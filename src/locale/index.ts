@@ -5,7 +5,7 @@ export const languages = {
         }
     },
     "en-US": {
-        "home": {
+        home: {
             description: "Connections is a bot for connecting servers, it was designed to help move your server helping new users and new friends!",
         }
     }
