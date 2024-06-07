@@ -1,3 +1,4 @@
+import { nextui } from "@nextui-org/react";
 import type { Config } from "tailwindcss";
 const { default: flattenColorPalette } = require("tailwindcss/lib/util/flattenColorPalette");
 
@@ -32,7 +33,7 @@ const config: Config = {
             },
         },
     },
-    plugins: [addVariablesForColors],
+    plugins: [addVariablesForColors, nextui()],
 };
 
 export default config;
