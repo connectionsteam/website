@@ -1,10 +1,6 @@
+"use client"
 import React, { createContext, useState, useEffect, PropsWithChildren, ReactNode } from "react";
-import { UserStructure } from "@/types";
-
-interface UserContextProps {
-    user: UserStructure | null;
-    setUser: (user: UserStructure | null) => void;
-}
+import { UserContextProps, UserStructure } from "@/types";
 
 export const UserContext = createContext<UserContextProps>({
     user: null,
