@@ -10,19 +10,13 @@ export const UserContext = createContext<UserContextProps>({
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [user, setUser] = useState<UserStructure | null>(null);
 
-    // const getUserData = async () => {
-    //     const { data } = await api.getUserData();
-        
-    //     if (data) {
-    //         setUser(data);
-    //     } else {
-    //         setUser(null);
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     getUserData();
-    // }, []);
+    useEffect(() => {
+        setUser({
+            avatar: "4007e7943493138d10aeb5d6e64e481c",
+            id: "955095844275781693",
+            username: "Spyei"
+        });
+    }, [])
 
     return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>;
 };
