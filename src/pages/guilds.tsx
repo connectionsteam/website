@@ -1,4 +1,4 @@
-import GuildsComponent from "@/components/Dashboard.tsx/Guilds";
+import GuildsComponent from "@/components/Dashboard/Guilds";
 import Head from "next/head";
 
 export default function GuildsPage() {

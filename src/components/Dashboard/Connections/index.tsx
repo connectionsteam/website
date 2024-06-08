@@ -24,6 +24,7 @@ export default function ConnectionsComponent() {
                 {
                     _id: "1244349322204549181",
                     name: "Connections Community",
+                    description: "A comunidade de conexões para o Discord",
                     icon: "https://cdn.discordapp.com/avatars/955095844275781693/4007e7943493138d10aeb5d6e64e481c.png",
                     ...data[0]
                 }
@@ -50,7 +51,7 @@ export default function ConnectionsComponent() {
                                 <Avatar className="w-12 h-12" src={connection.icon} key={connection.name} />
                                 <div className="flex flex-col gap-1 text-start">
                                     <span className="font-bold text-lg">{connection.name}</span>
-                                    <span className="text-neutral-300 text-sm">{connection.description}</span>
+                                    <span className="text-neutral-300 text-sm">{connection.description.length > 30 ? connection.description.slice(0, 30) + "..." : connection.description}</span>
                                 </div>
                             </Link>
                         ))
