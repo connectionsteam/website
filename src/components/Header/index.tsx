@@ -31,12 +31,13 @@ export default function Header() {
     return (
         <header className="w-screen flex justify-center text-white fixed z-50 tablet:px-2">
             <div className="mt-2 flex gap-4 items-center w-full max-w-[1100px] p-1 px-2 tablet:p-2 bg-black bg-opacity-20 backdrop-blur-sm rounded-lg tablet:mr-0">
-                <Link onClick={handleRecallDrawer} className="transition duration-300" href="/">
+                <Link className="transition duration-300" href="/">
                     <h1 className="text-2xl p-2 tablet:p-0 font-bold bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-500 via-purple-500 to-indigo-500">Connections</h1>
                 </Link>
                 <div className="flex gap-4 justify-center text-lg font-bold tablet:hidden">
-                    <Link onClick={handleRecallDrawer} className="transition duration-300 group ease-in-out" href="/premium"><Underline>Premium</Underline></Link>
-                    <a onClick={handleRecallDrawer} className="transition duration-300 group ease-in-out" href="https://discord.gg/RXBRraTWeY" about="_blank"><Underline>Support</Underline></a>
+                    <Link className="transition duration-300 group ease-in-out" href="/premium"><Underline>Premium</Underline></Link>
+                    <a className="transition duration-300 group ease-in-out" href="https://discord.gg/RXBRraTWeY" about="_blank"><Underline>Support</Underline></a>
+                    <Link className="transition duration-300 group ease-in-out" href="/docs"><Underline>Documentação</Underline></Link>
                 </div>
                 <div className="w-full flex justify-end">
                     <AuthUser type="desktop" />
@@ -52,6 +53,7 @@ export default function Header() {
                     <div className="flex gap-4 justify-center text-lg flex-col">
                         <Link onClick={handleRecallDrawer} className="transition duration-300 group ease-in-out" href="/dashboard"><Underline>Premium</Underline></Link>
                         <a onClick={handleRecallDrawer} className="transition duration-300 group ease-in-out" href="https://discord.gg/RXBRraTWeY" about="_blank"><Underline>Support</Underline></a>
+                        <Link className="transition duration-300 group ease-in-out" href="/docs"><Underline>Documentação</Underline></Link>
                     </div>
                 </div>
             </div>
