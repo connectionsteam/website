@@ -4,6 +4,7 @@ export default function Avatar({ src, className }: { src: string, className?: st
     return (
         <NextUIAvatar
             src={src}
+            alt="avatar"
             className={className}
             classNames={{
                 base: "bg-gradient-to-r from-fuchsia-500 via-purple-500 to-indigo-500",
