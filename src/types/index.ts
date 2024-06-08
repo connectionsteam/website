@@ -57,6 +57,8 @@ export interface BaseCase<Type extends CaseTypes> {
 
 export interface ConnectedConnectionPayload {
     name: string;
+    icon: string;
+    description: string;
     channelId: string;
     flags: ConnectedConnectionFlags[];
 }
