@@ -9,7 +9,7 @@ export default function Page() {
 
     return (
         <div className="h-screen flex items-center justify-center">
-            <div className="flex w-full max-w-[1100px] justify-center items-center flex-col gap-3 z-10 mobile:px-3">
+            <div className="flex w-full max-w-[1100px] justify-center items-center flex-col gap-3 z-10 tablet:px-3">
                 <h1 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-500 via-purple-500 to-indigo-500">Connections</h1>
                 <p className="text-neutral-300 text-xl text-center">{languages[language].home.description}</p>
             </div>
