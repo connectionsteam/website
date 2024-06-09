@@ -24,8 +24,6 @@ export default function GuildComponent() {
         fetchGuild();
     }, [id]);
 
-    if (!id) return <DefaultLayout><div>Loading...</div></DefaultLayout>;
-
     return (
         <DefaultLayout>
             {guild ? (
