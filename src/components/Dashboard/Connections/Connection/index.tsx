@@ -1,7 +1,6 @@
 import Avatar from "@/components/Mixed/Avatar";
 import DefaultLayout from "@/components/Mixed/Layout";
 import { api } from "@/utils/api";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { ConnectionPayload } from "@/types";

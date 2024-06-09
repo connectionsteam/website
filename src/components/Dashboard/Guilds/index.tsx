@@ -24,7 +24,7 @@ export default function GuildsComponent() {
 
             setConnections([
                 {
-                    name: "sexcommunity",
+                    name: "sexconnection",
                     icon: "https://cdn.discordapp.com/avatars/955095844275781693/4007e7943493138d10aeb5d6e64e481c.png",
                     ...data[0]
                 }

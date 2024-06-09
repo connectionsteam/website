@@ -13,7 +13,7 @@ export default function ConnectionsComponent() {
     const handleChangeQuery = (event: ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(event.target.value);
     };
-
+    
     useEffect(() => {
         const fetchConnections = async () => {
             const response = await api.get("/users/@me/connections");
@@ -23,7 +23,7 @@ export default function ConnectionsComponent() {
             setConnections([
                 {
                     _id: "1244349322204549181",
-                    name: "sexcommunity",
+                    name: "sexconnection",
                     description: "A comunidade de conexões para o Discord",
                     icon: "https://cdn.discordapp.com/avatars/955095844275781693/4007e7943493138d10aeb5d6e64e481c.png",
                     ...data[0]
