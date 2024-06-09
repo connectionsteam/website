@@ -45,9 +45,9 @@ export default function GuildsComponent() {
                     <Input classNames={{
                         inputWrapper: "rounded-lg bg-neutral-800 group-hover:bg-neutral-700",
                     }} onChange={handleChangeQuery} type="string" label="Filtrar conexão" />
-                    {connections ? (
-                        <div className="grid grid-cols-3 gap-3 w-full">
-                            {connections.filter((connection) => connection.name.toLowerCase().includes(searchQuery.toLowerCase()) || connection.id.includes(searchQuery)).map((connection) => (
+                    <div className="grid grid-cols-3 gap-3 w-full">
+                        {connections ? (
+                            connections.filter((connection) => connection.name.toLowerCase().includes(searchQuery.toLowerCase()) || connection.id.includes(searchQuery)).map((connection) => (
                                 <Link href={`/guild/${connection.id}`} key={connection.id} className="flex items-center gap-2 p-3 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition">
                                     <Avatar className="w-12 h-12" src={connection.icon} key={connection.id} />
                                     <div className="flex flex-col gap-1 text-start">
@@ -55,9 +55,9 @@ export default function GuildsComponent() {
                                         <span className="text-neutral-300 text-sm">{connection.id}</span>
                                     </div>
                                 </Link>
-                            ))}
-                        </div>
-                    ) : <ConnectionsSkeleton key={Math.random()} />}
+                            ))
+                        ) : <ConnectionsSkeleton key={Math.random()} />}
+                    </div>
                 </div>
             </div>
         </ProtectedRoute>
