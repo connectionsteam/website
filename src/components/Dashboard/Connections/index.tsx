@@ -23,7 +23,7 @@ export default function ConnectionsComponent() {
             setConnections([
                 {
                     _id: "1244349322204549181",
-                    name: "Connections Community",
+                    name: "sexcommunity",
                     description: "A comunidade de conexões para o Discord",
                     icon: "https://cdn.discordapp.com/avatars/955095844275781693/4007e7943493138d10aeb5d6e64e481c.png",
                     ...data[0]
