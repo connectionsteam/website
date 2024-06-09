@@ -7,6 +7,9 @@ import Avatar from "@/components/Mixed/Avatar";
 import ConnectionsSkeleton from "../ConnectionsSkeleton";
 import ProtectedRoute from "@/components/Mixed/ProtectedRoute";
 import GuildsSkeleton from "./Skeleton";
+import { LuPlusCircle } from "react-icons/lu";
+
+const url = "https://discord.com/oauth2/authorize?client_id=1243234162077470802";
 
 export default function GuildsComponent() {
     const [connections, setConnections] = useState<GuildPayload[] | null>(null);
@@ -57,6 +60,12 @@ export default function GuildsComponent() {
                                 </Link>
                             ))
                         ) : <ConnectionsSkeleton key={Math.random()} />}
+                        <div className="p-[2px] bg-gradient-to-r from-fuchsia-500 to-indigo-500 rounded-lg w-full">
+                            <a target="_blank" href={url} className="flex items-center justify-center gap-2 p-3 h-full w-full rounded-lg bg-neutral-800 hover:bg-neutral-700 transition">
+                                <LuPlusCircle size={20} />
+                                <span>Adicionar servidor</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

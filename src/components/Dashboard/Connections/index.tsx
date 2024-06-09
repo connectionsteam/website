@@ -5,6 +5,7 @@ import { api } from "@/utils/api";
 import { ConnectionPayload } from "@/types";
 import Avatar from "@/components/Mixed/Avatar";
 import ConnectionsSkeleton from "../ConnectionsSkeleton";
+import { LuPlusCircle } from "react-icons/lu";
 
 export default function ConnectionsComponent() {
     const [connections, setConnections] = useState<ConnectionPayload[] | null>(null);
@@ -13,7 +14,7 @@ export default function ConnectionsComponent() {
     const handleChangeQuery = (event: ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(event.target.value);
     };
-    
+
     useEffect(() => {
         const fetchConnections = async () => {
             const response = await api.get("/users/@me/connections");
@@ -56,6 +57,12 @@ export default function ConnectionsComponent() {
                             </Link>
                         ))
                     ) : <ConnectionsSkeleton key={Math.random()} />}
+                    <div className="p-[2px] bg-gradient-to-r from-fuchsia-500 to-indigo-500 rounded-lg w-full">
+                        <button className="flex items-center justify-center gap-2 p-3 h-full w-full rounded-lg bg-neutral-800 hover:bg-neutral-700 transition">
+                            <LuPlusCircle size={26} />
+                            <span>Adicionar Conexão</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
