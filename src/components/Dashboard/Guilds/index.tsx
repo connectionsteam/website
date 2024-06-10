@@ -23,15 +23,7 @@ export default function GuildsComponent() {
         const fetchConnections = async () => {
             const response = await api.get("/users/@me/guilds");
 
-            const data = await response.data;
-
-            setConnections([
-                {
-                    name: "sexconnection",
-                    icon: "https://cdn.discordapp.com/avatars/955095844275781693/4007e7943493138d10aeb5d6e64e481c.png",
-                    ...data[0]
-                }
-            ]);
+            setConnections(response.data);
         };
 
         fetchConnections();
