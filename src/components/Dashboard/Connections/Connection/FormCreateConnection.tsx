@@ -26,7 +26,7 @@ export default function CreateConnectionForm() {
     return (
         <>
             <div className="p-[2px] bg-gradient-to-r from-fuchsia-500 to-indigo-500 rounded-lg w-full">
-                <button onClick={onOpen} className="flex items-center justify-center gap-2 p-5 h-full w-full rounded-lg bg-neutral-800 hover:bg-neutral-700 transition">
+                <button onClick={onOpen} className="flex items-center justify-center gap-2 p-5 h-full w-full rounded-lg bg-neutral-800 hover:bg-transparent transition">
                     <LuPlusCircle size={26} />
                     <span>Adicionar Conexão</span>
                 </button>
