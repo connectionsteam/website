@@ -5,6 +5,7 @@ import Link from "next/link";
 import Underline from "../Mixed/Underline";
 import { FaX } from "react-icons/fa6";
 import AuthUser from "./User";
+import ChooseLanguage from "./Language";
 
 export default function Header() {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -39,8 +40,9 @@ export default function Header() {
                     <a className="transition duration-300 group ease-in-out" href="https://discord.gg/RXBRraTWeY" about="_blank"><Underline>Support</Underline></a>
                     <Link className="transition duration-300 group ease-in-out" href="/docs"><Underline>Documentação</Underline></Link>
                 </div>
-                <div className="w-full flex justify-end">
+                <div className="w-full flex justify-end gap-1">
                     <AuthUser type="desktop" />
+                    <ChooseLanguage/>
                 </div>
                 <button onClick={() => setIsDrawerOpen(true)} className="tabletdesk:hidden">
                     <RiMenu3Line fill="#fff" size={30} />
