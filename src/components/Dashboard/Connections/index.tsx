@@ -5,7 +5,7 @@ import { api } from "@/utils/api";
 import { ConnectionPayload } from "@/types";
 import Avatar from "@/components/Mixed/Avatar";
 import ConnectionsSkeleton from "../ConnectionsSkeleton";
-import { LuPlusCircle } from "react-icons/lu";
+import CreateConnectionForm from "./Connection/FormCreateConnection";
 
 export default function ConnectionsComponent() {
     const [connections, setConnections] = useState<ConnectionPayload[] | null>(null);
@@ -17,19 +17,9 @@ export default function ConnectionsComponent() {
 
     useEffect(() => {
         const fetchConnections = async () => {
-            const response = await api.get("/users/@me/connections");
+            const res = await api.get("/users/@me/connections");
 
-            const data = await response.data;
-
-            setConnections([
-                {
-                    _id: "1244349322204549181",
-                    name: "sexconnection",
-                    description: "A comunidade de conexões para o Discord",
-                    icon: "https://cdn.discordapp.com/avatars/955095844275781693/4007e7943493138d10aeb5d6e64e481c.png",
-                    ...data[0]
-                }
-            ]);
+            setConnections(res.data);
         };
 
         fetchConnections();
@@ -49,20 +39,15 @@ export default function ConnectionsComponent() {
                     {connections ? (
                         connections.filter((connection) => connection.name.toLowerCase().includes(searchQuery.toLowerCase()) || connection.name.includes(searchQuery)).map((connection) => (
                             <Link href={`/connection/${connection.name.replace(/ /g, "-")}`} key={connection.name} className="flex items-center gap-2 p-3 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition">
-                                <Avatar className="w-12 h-12" src={connection.icon} key={connection.name} />
+                                <Avatar className="w-12 h-12" src={connection.icon || ""} key={connection.name} />
                                 <div className="flex flex-col gap-1 text-start">
                                     <span className="font-bold text-lg">{connection.name}</span>
-                                    <span className="text-neutral-300 text-sm">{connection.description.length > 30 ? connection.description.slice(0, 30) + "..." : connection.description}</span>
+                                    {connection.description && <span className="text-neutral-300 text-sm">{connection.description.length > 30 ? connection.description.slice(0, 30) + "..." : connection.description}</span>}
                                 </div>
                             </Link>
                         ))
                     ) : <ConnectionsSkeleton key={Math.random()} />}
-                    <div className="p-[2px] bg-gradient-to-r from-fuchsia-500 to-indigo-500 rounded-lg w-full">
-                        <button className="flex items-center justify-center gap-2 p-3 h-full w-full rounded-lg bg-neutral-800 hover:bg-neutral-700 transition">
-                            <LuPlusCircle size={26} />
-                            <span>Adicionar Conexão</span>
-                        </button>
-                    </div>
+                    <CreateConnectionForm/>
                 </div>
             </div>
         </div>
