@@ -64,15 +64,15 @@ export interface ConnectedConnectionPayload {
 }
 
 export enum ConnectedConnectionFlags {
-    Locked = 'LOCKED',
-    Frozen = 'FROZEN',
-    AllowFiles = 'ALLOW_FILES',
-    AllowInvites = 'ALLOW_INVITES',
-    AllowLinks = 'ALLOW_LINKS',
-    NoIndentification = 'NO_INDENTIFICATION',
-    AllowOrigin = 'ALLOW_ORIGIN',
-    AllowEmojis = 'ALLOW_EMOJIS',
-    CompactModeEnabled = 'COMPACT_MODE',
+    Locked = "LOCKED",
+    Frozen = "FROZEN",
+    AllowFiles = "ALLOW_FILES",
+    AllowInvites = "ALLOW_INVITES",
+    AllowLinks = "ALLOW_LINKS",
+    NoIndentification = "NO_INDENTIFICATION",
+    AllowOrigin = "ALLOW_ORIGIN",
+    AllowEmojis = "ALLOW_EMOJIS",
+    CompactModeEnabled = "COMPACT_MODE",
 }
 
 export enum ModType {
@@ -81,10 +81,17 @@ export enum ModType {
 }
 
 export interface ConnectionPayload {
-    description: string;
-    icon: string;
+    description?: string;
+    icon?: string;
     name: string;
     creatorId: string;
     createdTimestamp: number;
+    maxConnections?: number;
+}
+
+export interface RequestPost {
+    name: string;
+    description?: string;
+    icon?: string;
     maxConnections?: number;
 }
