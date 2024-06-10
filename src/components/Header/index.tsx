@@ -1,15 +1,18 @@
 "use client"
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { RiMenu3Line } from "react-icons/ri";
 import Link from "next/link";
 import Underline from "../Mixed/Underline";
 import { FaX } from "react-icons/fa6";
 import AuthUser from "./User";
 import ChooseLanguage from "./Language";
+import { languages } from "@/locale";
+import { LanguageContext } from "@/contexts/Language";
 
 export default function Header() {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const drawerRef = useRef<HTMLDivElement | null>(null);
+    const { language } = useContext(LanguageContext);
 
     const handleRecallDrawer = () => {
         setIsDrawerOpen(false);
@@ -37,8 +40,8 @@ export default function Header() {
                 </Link>
                 <div className="flex gap-4 justify-center text-lg font-bold tablet:hidden">
                     <Link className="transition duration-300 group ease-in-out" href="/premium"><Underline>Premium</Underline></Link>
-                    <a className="transition duration-300 group ease-in-out" href="https://discord.gg/RXBRraTWeY" about="_blank"><Underline>Support</Underline></a>
-                    <Link className="transition duration-300 group ease-in-out" href="/docs"><Underline>Documentação</Underline></Link>
+                    <a className="transition duration-300 group ease-in-out" href="https://discord.gg/RXBRraTWeY" about="_blank"><Underline>{languages[language].home.header.support}</Underline></a>
+                    <Link className="transition duration-300 group ease-in-out" href="/docs"><Underline>{languages[language].home.header.documentation}</Underline></Link>
                 </div>
                 <div className="w-full flex justify-end gap-1">
                     <AuthUser type="desktop" />
@@ -54,8 +57,8 @@ export default function Header() {
                     <AuthUser type="mobile" />
                     <div className="flex gap-4 justify-center text-lg flex-col">
                         <Link onClick={handleRecallDrawer} className="transition duration-300 group ease-in-out" href="/dashboard"><Underline>Premium</Underline></Link>
-                        <a onClick={handleRecallDrawer} className="transition duration-300 group ease-in-out" href="https://discord.gg/RXBRraTWeY" about="_blank"><Underline>Support</Underline></a>
-                        <Link className="transition duration-300 group ease-in-out" href="/docs"><Underline>Documentação</Underline></Link>
+                        <a onClick={handleRecallDrawer} className="transition duration-300 group ease-in-out" href="https://discord.gg/RXBRraTWeY" about="_blank"><Underline>{languages[language].home.header.support}</Underline></a>
+                        <Link className="transition duration-300 group ease-in-out" href="/docs"><Underline>{languages[language].home.header.documentation}</Underline></Link>
                     </div>
                 </div>
             </div>

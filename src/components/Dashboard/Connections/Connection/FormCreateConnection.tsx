@@ -1,11 +1,14 @@
-import { api } from "@/utils/api";
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/modal";
-import { ChangeEvent, ChangeEventHandler, useState } from "react";
+import { ChangeEvent, ChangeEventHandler, useContext, useState } from "react";
 import { LuPlusCircle } from "react-icons/lu";
 import CreateConnection from "./CreateConnection";
 import { RequestPost } from "@/types";
+import { LanguageContext } from "@/contexts/Language";
+import { languages } from "@/locale";
 
 export default function CreateConnectionForm() {
+    const { language } = useContext(LanguageContext);
+    
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [post, setPost] = useState<RequestPost>({
         name: "",
@@ -28,7 +31,7 @@ export default function CreateConnectionForm() {
             <div className="p-[2px] bg-gradient-to-r from-fuchsia-500 to-indigo-500 rounded-lg w-full">
                 <button onClick={onOpen} className="flex items-center justify-center gap-2 p-5 h-full w-full rounded-lg bg-neutral-800 hover:bg-transparent transition">
                     <LuPlusCircle size={26} />
-                    <span>Adicionar Conexão</span>
+                    <span>{languages[language].dashboard.connections.addConnection}</span>
                 </button>
             </div>
             <Modal classNames={{
@@ -37,12 +40,12 @@ export default function CreateConnectionForm() {
                 base: "max-h-screen overflow-y-auto",
             }} isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent className="bg-neutral-800 text-white">
-                    <ModalHeader className="flex flex-col gap-1 bg-neutral-800">Criar Conexão</ModalHeader>
+                    <ModalHeader className="flex flex-col gap-1 bg-neutral-800">{languages[language].dashboard.connections.addConnection}</ModalHeader>
                     <ModalBody>
-                        <InputField obrigatory label="Nome" type="text" placeholder="conexãolegal" onChange={(e) => setPostValues(e, "name")} error={errors.name} />
-                        <InputField label="Descrição" type="text" placeholder="Essa conexão é supimpa de bom!" onChange={(e) => setPostValues(e, "description")} error={errors.description} />
-                        <InputField label="Icone" type="text" placeholder="https://i.imgur.com/EXQVxqQ.png" onChange={(e) => setPostValues(e, "icon")} error={errors.icon} />
-                        <InputField label="Conexões máximas" type="text" placeholder="5" onChange={(e) => setPostValues(e, "maxConnections")} error={errors.maxConnections} />
+                        <InputField obrigatory label={languages[language].dashboard.connections.connection.form.name} type="text" placeholder={languages[language].dashboard.connections.connection.form.placeholders.name} onChange={(e) => setPostValues(e, "name")} error={errors.name} />
+                        <InputField label={languages[language].dashboard.connections.connection.form.description} type="text" placeholder={languages[language].dashboard.connections.connection.form.placeholders.description} onChange={(e) => setPostValues(e, "description")} error={errors.description} />
+                        <InputField label={languages[language].dashboard.connections.connection.form.icon} type="text" placeholder="https://i.imgur.com/EXQVxqQ.png" onChange={(e) => setPostValues(e, "icon")} error={errors.icon} />
+                        <InputField label={languages[language].dashboard.connections.connection.form.maxConnections} type="text" placeholder="5" onChange={(e) => setPostValues(e, "maxConnections")} error={errors.maxConnections} />
                         {errors.api && <div className="text-red-500">{errors.api}</div>}
                     </ModalBody>
                     <ModalFooter className="w-full">

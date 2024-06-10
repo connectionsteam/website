@@ -4,14 +4,17 @@ import { GuildPayload } from "@/types";
 import { api } from "@/utils/api";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import GuildSkeleton from "./Skeleton";
+import { LanguageContext } from "@/contexts/Language";
+import { languages } from "@/locale";
 
 export default function GuildComponent() {
     const router = useRouter();
     const { id } = router.query;
     const [guild, setGuild] = useState<GuildPayload | null>(null);
-
+    const { language } = useContext(LanguageContext);
+    
     useEffect(() => {
         if (!id) return;
 
@@ -29,7 +32,7 @@ export default function GuildComponent() {
             {guild ? (
                 <div className="flex flex-col gap-3 w-full">
                     <div className="flex gap-4 w-full flex-col">
-                        <span className="font-bold text-xl">Servidor</span>
+                        <span className="font-bold text-xl">{languages[language].dashboard.guilds.guild.title}</span>
                         <div className="flex items-center gap-2 p-3 rounded-lg bg-neutral-800 w-full">
                             <Avatar className="w-12 h-12" src={guild.icon} key={id as string} />
                             <div className="flex flex-col gap-1 text-start">
@@ -38,7 +41,7 @@ export default function GuildComponent() {
                             </div>
                         </div>
                         <div className="flex gap-2 rounded-lg w-full flex-col">
-                            <span className="font-bold text-xl">Conexões</span>
+                            <span className="font-bold text-xl">{languages[language].dashboard.guilds.guild.connections}</span>
                             <div className="grid grid-cols-3 gap-3 w-full">
                                 {guild.connections.map((connection) => (
                                     <Link href={`/connection/${connection.name.replace(/ /g, "-")}`} key={connection.name} className="flex items-center gap-2 p-3 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition">

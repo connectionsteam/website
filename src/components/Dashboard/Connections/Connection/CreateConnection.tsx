@@ -1,7 +1,9 @@
+import { LanguageContext } from "@/contexts/Language";
+import { languages } from "@/locale";
 import { RequestPost } from "@/types";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 interface Props {
@@ -13,6 +15,7 @@ interface Props {
 export default function CreateConnection({ post, setErrors, errors }: Props) {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+    const { language } = useContext(LanguageContext);
 
     // const validations = [
     //     { key: "name", condition: (postobj: RequestPost) => postobj.name.trim() === "", message: "O nome da conexão é obrigatório." },
@@ -65,9 +68,9 @@ export default function CreateConnection({ post, setErrors, errors }: Props) {
                 {loading ? (
                     <div className="flex gap-2 items-center w-full justify-center">
                         <AiOutlineLoading3Quarters className="animate-spin" />
-                        <span className="font-semibold">Criando conexão...</span>
+                        <span className="font-semibold">{languages[language].dashboard.connections.createConnectionLoading}</span>
                     </div>
-                ) : <span className="font-semibold">Criar conexão</span>}
+                ) : <span className="font-semibold">{languages[language].dashboard.connections.createConnection}</span>}
             </button>
         </div>
     );

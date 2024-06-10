@@ -1,6 +1,6 @@
 import { Input } from "@nextui-org/input";
 import Link from "next/link";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { api } from "@/utils/api";
 import { GuildPayload } from "@/types";
 import Avatar from "@/components/Mixed/Avatar";
@@ -8,12 +8,15 @@ import ConnectionsSkeleton from "../ConnectionsSkeleton";
 import ProtectedRoute from "@/components/Mixed/ProtectedRoute";
 import GuildsSkeleton from "./Skeleton";
 import { LuPlusCircle } from "react-icons/lu";
+import { LanguageContext } from "@/contexts/Language";
+import { languages } from "@/locale";
 
 const url = "https://discord.com/oauth2/authorize?client_id=1243234162077470802";
 
 export default function GuildsComponent() {
     const [connections, setConnections] = useState<GuildPayload[] | null>(null);
     const [searchQuery, setSearchQuery] = useState("");
+    const { language } = useContext(LanguageContext);
 
     const handleChangeQuery = (event: ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(event.target.value);
@@ -34,12 +37,12 @@ export default function GuildsComponent() {
             <div className="flex items-center justify-center text-white">
                 <div className="flex w-full max-w-[1100px] items-start flex-col gap-4 z-10 tablet:px-3 mt-28">
                     <div className="flex flex-col gap-2">
-                        <h1 className="font-bold text-3xl">Servidores</h1>
-                        <span className="text-neutral-300">Selecione o servidor que deseja gerenciar</span>
+                        <h1 className="font-bold text-3xl">{languages[language].dashboard.guilds.title}</h1>
+                        <span className="text-neutral-300">{languages[language].dashboard.guilds.description}</span>
                     </div>
                     <Input classNames={{
                         inputWrapper: "rounded-lg bg-neutral-800 group-hover:bg-neutral-700",
-                    }} onChange={handleChangeQuery} type="string" label="Filtrar conexão" />
+                    }} onChange={handleChangeQuery} type="string" label={languages[language].dashboard.misc.filterGuilds} />
                     <div className="grid grid-cols-3 gap-3 w-full">
                         {connections ? (
                             connections.filter((connection) => connection.name.toLowerCase().includes(searchQuery.toLowerCase()) || connection.id.includes(searchQuery)).map((connection) => (
@@ -55,7 +58,7 @@ export default function GuildsComponent() {
                         <div className="p-[2px] bg-gradient-to-r from-fuchsia-500 to-indigo-500 rounded-lg w-full">
                             <a target="_blank" href={url} className="flex items-center justify-center gap-2 p-3 h-full w-full rounded-lg bg-neutral-800 hover:bg-neutral-700 transition">
                                 <LuPlusCircle size={20} />
-                                <span>Adicionar servidor</span>
+                                <span>{languages[language].dashboard.guilds.addServer}</span>
                             </a>
                         </div>
                     </div>
