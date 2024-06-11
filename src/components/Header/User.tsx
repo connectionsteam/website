@@ -7,12 +7,15 @@ import { useIsClient } from "@/contexts/Client";
 import axios from "axios";
 import Link from "next/link";
 import Avatar from "../Mixed/Avatar";
+import { LanguageContext } from "@/contexts/Language";
+import { languages } from "@/locale";
 
 const url = "https://discord.com/oauth2/authorize?client_id=1021810246462738432&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback&scope=identify+guilds";
 
 export default function AuthUser({ type }: { type: "mobile" | "desktop" }) {
     const { user } = useContext(UserContext);
     const isClient = useIsClient();
+    const { language } = useContext(LanguageContext);
 
     const handleLogout = () => {
         isClient ? window.location.href = "/" : null;
@@ -44,19 +47,19 @@ export default function AuthUser({ type }: { type: "mobile" | "desktop" }) {
                     <DropdownItem className="bg-neutral-800 rounded-lg cursor-pointer hover:bg-neutral-700 transition outline-none" key="exit">
                         <Link href="/connections" className="flex items-center justify-start min-w-[240px] py-2 gap-3">
                             <LuLink />
-                            <span>Conexões</span>
+                            <span>{languages[language].home.header.menu.connections}</span>
                         </Link>
                     </DropdownItem>
                     <DropdownItem className="bg-neutral-800 rounded-lg cursor-pointer hover:bg-neutral-700 transition outline-none" key="exit">
                         <Link href="/guilds" className="flex items-center min-w-[240px] py-2 gap-3">
                             <LuServer />
-                            <span>Servidores</span>
+                            <span>{languages[language].home.header.menu.guilds}</span>
                         </Link>
                     </DropdownItem>
                     <DropdownItem className="bg-neutral-800 rounded-lg cursor-pointer hover:bg-neutral-700 transition outline-none" key="exit">
                         <button onClick={handleLogout} className="flex items-center min-w-[240px] py-2 gap-3">
                             <LuLogOut />
-                            <span>Sair</span>
+                            <span>{languages[language].home.header.menu.exit}</span>
                         </button>
                     </DropdownItem>
                 </DropdownMenu>
@@ -75,19 +78,19 @@ export default function AuthUser({ type }: { type: "mobile" | "desktop" }) {
                     <DropdownItem className="bg-neutral-800 rounded-lg cursor-pointer hover:bg-neutral-700 transition outline-none" key="exit">
                         <Link href="/connections" className="flex items-center justify-start min-w-28 py-2 gap-3">
                             <LuLink />
-                            <span>Conexões</span>
+                            <span>{languages[language].home.header.menu.connections}</span>
                         </Link>
                     </DropdownItem>
                     <DropdownItem className="bg-neutral-800 rounded-lg cursor-pointer hover:bg-neutral-700 transition outline-none" key="exit">
                         <Link href="/guilds" className="flex items-center min-w-28 py-2 gap-3">
                             <LuServer />
-                            <span>Servidores</span>
+                            <span>{languages[language].home.header.menu.guilds}</span>
                         </Link>
                     </DropdownItem>
                     <DropdownItem className="bg-neutral-800 rounded-lg cursor-pointer hover:bg-neutral-700 transition outline-none" key="exit">
                         <button onClick={handleLogout} className="flex items-center min-w-28 py-2 gap-3">
                             <LuLogOut />
-                            <span>Sair</span>
+                            <span>{languages[language].home.header.menu.exit}</span>
                         </button>
                     </DropdownItem>
                 </DropdownMenu>

@@ -4,6 +4,11 @@ export const languages = {
             header: {
                 documentation: "Documentação",
                 support: "Suporte",
+                menu: {
+                    exit: "Sair",
+                    connections: "Conexões",
+                    guilds: "Servidores",
+                }
             },
             description: "Connections é um bot projetado para facilitar conexões entre servidores, promovendo o engajamento e dinamismo em seu servidor.",
         },
@@ -40,7 +45,7 @@ export const languages = {
             },
             misc: {
                 filterConnections: "Filtrar conexão",
-                filterGuilds: "Filtrar guilda",
+                filterGuilds: "Filtrar servidor",
             }
         }
     },
@@ -49,6 +54,11 @@ export const languages = {
             header: {
                 documentation: "Documentation",
                 support: "Support",
+                menu: {
+                    exit: "Exit",
+                    connections: "Connections",
+                    guilds: "Guilds",
+                }
             },
             description: "Connections is a bot designed to facilitate connections between servers, enhancing engagement and dynamism in your server.",
         },
