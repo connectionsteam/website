@@ -1,21 +1,22 @@
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
 import FlagBr from "../Flags/br";
 import FlagEn from "../Flags/en";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useIsClient } from "@/contexts/Client";
+import { LanguageContext } from "@/contexts/Language";
 
 export default function ChooseLanguage() {
     const isClient = useIsClient();
     const [language, setLanguage] = useState("en-US");
     const [selectedLanguage, setSelectedLanguage] = useState(language);
+    const { setLanguage: setLocalLanguage } = useContext(LanguageContext);
 
     const handleLanguage = (language: string) => {
         if (isClient) {
             localStorage.setItem("language", language);
         }
 
-        if (language !== selectedLanguage) window.location.reload();
-
+        setLocalLanguage(language as any);
         setSelectedLanguage(language);
     };
 
