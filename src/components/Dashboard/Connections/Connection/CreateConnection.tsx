@@ -15,36 +15,10 @@ interface Props {
 export default function CreateConnection({ post, setErrors, errors }: Props) {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
-    const { language } = useContext(LanguageContext);
-
-    // const validations = [
-    //     { key: "name", condition: (postobj: RequestPost) => postobj.name.trim() === "", message: "O nome da conexão é obrigatório." },
-    //     { key: "maxConnections", condition: (postobj: RequestPost) => postobj.maxConnections && postobj.maxConnections < 1, message: "O número máximo de conexões é obrigatório." },
-    //     { key: "description", condition: (postobj: RequestPost) => postobj.description && (postobj.description.length < 20 || postobj.description.length > 50), message: "A descrição deve ter entre 20 e 50 caracteres." }
-    // ];
-
-    // const validatePost = (post: RequestPost) => {
-    //     let newErrors: { [key: string]: string } = {};
-
-    //     for (let { key, condition, message } of validations) {
-    //         if (condition(post)) {
-    //             newErrors[key] = message;
-    //         }
-    //     }
-
-    //     return newErrors;
-    // };   
+    const { language } = useContext(LanguageContext);  
 
     const createConnection = async () => {
         setLoading(true);
-        // const newErrors = validatePost(post);
-        
-        // if (Object.keys(newErrors).length > 0) {
-        //     setErrors(newErrors);
-        //     setLoading(false);
-
-        //     return;
-        // }
 
         try {
             await api.post("/users/@me/connections", post);
