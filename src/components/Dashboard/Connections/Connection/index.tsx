@@ -7,18 +7,13 @@ import { ConnectionPayload } from "@/types";
 import ConnectionsSkeletonC from "../Skeleton";
 import { languages } from "@/locale";
 import { LanguageContext } from "@/contexts/Language";
+import DeleteConnection from "./DeleteConnection";
 
 export default function ConnectionComponent() {
     const router = useRouter();
     const { id } = router.query;
     const [connection, setConnection] = useState<ConnectionPayload | null>(null);
     const { language } = useContext(LanguageContext);
-
-    const handleDeleteConnection = async () => {
-        await api.delete(`/connections/${id}`);
-        
-        router.push("/connections");
-    };
 
     useEffect(() => {
         if (!id) return;
@@ -43,10 +38,10 @@ export default function ConnectionComponent() {
                             <div className="flex flex-col gap-1 text-start">
                                 <span className="font-bold text-xl">{connection.name}</span>
                                 <span className="text-neutral-300 text-sm">{connection.description}</span>
-                                <button onClick={handleDeleteConnection}>deletar</button>
                             </div>
                         </div>
                     </div>
+                    <DeleteConnection id={id as string}/>
                 </div>
             ) : <ConnectionsSkeletonC />}
         </DefaultLayout>
