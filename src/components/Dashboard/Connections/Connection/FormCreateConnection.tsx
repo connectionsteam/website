@@ -5,10 +5,11 @@ import CreateConnection from "./CreateConnection";
 import { RequestPost } from "@/types";
 import { LanguageContext } from "@/contexts/Language";
 import { languages } from "@/locale";
+import DefaultInput from "@/components/Mixed/Input";
 
 export default function CreateConnectionForm() {
     const { language } = useContext(LanguageContext);
-    
+
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [post, setPost] = useState<RequestPost>({
         name: "",
@@ -42,10 +43,10 @@ export default function CreateConnectionForm() {
                 <ModalContent className="bg-neutral-800 text-white">
                     <ModalHeader className="flex flex-col gap-1 bg-neutral-800">{languages[language].dashboard.connections.addConnection}</ModalHeader>
                     <ModalBody>
-                        <InputField obrigatory label={languages[language].dashboard.connections.connection.form.name} type="text" placeholder={languages[language].dashboard.connections.connection.form.placeholders.name} onChange={(e) => setPostValues(e, "name")} error={errors.name} />
-                        <InputField label={languages[language].dashboard.connections.connection.form.description} type="text" placeholder={languages[language].dashboard.connections.connection.form.placeholders.description} onChange={(e) => setPostValues(e, "description")} error={errors.description} />
-                        <InputField label={languages[language].dashboard.connections.connection.form.icon} type="text" placeholder="https://i.imgur.com/EXQVxqQ.png" onChange={(e) => setPostValues(e, "icon")} error={errors.icon} />
-                        <InputField label={languages[language].dashboard.connections.connection.form.maxConnections} type="text" placeholder="5" onChange={(e) => setPostValues(e, "maxConnections")} error={errors.maxConnections} />
+                        <DefaultInput obrigatory label={languages[language].dashboard.connections.connection.form.name} type="text" placeholder={languages[language].dashboard.connections.connection.form.placeholders.name} onChange={(e) => setPostValues(e, "name")} />
+                        <DefaultInput label={languages[language].dashboard.connections.connection.form.description} type="text" placeholder={languages[language].dashboard.connections.connection.form.placeholders.description} onChange={(e) => setPostValues(e, "description")} />
+                        <DefaultInput label={languages[language].dashboard.connections.connection.form.icon} type="text" placeholder="https://i.imgur.com/EXQVxqQ.png" onChange={(e) => setPostValues(e, "icon")} />
+                        <DefaultInput label={languages[language].dashboard.connections.connection.form.maxConnections} type="text" placeholder="5" onChange={(e) => setPostValues(e, "maxConnections")} />
                         {errors.api && <div className="text-red-500">{errors.api}</div>}
                     </ModalBody>
                     <ModalFooter className="w-full">
@@ -54,20 +55,5 @@ export default function CreateConnectionForm() {
                 </ModalContent>
             </Modal>
         </>
-    );
-}
-
-function InputField({ label, type, placeholder, onChange, obrigatory, error }: { obrigatory?: boolean, label: string, type: string, placeholder: string, onChange: ChangeEventHandler<HTMLInputElement>, error?: string }) {
-    return (
-        <div className="flex flex-col gap-2">
-            <label className="text-neutral-300 flex gap-1">
-                <div>{label}</div>
-                {obrigatory && <span className="text-red-500">*</span>}
-            </label>
-            <div className="w-full">
-                <input className={`transition w-full p-3 rounded-lg bg-neutral-900/50 focus:outline-none ${error ? 'border border-red-500' : 'hover:bg-neutral-700/30 focus:bg-neutral-700/30'}`} onChange={onChange} type={type} placeholder={placeholder} />
-            </div>
-            {error && <span className="text-red-500">{error}</span>}
-        </div>
     );
 }
