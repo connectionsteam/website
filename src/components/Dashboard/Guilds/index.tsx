@@ -14,7 +14,7 @@ import { languages } from "@/locale";
 const url = "https://discord.com/oauth2/authorize?client_id=1243234162077470802";
 
 export default function GuildsComponent() {
-    const [connections, setConnections] = useState<GuildPayload[] | null>(null);
+    const [guilds, setGuilds] = useState<GuildPayload[] | null>(null);
     const [searchQuery, setSearchQuery] = useState("");
     const { language } = useContext(LanguageContext);
 
@@ -26,7 +26,7 @@ export default function GuildsComponent() {
         const fetchConnections = async () => {
             const response = await api.get("/users/@me/guilds");
 
-            setConnections(response.data);
+            setGuilds(response.data);
         };
 
         fetchConnections();
@@ -44,13 +44,13 @@ export default function GuildsComponent() {
                         inputWrapper: "rounded-lg bg-neutral-800 group-hover:bg-neutral-700",
                     }} onChange={handleChangeQuery} type="string" label={languages[language].dashboard.misc.filterGuilds} />
                     <div className="grid grid-cols-3 gap-3 w-full">
-                        {connections ? (
-                            connections.filter((connection) => connection.name.toLowerCase().includes(searchQuery.toLowerCase()) || connection.id.includes(searchQuery)).map((connection) => (
-                                <Link href={`/guild/${connection.id}`} key={connection.id} className="flex items-center gap-2 p-3 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition">
-                                    <Avatar className="w-12 h-12" src={connection.icon} key={connection.id} />
+                        {guilds ? (
+                            guilds.filter((guild) => guild.name.toLowerCase().includes(searchQuery.toLowerCase()) || guild.id.includes(searchQuery)).map((guild) => (
+                                <Link href={`/guild/${guild.id}`} key={guild.id} className="flex items-center gap-2 p-3 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition">
+                                    <Avatar className="w-12 h-12" src={guild.icon} key={guild.id} />
                                     <div className="flex flex-col gap-1 text-start">
-                                        <span className="font-bold text-lg">{connection.name}</span>
-                                        <span className="text-neutral-300 text-sm">{connection.id}</span>
+                                        <span className="font-bold text-lg">{guild.name}</span>
+                                        <span className="text-neutral-300 text-sm">{guild.id}</span>
                                     </div>
                                 </Link>
                             ))
