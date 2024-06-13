@@ -12,7 +12,6 @@ export default function DeleteConnection({ id }: { id: string }) {
         router.push("/connections");
     };
 
-
     return (
         <>
             <div className="flex flex-col gap-2 w-full">
