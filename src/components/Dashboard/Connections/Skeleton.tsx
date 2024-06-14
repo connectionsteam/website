@@ -1,20 +1,18 @@
-import { LanguageContext } from "@/contexts/Language";
-import { languages } from "@/locale";
-import { useContext } from "react";
-
 export default function ConnectionsSkeletonC() {
-    const { language } = useContext(LanguageContext);
-    
     return (
-        <div className="flex flex-col gap-3 w-full">
-            <div className="flex gap-4 w-full flex-col">
-                <span className="font-bold text-xl">{languages[language].dashboard.connections.title}</span>
-                <div className="flex items-center gap-2 p-3 rounded-lg bg-neutral-800 w-full">
-                    <div className="w-12 h-12 bg-neutral-700 rounded-full animate-pulse"></div>
-                    <div className="flex flex-col gap-2 text-start">
-                        <div className="bg-neutral-700 h-6 rounded-lg animate-pulse w-36"></div>
-                        <div className="bg-neutral-700 h-4 rounded-lg animate-pulse w-64"></div>
-                    </div>
+        <div className="p-2 bg-neutral-800 rounded-lg w-full justify-center flex flex-col tablet:max-w-none">
+            <div className="flex items-center justify-center flex-col gap-3 w-full">
+                <div className="flex items-center flex-col justify-center gap-4 w-full">
+                    <div className="h-20 w-20 bg-neutral-700 rounded-full animate-pulse"></div>
+                    <div className="bg-neutral-700 h-8 w-40 rounded-lg animate-pulse"></div>
+                    <div className="transition w-full p-5 rounded-lg bg-neutral-900/50 animate-pulse"></div>
+                </div>
+                <div className="transition w-full p-8 rounded-lg bg-neutral-900/50 animate-pulse"></div>
+                <div className="bg-neutral-700 w-full p-6 rounded-lg animate-pulse"></div>
+                <div className="flex flex-col bg-neutral-700 bg-opacity-10 p-3 rounded-lg w-full gap-2">
+                    <div className="h-5 w-24 bg-neutral-700 rounded-full animate-pulse"></div>
+                    <div className="h-5 w-32 pr-6 bg-neutral-700 rounded-full animate-pulse"></div>
+                    <div className="flex gap-2 tablet:max-w-none justify-center items-center bg-neutral-700 transition p-6 rounded-lg animate-pulse"></div>
                 </div>
             </div>
         </div>
