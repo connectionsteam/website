@@ -9,6 +9,7 @@ import Link from "next/link";
 import Avatar from "../Mixed/Avatar";
 import { LanguageContext } from "@/contexts/Language";
 import { languages } from "@/locale";
+import { MdOutlineSpaceDashboard } from "react-icons/md";
 
 const url = "https://discord.com/oauth2/authorize?client_id=1021810246462738432&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback&scope=identify+guilds";
 
@@ -45,15 +46,9 @@ export default function AuthUser({ type }: { type: "mobile" | "desktop" }) {
                 </DropdownTrigger>
                 <DropdownMenu className="bg-neutral-800 rounded-lg">
                     <DropdownItem className="bg-neutral-800 rounded-lg cursor-pointer hover:bg-neutral-700 transition outline-none" key="exit">
-                        <Link href="/connections" className="flex items-center justify-start min-w-[240px] py-2 gap-3">
-                            <LuLink />
-                            <span>{languages[language].home.header.menu.connections}</span>
-                        </Link>
-                    </DropdownItem>
-                    <DropdownItem className="bg-neutral-800 rounded-lg cursor-pointer hover:bg-neutral-700 transition outline-none" key="exit">
-                        <Link href="/guilds" className="flex items-center min-w-[240px] py-2 gap-3">
-                            <LuServer />
-                            <span>{languages[language].home.header.menu.guilds}</span>
+                        <Link href="/dashboard" className="flex items-center justify-start min-w-28 py-2 gap-3">
+                            <MdOutlineSpaceDashboard />
+                            <span>{languages[language].home.header.menu.dashboard}</span>
                         </Link>
                     </DropdownItem>
                     <DropdownItem className="bg-neutral-800 rounded-lg cursor-pointer hover:bg-neutral-700 transition outline-none" key="exit">
@@ -76,15 +71,9 @@ export default function AuthUser({ type }: { type: "mobile" | "desktop" }) {
                 </DropdownTrigger >
                 <DropdownMenu className="bg-neutral-800 rounded-lg outline-none">
                     <DropdownItem className="bg-neutral-800 rounded-lg cursor-pointer hover:bg-neutral-700 transition outline-none" key="exit">
-                        <Link href="/connections" className="flex items-center justify-start min-w-28 py-2 gap-3">
-                            <LuLink />
-                            <span>{languages[language].home.header.menu.connections}</span>
-                        </Link>
-                    </DropdownItem>
-                    <DropdownItem className="bg-neutral-800 rounded-lg cursor-pointer hover:bg-neutral-700 transition outline-none" key="exit">
-                        <Link href="/guilds" className="flex items-center min-w-28 py-2 gap-3">
-                            <LuServer />
-                            <span>{languages[language].home.header.menu.guilds}</span>
+                        <Link href="/dashboard" className="flex items-center justify-start min-w-28 py-2 gap-3">
+                            <MdOutlineSpaceDashboard />
+                            <span>{languages[language].home.header.menu.dashboard}</span>
                         </Link>
                     </DropdownItem>
                     <DropdownItem className="bg-neutral-800 rounded-lg cursor-pointer hover:bg-neutral-700 transition outline-none" key="exit">
