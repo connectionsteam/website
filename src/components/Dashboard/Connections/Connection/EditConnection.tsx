@@ -63,9 +63,9 @@ export default function EditConnection({ connection }: { connection: ConnectionP
                         className="h-20 w-20 rounded-full"
                     />
                     <h1 className="text-xl font-semibold">{connection.name}</h1>
-                    <input className="transition w-full p-3 rounded-lg bg-neutral-900/50 focus:outline-none" value={infos.icon} onChange={(event) => handleChangeQuery(event, "icon")} type="text" />
+                    <input placeholder={connection.icon} className="transition w-full p-3 rounded-lg bg-neutral-900/50 focus:outline-none" value={infos.icon} onChange={(event) => handleChangeQuery(event, "icon")} type="text" />
                 </div>
-                <textarea className="transition w-full p-3 rounded-lg bg-neutral-900/50 focus:outline-none" value={infos.description} onChange={(event) => handleChangeQuery(event, "description")} />
+                <textarea placeholder={connection.description} className="transition w-full p-3 rounded-lg bg-neutral-900/50 focus:outline-none" value={infos.description} onChange={(event) => handleChangeQuery(event, "description")} />
                 {submited && <div className="text-green-500">Salvo com sucesso!</div>}
                 <DefaultButton className="p-3" onClick={updateConnection}>
                     {loading ? (
