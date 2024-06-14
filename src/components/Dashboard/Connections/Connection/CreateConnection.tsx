@@ -1,3 +1,4 @@
+import { useIsClient } from "@/contexts/Client";
 import { LanguageContext } from "@/contexts/Language";
 import { languages } from "@/locale";
 import { RequestPost } from "@/types";
@@ -14,8 +15,8 @@ interface Props {
 
 export default function CreateConnection({ post, setErrors, errors }: Props) {
     const [loading, setLoading] = useState(false);
-    const router = useRouter();
     const { language } = useContext(LanguageContext);  
+    const isClient = useIsClient();
 
     const createConnection = async () => {
         setLoading(true);
@@ -23,8 +24,8 @@ export default function CreateConnection({ post, setErrors, errors }: Props) {
         try {
             await api.post("/users/@me/connections", post);
 
-            router.push(`/connection/${post.name}`);
             setLoading(false);
+            isClient && window.location.reload();
         } catch (error: any) {
             const json = error.response.data.errors[0].map((err: any) => err.message) || error.message;
             

@@ -1,15 +1,15 @@
+import { useIsClient } from "@/contexts/Client";
 import { api } from "@/utils/api";
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/modal";
-import { useRouter } from "next/router";
 
 export default function DeleteConnection({ id }: { id: string }) {
-    const router = useRouter();
+    const isClient = useIsClient();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     const handleDeleteConnection = async () => {
         await api.delete(`/connections/${id}`);
 
-        router.push("/connections");
+        isClient && window.location.reload();
     };
 
     return (
