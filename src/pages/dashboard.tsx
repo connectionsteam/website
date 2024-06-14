@@ -1,0 +1,54 @@
+import ConnectionsComponent from "@/components/Dashboard/Connections";
+import ConnectionsProtectedSkeleton from "@/components/Dashboard/Connections/Skeleton";
+import GuildsComponent from "@/components/Dashboard/Guilds";
+import DefaultLayout from "@/components/Mixed/Layout";
+import ProtectedRoute from "@/components/Mixed/ProtectedRoute";
+import { LanguageContext } from "@/contexts/Language";
+import { languages } from "@/locale";
+import { ConnectionPayload, GuildPayload } from "@/types";
+import { api } from "@/utils/api";
+import { Tab, Tabs } from "@nextui-org/tabs";
+import { useContext, useEffect, useState } from "react";
+
+export default function DashboardPage() {
+    const { language } = useContext(LanguageContext);
+    const [connections, setConnections] = useState<ConnectionPayload[] | null>(null);
+    const [guilds, setGuilds] = useState<GuildPayload[] | null>(null);
+
+    useEffect(() => {
+        const fetchConnections = async () => {
+            const res = await api.get("/users/@me/connections");
+
+            setConnections(res.data);
+        };
+
+        const fetchGuilds = async () => {
+            const response = await api.get("/users/@me/guilds");
+
+            setGuilds(response.data);
+        };
+
+        fetchGuilds();
+        fetchConnections();
+    }, []);
+
+    return (
+        <ProtectedRoute loading={<ConnectionsProtectedSkeleton key={Math.random()} />}>
+            <DefaultLayout className="mt-24">
+                <div className="flex w-full flex-col items-center">
+                    <Tabs classNames={{
+                        cursor: "bg-neutral-700",
+                        tabList: "bg-neutral-800"
+                    }} aria-label="Options">
+                        <Tab className="flex items-start w-full" key="connections" title={languages[language].dashboard.connections.title}>
+                            <ConnectionsComponent connections={connections} />
+                        </Tab>
+                        <Tab className="flex items-start w-full" key="guilds" title={languages[language].dashboard.guilds.title}>
+                            <GuildsComponent guilds={guilds} />
+                        </Tab>
+                    </Tabs>
+                </div>
+            </DefaultLayout>
+        </ProtectedRoute>
+    )
+}
