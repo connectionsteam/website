@@ -14,9 +14,11 @@ export default function DeleteConnection({ id }: { id: string }) {
 
     return (
         <>
-            <div className="flex flex-col gap-2 w-full">
-                <button onClick={onOpen} className="flex gap-2 items-center w-full border-red-500 border-2 transition hover:bg-red-500 p-3 rounded-lg">
-                    <span className="text-center">Deltar</span>
+            <div className="flex flex-col bg-red-500 bg-opacity-10 p-3 rounded-lg">
+                <div className="font-semibold">Deletar conexão</div>
+                <span className="text-neutral-300 mb-2">Essa ação é irreversível.</span>
+                <button onClick={onOpen} className="flex gap-2 tablet:max-w-none justify-center items-center border-red-500 border-2 transition hover:bg-red-500 p-3 rounded-lg">
+                    <span className="text-center">Deletar</span>
                 </button>
             </div>
             <Modal classNames={{
@@ -31,7 +33,7 @@ export default function DeleteConnection({ id }: { id: string }) {
                     </ModalBody>
                     <ModalFooter className="flex w-full justify-center">
                         <button onClick={handleDeleteConnection} className="flex gap-2 w-1/2 items-center justify-center font-semibold text-center border-red-500 border-2 transition hover:bg-red-500 p-2 rounded-lg">
-                            <span className="text-center">Deletar</span>
+                            <span className="text-center">Deltar</span>
                         </button>
                     </ModalFooter>
                 </ModalContent>
