@@ -6,8 +6,7 @@ export const languages = {
                 support: "Suporte",
                 menu: {
                     exit: "Sair",
-                    connections: "Conexões",
-                    guilds: "Servidores",
+                    dashboard: "Painel",
                 }
             },
             description: "Connections é um bot projetado para facilitar conexões entre servidores, promovendo o engajamento e dinamismo em seu servidor.",
@@ -56,8 +55,7 @@ export const languages = {
                 support: "Support",
                 menu: {
                     exit: "Exit",
-                    connections: "Connections",
-                    guilds: "Guilds",
+                    dashboard: "Dashboard",
                 }
             },
             description: "Connections is a bot designed to facilitate connections between servers, enhancing engagement and dynamism in your server.",
