@@ -23,10 +23,9 @@ export interface LanguageContextProps {
 }
 
 export interface GuildPayload extends BasePayload {
+    name?: string;
+    icon?: string;
     id: string;
-    name: string;
-    icon: string
-    // --
     connections: ConnectedConnectionPayload[];
     cases: AnyCase[];
     mods: Record<string, ModType>;
