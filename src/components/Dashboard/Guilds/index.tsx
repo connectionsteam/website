@@ -2,7 +2,6 @@ import { Input } from "@nextui-org/input";
 import Link from "next/link";
 import { ChangeEvent, useContext, useState } from "react";
 import { GuildPayload } from "@/types";
-import Avatar from "@/components/Mixed/Avatar";
 import ConnectionsSkeleton from "../ConnectionsSkeleton";
 import { LuPlusCircle } from "react-icons/lu";
 import { LanguageContext } from "@/contexts/Language";
@@ -29,13 +28,9 @@ export default function GuildsComponent({ guilds }: { guilds: GuildPayload[] | n
             }} onChange={handleChangeQuery} type="string" label={languages[language].dashboard.misc.filterGuilds} />
             <div className="grid grid-cols-3 gap-3 w-full">
                 {guilds ? (
-                    guilds.filter((guild) => guild.name.toLowerCase().includes(searchQuery.toLowerCase()) || guild.id.includes(searchQuery)).map((guild) => (
-                        <Link href={`/guild/${guild.id}`} key={guild.id} className="flex items-center gap-2 p-3 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition">
-                            <Avatar className="w-12 h-12" src={guild.icon} key={guild.id} />
-                            <div className="flex flex-col gap-1 text-start">
-                                <span className="font-bold text-lg">{guild.name}</span>
-                                <span className="text-neutral-300 text-sm">{guild.id}</span>
-                            </div>
+                    guilds.filter((guild) => guild.id.includes(searchQuery)).map((guild) => (
+                        <Link href={`/guild/${guild.id}`} key={guild.id} className="flex items-center gap-2 p-4 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition">
+                            <span className="font-semibold">{guild.id}</span>
                         </Link>
                     ))
                 ) : <ConnectionsSkeleton key={Math.random()} />}
