@@ -94,3 +94,10 @@ export interface RequestPost {
     icon?: string;
     maxConnections?: number;
 }
+
+export interface PlanStructure {
+    name: string;
+    price: number;
+    features: string[];
+    popular: boolean;
+}
