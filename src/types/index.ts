@@ -101,3 +101,11 @@ export interface PlanStructure {
     features: string[];
     popular: boolean;
 }
+
+export interface GuildChannelsPayload {
+    id: string;
+    name: string;
+    position: number;
+    nsfw?: boolean;
+    parent_id?: string;
+}
