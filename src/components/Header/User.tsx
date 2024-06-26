@@ -11,7 +11,7 @@ import { LanguageContext } from "@/contexts/Language";
 import { languages } from "@/locale";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 
-const url = "https://discord.com/oauth2/authorize?client_id=1021810246462738432&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback&scope=identify+guilds";
+const url = "https://discord.com/oauth2/authorize?client_id=1243234162077470802&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback&scope=guilds+identify";
 
 export default function AuthUser({ type }: { type: "mobile" | "desktop" }) {
     const { user } = useContext(UserContext);
