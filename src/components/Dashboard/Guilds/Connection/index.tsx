@@ -11,7 +11,7 @@ interface Props {
 
 export default function GuildEditConnection({ GuildConnection, guild, setGuild }: Props) {
     const [connection, setConnection] = useState(GuildConnection);
-    
+
     return (
         <div className="w-full rounded-lg bg-neutral-800 p-6 transition flex flex-col gap-4">
             <h1 className="font-bold text-xl">Editar conexão conectada</h1>
@@ -29,7 +29,9 @@ export default function GuildEditConnection({ GuildConnection, guild, setGuild }
                         <div className="flex items-center gap-1">
                             <div className="">Palavras bloqueadas:</div>
                             <span className="text-neutral-300">
-                                {connection.blockwords.length > 0 ? connection.blockwords.join(", ") : "Nenhuma"}
+                                {connection.blockwords
+                                    && connection.blockwords.length > 0 ? connection.blockwords.join(", ") : "Nenhuma"
+                                }
                             </span>
                         </div>
                         <div className="flex items-center gap-1">

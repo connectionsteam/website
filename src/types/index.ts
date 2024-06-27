@@ -56,10 +56,10 @@ export interface BaseCase<Type extends CaseTypes> {
 
 export interface ConnectedConnectionPayload {
     name: string;
-    blockwords: string[];
+    blockwords?: string[];
     language?: Languages;
     icon: string;
-    description: string;
+    description?: string;
     channelId: string;
     flags: ConnectedConnectionFlags[];
 }
