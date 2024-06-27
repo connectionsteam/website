@@ -1,8 +1,8 @@
 import DefaultLayout from "@/components/Mixed/Layout";
-import { GuildPayload } from "@/types";
+import { GuildChannelsPayload, GuildPayload } from "@/types";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
-import { ReactNode, useEffect, useState } from "react";
+import { MouseEvent, ReactNode, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import GuildSkeleton from "./Skeleton";
 import Infos from "./Infos";
@@ -21,6 +21,7 @@ export default function GuildComponent() {
     const [guild, setGuild] = useState<GuildPayload>();
     const [tabs, setTabs] = useState<TabsStructure[]>([]);
     const [selectedTab, setSelectedTab] = useState("infos");
+    const [channels, setChannels] = useState<GuildChannelsPayload[]>([]);
 
     const addTab = (newTab: TabsStructure) => {
         setTabs((prevTabs) => {
@@ -30,7 +31,9 @@ export default function GuildComponent() {
         });
     };
 
-    const removeTab = (tab: TabsStructure) => {
+    const removeTab = (tab: TabsStructure, event: MouseEvent<HTMLButtonElement>) => {
+        event.stopPropagation();
+
         setTabs((prevTabs) => {
             return prevTabs.filter(prevTab => prevTab.value !== tab.value);
         });
@@ -39,32 +42,16 @@ export default function GuildComponent() {
             setSelectedTab("connections");
         }, 100);
     };
-    
+
     useEffect(() => {
         if (!id) return;
 
         const fetchGuild = async () => {
-            const res: { data: GuildPayload } = await api.get(`/guilds/${id}`);
+            const guildRes = await api.get(`/guilds/${id}`);
+            const channelRes = await api.get(`/guilds/${id}/channels`);
 
-            setGuild({
-                ...res.data,
-                connections: [
-                    {
-                        icon: "https://cdn.discordapp.com/avatars/551374220953649181/01d8288ab9879d1edb2b334b69e57faf.png",
-                        name: "ciao",
-                        description: "conmexão legal",
-                        channelId: res.data.connections[0].channelId,
-                        flags: res.data.connections[0].flags,
-                    },
-                    {
-                        icon: "https://cdn.discordapp.com/avatars/551374220953649181/01d8288ab9879d1edb2b334b69e57faf.png",
-                        name: "conexaolegal2",
-                        description: "conmexão legal dasdsadsa",
-                        channelId: res.data.connections[0].channelId,
-                        flags: res.data.connections[0].flags,
-                    },
-                ],
-            });
+            setChannels(channelRes.data);
+            setGuild(guildRes.data);
         };
 
         fetchGuild();
@@ -81,8 +68,9 @@ export default function GuildComponent() {
                 {
                     value: "connections",
                     title: "Conexões",
-                    content: <Connections setSelectedTab={setSelectedTab} guild={guild as GuildPayload} addTab={addTab} />,
+                    content: <Connections channels={channels} setGuild={setGuild} setSelectedTab={setSelectedTab} guild={guild as GuildPayload} addTab={addTab} />,
                 },
+                ...tabs.filter((tab) => !["connections", "infos"].includes(tab.value)),
             ]);
         }
     }, [guild]);
@@ -101,9 +89,12 @@ export default function GuildComponent() {
                                 <span>{tab.title}</span>
                                 {!["infos", "connections"].includes(tab.value) && (
                                     <button
-                                        onClick={() => removeTab(tab)}
+                                        onClick={(event) => removeTab(tab, event)}
                                         className="flex items-center justify-center h-full text-neutral-300 hover:text-neutral-400 transition-colors duration-300">
-                                        <BiX className="hover:fill-red-500 hover:bg-neutral-800 transition rounded-full font-bold" size={23} /> 
+                                        <BiX
+                                            className="hover:fill-red-500 hover:bg-neutral-800 transition rounded-full font-bold"
+                                            size={23}
+                                        />
                                     </button>
                                 )}
                             </button>
@@ -112,11 +103,7 @@ export default function GuildComponent() {
                     <div>
                         {tabs.map((tab) => (
                             selectedTab === tab.value && (
-                                <motion.div
-                                    key={tab.value}
-                                    initial={{ opacity: 0, x: -20 }} 
-                                    animate={{ opacity: 1, x: 0 }}
-                                >
+                                <motion.div key={tab.value} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
                                     {tab.content}
                                 </motion.div>
                             )
