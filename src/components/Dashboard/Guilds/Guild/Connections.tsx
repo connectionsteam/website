@@ -1,17 +1,33 @@
 import Avatar from "@/components/Mixed/Avatar";
-import { ConnectedConnectionPayload, GuildPayload } from "@/types";
+import { ConnectedConnectionPayload, GuildChannelsPayload, GuildPayload } from "@/types";
 import ConnectionsSkeleton from "../../ConnectionsSkeleton";
 import GuildEditConnection from "../Connection";
 import { TabsStructure } from ".";
+import { LuPlusCircle } from "react-icons/lu";
+import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/modal";
+import GuildConnectConnection from "../Connection/Connect";
+import { useState } from "react";
 
-export default function Connections({ guild, addTab, setSelectedTab }: { guild: GuildPayload, addTab: (newTab: TabsStructure) => void, setSelectedTab: (value: string) => void }) {
+interface Props {
+    guild: GuildPayload;
+    addTab: (newTab: TabsStructure) => void;
+    setSelectedTab: (value: string) => void;
+    setGuild: (guild: GuildPayload) => void;
+    channels: GuildChannelsPayload[];
+}
+
+export default function Connections({ guild, addTab, setSelectedTab, setGuild, channels }: Props) {
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const [connection, setConnection] = useState<ConnectedConnectionPayload>();
+
     const handleSelectConnection = (connection: ConnectedConnectionPayload) => {
         addTab({
             value: connection.name,
             title: connection.name,
-            content: <GuildEditConnection guild={guild} connection={connection} />
+            content: <GuildEditConnection setGuild={setGuild} guild={guild} GuildConnection={connection} />
         });
-
+        
+        setConnection(connection);
         setSelectedTab(connection.name);
     };
 
@@ -30,6 +46,27 @@ export default function Connections({ guild, addTab, setSelectedTab }: { guild: 
                         </button>
                     ))
                 ) : <ConnectionsSkeleton key={Math.random()} />}
+                <div className="p-[2px] bg-gradient-to-r from-fuchsia-500 to-indigo-500 rounded-lg w-full">
+                    <button
+                        onClick={onOpen}
+                        className="flex items-center justify-center gap-2 p-5 h-full w-full rounded-lg bg-neutral-800 hover:bg-transparent transition"
+                    >
+                        <LuPlusCircle size={26} />
+                        <span>Adicionar conexão</span>
+                    </button>
+                </div>
+                <Modal classNames={{
+                    closeButton: "transition hover:bg-neutral-700",
+                    wrapper: "overflow-y-hidden",
+                    base: "max-h-screen overflow-y-auto",
+                }} isOpen={isOpen} onOpenChange={onOpenChange}>
+                    <ModalContent className="bg-neutral-800 text-white">
+                        <ModalHeader className="flex flex-col gap-1 bg-neutral-800">Conectar a uma conexão</ModalHeader>
+                        <ModalBody>
+                            <GuildConnectConnection channels={channels} connection={connection as ConnectedConnectionPayload} guild={guild} />
+                        </ModalBody>
+                    </ModalContent>
+                </Modal>
             </div>
         </div>
     );
