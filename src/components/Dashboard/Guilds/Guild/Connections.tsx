@@ -1,3 +1,4 @@
+"use client"
 import Avatar from "@/components/Mixed/Avatar";
 import { ConnectedConnectionPayload, GuildChannelsPayload, GuildPayload } from "@/types";
 import ConnectionsSkeleton from "../../ConnectionsSkeleton";
@@ -17,7 +18,7 @@ interface Props {
 }
 
 export default function Connections({ guild, addTab, setSelectedTab, setGuild, channels }: Props) {
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     const [connection, setConnection] = useState<ConnectedConnectionPayload>();
 
     const handleSelectConnection = (connection: ConnectedConnectionPayload) => {
@@ -34,7 +35,7 @@ export default function Connections({ guild, addTab, setSelectedTab, setGuild, c
     return (
         <div className="w-full rounded-lg bg-neutral-800 p-6 transition flex flex-col gap-4">
             <h1 className="font-semibold text-xl">Conexões</h1>
-            <div className="grid grid-cols-3 gap-3 w-full">
+            <div className="grid grid-cols-3 gap-3 w-full tablet:grid-cols-2 mobile:grid-cols-1">
                 {guild.connections ? (
                     guild.connections.map((connection) => (
                         <button onClick={() => handleSelectConnection(connection)} key={connection.name} className="flex items-center gap-2 p-3 rounded-lg bg-neutral-900/50 hover:bg-neutral-900 transition">
@@ -63,7 +64,7 @@ export default function Connections({ guild, addTab, setSelectedTab, setGuild, c
                     <ModalContent className="bg-neutral-800 text-white">
                         <ModalHeader className="flex flex-col gap-1 bg-neutral-800">Conectar a uma conexão</ModalHeader>
                         <ModalBody>
-                            <GuildConnectConnection channels={channels} connection={connection as ConnectedConnectionPayload} guild={guild} />
+                            <GuildConnectConnection onClose={onClose} channels={channels} connection={connection as ConnectedConnectionPayload} guild={guild} />
                         </ModalBody>
                     </ModalContent>
                 </Modal>
