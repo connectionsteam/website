@@ -1,3 +1,4 @@
+"use client"
 import DefaultLayout from "@/components/Mixed/Layout";
 import { GuildChannelsPayload, GuildPayload } from "@/types";
 import { api } from "@/utils/api";
