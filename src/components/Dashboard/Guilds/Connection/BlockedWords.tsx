@@ -14,7 +14,7 @@ interface Props {
 }
 
 export default function BlockedWords({ connection, guild, setConnection, setGuild }: Props) {
-    const [words, setWords] = useState(connection.blockwords);
+    const [words, setWords] = useState(connection.blockwords || []);
     const [word, setWord] = useState("");
     const [loading, setLoading] = useState({ loading: false, check: false });
 
@@ -22,9 +22,12 @@ export default function BlockedWords({ connection, guild, setConnection, setGuil
         try {
             setLoading({ loading: true, check: false });
 
-            const req = await api.patch(`/guilds/${guild.id}/connections/${connection.name}`, { blockwords: words });
+            await api.patch(`/guilds/${guild.id}/connections/${connection.name}`, { blockwords: words });
 
-            setConnection(req.data);
+            setConnection({
+                ...connection,
+                blockwords: words
+            });
             
             setGuild({
                 ...guild,
