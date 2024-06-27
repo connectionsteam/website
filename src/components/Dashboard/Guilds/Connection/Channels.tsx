@@ -1,9 +1,18 @@
+"use client"
 import { ConnectedConnectionPayload, GuildChannelsPayload, GuildPayload } from "@/types";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger, Switch } from "@nextui-org/react";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { HiHashtag } from "react-icons/hi";
+import { ConnectionBody } from "./Connect";
 
-export default function ConnectionChannels({ channels, connection }: { channels: GuildChannelsPayload[], connection: ConnectedConnectionPayload }) {
-    const [channel, setChannel] = useState<GuildChannelsPayload>();
+interface Props {
+    channels: GuildChannelsPayload[];
+    connection: ConnectedConnectionPayload;
+    body: ConnectionBody;
+    setBody: Dispatch<SetStateAction<ConnectionBody>>;
+};
+
+export default function ConnectionChannels({ channels, connection, body, setBody }: Props) {
     const [groupedChannels, setGroupedChannels] = useState<Record<string, GuildChannelsPayload[]>>();
 
     useEffect(() => {
@@ -40,14 +49,27 @@ export default function ConnectionChannels({ channels, connection }: { channels:
                 {groupedChannels && Object.keys(groupedChannels).length > 0 ? (
                     <Dropdown className="bg-neutral-800 text-white rounded-lg outline-none flex justify-start">
                         <DropdownTrigger>
-                            <button className="w-full bg-neutral-900/50 hover:bg-neutral-900 transition p-3 rounded-lg min-w-52 text-start">{!channel ? "Clique aqui para selecionar" : channel.name}</button>
+                            <button className="w-full bg-neutral-900/50 hover:bg-neutral-900 transition p-3 rounded-lg min-w-52 text-start">
+                                {!body.channel
+                                    ? "Clique aqui e selecione um canal" :
+                                    <div className="flex gap-1 items-center">
+                                        <HiHashtag />
+                                        <span>{body.channel.name.length > 30 ? body.channel.name.slice(0, 30) + "..." : body.channel.name}</span>
+                                    </div>
+                                }
+                            </button>
                         </DropdownTrigger>
-                        <DropdownMenu className="max-h-56 min-w-52 items-start overflow-auto flex justify-start">
+                        <DropdownMenu aria-label="Channels" className="max-h-56 min-w-52 items-start overflow-auto flex justify-start">
                             {Object.entries(groupedChannels).map(([categoryId, categoryChannels]) => (
-                                <DropdownSection key={categoryId} title={categoryId !== "" ? (channels.find((channel) => channel.id === categoryId)?.name) : undefined}>
+                                <DropdownSection aria-label="Channel" className="w-full" classNames={{
+                                    heading: "p-2 text-neutral-400"
+                                }} key={categoryId} title={categoryId !== "" ? (channels.find((channel) => channel.id === categoryId)?.name ? channels.find((channel) => channel.id === categoryId)!.name.length > 30 ? channels.find((channel) => channel.id === categoryId)?.name.slice(0, 30) + "..." : channels.find((channel) => channel.id === categoryId)?.name : undefined) : undefined}>
                                     {categoryChannels.map((channel) => (
-                                        <DropdownItem className="hover:bg-neutral-900/50 transition p-3" key={channel.id} onClick={() => setChannel(channel)}>
-                                            {channel.name}
+                                        <DropdownItem aria-label="ChannelItem" classNames={{
+                                            title: "flex items-center gap-1"
+                                        }} className="hover:bg-neutral-900/50 transition p-3" key={channel.id} onClick={() => setBody({ ...body, channel })}>
+                                            <HiHashtag />
+                                            <span>{channel.name.length > 30 ? channel.name.slice(0, 30) + "..." : channel.name}</span>
                                         </DropdownItem>
                                     ))}
                                 </DropdownSection>
