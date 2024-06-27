@@ -64,12 +64,12 @@ export default function GuildComponent() {
                 {
                     value: "infos",
                     title: "Informações",
-                    content: <Infos guild={guild as GuildPayload} />,
+                    content: <Infos key={0} guild={guild as GuildPayload} />,
                 },
                 {
                     value: "connections",
                     title: "Conexões",
-                    content: <Connections channels={channels} setGuild={setGuild} setSelectedTab={setSelectedTab} guild={guild as GuildPayload} addTab={addTab} />,
+                    content: <Connections key={0} channels={channels} setGuild={setGuild} setSelectedTab={setSelectedTab} guild={guild as GuildPayload} addTab={addTab} />,
                 },
                 ...tabs.filter((tab) => !["connections", "infos"].includes(tab.value)),
             ]);
@@ -80,7 +80,7 @@ export default function GuildComponent() {
         <DefaultLayout>
             {guild ? (
                 <div className="flex flex-col gap-4 w-full">
-                    <div className="flex mb-1 bg-neutral-800 rounded-lg p-1">
+                    <div className="flex mb-1 bg-neutral-800 rounded-lg p-1 overflow-x-auto">
                         {tabs.map((tab) => (
                             <button
                                 key={tab.value}

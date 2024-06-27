@@ -25,7 +25,7 @@ export default function Connections({ guild, addTab, setSelectedTab, setGuild, c
         addTab({
             value: connection.name,
             title: connection.name,
-            content: <GuildEditConnection setGuild={setGuild} guild={guild} GuildConnection={connection} />
+            content: <GuildEditConnection key={connection.name} setGuild={setGuild} guild={guild} GuildConnection={connection} />
         });
         
         setConnection(connection);

@@ -26,11 +26,11 @@ export default function GuildsComponent({ guilds }: { guilds: GuildPayload[] | n
             <Input classNames={{
                 inputWrapper: "rounded-lg bg-neutral-800 group-hover:bg-neutral-700",
             }} onChange={handleChangeQuery} type="string" label={languages[language].dashboard.misc.filterGuilds} />
-            <div className="grid grid-cols-3 gap-3 w-full">
+            <div className="grid grid-cols-3 gap-3 w-full tablet:grid-cols-2 mobile:grid-cols-1">
                 {guilds ? (
                     guilds.filter((guild) => guild.id.includes(searchQuery)).map((guild) => (
                         <Link href={`/guild/${guild.id}`} key={guild.id} className="flex items-center gap-2 p-4 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition">
-                            <span className="font-semibold">{guild.id}</span>
+                            <span className="font-semibold break-all">{guild.id}</span>
                         </Link>
                     ))
                 ) : <ConnectionsSkeleton key={0} />}

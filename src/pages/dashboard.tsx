@@ -35,10 +35,11 @@ export default function DashboardPage() {
     return (
         <ProtectedRoute loading={<ConnectionsProtectedSkeleton key={0} />}>
             <DefaultLayout className="mt-24">
-                <div className="flex w-full flex-col items-center">
+                <div className="flex w-full flex-col items-center tablet:items-start">
                     <Tabs classNames={{
                         cursor: "bg-neutral-700",
-                        tabList: "bg-neutral-800"
+                        tabList: "bg-neutral-800",
+                        base: "pl-3"
                     }} aria-label="Options">
                         <Tab className="flex items-start w-full" key="connections" title={languages[language].dashboard.connections.title}>
                             <ConnectionsComponent connections={connections} />

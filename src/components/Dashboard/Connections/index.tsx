@@ -33,17 +33,30 @@ export default function ConnectionsComponent({ connections }: { connections: Con
             <Input classNames={{
                 inputWrapper: "rounded-lg bg-neutral-800 group-hover:bg-neutral-700",
             }} onChange={handleChangeQuery} type="string" label={languages[language].dashboard.misc.filterConnections} />
-            <div className="grid grid-cols-3 gap-3 w-full">
+            <div className="grid grid-cols-3 gap-3 w-full tablet:grid-cols-2 mobile:grid-cols-1">
                 {connections ? (
-                    connections.filter((connection) => connection.name.toLowerCase().includes(searchQuery.toLowerCase()) || connection.name.includes(searchQuery)).map((connection) => (
-                        <button onClick={() => openModal(connection)} key={connection.name} className="flex items-center gap-2 p-3 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition">
-                            <Avatar className="w-12 h-12" src={connection.icon || ""} key={connection.name} />
-                            <div className="flex flex-col gap-1 text-start">
-                                <span className="font-bold text-lg">{connection.name}</span>
-                                {connection.description && <span className="text-neutral-300 text-sm">{connection.description.length > 30 ? connection.description.slice(0, 30) + "..." : connection.description}</span>}
-                            </div>
-                        </button>
-                    ))
+                    connections
+                        .filter((connection) => connection.name.toLowerCase().includes(searchQuery.toLowerCase()) || connection.name.includes(searchQuery))
+                        .map((connection) => (
+                            <button
+                                onClick={() => openModal(connection)}
+                                key={connection.name}
+                                className="flex items-center gap-2 p-3 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition"
+                            >
+                                <Avatar className="w-12 h-12" src={connection.icon || ""} key={connection.name} />
+                                <div className="flex flex-col gap-1 text-start">
+                                    <span className="font-bold text-lg">{connection.name}</span>
+                                    {connection.description &&
+                                        <span className="text-neutral-300 text-sm">
+                                            {connection.description.length > 30
+                                                ? connection.description.slice(0, 30) + "..." :
+                                                connection.description
+                                            }
+                                        </span>
+                                    }
+                                </div>
+                            </button>
+                        ))
                 ) : <ConnectionsSkeleton key={0} />}
                 <CreateConnectionForm />
                 <Modal classNames={{
@@ -54,7 +67,7 @@ export default function ConnectionsComponent({ connections }: { connections: Con
                     <ModalContent className="bg-neutral-800 text-white">
                         <ModalHeader className="flex flex-col gap-1 bg-neutral-800">Editar conexão {connection?.name}</ModalHeader>
                         <ModalBody>
-                            <ConnectionComponent connection={connection as ConnectionPayload} /> 
+                            <ConnectionComponent connection={connection as ConnectionPayload} />
                         </ModalBody>
                     </ModalContent>
                 </Modal>
