@@ -41,7 +41,7 @@ function Skeleton() {
                 inputWrapper: "rounded-lg bg-neutral-800 group-hover:bg-neutral-700",
             }} type="string" label={languages[language].dashboard.misc.filterConnections} />
             <div className="grid grid-cols-3 gap-3 w-full">
-                <ConnectionsSkeleton key={Math.random()} />
+                <ConnectionsSkeleton key={0} />
             </div>
         </div>
     )

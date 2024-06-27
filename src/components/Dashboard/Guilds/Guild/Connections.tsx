@@ -45,7 +45,7 @@ export default function Connections({ guild, addTab, setSelectedTab, setGuild, c
                             </div>
                         </button>
                     ))
-                ) : <ConnectionsSkeleton key={Math.random()} />}
+                ) : <ConnectionsSkeleton key={0} />}
                 <div className="p-[2px] bg-gradient-to-r from-fuchsia-500 to-indigo-500 rounded-lg w-full">
                     <button
                         onClick={onOpen}

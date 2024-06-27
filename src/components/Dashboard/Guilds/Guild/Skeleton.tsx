@@ -20,7 +20,7 @@ export default function GuildSkeleton() {
                 <div className="flex gap-2 rounded-lg w-full flex-col">
                     <div className="font-bold text-xl">{languages[language].dashboard.guilds.guild.connections}</div>
                     <div className="grid grid-cols-3 gap-3 w-full">
-                        <ConnectionsSkeleton key={Math.random()} />
+                        <ConnectionsSkeleton key={0} />
                     </div>
                 </div>
             </div>

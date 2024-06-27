@@ -33,7 +33,7 @@ export default function GuildsComponent({ guilds }: { guilds: GuildPayload[] | n
                             <span className="font-semibold">{guild.id}</span>
                         </Link>
                     ))
-                ) : <ConnectionsSkeleton key={Math.random()} />}
+                ) : <ConnectionsSkeleton key={0} />}
                 <div className="p-[2px] bg-gradient-to-r from-fuchsia-500 to-indigo-500 rounded-lg w-full">
                     <a target="_blank" href={url} className="flex items-center justify-center gap-2 p-3 h-full w-full rounded-lg bg-neutral-800 hover:bg-neutral-700 transition">
                         <LuPlusCircle size={20} />

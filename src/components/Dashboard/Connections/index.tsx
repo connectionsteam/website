@@ -44,7 +44,7 @@ export default function ConnectionsComponent({ connections }: { connections: Con
                             </div>
                         </button>
                     ))
-                ) : <ConnectionsSkeleton key={Math.random()} />}
+                ) : <ConnectionsSkeleton key={0} />}
                 <CreateConnectionForm />
                 <Modal classNames={{
                     closeButton: "transition hover:bg-neutral-700",

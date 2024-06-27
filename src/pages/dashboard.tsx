@@ -33,7 +33,7 @@ export default function DashboardPage() {
     }, []);
 
     return (
-        <ProtectedRoute loading={<ConnectionsProtectedSkeleton key={Math.random()} />}>
+        <ProtectedRoute loading={<ConnectionsProtectedSkeleton key={0} />}>
             <DefaultLayout className="mt-24">
                 <div className="flex w-full flex-col items-center">
                     <Tabs classNames={{

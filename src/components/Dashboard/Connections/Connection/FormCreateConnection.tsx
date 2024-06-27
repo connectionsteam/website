@@ -50,7 +50,7 @@ export default function CreateConnectionForm() {
                         {errors.api && <div className="text-red-500">{errors.api}</div>}
                     </ModalBody>
                     <ModalFooter className="w-full">
-                        <CreateConnection key={Math.random()} errors={errors} post={post} setErrors={setErrors} />
+                        <CreateConnection key={0} errors={errors} post={post} setErrors={setErrors} />
                     </ModalFooter>
                 </ModalContent>
             </Modal>
