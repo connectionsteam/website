@@ -13,7 +13,7 @@ import { MdOutlineSpaceDashboard } from "react-icons/md";
 
 const url = "https://discord.com/oauth2/authorize?client_id=1243234162077470802&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback&scope=guilds+identify";
 
-export default function AuthUser({ type }: { type: "mobile" | "desktop" }) {
+export default function AuthUser({ type, handleRecallDrawer }: { type: "mobile" | "desktop"; handleRecallDrawer: () => void; }) {
     const { user } = useContext(UserContext);
     const isClient = useIsClient();
     const { language } = useContext(LanguageContext);
@@ -46,7 +46,7 @@ export default function AuthUser({ type }: { type: "mobile" | "desktop" }) {
                 </DropdownTrigger>
                 <DropdownMenu className="bg-neutral-800 rounded-lg">
                     <DropdownItem className="bg-neutral-800 rounded-lg cursor-pointer hover:bg-neutral-700 transition outline-none" key="exit">
-                        <Link href="/dashboard" className="flex items-center justify-start min-w-28 py-2 gap-3">
+                        <Link onClick={handleRecallDrawer} href="/dashboard" className="flex items-center justify-start min-w-28 py-2 gap-3">
                             <MdOutlineSpaceDashboard />
                             <span>{languages[language].home.header.menu.dashboard}</span>
                         </Link>
@@ -59,7 +59,9 @@ export default function AuthUser({ type }: { type: "mobile" | "desktop" }) {
                     </DropdownItem>
                 </DropdownMenu>
             </Dropdown>
-        ) : <a href={url} className="flex gap-2 justify-center items-center transition p-2 hover:bg-neutral-900 border-neutral-800 border-2 rounded-lg w-full mb-4">Login</a>
+        ) : <a href={url} className="flex gap-2 justify-center items-center transition p-2 hover:bg-neutral-900 border-neutral-800 border-2 rounded-lg w-full mb-4">
+            Login
+        </a>
     ) : (
         user ? (
             <Dropdown className="bg-neutral-800 text-white rounded-lg outline-none">
@@ -70,13 +72,19 @@ export default function AuthUser({ type }: { type: "mobile" | "desktop" }) {
                     </button >
                 </DropdownTrigger >
                 <DropdownMenu className="bg-neutral-800 rounded-lg outline-none">
-                    <DropdownItem className="bg-neutral-800 rounded-lg cursor-pointer hover:bg-neutral-700 transition outline-none" key="exit">
+                    <DropdownItem
+                        className="bg-neutral-800 rounded-lg cursor-pointer hover:bg-neutral-700 transition outline-none"
+                        key="dash"
+                    >
                         <Link href="/dashboard" className="flex items-center justify-start min-w-28 py-2 gap-3">
                             <MdOutlineSpaceDashboard />
                             <span>{languages[language].home.header.menu.dashboard}</span>
                         </Link>
                     </DropdownItem>
-                    <DropdownItem className="bg-neutral-800 rounded-lg cursor-pointer hover:bg-neutral-700 transition outline-none" key="exit">
+                    <DropdownItem
+                        className="bg-neutral-800 rounded-lg cursor-pointer hover:bg-neutral-700 transition outline-none"
+                        key="exit"
+                    >
                         <button onClick={handleLogout} className="flex items-center min-w-28 py-2 gap-3">
                             <LuLogOut />
                             <span>{languages[language].home.header.menu.exit}</span>
@@ -84,6 +92,8 @@ export default function AuthUser({ type }: { type: "mobile" | "desktop" }) {
                     </DropdownItem>
                 </DropdownMenu>
             </Dropdown>
-        ) : <a href={url} className="tablet:hidden flex gap-2 justify-center items-center transition p-3 m-[2px] px-4 hover:bg-neutral-800 border-neutral-800 border-2 rounded-lg">Login</a>
+        ) : <a href={url} className="tablet:hidden flex gap-2 justify-center items-center transition p-3 m-[2px] px-4 hover:bg-neutral-800 border-neutral-800 border-2 rounded-lg">
+            Login
+        </a>
     )
 }
