@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 
 export interface BasePayload {
     _id: string;
@@ -246,4 +246,25 @@ export enum Languages {
     'yo' = 'Yoruba',
     'yua' = 'Yucatec Maya',
     'zu' = 'Zulu',
+}
+
+export interface TabsStructure {
+    value: string;
+    title: string;
+    content: ReactNode;
+}
+
+export interface ConnectionBody {
+    channel: GuildChannelsPayload;
+    name: string;
+    language: {
+        language: Languages | "";
+        key: keyof typeof Languages | "";
+    };
+};
+
+export interface ConnectedConnectionsState {
+    connection: ConnectedConnectionPayload;
+    hover: string | null;
+    removing: string | null;
 }
