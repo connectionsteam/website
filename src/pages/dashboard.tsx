@@ -42,7 +42,7 @@ export default function DashboardPage() {
                         base: "pl-3"
                     }} aria-label="Options">
                         <Tab className="flex items-start w-full" key="connections" title={languages[language].dashboard.connections.title}>
-                            <ConnectionsComponent connections={connections} />
+                            <ConnectionsComponent connections={connections} setConnections={setConnections} />
                         </Tab>
                         <Tab className="flex items-start w-full" key="guilds" title={languages[language].dashboard.guilds.title}>
                             <GuildsComponent guilds={guilds} />

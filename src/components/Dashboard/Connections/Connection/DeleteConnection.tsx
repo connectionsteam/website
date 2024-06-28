@@ -1,26 +1,45 @@
-import { useIsClient } from "@/contexts/Client";
+import { ConnectionPayload } from "@/types";
 import { api } from "@/utils/api";
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/modal";
+import { AnimatePresence } from "framer-motion";
+import { Dispatch, SetStateAction } from "react";
+import { LuTrash } from "react-icons/lu";
+import { motion } from "framer-motion";
 
-export default function DeleteConnection({ id }: { id: string }) {
-    const isClient = useIsClient();
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+interface Props {
+    id: string;
+    closeForm: () => void;
+    open: boolean;
+    handleRemove: () => void;
+}
+
+export default function DeleteConnection({ id, closeForm, open, handleRemove }: Props) {
+    const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
     const handleDeleteConnection = async () => {
-        await api.delete(`/connections/${id}`);
-
-        isClient && window.location.reload();
+        handleRemove();
+        onClose();
+        closeForm();
     };
 
     return (
         <>
-            <div className="flex flex-col bg-red-500 bg-opacity-10 p-3 rounded-lg">
-                <div className="font-semibold">Deletar conexão</div>
-                <span className="text-neutral-300 mb-2">Essa ação é irreversível.</span>
-                <button onClick={onOpen} className="flex gap-2 tablet:max-w-none justify-center items-center border-red-500 border-2 transition hover:bg-red-500 p-3 rounded-lg">
-                    <span className="text-center">Deletar</span>
-                </button>
-            </div>
+            <AnimatePresence key={id}>
+                {open ? (
+                    <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="absolute top-0 right-0 z-50"
+                    >
+                        <div className="bg-neutral-900 rounded-lg p-2 items-center flex">
+                            <button onClick={onOpen} className="hover:text-red-500 transition">
+                                <LuTrash size={18} />
+                            </button>
+                        </div>
+                    </motion.div>
+                ) : null}
+            </AnimatePresence>
             <Modal classNames={{
                 closeButton: "transition hover:bg-neutral-700",
                 wrapper: "overflow-y-hidden",
