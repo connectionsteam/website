@@ -1,13 +1,12 @@
-"use client"
-import Avatar from "@/components/Mixed/Avatar";
-import { ConnectedConnectionPayload, GuildChannelsPayload, GuildPayload } from "@/types";
-import ConnectionsSkeleton from "../../ConnectionsSkeleton";
-import GuildEditConnection from "../Connection";
-import { TabsStructure } from ".";
+import { useState } from "react";
+import { ConnectedConnectionPayload, ConnectedConnectionsState, GuildChannelsPayload, GuildPayload, TabsStructure } from "@/types";
+import ConnectionsSkeleton from "../../../ConnectionsSkeleton";
+import GuildEditConnection from "../../Connection";
 import { LuPlusCircle } from "react-icons/lu";
 import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/modal";
-import GuildConnectConnection from "../Connection/Connect";
-import { useState } from "react";
+import GuildConnectConnection from "../../Connection/Connect";
+import ConnectedConnnectionCard from "./Card";
+import { api } from "@/utils/api";
 
 interface Props {
     guild: GuildPayload;
@@ -19,7 +18,11 @@ interface Props {
 
 export default function Connections({ guild, addTab, setSelectedTab, setGuild, channels }: Props) {
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-    const [connection, setConnection] = useState<ConnectedConnectionPayload>();
+    const [connectionProps, setConnectionProps] = useState<ConnectedConnectionsState>({
+        connection: null!,
+        hover: null,
+        removing: null
+    });
 
     const handleSelectConnection = (connection: ConnectedConnectionPayload) => {
         addTab({
@@ -27,9 +30,24 @@ export default function Connections({ guild, addTab, setSelectedTab, setGuild, c
             title: connection.name,
             content: <GuildEditConnection key={connection.name} setGuild={setGuild} guild={guild} GuildConnection={connection} />
         });
-        
-        setConnection(connection);
+
+        setConnectionProps({ ...connectionProps, connection });
         setSelectedTab(connection.name);
+    };
+
+    const handleRemoveConnection = async (connectionName: string) => {
+        setConnectionProps({ ...connectionProps, removing: connectionName });
+
+        await api.delete(`/guilds/${guild.id}/connections/${connectionName}`);
+
+        setTimeout(() => {
+            setGuild({
+                ...guild,
+                connections: guild.connections.filter(connection => connection.name !== connectionName)
+            });
+
+            setConnectionProps({ ...connectionProps, removing: null });
+        }, 500);
     };
 
     return (
@@ -38,15 +56,15 @@ export default function Connections({ guild, addTab, setSelectedTab, setGuild, c
             <div className="grid grid-cols-3 gap-3 w-full tablet:grid-cols-2 mobile:grid-cols-1">
                 {guild.connections ? (
                     guild.connections.map((connection) => (
-                        <button onClick={() => handleSelectConnection(connection)} key={connection.name} className="flex items-center gap-2 p-3 rounded-lg bg-neutral-900/50 hover:bg-neutral-900 transition">
-                            <Avatar className="w-12 h-12" src={connection.icon || ""} key={connection.name} />
-                            <div className="flex flex-col gap-1 text-start">
-                                <span className="font-bold text-lg">{connection.name}</span>
-                                {connection.description && <span className="text-neutral-300 text-sm">{connection.description.length > 30 ? connection.description.slice(0, 30) + "..." : connection.description}</span>}
-                            </div>
-                        </button>
+                        <ConnectedConnnectionCard 
+                            connection={connection}
+                            handleRemoveConnection={handleRemoveConnection}
+                            handleSelectConnection={handleSelectConnection}
+                            setConnectionProps={setConnectionProps}
+                            connectionProps={connectionProps} 
+                            key={connection.name} />
                     ))
-                ) : <ConnectionsSkeleton key={0} />}
+                ) : <ConnectionsSkeleton />}
                 <div className="p-[2px] bg-gradient-to-r from-fuchsia-500 to-indigo-500 rounded-lg w-full">
                     <button
                         onClick={onOpen}
@@ -64,7 +82,13 @@ export default function Connections({ guild, addTab, setSelectedTab, setGuild, c
                     <ModalContent className="bg-neutral-800 text-white">
                         <ModalHeader className="flex flex-col gap-1 bg-neutral-800">Conectar a uma conexão</ModalHeader>
                         <ModalBody>
-                            <GuildConnectConnection onClose={onClose} channels={channels} connection={connection as ConnectedConnectionPayload} guild={guild} />
+                            <GuildConnectConnection
+                                setGuild={setGuild}
+                                onClose={onClose}
+                                channels={channels}
+                                connection={connectionProps.connection as ConnectedConnectionPayload}
+                                guild={guild}
+                            />
                         </ModalBody>
                     </ModalContent>
                 </Modal>
