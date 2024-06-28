@@ -31,7 +31,7 @@ export default function JoinConnectionLanguage({ setBody, body }: Props) {
                 <span className="text-red-500">*</span>
             </div>
             <button onClick={onOpen} className="p-3 bg-neutral-900/50 transition rounded-lg text-start w-full">
-                {!body.language 
+                {(body.language.key === "" && body.language.language === "")
                     ? "Clique aqui e selecione uma linguagem" :
                     <div className="w-full flex gap-2 items-center">
                         <Avatar

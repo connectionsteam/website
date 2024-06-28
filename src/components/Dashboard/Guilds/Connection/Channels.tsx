@@ -50,11 +50,16 @@ export default function ConnectionChannels({ channels, connection, body, setBody
                     <Dropdown className="bg-neutral-800 text-white rounded-lg outline-none flex justify-start">
                         <DropdownTrigger>
                             <button className="w-full bg-neutral-900/50 hover:bg-neutral-900 transition p-3 rounded-lg min-w-52 text-start">
-                                {!body.channel
+                                {body.channel.name === ""
                                     ? "Clique aqui e selecione um canal" :
                                     <div className="flex gap-1 items-center">
                                         <HiHashtag />
-                                        <span>{body.channel.name.length > 30 ? body.channel.name.slice(0, 30) + "..." : body.channel.name}</span>
+                                        <span>
+                                            {body.channel.name.length > 30
+                                                ? body.channel.name.slice(0, 30) + "..." :
+                                                body.channel.name
+                                            }
+                                        </span>
                                     </div>
                                 }
                             </button>
@@ -63,13 +68,29 @@ export default function ConnectionChannels({ channels, connection, body, setBody
                             {Object.entries(groupedChannels).map(([categoryId, categoryChannels]) => (
                                 <DropdownSection aria-label="Channel" className="w-full" classNames={{
                                     heading: "p-2 text-neutral-400"
-                                }} key={categoryId} title={categoryId !== "" ? (channels.find((channel) => channel.id === categoryId)?.name ? channels.find((channel) => channel.id === categoryId)!.name.length > 30 ? channels.find((channel) => channel.id === categoryId)?.name.slice(0, 30) + "..." : channels.find((channel) => channel.id === categoryId)?.name : undefined) : undefined}>
+                                }} key={categoryId} title={categoryId !== "" ?
+                                    (channels.find((channel) => channel.id === categoryId)?.name
+                                        ? channels.find((channel) => channel.id === categoryId)!.name.length > 30
+                                            ? channels.find((channel) => channel.id === categoryId)?.name.slice(0, 30) + "..." :
+                                            channels.find((channel) => channel.id === categoryId)?.name : undefined)
+                                    : undefined
+                                }>
                                     {categoryChannels.map((channel) => (
-                                        <DropdownItem aria-label="ChannelItem" classNames={{
-                                            title: "flex items-center gap-1"
-                                        }} className="hover:bg-neutral-900/50 transition p-3" key={channel.id} onClick={() => setBody({ ...body, channel })}>
+                                        <DropdownItem
+                                            aria-label="ChannelItem"
+                                            classNames={{
+                                                title: "flex items-center gap-1"
+                                            }}
+                                            className="hover:bg-neutral-900/50 transition p-3"
+                                            key={channel.id} onClick={() => setBody({ ...body, channel })}
+                                        >
                                             <HiHashtag />
-                                            <span>{channel.name.length > 30 ? channel.name.slice(0, 30) + "..." : channel.name}</span>
+                                            <span>
+                                                {channel.name.length > 30
+                                                    ? channel.name.slice(0, 30) + "..." :
+                                                    channel.name
+                                                }
+                                            </span>
                                         </DropdownItem>
                                     ))}
                                 </DropdownSection>

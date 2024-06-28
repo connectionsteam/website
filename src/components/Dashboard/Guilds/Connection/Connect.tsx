@@ -18,16 +18,25 @@ export interface ConnectionBody {
     channel: GuildChannelsPayload;
     name: string;
     language: {
-        language: Languages;
-        key: keyof typeof Languages;
+        language: Languages | "";
+        key: keyof typeof Languages | "";
     };
 };
 
 export default function GuildConnectConnection({ guild, connection, channels, onClose }: Props) {
     const [body, setBody] = useState<ConnectionBody>({
-        channel: null!,
+        channel: {
+            id: "",
+            name: "",
+            position: 0,
+            nsfw: false,
+            parent_id: "",
+        },
         name: "",
-        language: null!
+        language: {
+            language: "",
+            key: ""
+        }
     });
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [loading, setLoading] = useState(false);
@@ -36,10 +45,10 @@ export default function GuildConnectConnection({ guild, connection, channels, on
         setLoading(true);
 
         try {
-            await api.put(`/guilds/${guild.id}/connections`, {
-                channelId: body.channel.id,
-                name: body.name,
-                language: body.language.key,
+            var req = await api.put(`/guilds/${guild.id}/connections`, {
+                channelId: body.channel.id || "",
+                name: body.name || "",
+                language: body.language.key || "",
             });
 
             setLoading(false);
@@ -56,13 +65,25 @@ export default function GuildConnectConnection({ guild, connection, channels, on
     };
 
     return (
-        <div className="flex gap-2 w-full flex-col">
-            <DefaultInput value={body.name} obrigatory onChange={(event) => setBody({ ...body, name: event.target.value })} key={0} label="Nome da conexão" type="text" placeholder="conexaolegal" />
+        <div className="flex w-full flex-col gap-4">
+            <DefaultInput
+                value={body.name}
+                obrigatory
+                onChange={(event) => setBody({ ...body, name: event.target.value })}
+                key={0}
+                label="Nome da conexão"
+                type="text"
+                placeholder="conexaolegal"
+            />
             <JoinConnectionLanguage setBody={setBody} body={body} />
             <ConnectionChannels setBody={setBody} body={body} channels={channels} connection={connection} />
             {errors.api && <div className="text-red-500">{errors.api}</div>}
             <div className="p-[2px] bg-gradient-to-r from-fuchsia-500 to-indigo-500 rounded-lg w-full">
-                <button disabled={loading} onClick={joinConnection} className={`flex items-center justify-center gap-2 p-4 h-full w-full rounded-lg bg-neutral-800 hover:bg-transparent transition ${loading ? "cursor-wait hover:bg-neutral-800" : "bg-opacity-100"}`}>
+                <button
+                    disabled={loading}
+                    onClick={joinConnection}
+                    className={`flex items-center justify-center gap-2 p-4 h-full w-full rounded-lg bg-neutral-800 hover:bg-transparent transition ${loading ? "cursor-wait hover:bg-neutral-800" : "bg-opacity-100"}`}
+                >
                     {loading ? (
                         <div className="flex gap-2 items-center w-full justify-center">
                             <AiOutlineLoading3Quarters className="animate-spin" />
