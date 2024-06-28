@@ -1,22 +1,38 @@
 import { Input } from "@nextui-org/input";
-import { ChangeEvent, useContext, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useContext, useState } from "react";
 import { ConnectionPayload } from "@/types";
-import Avatar from "@/components/Mixed/Avatar";
 import ConnectionsSkeleton from "../ConnectionsSkeleton";
 import CreateConnectionForm from "./Connection/FormCreateConnection";
 import { LanguageContext } from "@/contexts/Language";
 import { languages } from "@/locale";
 import ConnectionComponent from "./Connection";
 import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/modal";
+import { api } from "@/utils/api";
+import ConnectionCard from "./Connection/Card";
 
-export default function ConnectionsComponent({ connections }: { connections: ConnectionPayload[] | null }) {
+interface Props {
+    connections: ConnectionPayload[] | null;
+    setConnections: Dispatch<SetStateAction<ConnectionPayload[] | null>>;
+}
+
+export interface ConnectionState {
+    connection: ConnectionPayload | null;
+    hover: string | null;
+    removing: string | null;
+}
+
+export default function ConnectionsComponent({ connections, setConnections }: Props) {
     const [searchQuery, setSearchQuery] = useState("");
     const { language } = useContext(LanguageContext);
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const [connection, setConnection] = useState<ConnectionPayload | null>(null);
+    const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+    const [connectionProps, setConnectionProps] = useState<ConnectionState>({
+        connection: null!,
+        hover: null,
+        removing: null
+    });
 
     const openModal = (connection: ConnectionPayload) => {
-        setConnection(connection);
+        setConnectionProps({ ...connectionProps, connection });
         onOpen();
     };
 
@@ -24,8 +40,20 @@ export default function ConnectionsComponent({ connections }: { connections: Con
         setSearchQuery(event.target.value);
     };
 
+    const handleDeleteConnection = async () => {
+        setConnectionProps({ ...connectionProps, removing: connectionProps.hover });
+
+        await api.delete(`/connections/${connectionProps.hover}`);
+
+        setTimeout(() => {
+            setConnections(connections!.filter(connection => connection.name !== connectionProps.hover));
+
+            setConnectionProps({ ...connectionProps, removing: null });
+        }, 500);
+    };
+
     return (
-        <div className="flex w-full items-start flex-col gap-4 z-10 tablet:px-3">
+        <div className="flex w-full items-start flex-col gap-4 tablet:px-3">
             <div className="flex flex-col gap-2">
                 <h1 className="font-bold text-3xl">{languages[language].dashboard.connections.title}</h1>
                 <span className="text-neutral-300">{languages[language].dashboard.connections.description}</span>
@@ -37,37 +65,35 @@ export default function ConnectionsComponent({ connections }: { connections: Con
                 {connections ? (
                     connections
                         .filter((connection) => connection.name.toLowerCase().includes(searchQuery.toLowerCase()) || connection.name.includes(searchQuery))
-                        .map((connection) => (
-                            <button
-                                onClick={() => openModal(connection)}
-                                key={connection.name}
-                                className="flex items-center gap-2 p-3 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition"
-                            >
-                                <Avatar className="w-12 h-12" src={connection.icon || ""} key={connection.name} />
-                                <div className="flex flex-col gap-1 text-start">
-                                    <span className="font-bold text-lg">{connection.name}</span>
-                                    {connection.description &&
-                                        <span className="text-neutral-300 text-sm">
-                                            {connection.description.length > 30
-                                                ? connection.description.slice(0, 30) + "..." :
-                                                connection.description
-                                            }
-                                        </span>
-                                    }
-                                </div>
-                            </button>
+                        .map((connection, index) => (
+                            <ConnectionCard
+                                handleDeleteConnection={handleDeleteConnection}
+                                key={index}
+                                closeForm={onClose}
+                                connection={connection}
+                                connectionProps={connectionProps}
+                                setConnectionProps={setConnectionProps}
+                                index={index}
+                                openModal={openModal}
+                            />
                         ))
                 ) : <ConnectionsSkeleton key={0} />}
-                <CreateConnectionForm />
+                {connections &&
+                    <CreateConnectionForm
+                        key={0}
+                        connections={connections}
+                        setConnections={setConnections as Dispatch<SetStateAction<ConnectionPayload[]>>}
+                    />
+                }
                 <Modal classNames={{
                     closeButton: "transition hover:bg-neutral-700",
                     wrapper: "overflow-y-hidden",
                     base: "max-h-screen overflow-y-auto",
                 }} isOpen={isOpen} onOpenChange={onOpenChange}>
                     <ModalContent className="bg-neutral-800 text-white">
-                        <ModalHeader className="flex flex-col gap-1 bg-neutral-800">Editar conexão {connection?.name}</ModalHeader>
+                        <ModalHeader className="flex flex-col gap-1 bg-neutral-800">Editar conexão {connectionProps?.connection?.name}</ModalHeader>
                         <ModalBody>
-                            <ConnectionComponent connection={connection as ConnectionPayload} />
+                            <ConnectionComponent key={0} connection={connectionProps.connection as ConnectionPayload} />
                         </ModalBody>
                     </ModalContent>
                 </Modal>

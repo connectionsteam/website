@@ -1,16 +1,21 @@
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/modal";
-import { ChangeEvent, ChangeEventHandler, useContext, useState } from "react";
+import { ChangeEvent, ChangeEventHandler, Dispatch, SetStateAction, useContext, useState } from "react";
 import { LuPlusCircle } from "react-icons/lu";
 import CreateConnection from "./CreateConnection";
-import { RequestPost } from "@/types";
+import { ConnectionPayload, RequestPost } from "@/types";
 import { LanguageContext } from "@/contexts/Language";
 import { languages } from "@/locale";
 import DefaultInput from "@/components/Mixed/Input";
 
-export default function CreateConnectionForm() {
+interface Props {
+    connections: ConnectionPayload[];
+    setConnections: Dispatch<SetStateAction<ConnectionPayload[]>>;
+}
+
+export default function CreateConnectionForm({ connections, setConnections }: Props) {
     const { language } = useContext(LanguageContext);
 
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     const [post, setPost] = useState<RequestPost>({
         name: "",
     });
@@ -82,7 +87,15 @@ export default function CreateConnectionForm() {
                         {errors.api && <div className="text-red-500">{errors.api}</div>}
                     </ModalBody>
                     <ModalFooter className="w-full">
-                        <CreateConnection key={0} errors={errors} post={post} setErrors={setErrors} />
+                        <CreateConnection
+                            key={0}
+                            setConnections={setConnections}
+                            connections={connections}
+                            errors={errors}
+                            post={post}
+                            setErrors={setErrors}
+                            onClose={onClose}
+                        />
                     </ModalFooter>
                 </ModalContent>
             </Modal>

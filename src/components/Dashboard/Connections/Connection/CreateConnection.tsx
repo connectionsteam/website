@@ -1,9 +1,7 @@
-import { useIsClient } from "@/contexts/Client";
 import { LanguageContext } from "@/contexts/Language";
 import { languages } from "@/locale";
-import { RequestPost } from "@/types";
+import { ConnectionPayload, RequestPost } from "@/types";
 import { api } from "@/utils/api";
-import { useRouter } from "next/router";
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
@@ -11,21 +9,27 @@ interface Props {
     post: RequestPost;
     setErrors: Dispatch<SetStateAction<{ [key: string]: string }>>;
     errors: { [key: string]: string };
+    onClose: () => void;
+    setConnections: Dispatch<SetStateAction<ConnectionPayload[]>>;
+    connections: ConnectionPayload[];
 }
 
-export default function CreateConnection({ post, setErrors, errors }: Props) {
+export default function CreateConnection({ post, setErrors, errors, connections, setConnections, onClose }: Props) {
     const [loading, setLoading] = useState(false);
     const { language } = useContext(LanguageContext);  
-    const isClient = useIsClient();
 
     const createConnection = async () => {
         setLoading(true);
 
         try {
-            await api.post("/users/@me/connections", post);
+            const req = await api.post("/users/@me/connections", post);
 
             setLoading(false);
-            isClient && window.location.reload();
+            onClose();
+            setConnections([
+                ...connections,
+                req.data,
+            ]);
         } catch (error: any) {
             const json = error.response.data.errors[0].map((err: any) => err.message) || error.message;
             
