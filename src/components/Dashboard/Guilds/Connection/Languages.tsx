@@ -1,8 +1,7 @@
 import DefaultInput from "@/components/Mixed/Input";
-import { Languages } from "@/types";
+import { ConnectionBody, Languages } from "@/types";
 import { Avatar, Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/react";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
-import { ConnectionBody } from "./Connect";
 
 interface Props {
     setBody: Dispatch<ConnectionBody>;

@@ -1,20 +1,14 @@
 "use client"
 import DefaultLayout from "@/components/Mixed/Layout";
-import { GuildChannelsPayload, GuildPayload } from "@/types";
+import { GuildChannelsPayload, GuildPayload, TabsStructure } from "@/types";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
-import { MouseEvent, ReactNode, useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import GuildSkeleton from "./Skeleton";
 import Infos from "./Infos";
-import Connections from "./Connections";
+import Connections from "./Connecions";
 import { BiX } from "react-icons/bi";
-
-export interface TabsStructure {
-    value: string;
-    title: string;
-    content: ReactNode;
-}
 
 export default function GuildComponent() {
     const router = useRouter();

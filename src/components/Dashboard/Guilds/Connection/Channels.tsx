@@ -1,9 +1,8 @@
 "use client"
-import { ConnectedConnectionPayload, GuildChannelsPayload, GuildPayload } from "@/types";
+import { ConnectedConnectionPayload, ConnectionBody, GuildChannelsPayload } from "@/types";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger, Switch } from "@nextui-org/react";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { HiHashtag } from "react-icons/hi";
-import { ConnectionBody } from "./Connect";
 
 interface Props {
     channels: GuildChannelsPayload[];

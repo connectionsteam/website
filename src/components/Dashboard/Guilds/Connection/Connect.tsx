@@ -1,6 +1,6 @@
 "use client"
 import DefaultInput from "@/components/Mixed/Input";
-import { ConnectedConnectionPayload, GuildChannelsPayload, GuildPayload, Languages } from "@/types";
+import { ConnectedConnectionPayload, ConnectionBody, GuildChannelsPayload, GuildPayload, Languages } from "@/types";
 import { api } from "@/utils/api";
 import { useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
@@ -12,18 +12,10 @@ interface Props {
     connection: ConnectedConnectionPayload;
     channels: GuildChannelsPayload[];
     onClose: () => void;
+    setGuild: (guild: GuildPayload) => void;
 };
 
-export interface ConnectionBody {
-    channel: GuildChannelsPayload;
-    name: string;
-    language: {
-        language: Languages | "";
-        key: keyof typeof Languages | "";
-    };
-};
-
-export default function GuildConnectConnection({ guild, connection, channels, onClose }: Props) {
+export default function GuildConnectConnection({ guild, connection, channels, onClose, setGuild }: Props) {
     const [body, setBody] = useState<ConnectionBody>({
         channel: {
             id: "",
@@ -44,15 +36,29 @@ export default function GuildConnectConnection({ guild, connection, channels, on
     const joinConnection = async () => {
         setLoading(true);
 
+        if (guild.connections.map(c => c.name).includes(body.name)) {
+            setErrors({ ...errors, api: "Already joinned this connection" });
+            return setLoading(false);
+        }
+
         try {
-            var req = await api.put(`/guilds/${guild.id}/connections`, {
-                channelId: body.channel.id || "",
-                name: body.name || "",
-                language: body.language.key || "",
+            const req = await api.put(`/guilds/${guild.id}/connections`, {
+                channelId: body.channel.id,
+                name: body.name,
+                language: body.language.key,
             });
 
             setLoading(false);
             onClose();
+            setGuild({
+                ...guild,
+                connections: [
+                    ...guild.connections.filter(c => c.name !== req.data.name),
+                    {
+                        ...req.data,
+                    }
+                ]
+            });
         } catch (error: any) {
             const json = error.response.data.errors[0].map((err: any) => err.message) || error.message;
 
@@ -63,6 +69,8 @@ export default function GuildConnectConnection({ guild, connection, channels, on
             });
         }
     };
+
+    console.log(body)
 
     return (
         <div className="flex w-full flex-col gap-4">
