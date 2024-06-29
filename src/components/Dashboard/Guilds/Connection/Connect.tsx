@@ -36,17 +36,18 @@ export default function GuildConnectConnection({ guild, connection, channels, on
     const joinConnection = async () => {
         setLoading(true);
 
-        if (guild.connections.map(c => c.name).includes(body.name)) {
-            setErrors({ ...errors, api: "Already joinned this connection" });
-            return setLoading(false);
-        }
-
         try {
-            const req = await api.put(`/guilds/${guild.id}/connections`, {
+            let reqBody = {
                 channelId: body.channel.id,
                 name: body.name,
-                language: body.language.key,
-            });
+                language: body.language?.key,
+            }
+
+            if (body.language?.key === "" && body.language?.language === "") {
+                delete reqBody.language;
+            }
+            
+            const req = await api.put(`/guilds/${guild.id}/connections`, reqBody);
 
             setLoading(false);
             onClose();
@@ -60,6 +61,16 @@ export default function GuildConnectConnection({ guild, connection, channels, on
                 ]
             });
         } catch (error: any) {
+            const errors = {
+                404: "Unknown connection",
+                409: "Already joinned this connection",
+            }
+            
+            if (error.response.status in errors) {
+                setErrors({ ...errors, api: errors[error.response.status as keyof typeof errors] });
+                return setLoading(false);
+            }
+
             const json = error.response.data.errors[0].map((err: any) => err.message) || error.message;
 
             setLoading(false);
@@ -69,8 +80,6 @@ export default function GuildConnectConnection({ guild, connection, channels, on
             });
         }
     };
-
-    console.log(body)
 
     return (
         <div className="flex w-full flex-col gap-4">
