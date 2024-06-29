@@ -22,7 +22,22 @@ export default function CreateConnection({ post, setErrors, errors, connections,
         setLoading(true);
 
         try {
-            const req = await api.post("/users/@me/connections", post);
+            const postBody = {
+                name: post.name,
+                description: post.description ? post.description : "",
+                icon: post.icon,
+                maxConnections: post.maxConnections ? parseFloat(post.maxConnections.toString()) : "",
+            }
+            
+            for (let i in postBody) {
+                if (postBody[i as keyof typeof postBody] === "") {
+                    delete postBody[i as keyof typeof postBody];
+                }
+            }
+
+            console.log(postBody);
+
+            const req = await api.post("/users/@me/connections", postBody);
 
             setLoading(false);
             onClose();
