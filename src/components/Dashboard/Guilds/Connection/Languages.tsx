@@ -27,18 +27,17 @@ export default function JoinConnectionLanguage({ setBody, body }: Props) {
         <div className="flex flex-col gap-2 w-full">
             <div className="text-neutral-300 flex gap-1">
                 <div>Linguagem da conexão</div>
-                <span className="text-red-500">*</span>
             </div>
             <button onClick={onOpen} className="p-3 bg-neutral-900/50 transition rounded-lg text-start w-full">
-                {(body.language.key === "" && body.language.language === "")
+                {(body.language?.key === "" && body.language?.language === "")
                     ? "Clique aqui e selecione uma linguagem" :
                     <div className="w-full flex gap-2 items-center">
                         <Avatar
-                            src={`https://flagpedia.net/data/flags/w702/${body.language.key}.webp`}
-                            name={body.language.key}
+                            src={`https://flagpedia.net/data/flags/w702/${body.language?.key}.webp`}
+                            name={body.language?.key}
                             className="w-5 h-5 rounded-sm"
                         />
-                        <span>{body.language.language}</span>
+                        <span>{body.language?.language}</span>
                     </div>
                 }
             </button>

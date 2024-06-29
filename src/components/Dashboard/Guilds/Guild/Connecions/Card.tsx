@@ -1,9 +1,10 @@
-import { ConnectedConnectionPayload, ConnectedConnectionsState, GuildPayload } from "@/types";
+import { ConnectedConnectionFlags, ConnectedConnectionPayload, ConnectedConnectionsState, GuildPayload } from "@/types";
 import { AnimatePresence } from "framer-motion";
 import FloatingMenu from "./Menu";
 import { motion } from "framer-motion";
 import { Dispatch, SetStateAction } from "react";
 import Avatar from "@/components/Mixed/Avatar";
+import Image from "next/image";
 
 interface Props {
     connection: ConnectedConnectionPayload;
@@ -27,6 +28,14 @@ export default function ConnectedConnnectionCard(
                     onMouseLeave={() => setConnectionProps({ ...connectionProps, hover: null })}
                     className="relative w-full"
                 >
+                    {connection.flags.includes(ConnectedConnectionFlags.Frozen) && (
+                        <Image
+                            width={150}
+                            height={40}
+                            src="/backgrounds/frozenborder.png"
+                            alt="Frozen border"
+                            className="absolute -top-4 -left-2 z-20" />
+                    )}
                     <FloatingMenu
                         open={connectionProps.hover === connection.name}
                         connection={connection}
