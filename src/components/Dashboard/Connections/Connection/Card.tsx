@@ -38,7 +38,7 @@ export default function ConnectionCard(
                         closeForm={closeForm}
                     />
                     <button
-                        className="flex items-center gap-2 p-3 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition relative w-full"
+                        className="flex items-center gap-2 p-3 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition relative w-full h-full"
                         onClick={() => openModal(connection)}
                     >
                         <Avatar className="w-12 h-12" src={connection.icon || ""} key={connection.name} />
