@@ -58,7 +58,7 @@ export default function GuildComponent() {
                 {
                     value: "infos",
                     title: "Informações",
-                    content: <Infos key={0} guild={guild as GuildPayload} />,
+                    content: <Infos setGuild={setGuild} key={0} guild={guild as GuildPayload} />,
                 },
                 {
                     value: "connections",
