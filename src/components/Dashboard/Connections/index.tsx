@@ -9,6 +9,7 @@ import ConnectionComponent from "./Connection";
 import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/modal";
 import { api } from "@/utils/api";
 import ConnectionCard from "./Connection/Card";
+import { AnimatePresence } from "framer-motion";
 
 interface Props {
     connections: ConnectionPayload[] | null;
@@ -62,22 +63,24 @@ export default function ConnectionsComponent({ connections, setConnections }: Pr
                 inputWrapper: "rounded-lg bg-neutral-800 group-hover:bg-neutral-700",
             }} onChange={handleChangeQuery} type="string" label={languages[language].dashboard.misc.filterConnections} />
             <div className="grid grid-cols-3 gap-3 w-full tablet:grid-cols-2 mobile:grid-cols-1">
-                {connections ? (
-                    connections
-                        .filter((connection) => connection.name.toLowerCase().includes(searchQuery.toLowerCase()) || connection.name.includes(searchQuery))
-                        .map((connection, index) => (
-                            <ConnectionCard
-                                handleDeleteConnection={handleDeleteConnection}
-                                key={index}
-                                closeForm={onClose}
-                                connection={connection}
-                                connectionProps={connectionProps}
-                                setConnectionProps={setConnectionProps}
-                                index={index}
-                                openModal={openModal}
-                            />
-                        ))
-                ) : <ConnectionsSkeleton key={0} />}
+                <AnimatePresence>
+                    {connections ? (
+                        connections
+                            .filter((connection) => connection.name.toLowerCase().includes(searchQuery.toLowerCase()) || connection.name.includes(searchQuery))
+                            .map((connection, index) => (
+                                <ConnectionCard
+                                    handleDeleteConnection={handleDeleteConnection}
+                                    key={index}
+                                    closeForm={onClose}
+                                    connection={connection}
+                                    connectionProps={connectionProps}
+                                    setConnectionProps={setConnectionProps}
+                                    index={index}
+                                    openModal={openModal}
+                                />
+                            ))
+                    ) : <ConnectionsSkeleton key={0} />}
+                </AnimatePresence>
                 {connections &&
                     <CreateConnectionForm
                         key={0}

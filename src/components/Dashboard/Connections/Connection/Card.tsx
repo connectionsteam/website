@@ -19,13 +19,13 @@ export default function ConnectionCard(
     { connection, connectionProps, setConnectionProps, index, closeForm, openModal, handleDeleteConnection }: Props
 ) {
     return (
-        <AnimatePresence key={connection.name}>
+        <AnimatePresence key={index}>
             {connectionProps.removing !== connection.name ? (
                 <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ delay: index * 0.1 }}
                     onMouseEnter={() => setConnectionProps({ ...connectionProps, hover: connection.name })}
                     onMouseLeave={() => setConnectionProps({ ...connectionProps, hover: null })}
                     className="w-full relative"
