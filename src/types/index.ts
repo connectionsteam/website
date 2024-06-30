@@ -1,9 +1,5 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
 
-export interface BasePayload {
-    _id: string;
-}
-
 export interface UserStructure {
     id: string;
     username: string;
@@ -22,9 +18,9 @@ export interface LanguageContextProps {
     setLanguage: Dispatch<SetStateAction<LanguageType>>;
 }
 
-export interface GuildPayload extends BasePayload {
-    name?: string;
-    icon?: string;
+export interface GuildPayload {
+    name: string;
+    icon: string;
     id: string;
     connections: ConnectedConnectionPayload[];
     cases: AnyCase[];
@@ -76,7 +72,13 @@ export enum ConnectedConnectionFlags {
     CompactModeEnabled = "COMPACT_MODE",
 }
 
-export enum ModType {
+export interface ModType {
+    username: string;
+    avatar: string;
+    type: ModPermType;
+}
+
+export enum ModPermType {
     TrustedAdmin,
     PhysicalOwner,
 }
@@ -267,4 +269,14 @@ export interface ConnectedConnectionsState {
     connection: ConnectedConnectionPayload;
     hover: string | null;
     removing: string | null;
+}
+
+export interface DiscordMember {
+    user: {
+        username: string;
+        avatar: string;
+        id: string;
+        bot: boolean
+        global_name?: string;
+    }
 }
