@@ -66,7 +66,12 @@ export default function ConnectionsComponent({ connections, setConnections }: Pr
                 <AnimatePresence>
                     {connections ? (
                         connections
-                            .filter((connection) => connection.name.toLowerCase().includes(searchQuery.toLowerCase()) || connection.name.includes(searchQuery))
+                            .filter((connection) =>
+                                connection.name.toLowerCase().includes(searchQuery.toLowerCase())
+                                || connection.name.includes(searchQuery)
+                                || connection.description?.toLowerCase().includes(searchQuery.toLowerCase())
+                                || connection.creatorId.includes(searchQuery)
+                            )
                             .map((connection, index) => (
                                 <ConnectionCard
                                     handleDeleteConnection={handleDeleteConnection}
