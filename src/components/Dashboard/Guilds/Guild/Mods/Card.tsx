@@ -1,6 +1,9 @@
 import { motion, AnimatePresence } from "framer-motion";
 import RemoveGuildMod from "./Menu";
 import Avatar from "@/components/Mixed/Avatar";
+import { GuildPayload, ModPermType } from "@/types";
+import { UserContext } from "@/contexts/User";
+import { useContext } from "react";
 
 interface Props {
     index: number;
@@ -8,9 +11,15 @@ interface Props {
     handleRemoveMod: (mod: string) => void;
     menu: { hover: string | null, removing: string | null };
     setMenu: (menu: { hover: string | null, removing: string | null }) => void;
+    guild: GuildPayload;
 }
 
-export default function GuildModCard({ index, mod, handleRemoveMod, menu, setMenu }: Props) {
+export default function GuildModCard({ index, mod, handleRemoveMod, menu, setMenu, guild }: Props) {
+    const { user } = useContext(UserContext);
+
+    const owner = Object.entries(guild.mods)
+        .find(([id, mod]) => id === user?.id && mod.type === ModPermType.PhysicalOwner);
+
     return (
         <AnimatePresence key={index}>
             {menu.removing !== mod.id && (
@@ -23,12 +32,14 @@ export default function GuildModCard({ index, mod, handleRemoveMod, menu, setMen
                     key={index}
                     className="w-full relative"
                 >
-                    <RemoveGuildMod
-                        key={0}
-                        mod={{ avatar: mod.avatar, id: mod.id, username: mod.username }}
-                        open={menu.hover === mod.id}
-                        handleRemove={() => handleRemoveMod(mod.id)}
-                    />
+                    {(owner && mod.id !== user?.id) && (
+                        <RemoveGuildMod
+                            key={0}
+                            mod={{ avatar: mod.avatar, id: mod.id, username: mod.username }}
+                            open={menu.hover === mod.id}
+                            handleRemove={() => handleRemoveMod(mod.id)}
+                        />
+                    )}
                     <div className="flex gap-3 text-start rounded-lg p-3 bg-neutral-900/50 w-full">
                         <Avatar className="w-12 h-12" src={`https://cdn.discordapp.com/avatars/${mod.id}/${mod.avatar}.png`} />
                         <div className="flex flex-col">
