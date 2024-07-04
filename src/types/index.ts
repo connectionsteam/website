@@ -280,3 +280,11 @@ export interface DiscordMember {
         global_name?: string;
     }
 }
+
+export interface GuildThreadsPayload {
+    id: string;
+    originId: string;
+    creatorId: string;
+    children: string[];
+    createdTimestamp: number;
+}
