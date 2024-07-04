@@ -46,6 +46,23 @@ export const languages = {
                 filterConnections: "Filtrar conexão",
                 filterGuilds: "Filtrar servidor",
             }
+        },
+        plans: {
+            basicpremium: {
+                features: [
+                    "+ Threads",
+                    "Cooldown de mensagens diminuido",
+                    "Congelar mensagens nas conexões conectadas",
+                    "+ Conexões conectadas",
+                    "Sistema de moderação melhorado",
+                    "E muito mais!"
+                ]
+            },
+            premium: {
+                features: [
+                    "Tudo do Basic Premium",
+                ]
+            }
         }
     },
     "en-US": {
@@ -94,6 +111,23 @@ export const languages = {
             misc: {
                 filterConnections: "Filter connection",
                 filterGuilds: "Filter guild",
+            }
+        },
+        plans: {
+            basicpremium: {
+                features: [
+                    "+ Threads",
+                    "Reduced message cooldown",
+                    "Freeze messages in connected connections",
+                    "+ Connected connections",
+                    "Improved moderation system",
+                    "And much more!"
+                ]
+            },
+            premium: {
+                features: [
+                    "Everything from Basic Premium",
+                ]
             }
         }
     }

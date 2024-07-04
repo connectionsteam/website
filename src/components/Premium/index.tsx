@@ -1,59 +1,33 @@
 "use client"
 import DefaultButton from "../Mixed/Button";
 import DefaultLayout from "../Mixed/Layout";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Carousel from "./Carousel";
 import { IoIosArrowForward } from "react-icons/io";
 import { TextGenerateEffect } from "../ui/Text";
 import Plans from "./Plans";
 import { motion } from "framer-motion";
-
-const plans = [
-    {
-        name: "Standard",
-        price: 200.99,
-        features: [
-            "10 users",
-            "10 connections",
-            "1 channel",
-            "1 server",
-            "2 messages",
-            "2 attachments",
-            "2 emojis",
-            "20 reactions"
-        ],
-        popular: true
-    },
-    {
-        name: "Basic",
-        price: 187.99,
-        features: [
-            "10 users",
-            "1 server",
-            "2 messages",
-        ],
-        popular: false
-    },
-    {
-        name: "Premium",
-        price: 499.99,
-        features: [
-            "10 users",
-            "10 connections",
-            "1 channel",
-            "1 server",
-            "30 custom servers",
-            "30 custom channels",
-            "30 custom guilds",
-            "30 custom servers",
-            "30 custom webhooks",
-        ],
-        popular: false
-    }
-];
+import { LanguageContext } from "@/contexts/Language";
+import { languages } from "@/locale";
 
 export default function PremiumComponent() {
     const [morePlans, setMorePlans] = useState(false);
+    const { language } = useContext(LanguageContext);
+
+    const plans = [
+        {
+            name: "Premium",
+            price: 49.99,
+            features: languages[language].plans.premium.features,
+            popular: true
+        },
+        {
+            name: "Basic Premium",
+            price: 19.99,
+            features: languages[language].plans.basicpremium.features,
+            popular: false
+        }
+    ];
 
     return (
         <DefaultLayout>
