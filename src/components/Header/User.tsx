@@ -45,7 +45,7 @@ export default function AuthUser({ type, handleRecallDrawer }: { type: "mobile" 
                     </button>
                 </DropdownTrigger>
                 <DropdownMenu className="bg-neutral-800 rounded-lg">
-                    <DropdownItem className="bg-neutral-800 rounded-lg cursor-pointer hover:bg-neutral-700 transition outline-none" key="exit">
+                    <DropdownItem className="bg-neutral-800 rounded-lg cursor-pointer hover:bg-neutral-700 transition outline-none" key="dash">
                         <Link onClick={handleRecallDrawer} href="/dashboard" className="flex items-center justify-start min-w-28 py-2 gap-3">
                             <MdOutlineSpaceDashboard />
                             <span>{languages[language].home.header.menu.dashboard}</span>
