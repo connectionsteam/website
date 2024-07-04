@@ -27,7 +27,7 @@ export default function GuildMods({ guild, setGuild }: Props) {
     const [menu, setMenu] = useState<MenuProps>({
         hover: null,
         removing: null,
-    })
+    });
 
     const handleAddMod = async (mod: DiscordMember) => {
         await api.put(`/guilds/${guild.id}/mods/${mod.user.id}`);
