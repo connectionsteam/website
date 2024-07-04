@@ -1,8 +1,5 @@
-import { ConnectionPayload } from "@/types";
-import { api } from "@/utils/api";
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/modal";
 import { AnimatePresence } from "framer-motion";
-import { Dispatch, SetStateAction } from "react";
 import { LuTrash } from "react-icons/lu";
 import { motion } from "framer-motion";
 import Avatar from "@/components/Mixed/Avatar";
