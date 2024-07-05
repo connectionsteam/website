@@ -266,7 +266,6 @@ export interface ConnectionBody {
 };
 
 export interface ConnectedConnectionsState {
-    connection: ConnectedConnectionPayload;
     hover: string | null;
     removing: string | null;
 }
@@ -287,4 +286,10 @@ export interface GuildThreadsPayload {
     creatorId: string;
     children: string[];
     createdTimestamp: number;
+}
+
+export interface TabState {
+    tabs: TabsStructure[];
+    selected: string;
+    connection: boolean;
 }
