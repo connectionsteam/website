@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { ConnectedConnectionPayload, ConnectedConnectionsState, GuildChannelsPayload, GuildPayload, TabsStructure } from "@/types";
 import ConnectionsSkeleton from "../../../ConnectionsSkeleton";
-import GuildEditConnection from "../../Connection";
 import { LuPlusCircle } from "react-icons/lu";
 import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/modal";
 import GuildConnectConnection from "../../Connection/Connect";
@@ -10,30 +9,19 @@ import { api } from "@/utils/api";
 
 interface Props {
     guild: GuildPayload;
-    addTab: (newTab: TabsStructure) => void;
-    setSelectedTab: (value: string) => void;
     setGuild: (guild: GuildPayload) => void;
     channels: GuildChannelsPayload[];
+    connection: ConnectedConnectionPayload;
+    setConnection: Dispatch<SetStateAction<ConnectedConnectionPayload>>;
+    handleSelectConnection: (connection: ConnectedConnectionPayload) => void;
 }
 
-export default function Connections({ guild, addTab, setSelectedTab, setGuild, channels }: Props) {
+export default function Connections({ guild, setGuild, channels, connection, handleSelectConnection }: Props) {
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     const [connectionProps, setConnectionProps] = useState<ConnectedConnectionsState>({
-        connection: null!,
         hover: null,
         removing: null
     });
-
-    const handleSelectConnection = (connection: ConnectedConnectionPayload) => {
-        addTab({
-            value: connection.name,
-            title: connection.name,
-            content: <GuildEditConnection channels={channels} key={connection.name} setGuild={setGuild} guild={guild} GuildConnection={connection} />
-        });
-
-        setConnectionProps({ ...connectionProps, connection });
-        setSelectedTab(connection.name);
-    };
 
     const handleRemoveConnection = async (connectionName: string) => {
         setConnectionProps({ ...connectionProps, removing: connectionName });
@@ -56,12 +44,12 @@ export default function Connections({ guild, addTab, setSelectedTab, setGuild, c
             <div className="grid grid-cols-3 gap-3 w-full tablet:grid-cols-2 mobile:grid-cols-1">
                 {guild.connections ? (
                     guild.connections.map((connection) => (
-                        <ConnectedConnnectionCard 
+                        <ConnectedConnnectionCard
                             connection={connection}
                             handleRemoveConnection={handleRemoveConnection}
                             handleSelectConnection={handleSelectConnection}
                             setConnectionProps={setConnectionProps}
-                            connectionProps={connectionProps} 
+                            connectionProps={connectionProps}
                             key={connection.name} />
                     ))
                 ) : <ConnectionsSkeleton />}
@@ -86,7 +74,7 @@ export default function Connections({ guild, addTab, setSelectedTab, setGuild, c
                                 setGuild={setGuild}
                                 onClose={onClose}
                                 channels={channels}
-                                connection={connectionProps.connection as ConnectedConnectionPayload}
+                                connection={connection}
                                 guild={guild}
                             />
                         </ModalBody>
