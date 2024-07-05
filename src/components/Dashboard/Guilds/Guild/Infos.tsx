@@ -23,7 +23,7 @@ export default function Infos({ guild, setGuild, threads, channels, setThreads }
                         <div className="text-sm text-neutral-300">{guild.id}</div>
                     </div>
                 </div>
-                {(threads.length > 0  || !threads) && <Threads setThreads={setThreads} channels={channels} guild={guild} threads={threads} />}
+                {(threads.length > 0 || !threads) && <Threads setThreads={setThreads} channels={channels} guild={guild} threads={threads} />}
                 <GuildMods setGuild={setGuild} guild={guild} />
             </div>
         </div>
