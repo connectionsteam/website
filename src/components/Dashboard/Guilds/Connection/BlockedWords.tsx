@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { BiX } from "react-icons/bi";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
-import Image from "next/image";
 
 interface Props {
     guild: GuildPayload;

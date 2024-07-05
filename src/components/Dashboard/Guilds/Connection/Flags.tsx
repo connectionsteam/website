@@ -1,7 +1,7 @@
 import { ConnectedConnectionFlags, ConnectedConnectionPayload, GuildPayload } from "@/types";
 import { api } from "@/utils/api";
 import { Switch } from "@nextui-org/switch";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface Props {
     guild: GuildPayload;
@@ -52,23 +52,28 @@ export default function GuildConnectionFlags({ connection, guild, setConnection,
         },
     };
 
-    const handleFlagChange = async (flag: ConnectedConnectionFlags, isEnabled: boolean) => {
-        const flasgsSpread = [...flags, flag];
-        const flagsternary = isEnabled ? flasgsSpread : flasgsSpread.filter(f => f !== flag);
+    useEffect(() => {
+        setFlags(connection.flags);
+    }, [connection.flags]);
 
-        if (isEnabled) {
-            setFlags([...flags, flag]);
-        } else {
-            setFlags(flags.filter(f => f !== flag));
-        }
+    const handleFlagChange = async (flag: ConnectedConnectionFlags, isEnabled: boolean) => {
+        const updatedFlags = isEnabled ? [...flags, flag] : flags.filter(f => f !== flag);
+
+        setFlags(updatedFlags);
+
+        const updatedConnection = {
+            ...connection,
+            flags: updatedFlags,
+        };
 
         await api.patch(`/guilds/${guild.id}/connections/${connection.name}`, {
-            flags: flagsternary,
+            flags: updatedFlags,
         });
 
-        setConnection({
-            ...connection,
-            flags: flagsternary,
+        setConnection(updatedConnection);
+        setGuild({
+            ...guild,
+            connections: guild.connections.map(conn => conn.name === connection.name ? updatedConnection : conn)
         });
     }
 
@@ -81,7 +86,7 @@ export default function GuildConnectionFlags({ connection, guild, setConnection,
                 </span>
             </div>
             <div className="gap-4 grid grid-cols-3 tablet:grid-cols-1 items-start">
-                {Object.values(ConnectedConnectionFlags).map((flag, index) => (
+                {Object.values(ConnectedConnectionFlags).map((flag, index) => flag !== ConnectedConnectionFlags.Locked && (
                     <div key={index} className="flex flex-col gap-1 p-3 rounded-lg bg-neutral-900 h-full place-content-center">
                         <div className="flex items-center gap-1">
                             <div className="relative">
@@ -101,5 +106,5 @@ export default function GuildConnectionFlags({ connection, guild, setConnection,
                 ))}
             </div>
         </div>
-    )
+    );
 }
