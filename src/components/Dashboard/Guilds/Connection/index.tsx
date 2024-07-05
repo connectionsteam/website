@@ -1,21 +1,22 @@
 import Avatar from "@/components/Mixed/Avatar";
 import { ConnectedConnectionFlags, ConnectedConnectionPayload, GuildChannelsPayload, GuildPayload } from "@/types";
 import BlockedWords from "./BlockedWords";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import GuildConnectionFlags from "./Flags";
 import Image from "next/image";
 import { HiHashtag } from "react-icons/hi";
+import { BiLeftArrowAlt } from "react-icons/bi";
 
 interface Props {
     guild: GuildPayload;
-    GuildConnection: ConnectedConnectionPayload;
     setGuild: (guild: GuildPayload) => void;
     channels: GuildChannelsPayload[];
+    connection: ConnectedConnectionPayload;
+    setConnection: Dispatch<SetStateAction<ConnectedConnectionPayload>>;
+    handleChangeTab: (selected: string) => void;
 }
 
-export default function GuildEditConnection({ GuildConnection, guild, setGuild, channels }: Props) {
-    const [connection, setConnection] = useState(GuildConnection);
-
+export default function GuildEditConnection({ guild, setGuild, channels, connection, setConnection, handleChangeTab }: Props) {
     return (
         <div className="relative w-full">
             {connection.flags.includes(ConnectedConnectionFlags.Frozen) && (
@@ -27,7 +28,13 @@ export default function GuildEditConnection({ GuildConnection, guild, setGuild, 
                     className="absolute -top-5 -left-4 z-0" />
             )}
             <div className="w-full rounded-lg bg-neutral-800 p-6 transition flex flex-col gap-4">
-                <h1 className="font-bold text-xl">Editar conexão conectada</h1>
+                <div className="flex gap-4 items-center">
+                    <button onClick={() => handleChangeTab("connections")} className="flex gap-2 items-center bg-neutral-900/50 p-2 text-sm rounded-lg transition hover:bg-neutral-900/100">
+                        <BiLeftArrowAlt />
+                        <span>Voltar</span>
+                    </button>
+                    <h1 className="font-bold text-xl">Editar conexão {connection.name}</h1>
+                </div>
                 <div className="flex flex-col gap-6">
                     <div className="flex gap-3">
                         <Avatar className="w-16 h-16" src={connection.icon || ""} />
@@ -73,4 +80,4 @@ export default function GuildEditConnection({ GuildConnection, guild, setGuild, 
             </div>
         </div>
     );
-};
+}
