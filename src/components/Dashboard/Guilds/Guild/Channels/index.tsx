@@ -1,4 +1,5 @@
-import { ConnectedConnectionFlags, GuildChannelsPayload, GuildPayload } from "@/types";
+import { ConnectedConnectionFlags, ConnectedConnectionPayload, GuildChannelsPayload, GuildPayload } from "@/types";
+import { api } from "@/utils/api";
 import { useEffect, useState } from "react";
 import { HiHashtag } from "react-icons/hi";
 import { LuLock, LuUnlock } from "react-icons/lu";
@@ -35,7 +36,7 @@ export default function Channels({ channels, guild, setGuild }: Props) {
         groupChannelsByCategory();
     }, [channels, guild.connections]);
 
-    const handleToggleLocked = (connectionName: string) => {
+    const handleToggleLocked = async (connectionName: string) => {
         const connection = guild.connections.find((connection) => connection.name === connectionName);
 
         if (!connection) return;
@@ -43,6 +44,8 @@ export default function Channels({ channels, guild, setGuild }: Props) {
         const flags = connection.flags.includes(ConnectedConnectionFlags.Locked)
             ? connection.flags.filter((flag) => flag !== ConnectedConnectionFlags.Locked)
             : [...connection.flags, ConnectedConnectionFlags.Locked];
+
+        await api.patch(`/guilds/${guild.id}/connections/${connection.name}`, { flags });
 
         setGuild({
             ...guild,
@@ -68,7 +71,7 @@ export default function Channels({ channels, guild, setGuild }: Props) {
                             const connection = guild.connections.find((connection) => connection.channelId === channel.id);
 
                             return connection ? (
-                                <button
+                                <div
                                     onClick={() => handleToggleLocked(connection.name)}
                                     key={channel.id}
                                     className="hover:bg-neutral-900/50 transition flex gap-2 items-center w-full rounded-lg"
@@ -77,8 +80,8 @@ export default function Channels({ channels, guild, setGuild }: Props) {
                                         <HiHashtag />
                                         <span>{channel.name} - <strong>{connection.name}</strong></span>
                                     </div>
-                                    <button className="flex gap-2 items-center pr-3">
-                                        <button
+                                    <div className="flex gap-2 items-center pr-3">
+                                        <div
                                             className={`transition text-black rounded-lg flex gap-2 p-1 items-center w-full
                                                 ${connection.flags.includes(ConnectedConnectionFlags.Locked)
                                                     ? "bg-red-500"
@@ -89,9 +92,9 @@ export default function Channels({ channels, guild, setGuild }: Props) {
                                                 ? <LuLock size={26} />
                                                 : <LuUnlock size={26} />
                                             }
-                                        </button>
-                                    </button>
-                                </button>
+                                        </div>
+                                    </div>
+                                </div>
                             ) : null;
                         })}
                     </button>
