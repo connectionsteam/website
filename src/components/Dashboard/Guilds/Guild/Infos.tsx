@@ -1,5 +1,5 @@
 import Avatar from "@/components/Mixed/Avatar";
-import { GuildChannelsPayload, GuildPayload, GuildThreadsPayload } from "@/types";
+import { DiscordMember, GuildChannelsPayload, GuildPayload, GuildThreadsPayload } from "@/types";
 import GuildMods from "./Mods";
 import Threads from "./Threads";
 
@@ -9,9 +9,10 @@ interface Props {
     threads: GuildThreadsPayload[];
     channels: GuildChannelsPayload[];
     setThreads: (threads: GuildThreadsPayload[]) => void;
+    members: DiscordMember[];
 }
 
-export default function Infos({ guild, setGuild, threads, channels, setThreads }: Props) {
+export default function Infos({ guild, setGuild, threads, channels, setThreads, members }: Props) {
     return (
         <div className="w-full rounded-lg bg-neutral-800 p-6 transition flex flex-col gap-4">
             <h1 className="font-semibold text-xl">Informações</h1>
@@ -24,7 +25,7 @@ export default function Infos({ guild, setGuild, threads, channels, setThreads }
                     </div>
                 </div>
                 {(threads.length > 0 || !threads) && <Threads setThreads={setThreads} channels={channels} guild={guild} threads={threads} />}
-                <GuildMods setGuild={setGuild} guild={guild} />
+                <GuildMods setGuild={setGuild} guild={guild} members={members} key={0} />
             </div>
         </div>
     )

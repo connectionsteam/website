@@ -13,6 +13,7 @@ import { UserContext } from "@/contexts/User";
 interface Props {
     guild: GuildPayload;
     setGuild: (guild: GuildPayload) => void;
+    members: DiscordMember[];
 }
 
 export interface MenuProps {
@@ -20,7 +21,7 @@ export interface MenuProps {
     removing: string | null;
 }
 
-export default function GuildMods({ guild, setGuild }: Props) {
+export default function GuildMods({ guild, setGuild, members }: Props) {
     const { user } = useContext(UserContext);
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     const [query, setQuery] = useState("");
@@ -97,7 +98,7 @@ export default function GuildMods({ guild, setGuild }: Props) {
                 <ModalContent className="bg-neutral-800 text-white">
                     <ModalHeader className="flex flex-col gap-1 bg-neutral-800">Adicionar moderador</ModalHeader>
                     <ModalBody>
-                        <GuildModModal key={0} guild={guild} query={query} setQuery={setQuery} handleAddMod={handleAddMod} />
+                        <GuildModModal key={0} query={query} setQuery={setQuery} handleAddMod={handleAddMod} users={members} />
                     </ModalBody>
                 </ModalContent>
             </Modal>

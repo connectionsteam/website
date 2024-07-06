@@ -1,29 +1,15 @@
 import Avatar from "@/components/Mixed/Avatar";
 import DefaultInput from "@/components/Mixed/Input";
 import { DiscordMember, GuildPayload } from "@/types";
-import { api } from "@/utils/api";
-import { useEffect, useState } from "react";
 
 interface Props {
     query: string;
     setQuery: (query: string) => void;
     handleAddMod: (user: DiscordMember) => void;
-    guild: GuildPayload
+    users: DiscordMember[];
 }
 
-export default function GuildModModal({ query, setQuery, handleAddMod, guild }: Props) {
-    const [users, setUsers] = useState<DiscordMember[] | null>(null);
-
-    useEffect(() => {
-        const fetchUsers = async () => {
-            const res = await api.get(`/guilds/${guild.id}/members?limit=100`);
-
-            setUsers(res.data);
-        };
-
-        fetchUsers();
-    }, [guild]);
-
+export default function GuildModModal({ query, setQuery, handleAddMod, users }: Props) {
     return (
         <>
             <DefaultInput

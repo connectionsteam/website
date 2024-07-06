@@ -1,6 +1,6 @@
 "use client"
 import DefaultLayout from "@/components/Mixed/Layout";
-import { ConnectedConnectionPayload, GuildChannelsPayload, GuildPayload, GuildThreadsPayload, TabState } from "@/types";
+import { ConnectedConnectionPayload, DiscordMember, GuildChannelsPayload, GuildPayload, GuildThreadsPayload, TabState } from "@/types";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -11,6 +11,7 @@ import Channels from "./Channels";
 import Connections from "./Connecions";
 import GuildEditConnection from "../Connection";
 import ProtectedRoute from "@/components/Mixed/ProtectedRoute";
+import Cases from "./Cases";
 
 export default function GuildComponent() {
     const router = useRouter();
@@ -19,6 +20,7 @@ export default function GuildComponent() {
     const [channels, setChannels] = useState<GuildChannelsPayload[]>([]);
     const [threads, setThreads] = useState<GuildThreadsPayload[]>([]);
     const [connection, setConnection] = useState<ConnectedConnectionPayload>(null!);
+    const [members, setMembers] = useState<DiscordMember[]>([]);
 
     const [tab, setTab] = useState<TabState>({
         tabs: [],
@@ -66,7 +68,9 @@ export default function GuildComponent() {
         const fetchGuild = async () => {
             const guildRes = await api.get(`/guilds/${id}`);
             const channelRes = await api.get(`/guilds/${id}/channels`);
+            const membersRes = await api.get(`/guilds/${id}/members`);
 
+            setMembers(membersRes.data);
             setThreads(guildRes.data.threads || []);
             setChannels(channelRes.data);
             setGuild(guildRes.data);
@@ -83,6 +87,7 @@ export default function GuildComponent() {
                         value: "infos",
                         title: "Informações",
                         content: <Infos
+                            members={members}
                             setGuild={setGuild}
                             setThreads={setThreads}
                             channels={channels}
@@ -95,6 +100,11 @@ export default function GuildComponent() {
                         value: "channels",
                         title: "Canais",
                         content: <Channels setGuild={setGuild} guild={guild} channels={channels} key={0} />,
+                    },
+                    {
+                        value: "cases",
+                        title: "Casos",
+                        content: <Cases members={members} setGuild={setGuild} guild={guild} key={0} />,
                     },
                     {
                         value: "connections",
