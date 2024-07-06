@@ -10,6 +10,7 @@ import Infos from "./Infos";
 import Channels from "./Channels";
 import Connections from "./Connecions";
 import GuildEditConnection from "../Connection";
+import ProtectedRoute from "@/components/Mixed/ProtectedRoute";
 
 export default function GuildComponent() {
     const router = useRouter();
@@ -117,44 +118,46 @@ export default function GuildComponent() {
 
     return (
         <DefaultLayout>
-            {guild ? (
-                <div className="flex flex-col gap-4 w-full">
-                    <div className="flex mb-1 bg-neutral-800 rounded-lg p-1 overflow-x-auto">
-                        {tab.tabs.map((t) => (
-                            <button
-                                key={t.value}
-                                onClick={() => handleChangeTab(t.value)}
-                                className={`text-white px-4 rounded-lg py-2 cursor-pointer transition-colors duration-300 gap-2 flex ${(tab.connection && t.value === "connections") ? "bg-neutral-700" : ""} ${tab.selected === t.value ? "bg-neutral-700" : ""}`}
-                            >
-                                <span>{t.title}</span>
-                            </button>
-                        ))}
+            <ProtectedRoute loading={<GuildSkeleton />}>
+                {guild ? (
+                    <div className="flex flex-col gap-4 w-full">
+                        <div className="flex mb-1 bg-neutral-800 rounded-lg p-1 overflow-x-auto">
+                            {tab.tabs.map((t) => (
+                                <button
+                                    key={t.value}
+                                    onClick={() => handleChangeTab(t.value)}
+                                    className={`text-white px-4 rounded-lg py-2 cursor-pointer transition-colors duration-300 gap-2 flex ${(tab.connection && t.value === "connections") ? "bg-neutral-700" : ""} ${tab.selected === t.value ? "bg-neutral-700" : ""}`}
+                                >
+                                    <span>{t.title}</span>
+                                </button>
+                            ))}
+                        </div>
+                        <div>
+                            {tab.tabs.map((t) => (
+                                tab.selected === t.value ? (
+                                    <motion.div key={t.value} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
+                                        {t.content}
+                                    </motion.div>
+                                ) : tab.connection && t.value === "connections" ? (
+                                    <motion.div key={t.value} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
+                                        <GuildEditConnection
+                                            handleChangeTab={handleChangeTab}
+                                            connection={connection}
+                                            channels={channels}
+                                            key={connection.name}
+                                            setGuild={setGuild}
+                                            guild={guild as GuildPayload}
+                                            setConnection={setConnection}
+                                        />
+                                    </motion.div>
+                                ) : null)
+                            )}
+                        </div>
                     </div>
-                    <div>
-                        {tab.tabs.map((t) => (
-                            tab.selected === t.value ? (
-                                <motion.div key={t.value} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
-                                    {t.content}
-                                </motion.div>
-                            ) : tab.connection && t.value === "connections" ? (
-                                <motion.div key={t.value} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
-                                    <GuildEditConnection
-                                        handleChangeTab={handleChangeTab}
-                                        connection={connection}
-                                        channels={channels}
-                                        key={connection.name}
-                                        setGuild={setGuild}
-                                        guild={guild as GuildPayload}
-                                        setConnection={setConnection}
-                                    />
-                                </motion.div>
-                            ) : null)
-                        )}
-                    </div>
-                </div>
-            ) : (
-                <GuildSkeleton />
-            )}
+                ) : (
+                    <GuildSkeleton />
+                )}
+            </ProtectedRoute>
         </DefaultLayout>
     );
 }
