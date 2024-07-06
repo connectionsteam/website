@@ -1,7 +1,7 @@
 import { UserContext } from "@/contexts/User";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/dropdown";
 import { useContext } from "react";
-import { LuLink, LuLogOut, LuServer } from "react-icons/lu";
+import { LuLogOut } from "react-icons/lu";
 import Cookies from "js-cookie";
 import { useIsClient } from "@/contexts/Client";
 import axios from "axios";
@@ -10,8 +10,6 @@ import Avatar from "../Mixed/Avatar";
 import { LanguageContext } from "@/contexts/Language";
 import { languages } from "@/locale";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
-
-const url = "https://discord.com/oauth2/authorize?client_id=1243234162077470802&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback&scope=guilds+identify";
 
 export default function AuthUser({ type, handleRecallDrawer }: { type: "mobile" | "desktop"; handleRecallDrawer: () => void; }) {
     const { user } = useContext(UserContext);
@@ -59,9 +57,9 @@ export default function AuthUser({ type, handleRecallDrawer }: { type: "mobile" 
                     </DropdownItem>
                 </DropdownMenu>
             </Dropdown>
-        ) : <a href={url} className="flex gap-2 justify-center items-center transition p-2 hover:bg-neutral-900 border-neutral-800 border-2 rounded-lg w-full mb-4">
+        ) : <Link href="/login" className="flex gap-2 justify-center items-center transition p-2 hover:bg-neutral-900 border-neutral-800 border-2 rounded-lg w-full mb-4">
             Login
-        </a>
+        </Link>
     ) : (
         user ? (
             <Dropdown className="bg-neutral-800 text-white rounded-lg outline-none">
@@ -92,8 +90,8 @@ export default function AuthUser({ type, handleRecallDrawer }: { type: "mobile" 
                     </DropdownItem>
                 </DropdownMenu>
             </Dropdown>
-        ) : <a href={url} className="tablet:hidden flex gap-2 justify-center items-center transition p-3 m-[2px] px-4 hover:bg-neutral-800 border-neutral-800 border-2 rounded-lg">
+        ) : <Link href="/login" className="tablet:hidden flex gap-2 justify-center items-center transition p-3 m-[2px] px-4 hover:bg-neutral-800 border-neutral-800 border-2 rounded-lg">
             Login
-        </a>
+        </Link>
     )
 }
