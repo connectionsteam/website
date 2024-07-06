@@ -36,6 +36,13 @@ export default function ConnectedConnnectionCard(
                             alt="Frozen border"
                             className="absolute -top-4 -left-2 z-20" />
                     )}
+                    <div className="w-full relative tabletdesk:invisible">
+                        <FloatingMenu
+                            open={true}
+                            connection={connection}
+                            onRemove={() => handleRemoveConnection(connection.name)}
+                        />
+                    </div>
                     <FloatingMenu
                         open={connectionProps.hover === connection.name}
                         connection={connection}

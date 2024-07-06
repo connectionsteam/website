@@ -54,6 +54,13 @@ function Thread({ thread, setThreads, channels, threads, guild }: ThreadProps) {
             onMouseLeave={() => setMenu({ ...menu, hover: "" })}
             className="relative"
         >
+            <div className="w-full relative tabletdesk:invisible">
+                <DeleteThread
+                    thread={thread}
+                    open={true}
+                    handleRemove={handleRemoveThread}
+                />
+            </div>
             <DeleteThread
                 thread={thread}
                 open={menu.hover === thread.id}

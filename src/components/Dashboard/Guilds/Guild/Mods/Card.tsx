@@ -33,12 +33,22 @@ export default function GuildModCard({ index, mod, handleRemoveMod, menu, setMen
                     className="w-full relative"
                 >
                     {(owner && mod.id !== user?.id) && (
-                        <RemoveGuildMod
-                            key={0}
-                            mod={{ avatar: mod.avatar, id: mod.id, username: mod.username }}
-                            open={menu.hover === mod.id}
-                            handleRemove={() => handleRemoveMod(mod.id)}
-                        />
+                        <>
+                            <div className="w-full relative tabletdesk:invisible">
+                                <RemoveGuildMod
+                                    key={0}
+                                    mod={{ avatar: mod.avatar, id: mod.id, username: mod.username }}
+                                    open={true}
+                                    handleRemove={() => handleRemoveMod(mod.id)}
+                                />
+                            </div>
+                            <RemoveGuildMod
+                                key={0}
+                                mod={{ avatar: mod.avatar, id: mod.id, username: mod.username }}
+                                open={menu.hover === mod.id}
+                                handleRemove={() => handleRemoveMod(mod.id)}
+                            />
+                        </>
                     )}
                     <div className="flex gap-3 text-start rounded-lg p-3 bg-neutral-900/50 w-full">
                         <Avatar className="w-12 h-12" src={`https://cdn.discordapp.com/avatars/${mod.id}/${mod.avatar}.png`} />

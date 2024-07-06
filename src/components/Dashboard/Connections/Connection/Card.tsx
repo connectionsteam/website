@@ -30,13 +30,22 @@ export default function ConnectionCard(
                     onMouseLeave={() => setConnectionProps({ ...connectionProps, hover: null })}
                     className="w-full relative"
                 >
+                    <div className="w-full relative tabletdesk:invisible">
+                        <DeleteConnection
+                            key={0}
+                            handleRemove={handleDeleteConnection}
+                            open={true}
+                            id={connection.name}
+                            closeForm={closeForm}
+                        />
+                    </div>
                     <DeleteConnection
-                        key={0}
-                        handleRemove={handleDeleteConnection}
-                        open={connectionProps.hover === connection.name}
-                        id={connection.name}
-                        closeForm={closeForm}
-                    />
+                            key={0}
+                            handleRemove={handleDeleteConnection}
+                            open={connectionProps.hover === connection.name}
+                            id={connection.name}
+                            closeForm={closeForm}
+                        />
                     <button
                         className="flex items-center gap-2 p-3 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition relative w-full h-full"
                         onClick={() => openModal(connection)}
