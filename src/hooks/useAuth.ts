@@ -17,7 +17,7 @@ const useAuth = () => {
                     setIsAuthenticated(false);
                     router.push("/login");
                 }
-            } catch (error) {
+            } catch {
                 setIsAuthenticated(false);
                 router.push("/login");
             }
