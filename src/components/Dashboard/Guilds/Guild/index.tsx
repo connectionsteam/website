@@ -131,27 +131,25 @@ export default function GuildComponent() {
                         ))}
                     </div>
                     <div>
-                        <AnimatePresence>
-                            {tab.tabs.map((t) => (
-                                tab.selected === t.value ? (
-                                    <motion.div key={t.value} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
-                                        {t.content}
-                                    </motion.div>
-                                ) : tab.connection && t.value === "connections" ? (
-                                    <motion.div key={t.value} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
-                                        <GuildEditConnection
-                                            handleChangeTab={handleChangeTab}
-                                            connection={connection}
-                                            channels={channels}
-                                            key={connection.name}
-                                            setGuild={setGuild}
-                                            guild={guild as GuildPayload}
-                                            setConnection={setConnection}
-                                        />
-                                    </motion.div>
-                                ) : null)
-                            )}
-                        </AnimatePresence>
+                        {tab.tabs.map((t) => (
+                            tab.selected === t.value ? (
+                                <motion.div key={t.value} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
+                                    {t.content}
+                                </motion.div>
+                            ) : tab.connection && t.value === "connections" ? (
+                                <motion.div key={t.value} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
+                                    <GuildEditConnection
+                                        handleChangeTab={handleChangeTab}
+                                        connection={connection}
+                                        channels={channels}
+                                        key={connection.name}
+                                        setGuild={setGuild}
+                                        guild={guild as GuildPayload}
+                                        setConnection={setConnection}
+                                    />
+                                </motion.div>
+                            ) : null)
+                        )}
                     </div>
                 </div>
             ) : (
