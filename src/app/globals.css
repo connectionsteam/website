@@ -8,3 +8,22 @@ body {
     box-sizing: border-box;
     background-color: #171717;
 }
+
+::-webkit-scrollbar {
+    width: 8px;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #3e3e3e;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #222222;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #2d2d2d;
+}
