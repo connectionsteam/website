@@ -23,7 +23,7 @@ export default function Plans({ plans, setMorePlans }: { plans: PlanStructure[],
                 </div>
                 <TextGenerateEffect className="text-center flex items-center text-lg text-neutral-300" words="Acesse o melhor nível do Connections. Use premium." />
             </div>
-            <div className="gap-4 w-full grid grid-cols-3 tablet:grid-cols-1 mt-6 mb-10">
+            <div className="gap-4 w-full flex justify-center mt-6 mb-10 flex-wrap">
                 {plans.map((plan, index) => {
                     const PlanComponent = (
                         <motion.div
@@ -31,7 +31,7 @@ export default function Plans({ plans, setMorePlans }: { plans: PlanStructure[],
                             animate={{ x: 0, opacity: 1 }}
                             transition={{ delay: index * 0.2 }}
                             key={index}
-                            className="flex flex-col gap-4 p-6 rounded-lg bg-neutral-800 items-start relative h-full"
+                            className="flex flex-col gap-4 p-6 rounded-lg bg-neutral-800 items-start relative h-full w-[350px] tabelt:w-full min-h-[460px]"
                         >
                             {plan.popular && <div className="absolute px-2 font-semibold -top-3 flex rounded-full bg-fuchsia-500 left-3">Popular</div>}
                             <div className="flex gap-3 flex-col">

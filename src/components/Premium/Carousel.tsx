@@ -35,10 +35,12 @@ export default function Carousel({ plans }: { plans: PlanStructure[] }) {
                                     <span className="text-neutral-300 text-sm">/mês</span>
                                 </h1>
                             </div>
-                            <div className="h-[270px] mt-3">
+                            <div className="h-[270px] mt-3 flex flex-col gap-2">
                                 {plan.features.map((feature, index) => (
                                     <div key={index} className="flex gap-1 items-center">
-                                        <BiCheck fill="#7DDA58" />
+                                        <div className="w-6">
+                                            <BiCheck size={20} fill="#7DDA58" />
+                                        </div>
                                         <span className="font-semibold">{feature}</span>
                                     </div>
                                 ))}
@@ -74,7 +76,7 @@ const NextArrow = ({ onClick }: CustomArrowProps) => {
 
 const PrevArrow = ({ onClick }: CustomArrowProps) => {
     return (
-        <div className="absolute top-1/2 right-[380px] transform -translate-y-1/2 bg-neutral-700 bg-opacity-50 rounded-full p-2 mobile:p-1 cursor-pointer z-10" onClick={onClick}> 
+        <div className="absolute top-1/2 right-[380px] transform -translate-y-1/2 bg-neutral-700 bg-opacity-50 rounded-full p-2 mobile:p-1 cursor-pointer z-10" onClick={onClick}>
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
             </svg>
