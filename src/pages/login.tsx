@@ -1,6 +1,8 @@
 import DefaultLayout from "@/components/Mixed/Layout";
 import { BsDiscord } from "react-icons/bs";
 
+const { NEXT_PUBLIC_AUTH_LINK } = process.env;
+
 export default function Login() {
     return (
         <DefaultLayout>
@@ -9,7 +11,7 @@ export default function Login() {
                     <h1 className="font-bold text-xl">Login no Connections</h1>
                     <div>Faça login no connections e desbloqueie o uso da dashboard e muito mais!</div>
                     <a
-                        href={process.env.AUTH_LINK}
+                        href={NEXT_PUBLIC_AUTH_LINK}
                         className="p-3 rounded-lg bg-[#5865F2] items-center flex gap-3 max-w-56 justify-center font-semibold transition cursor-pointer hover:-translate-y-1" 
                     >
                         <BsDiscord size={22} />
