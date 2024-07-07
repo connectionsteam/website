@@ -10,7 +10,7 @@ const ProtectedRoute = ({ children, loading }: { children: ReactNode, loading: R
 
     useEffect(() => {
         if (isAuthenticated === false) {
-            router.push("/login");
+            window.location.href = "/login"; 
         }
     }, [isAuthenticated, router]);
 

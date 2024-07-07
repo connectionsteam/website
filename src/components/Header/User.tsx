@@ -16,6 +16,12 @@ export default function AuthUser({ type, handleRecallDrawer }: { type: "mobile" 
     const isClient = useIsClient();
     const { language } = useContext(LanguageContext);
 
+    const handleLogin = () => {
+        if (!isClient) return;
+        
+        window.location.href = "/login"; 
+    }
+
     const handleLogout = () => {
         isClient ? window.location.href = "/" : null;
 
@@ -57,9 +63,9 @@ export default function AuthUser({ type, handleRecallDrawer }: { type: "mobile" 
                     </DropdownItem>
                 </DropdownMenu>
             </Dropdown>
-        ) : <Link href="/login" className="flex gap-2 justify-center items-center transition p-2 hover:bg-neutral-900 border-neutral-800 border-2 rounded-lg w-full mb-4">
+        ) : <button onClick={handleLogin} className="flex gap-2 justify-center items-center transition p-2 hover:bg-neutral-900 border-neutral-800 border-2 rounded-lg w-full mb-4">
             Login
-        </Link>
+        </button>
     ) : (
         user ? (
             <Dropdown className="bg-neutral-800 text-white rounded-lg outline-none">
@@ -90,8 +96,8 @@ export default function AuthUser({ type, handleRecallDrawer }: { type: "mobile" 
                     </DropdownItem>
                 </DropdownMenu>
             </Dropdown>
-        ) : <Link href="/login" className="tablet:hidden flex gap-2 justify-center items-center transition p-3 m-[2px] px-4 hover:bg-neutral-800 border-neutral-800 border-2 rounded-lg">
+        ) : <button onClick={handleLogin} className="tablet:hidden flex gap-2 justify-center items-center transition p-3 m-[2px] px-4 hover:bg-neutral-800 border-neutral-800 border-2 rounded-lg">
             Login
-        </Link>
+        </button>
     )
 }
