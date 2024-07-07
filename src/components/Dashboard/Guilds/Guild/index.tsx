@@ -67,16 +67,24 @@ export default function GuildComponent() {
 
         const fetchGuild = async () => {
             const guildRes = await api.get(`/guilds/${id}`);
-            const channelRes = await api.get(`/guilds/${id}/channels`);
+
+            setGuild(guildRes.data);
+            setThreads(guildRes.data.threads);
+        };
+
+        const fetchMembers = async () => {
             const membersRes = await api.get(`/guilds/${id}/members?limit=1000`);
 
             setMembers(membersRes.data);
-            setThreads(guildRes.data.threads || []);
-            setChannels(channelRes.data);
-            setGuild(guildRes.data);
         };
 
-        fetchGuild();
+        const fetchChannels = async () => {
+            const channelRes = await api.get(`/guilds/${id}/channels`);
+
+            setChannels(channelRes.data);
+        };
+
+        Promise.all([fetchGuild(), fetchMembers(), fetchChannels()]);
     }, [id]);
 
     useEffect(() => {
