@@ -8,11 +8,13 @@ import AuthUser from "./User";
 import ChooseLanguage from "./Language";
 import { languages } from "@/locale";
 import { LanguageContext } from "@/contexts/Language";
+import { useIsClient } from "@/contexts/Client";
 
 export default function Header() {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const drawerRef = useRef<HTMLDivElement | null>(null);
     const { language } = useContext(LanguageContext);
+    const isClient = useIsClient();
 
     const handleRecallDrawer = () => {
         setIsDrawerOpen(false);
@@ -31,10 +33,10 @@ export default function Header() {
             document.removeEventListener("mousedown", handleClickOutside);
         }
     }, []);
-
+    
     return (
         <header className="w-screen flex justify-center text-white fixed z-50 tablet:px-2">
-            <div className="mt-2 flex gap-4 items-center w-full max-w-[1100px] p-1 px-2 tablet:p-2 bg-black bg-opacity-20 backdrop-blur-sm rounded-lg tablet:mr-0">
+            <div className="mt-2 flex gap-4 items-center w-full max-w-[1110px] p-1 px-2 tablet:p-2 tablet:mr-0 bg-black bg-opacity-20 backdrop-blur-sm rounded-lg">
                 <Link className="transition duration-300" href="/">
                     <h1 className="text-2xl p-2 tablet:p-0 font-bold bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-500 to-indigo-500">
                         Connections
@@ -47,6 +49,9 @@ export default function Header() {
                     </a>
                     <Link className="transition duration-300 group ease-in-out" href="/docs">
                         <Underline>{languages[language].home.header.documentation}</Underline>
+                    </Link>
+                    <Link className="transition duration-300 group ease-in-out" href="/connections">
+                        <Underline>{languages[language].dashboard.connections.title}</Underline>
                     </Link>
                 </div>
                 <div className="w-full flex justify-end gap-1">

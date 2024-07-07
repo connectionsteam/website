@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import DefaultButton from "@/components/Mixed/Button";
 import { DiscordMember, GuildPayload, ModPermType } from "@/types";
 import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/modal";
@@ -9,6 +9,7 @@ import { api } from "@/utils/api";
 import GuildModCard from "./Card";
 import GuildModModal from "./Modal";
 import { UserContext } from "@/contexts/User";
+import { useLanguage } from "@/hooks/useLanguage";
 
 interface Props {
     guild: GuildPayload;
@@ -22,6 +23,7 @@ export interface MenuProps {
 }
 
 export default function GuildMods({ guild, setGuild, members }: Props) {
+    const l = useLanguage();
     const { user } = useContext(UserContext);
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     const [query, setQuery] = useState("");
@@ -67,7 +69,7 @@ export default function GuildMods({ guild, setGuild, members }: Props) {
     return (
         <>
             <div className="flex flex-col gap-2">
-                <h1 className="font-semibold text-xl">Administradores</h1>
+                <h1 className="font-semibold text-xl">{l.dashboard.guilds.mods.title}</h1>
                 <div className="grid grid-cols-3 gap-3 w-full tablet:grid-cols-1">
                     <AnimatePresence>
                         {Object.entries(guild.mods).map(([key, mod], index) => (
@@ -85,7 +87,7 @@ export default function GuildMods({ guild, setGuild, members }: Props) {
                     {Object.entries(guild.mods).find(([id]) => id === user?.id) && (
                         <DefaultButton onClick={onOpen} className="h-full w-full p-5">
                             <LuPlusCircle size={20} />
-                            <span>Adicionar moderador</span>
+                            <span>{l.dashboard.guilds.mods.addModerator}</span>
                         </DefaultButton>
                     )}
                 </div>
@@ -96,7 +98,7 @@ export default function GuildMods({ guild, setGuild, members }: Props) {
                 base: "max-h-screen overflow-y-auto",
             }} isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent className="bg-neutral-800 text-white">
-                    <ModalHeader className="flex flex-col gap-1 bg-neutral-800">Adicionar moderador</ModalHeader>
+                    <ModalHeader className="flex flex-col gap-1 bg-neutral-800">{l.dashboard.guilds.mods.addModerator}</ModalHeader>
                     <ModalBody>
                         <GuildModModal key={0} query={query} setQuery={setQuery} handleAddMod={handleAddMod} users={members} />
                     </ModalBody>

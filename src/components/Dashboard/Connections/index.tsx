@@ -99,7 +99,7 @@ export default function ConnectionsComponent({ connections, setConnections }: Pr
                     base: "max-h-screen overflow-y-auto",
                 }} isOpen={isOpen} onOpenChange={onOpenChange}>
                     <ModalContent className="bg-neutral-800 text-white">
-                        <ModalHeader className="flex flex-col gap-1 bg-neutral-800">Editar conexão {connectionProps?.connection?.name}</ModalHeader>
+                        <ModalHeader className="flex flex-col gap-1 bg-neutral-800">{languages[language].dashboard.connections.edit.title} {connectionProps?.connection?.name}</ModalHeader>
                         <ModalBody>
                             <ConnectionComponent key={0} connection={connectionProps.connection as ConnectionPayload} />
                         </ModalBody>

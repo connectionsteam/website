@@ -6,6 +6,7 @@ import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nex
 import GuildConnectConnection from "../../Connection/Connect";
 import ConnectedConnnectionCard from "./Card";
 import { api } from "@/utils/api";
+import { useLanguage } from "@/hooks/useLanguage";
 
 interface Props {
     guild: GuildPayload;
@@ -18,6 +19,7 @@ interface Props {
 
 export default function Connections({ guild, setGuild, channels, connection, handleSelectConnection }: Props) {
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+    const l = useLanguage();
     const [connectionProps, setConnectionProps] = useState<ConnectedConnectionsState>({
         hover: null,
         removing: null
@@ -40,7 +42,7 @@ export default function Connections({ guild, setGuild, channels, connection, han
 
     return (
         <div className="w-full rounded-lg bg-neutral-800 p-6 transition flex flex-col gap-4">
-            <h1 className="font-semibold text-xl">Conexões</h1>
+            <h1 className="font-semibold text-xl">{l.dashboard.connections.title}</h1>
             <div className="grid grid-cols-3 gap-3 w-full tablet:grid-cols-2 mobile:grid-cols-1">
                 {guild.connections ? (
                     guild.connections.map((connection) => (
@@ -59,7 +61,7 @@ export default function Connections({ guild, setGuild, channels, connection, han
                         className="flex items-center justify-center gap-2 p-5 h-full w-full rounded-lg bg-neutral-800 hover:bg-transparent transition"
                     >
                         <LuPlusCircle size={26} />
-                        <span>Adicionar conexão</span>
+                        <span>{l.dashboard.connections.addConnection}</span>
                     </button>
                 </div>
                 <Modal classNames={{
@@ -68,7 +70,7 @@ export default function Connections({ guild, setGuild, channels, connection, han
                     base: "max-h-screen overflow-y-auto",
                 }} isOpen={isOpen} onOpenChange={onOpenChange}>
                     <ModalContent className="bg-neutral-800 text-white">
-                        <ModalHeader className="flex flex-col gap-1 bg-neutral-800">Conectar a uma conexão</ModalHeader>
+                        <ModalHeader className="flex flex-col gap-1 bg-neutral-800">{l.dashboard.connections.connectToConnection}</ModalHeader>
                         <ModalBody>
                             <GuildConnectConnection
                                 setGuild={setGuild}

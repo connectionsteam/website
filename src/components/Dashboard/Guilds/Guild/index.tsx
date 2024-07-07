@@ -4,7 +4,7 @@ import { ConnectedConnectionPayload, DiscordMember, GuildChannelsPayload, GuildP
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import GuildSkeleton from "./Skeleton";
 import Infos from "./Infos";
 import Channels from "./Channels";
@@ -12,6 +12,7 @@ import Connections from "./Connecions";
 import GuildEditConnection from "../Connection";
 import ProtectedRoute from "@/components/Mixed/ProtectedRoute";
 import Cases from "./Cases";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export default function GuildComponent() {
     const router = useRouter();
@@ -21,6 +22,7 @@ export default function GuildComponent() {
     const [threads, setThreads] = useState<GuildThreadsPayload[]>([]);
     const [connection, setConnection] = useState<ConnectedConnectionPayload>(null!);
     const [members, setMembers] = useState<DiscordMember[]>([]);
+    const l = useLanguage();
 
     const [tab, setTab] = useState<TabState>({
         tabs: [],
@@ -93,7 +95,7 @@ export default function GuildComponent() {
                 tabs: [
                     {
                         value: "infos",
-                        title: "Informações",
+                        title: l.dashboard.guilds.tabs.infos,
                         content: <Infos
                             members={members}
                             setGuild={setGuild}
@@ -106,17 +108,17 @@ export default function GuildComponent() {
                     },
                     {
                         value: "channels",
-                        title: "Canais",
+                        title: l.dashboard.guilds.tabs.channels,
                         content: <Channels setGuild={setGuild} guild={guild} channels={channels} key={0} />
                     },
                     {
                         value: "cases",
-                        title: "Casos",
+                        title: l.dashboard.guilds.tabs.cases,
                         content: <Cases members={members} guild={guild} key={0} />
                     },
                     {
                         value: "connections",
-                        title: connection?.name || "Conexões",
+                        title: l.dashboard.guilds.tabs.connections,
                         content: <Connections
                             handleSelectConnection={handleSelectConnection}
                             connection={connection}

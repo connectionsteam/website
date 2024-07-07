@@ -2,6 +2,7 @@ import Avatar from "@/components/Mixed/Avatar";
 import { DiscordMember, GuildChannelsPayload, GuildPayload, GuildThreadsPayload } from "@/types";
 import GuildMods from "./Mods";
 import Threads from "./Threads";
+import { useLanguage } from "@/hooks/useLanguage";
 
 interface Props {
     guild: GuildPayload;
@@ -13,9 +14,11 @@ interface Props {
 }
 
 export default function Infos({ guild, setGuild, threads, channels, setThreads, members }: Props) {
+    const l = useLanguage();
+    
     return (
         <div className="w-full rounded-lg bg-neutral-800 p-6 transition flex flex-col gap-4">
-            <h1 className="font-semibold text-xl">Informações</h1>
+            <h1 className="font-semibold text-xl">{l.dashboard.guilds.info.title}</h1>
             <div className="flex flex-col gap-6">
                 <div className="flex gap-3">
                     <Avatar className="w-16 h-16" key={0} src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`} />

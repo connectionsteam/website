@@ -6,6 +6,7 @@ import { useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import ConnectionChannels from "./Channels";
 import JoinConnectionLanguage from "./Languages";
+import { useLanguage } from "@/hooks/useLanguage";
 
 interface Props {
     guild: GuildPayload;
@@ -16,6 +17,7 @@ interface Props {
 };
 
 export default function GuildConnectConnection({ guild, connection, channels, onClose, setGuild }: Props) {
+    const l = useLanguage();
     const [body, setBody] = useState<ConnectionBody>({
         channel: {
             id: "",
@@ -88,9 +90,9 @@ export default function GuildConnectConnection({ guild, connection, channels, on
                 obrigatory
                 onChange={(event) => setBody({ ...body, name: event.target.value })}
                 key={0}
-                label="Nome da conexão"
+                label={l.dashboard.guilds.connections.connectionName}
                 type="text"
-                placeholder="conexaolegal"
+                placeholder={l.dashboard.guilds.connections.connectionPlaceholder}
             />
             <JoinConnectionLanguage setBody={setBody} body={body} />
             <ConnectionChannels setBody={setBody} body={body} channels={channels} connection={connection} />
@@ -104,9 +106,9 @@ export default function GuildConnectConnection({ guild, connection, channels, on
                     {loading ? (
                         <div className="flex gap-2 items-center w-full justify-center">
                             <AiOutlineLoading3Quarters className="animate-spin" />
-                            <span className="font-semibold">Conectando...</span>
+                            <span className="font-semibold">{l.dashboard.guilds.connections.connecting}</span>
                         </div>
-                    ) : <span className="font-semibold">Conectar</span>}
+                    ) : <span className="font-semibold">{l.dashboard.guilds.connections.connect}</span>}
                 </button>
             </div>
         </div>

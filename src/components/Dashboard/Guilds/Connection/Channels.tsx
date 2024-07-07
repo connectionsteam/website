@@ -1,4 +1,5 @@
 "use client"
+import { useLanguage } from "@/hooks/useLanguage";
 import { ConnectedConnectionPayload, ConnectionBody, GuildChannelsPayload } from "@/types";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger, Switch } from "@nextui-org/react";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -13,6 +14,7 @@ interface Props {
 
 export default function ConnectionChannels({ channels, connection, body, setBody }: Props) {
     const [groupedChannels, setGroupedChannels] = useState<Record<string, GuildChannelsPayload[]>>();
+    const l = useLanguage();
 
     useEffect(() => {
         const groupChannelsByCategory = () => {
@@ -41,7 +43,7 @@ export default function ConnectionChannels({ channels, connection, body, setBody
     return (
         <div className="rounded-lg bg-neutral-800 transition flex flex-col gap-2">
             <label className="text-neutral-300 flex gap-1">
-                <div>Canal da conexão</div>
+                <div>{l.dashboard.guilds.connections.channel}</div>
                 <span className="text-red-500">*</span>
             </label>
             <div className="flex flex-col gap-2 items-start">
@@ -50,7 +52,7 @@ export default function ConnectionChannels({ channels, connection, body, setBody
                         <DropdownTrigger>
                             <button className="w-full bg-neutral-900/50 hover:bg-neutral-900 transition p-3 rounded-lg min-w-52 text-start">
                                 {body.channel.name === ""
-                                    ? "Clique aqui e selecione um canal" :
+                                    ? l.dashboard.guilds.connections.selectchannel :
                                     <div className="flex gap-1 items-center">
                                         <HiHashtag />
                                         <span>
@@ -96,7 +98,7 @@ export default function ConnectionChannels({ channels, connection, body, setBody
                             ))}
                         </DropdownMenu>
                     </Dropdown>
-                ) : <div>Carregando...</div>}
+                ) : <div>Loading...</div>}
             </div>
         </div>
     )

@@ -6,6 +6,7 @@ import GuildConnectionFlags from "./Flags";
 import Image from "next/image";
 import { HiHashtag } from "react-icons/hi";
 import { BiLeftArrowAlt } from "react-icons/bi";
+import { useLanguage } from "@/hooks/useLanguage";
 
 interface Props {
     guild: GuildPayload;
@@ -17,6 +18,8 @@ interface Props {
 }
 
 export default function GuildEditConnection({ guild, setGuild, channels, connection, setConnection, handleChangeTab }: Props) {
+    const l = useLanguage();
+    
     return (
         <div className="relative w-full">
             {connection.flags.includes(ConnectedConnectionFlags.Frozen) && (
@@ -31,9 +34,9 @@ export default function GuildEditConnection({ guild, setGuild, channels, connect
                 <div className="flex gap-4 items-center">
                     <button onClick={() => handleChangeTab("connections")} className="flex gap-2 items-center bg-neutral-900/50 p-2 text-sm rounded-lg transition hover:bg-neutral-900/100">
                         <BiLeftArrowAlt />
-                        <span>Voltar</span>
+                        <span>{l.dashboard.guilds.connections.infos.back}</span>
                     </button>
-                    <h1 className="font-bold text-xl">Editar conexão {connection.name}</h1>
+                    <h1 className="font-bold text-xl">{l.dashboard.guilds.connections.infos.title} {connection.name}</h1>
                 </div>
                 <div className="flex flex-col gap-6">
                     <div className="flex gap-3">
@@ -44,10 +47,10 @@ export default function GuildEditConnection({ guild, setGuild, channels, connect
                         </div>
                     </div>
                     <div className="flex flex-col gap-2">
-                        <h1 className="font-bold text-xl">Informações</h1>
+                        <h1 className="font-bold text-xl">{l.dashboard.guilds.connections.infos.informations}</h1>
                         <div className="flex flex-col gap-1">
                             <div className="flex items-center gap-1">
-                                <div>Palavras bloqueadas:</div>
+                                <div>{l.dashboard.guilds.connections.infos.blockedWords}:</div>
                                 <span className="text-neutral-300">
                                     {connection.blockwords
                                         && connection.blockwords.length > 0 ? connection.blockwords.join(", ") : "Nenhuma"
@@ -55,13 +58,13 @@ export default function GuildEditConnection({ guild, setGuild, channels, connect
                                 </span>
                             </div>
                             <div className="flex gap-1">
-                                <div className="text-start">Flags:</div>
+                                <div className="text-start">{l.dashboard.guilds.connections.infos.flags}:</div>
                                 <span className="text-neutral-300">
                                     {connection.flags.length > 0 ? connection.flags.join(", ") : "Nenhuma"}
                                 </span>
                             </div>
                             <div className="flex gap-1">
-                                <div className="text-start">Canal:</div>
+                                <div className="text-start">{l.dashboard.guilds.connections.infos.channel}:</div>
                                 <div className="text-neutral-300 flex gap-2 bg-neutral-900/50 rounded-lg p-1 text-sm items-center">
                                     <HiHashtag/>
                                     <span>{channels.find((channel) => channel.id === connection.channelId)?.name}</span>
@@ -70,7 +73,7 @@ export default function GuildEditConnection({ guild, setGuild, channels, connect
                         </div>
                     </div>
                     <div className="flex flex-col gap-2">
-                        <h1 className="font-bold text-xl">Configurar</h1>
+                        <h1 className="font-bold text-xl">{l.dashboard.guilds.connections.infos.configure}</h1>
                         <div className="flex flex-col gap-3">
                             <BlockedWords setGuild={setGuild} setConnection={setConnection} guild={guild} connection={connection} />
                             <GuildConnectionFlags setGuild={setGuild} setConnection={setConnection} guild={guild} connection={connection} />

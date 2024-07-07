@@ -1,3 +1,4 @@
+import { useLanguage } from "@/hooks/useLanguage";
 import { ConnectedConnectionPayload, GuildPayload } from "@/types";
 import { api } from "@/utils/api";
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/modal";
@@ -10,6 +11,7 @@ interface Props {
 
 export const DeleteConnectedConnection = ({ connection, onRemove }: Props) => {
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+    const l = useLanguage();
 
     const handleDelete = async () => {
         onRemove();
@@ -27,13 +29,13 @@ export const DeleteConnectedConnection = ({ connection, onRemove }: Props) => {
                 base: "max-h-screen overflow-y-auto",
             }} isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent className="bg-neutral-800 text-white">
-                    <ModalHeader className="flex flex-col gap-1 bg-neutral-800">Desconectar conexão</ModalHeader>
+                    <ModalHeader className="flex flex-col gap-1 bg-neutral-800">{l.dashboard.guilds.connections.disconnect.title}</ModalHeader>
                     <ModalBody className="flex gap-2">
-                        <div>Você deseja mesmo desconectar de seu servidor a conexão <strong>{connection.name}</strong>?</div> 
+                        <div>{l.dashboard.guilds.connections.disconnect.disconnectConfirm} <strong>{connection.name}</strong>?</div>
                     </ModalBody>
                     <ModalFooter className="flex w-full justify-center">
                         <button onClick={handleDelete} className="flex gap-2 w-1/2 items-center justify-center font-semibold text-center border-red-500 border-2 transition hover:bg-red-500 p-2 rounded-lg">
-                            <span className="text-center">Desconectar</span>
+                            <span className="text-center">{l.dashboard.guilds.connections.disconnect.disconnect}</span>
                         </button>
                     </ModalFooter>
                 </ModalContent>

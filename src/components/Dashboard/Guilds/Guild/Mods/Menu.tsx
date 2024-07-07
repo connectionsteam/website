@@ -3,6 +3,7 @@ import { AnimatePresence } from "framer-motion";
 import { LuTrash } from "react-icons/lu";
 import { motion } from "framer-motion";
 import Avatar from "@/components/Mixed/Avatar";
+import { useLanguage } from "@/hooks/useLanguage";
 
 interface Props {
     mod: {
@@ -16,6 +17,7 @@ interface Props {
 
 export default function RemoveGuildMod({ mod, open, handleRemove }: Props) {
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+    const l = useLanguage();   
 
     const handleDeleteConnection = () => {
         handleRemove();
@@ -46,7 +48,7 @@ export default function RemoveGuildMod({ mod, open, handleRemove }: Props) {
                 base: "max-h-screen overflow-y-auto",
             }} isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent className="bg-neutral-800 text-white">
-                    <ModalHeader className="flex flex-col gap-1 bg-neutral-800">Deletar conexão</ModalHeader>
+                    <ModalHeader className="flex flex-col gap-1 bg-neutral-800">{l.dashboard.guilds.mods.delete}</ModalHeader>
                     <ModalBody className="flex gap-2">
                         <div className="flex flex-col gap-3">
                             <div className="flex gap-3 text-start rounded-lg p-3 bg-neutral-900/50 transition w-full">
@@ -56,12 +58,12 @@ export default function RemoveGuildMod({ mod, open, handleRemove }: Props) {
                                     <span className="text-neutral-300 text-sm">{mod.id}</span>
                                 </div>
                             </div>
-                            <div>Você deseja mesmo remover <strong>{mod.username}</strong> como moderador?</div>
+                            <div>{l.dashboard.guilds.mods.deleteConfirm} <strong>{mod.username}</strong>?</div>
                         </div>
                     </ModalBody>
                     <ModalFooter className="flex w-full justify-center">
                         <button onClick={handleDeleteConnection} className="flex gap-2 w-1/2 items-center justify-center font-semibold text-center border-red-500 border-2 transition hover:bg-red-500 p-2 rounded-lg">
-                            <span className="text-center">Deltar</span>
+                            <span className="text-center">{l.dashboard.guilds.mods.deletetext}</span>
                         </button>
                     </ModalFooter>
                 </ModalContent>

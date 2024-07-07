@@ -1,5 +1,6 @@
 import Avatar from "@/components/Mixed/Avatar";
 import DefaultButton from "@/components/Mixed/Button";
+import { useLanguage } from "@/hooks/useLanguage";
 import { ConnectionPayload } from "@/types";
 import { api } from "@/utils/api";
 import { ChangeEvent, useState } from "react";
@@ -9,6 +10,7 @@ export default function EditConnection({ connection }: { connection: ConnectionP
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [submited, setSubmited] = useState(false);
+    const l = useLanguage();
 
     const [infos, setInfos] = useState({
         description: connection.description,
@@ -63,19 +65,19 @@ export default function EditConnection({ connection }: { connection: ConnectionP
                         className="h-20 w-20 rounded-full"
                     />
                     <h1 className="text-xl font-semibold">{connection.name}</h1>
-                    <input placeholder={connection.icon} className="transition w-full p-3 rounded-lg bg-neutral-900/50 focus:outline-none" value={infos.icon} onChange={(event) => handleChangeQuery(event, "icon")} type="text" />
+                    <input placeholder={connection.icon || l.dashboard.connections.edit.placeholders.icon} className="transition w-full p-3 rounded-lg bg-neutral-900/50 focus:outline-none" value={infos.icon} onChange={(event) => handleChangeQuery(event, "icon")} type="text" />
                 </div>
-                <textarea placeholder={connection.description} className="transition w-full p-3 rounded-lg bg-neutral-900/50 focus:outline-none" value={infos.description} onChange={(event) => handleChangeQuery(event, "description")} />
-                {submited && <div className="text-green-500">Salvo com sucesso!</div>}
+                <textarea placeholder={connection.description || l.dashboard.connections.edit.placeholders.description} className="transition w-full p-3 rounded-lg bg-neutral-900/50 focus:outline-none" value={infos.description} onChange={(event) => handleChangeQuery(event, "description")} />
+                {submited && <div className="text-green-500">{l.dashboard.connections.edit.success}</div>}
                 <DefaultButton className="p-3" onClick={updateConnection}>
                     {loading ? (
                         <div className="flex gap-2 items-center w-full justify-center">
                             <AiOutlineLoading3Quarters className="animate-spin" />
-                            <span className="font-semibold">Salvando...</span>
+                            <span className="font-semibold">{l.dashboard.connections.edit.saving}</span>
                         </div>
-                    ) : <span className="font-semibold">Salvar</span>}
+                    ) : <span className="font-semibold">{l.dashboard.connections.edit.save}</span>}
                 </DefaultButton>
-                {(infos.description !== connection.description || infos.icon !== connection.icon) && <button onClick={handleRedefine} className="text-blue-500 underline">Redefinir</button>}
+                {(infos.description !== connection.description || infos.icon !== connection.icon) && <button onClick={handleRedefine} className="text-blue-500 underline">{l.dashboard.connections.edit.redefine}</button>}
                 {errors.api && <div className="text-red-500">{errors.api}</div>}
             </div>
         </div>

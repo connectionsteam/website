@@ -3,6 +3,7 @@ import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure
 import { AnimatePresence } from "framer-motion";
 import { LuTrash } from "react-icons/lu";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/hooks/useLanguage";
 
 interface Props {
     thread: GuildThreadsPayload;
@@ -12,6 +13,7 @@ interface Props {
 
 export default function DeleteThread({ thread, open, handleRemove }: Props) {
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+    const l = useLanguage();
 
     const handleDeleteConnection = () => {
         handleRemove();
@@ -42,13 +44,13 @@ export default function DeleteThread({ thread, open, handleRemove }: Props) {
                 base: "max-h-screen overflow-y-auto",
             }} isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent className="bg-neutral-800 text-white">
-                    <ModalHeader className="flex flex-col gap-1 bg-neutral-800">Deletar thread</ModalHeader>
+                    <ModalHeader className="flex flex-col gap-1 bg-neutral-800">{l.dashboard.guilds.threads.thread.delete}</ModalHeader>
                     <ModalBody className="flex gap-2">
-                        <div>Você deseja mesmo deletar a thread <strong>{thread.id}</strong>?</div>
+                        <div>{l.dashboard.guilds.threads.thread.deleteConfirm} <strong>{thread.id}</strong>?</div>
                     </ModalBody>
                     <ModalFooter className="flex w-full justify-center">
                         <button onClick={handleDeleteConnection} className="flex gap-2 w-1/2 items-center justify-center font-semibold text-center border-red-500 border-2 transition hover:bg-red-500 p-2 rounded-lg">
-                            <span className="text-center">Deltar</span>
+                            <span className="text-center">{l.dashboard.guilds.threads.thread.deletetext}</span>
                         </button>
                     </ModalFooter>
                 </ModalContent>

@@ -1,3 +1,4 @@
+import { useLanguage } from "@/hooks/useLanguage";
 import { ConnectedConnectionFlags, ConnectedConnectionPayload, GuildPayload } from "@/types";
 import { api } from "@/utils/api";
 import { Switch } from "@nextui-org/switch";
@@ -12,44 +13,45 @@ interface Props {
 
 export default function GuildConnectionFlags({ connection, guild, setConnection, setGuild }: Props) {
     const [flags, setFlags] = useState(connection.flags || []);
+    const l = useLanguage();
 
     const flagsDescriptions: Record<ConnectedConnectionFlags, { title: string, description: string }> = {
         [ConnectedConnectionFlags.Locked]: {
-            title: "Conexão bloqueada",
-            description: "Conexão bloqueada por moderadores, a conexão não pode receber e nem enviar mensagens",
+            title: l.dashboard.guilds.connections.flags.allowFiles,
+            description: l.dashboard.guilds.connections.flags.allowFilesDescription,
         },
         [ConnectedConnectionFlags.Frozen]: {
-            title: "Conexão congelada",
-            description: "Conexão congelada por moderadores, a conexão não pode ser editada",
+            title: l.dashboard.guilds.connections.flags.allowInvites,
+            description: l.dashboard.guilds.connections.flags.allowInvitesDescription,
         },
         [ConnectedConnectionFlags.AllowFiles]: {
-            title: "Permitir arquivos",
-            description: "Permitir envio de arquivos",
+            title: l.dashboard.guilds.connections.flags.noIndentification,
+            description: l.dashboard.guilds.connections.flags.noIndentificationDescription,
         },
         [ConnectedConnectionFlags.AllowInvites]: {
-            title: "Permitir convites",
-            description: "Permitir convites de outros servidores",
+            title: l.dashboard.guilds.connections.flags.allowOrigin,
+            description: l.dashboard.guilds.connections.flags.allowOriginDescription,
         },
         [ConnectedConnectionFlags.AllowLinks]: {
-            title: "Permitir links",
-            description: "Permitir links nas mensagens enviadas",
+            title: l.dashboard.guilds.connections.flags.allowEmojis,
+            description: l.dashboard.guilds.connections.flags.allowEmojisDescription,
         },
         [ConnectedConnectionFlags.NoIndentification]: {
-            title: "Não identificar servidor",
-            description: "Não identificar nome do servidor",
+            title: l.dashboard.guilds.connections.flags.compactModeEnabled,
+            description: l.dashboard.guilds.connections.flags.compactModeEnabledDescription,
         },
         [ConnectedConnectionFlags.AllowOrigin]: {
-            title: "Permitir origem",
-            description: "Permitir aparecer informações do servidor da mensagem enviada, como nome e id",
+            title: l.dashboard.guilds.connections.flags.allowLinks,
+            description: l.dashboard.guilds.connections.flags.allowLinksDescription,
         },
         [ConnectedConnectionFlags.AllowEmojis]: {
-            title: "Permitir emojis",
-            description: "Permitir somente emojis do discord",
+            title: l.dashboard.guilds.connections.flags.allowInvites,
+            description: l.dashboard.guilds.connections.flags.allowInvitesDescription,
         },
         [ConnectedConnectionFlags.CompactModeEnabled]: {
-            title: "Modo compacto ativado",
-            description: "Mensagem mais compacta a ser enviada",
-        },
+            title: l.dashboard.guilds.connections.flags.noIndentification,
+            description: l.dashboard.guilds.connections.flags.noIndentificationDescription,
+        }
     };
 
     useEffect(() => {
@@ -80,9 +82,9 @@ export default function GuildConnectionFlags({ connection, guild, setConnection,
     return (
         <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-1">
-                <h1 className="text-lg">Flags</h1>
+                <h1 className="text-lg">{l.dashboard.guilds.connections.flags.title}</h1>
                 <span className="text-neutral-300">
-                    Selecione abaixo quais flags você deseja ativar para a conexão, ou desabilite qualquer que desejar.
+                    {l.dashboard.guilds.connections.flags.description}
                 </span>
             </div>
             <div className="gap-4 grid grid-cols-3 tablet:grid-cols-1 items-start">
@@ -90,7 +92,7 @@ export default function GuildConnectionFlags({ connection, guild, setConnection,
                     <div key={index} className="flex flex-col gap-1 p-3 rounded-lg bg-neutral-900 h-full place-content-center">
                         <div className="flex items-center gap-1">
                             <div className="relative">
-                                {(connection.flags.includes(ConnectedConnectionFlags.Frozen) && flag !== ConnectedConnectionFlags.Frozen) && (
+                                {connection.flags.includes(ConnectedConnectionFlags.Frozen) && (
                                     <div className="absolute top-0 left-0 w-14 h-full bg-gradient-to-tr from-cyan-300 via-sky-200 to-sky-500 rounded-full z-50"></div>
                                 )}
                                 <Switch

@@ -6,8 +6,11 @@ import { BiCheck } from "react-icons/bi";
 import DefaultButton from "../Mixed/Button";
 import { BackgroundGradient } from "../ui/Gradient";
 import { LuArrowLeft } from "react-icons/lu";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export default function Plans({ plans, setMorePlans }: { plans: PlanStructure[], setMorePlans: (value: boolean) => void }) {
+    const l = useLanguage();
+    
     return (
         <>
             <div className="w-full flex items-center gap-3 flex-col">
@@ -38,7 +41,7 @@ export default function Plans({ plans, setMorePlans }: { plans: PlanStructure[],
                                 <span className="font-bold text-3xl">{plan.name}</span>
                                 <h1 className="flex items-end">
                                     <span className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-500 to-indigo-500">R$ {plan.price}</span>
-                                    <span className="text-neutral-300 text-sm">/mês</span>
+                                    <span className="text-neutral-300 text-sm">/{l.plans.month}</span>
                                 </h1>
                             </div>
                             <div className="flex-grow mb-4">
@@ -50,7 +53,7 @@ export default function Plans({ plans, setMorePlans }: { plans: PlanStructure[],
                                 ))}
                             </div>
                             <DefaultButton onClick={() => window.location.href = "https://www.youtube.com/watch?v=xvFZjo5PgG0"} className="p-3">
-                                <div className="font-bold">Comprar</div>
+                                <div className="font-bold">{l.plans.buy}</div>
                             </DefaultButton>
                         </motion.div>
                     );

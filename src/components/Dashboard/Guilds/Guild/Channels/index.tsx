@@ -1,3 +1,4 @@
+import { useLanguage } from "@/hooks/useLanguage";
 import { ConnectedConnectionFlags, ConnectedConnectionPayload, GuildChannelsPayload, GuildPayload } from "@/types";
 import { api } from "@/utils/api";
 import { useEffect, useState } from "react";
@@ -11,6 +12,8 @@ interface Props {
 }
 
 export default function Channels({ channels, guild, setGuild }: Props) {
+    const l = useLanguage();
+
     const [groupedChannels, setGroupedChannels] = useState<Record<string, GuildChannelsPayload[]>>({});
 
     useEffect(() => {
@@ -56,9 +59,9 @@ export default function Channels({ channels, guild, setGuild }: Props) {
     return (
         <div className="flex flex-col gap-4 rounded-lg bg-neutral-800 p-6">
             <div className="flex flex-col">
-                <h1 className="font-bold text-xl">Editar Canais bloqueados</h1>
+                <h1 className="font-bold text-xl">{l.dashboard.guilds.channels.title}</h1>
                 <span className="text-neutral-300">
-                    Clique nos cadeados para bloquear e desbloquear o canal de cada conexão conectada em seu servidor
+                    {l.dashboard.guilds.channels.description}
                 </span>
             </div>
             <div className="w-full">

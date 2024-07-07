@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { BiX } from "react-icons/bi";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
+import { useLanguage } from "@/hooks/useLanguage";
 
 interface Props {
     guild: GuildPayload;
@@ -17,6 +18,7 @@ export default function BlockedWords({ connection, guild, setConnection, setGuil
     const [words, setWords] = useState(connection.blockwords || []);
     const [word, setWord] = useState("");
     const [loading, setLoading] = useState({ loading: false, check: false });
+    const l = useLanguage();
 
     const handleSaveWords = async () => {
         try {
@@ -77,9 +79,9 @@ export default function BlockedWords({ connection, guild, setConnection, setGuil
     return (
         <div className="flex flex-col gap-3">
             <div className="flex flex-col">
-                <div className="text-lg">Palavras bloqueadas</div>
+                <div className="text-lg">{l.dashboard.guilds.connections.blockedWords.title}</div>
                 <span className="text-neutral-300">
-                    Digite abaixo palavras que você deseja bloquear, separadas por vírgulas (supimpa, carambolas, etc)
+                    {l.dashboard.guilds.connections.blockedWords.description}
                 </span>
             </div>
             <div className="w-full relative">
@@ -113,7 +115,7 @@ export default function BlockedWords({ connection, guild, setConnection, setGuil
                         </AnimatePresence>
                         <input
                             className="outline-none bg-transparent"
-                            placeholder="Digite aqui alguma palavra."
+                            placeholder={l.dashboard.guilds.connections.blockedWords.type}
                             type="text"
                             value={word}
                             onKeyDown={handleKeyDown}
@@ -124,7 +126,7 @@ export default function BlockedWords({ connection, guild, setConnection, setGuil
                         className="p-3 bg-neutral-900 transition hover:bg-neutral-900/50 rounded-lg max-w-28 justify-center flex gap-2 items-center"
                         onClick={handleSaveWords}
                     >
-                        <span>Salvar</span>
+                        <span>{l.dashboard.guilds.connections.blockedWords.save}</span>
                         {loading.loading && <AiOutlineLoading3Quarters className="animate-spin" size={18} />}
                         {loading.check && <FaCheckCircle className="text-green-500" size={18} />}
                     </button>

@@ -5,8 +5,11 @@ import Slider, { CustomArrowProps, Settings } from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { PlanStructure } from "@/types";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export default function Carousel({ plans }: { plans: PlanStructure[] }) {
+    const l = useLanguage();
+
     const settings: Settings = {
         dots: false,
         infinite: true,
@@ -32,7 +35,7 @@ export default function Carousel({ plans }: { plans: PlanStructure[] }) {
                                 </div>
                                 <h1 className="flex items-end">
                                     <span className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-500 to-indigo-500">R$ {plan.price}</span>
-                                    <span className="text-neutral-300 text-sm">/mês</span>
+                                    <span className="text-neutral-300 text-sm">/{l.plans.month}</span>
                                 </h1>
                             </div>
                             <div className="h-[270px] mt-3 flex flex-col gap-2">
@@ -46,7 +49,7 @@ export default function Carousel({ plans }: { plans: PlanStructure[] }) {
                                 ))}
                             </div>
                             <DefaultButton onClick={() => window.location.href = "https://www.youtube.com/watch?v=xvFZjo5PgG0"} className="p-3">
-                                <div className="font-bold">Comprar</div>
+                                <div className="font-bold">{l.plans.buy}</div>
                             </DefaultButton>
                         </div>
                     );

@@ -1,7 +1,8 @@
 import DefaultInput from "@/components/Mixed/Input";
+import { useLanguage } from "@/hooks/useLanguage";
 import { ConnectionBody, Languages } from "@/types";
-import { Avatar, Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/react";
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/react";
+import { ChangeEvent, Dispatch, useState } from "react";
 
 interface Props {
     setBody: Dispatch<ConnectionBody>;
@@ -11,6 +12,7 @@ interface Props {
 export default function JoinConnectionLanguage({ setBody, body }: Props) {
     const [query, setQuery] = useState("");
     const { isOpen, onOpenChange, onOpen, onClose } = useDisclosure();
+    const l = useLanguage();
 
     const handleChangeQuery = (event: ChangeEvent<HTMLInputElement>) => {
         setQuery(event.target.value);
@@ -32,11 +34,6 @@ export default function JoinConnectionLanguage({ setBody, body }: Props) {
                 {(body.language?.key === "" && body.language?.language === "")
                     ? "Clique aqui e selecione uma linguagem" :
                     <div className="w-full flex gap-2 items-center">
-                        <Avatar
-                            src={`https://flagpedia.net/data/flags/w702/${body.language?.key}.webp`}
-                            name={body.language?.key}
-                            className="w-5 h-5 rounded-sm"
-                        />
                         <span>{body.language?.language}</span>
                     </div>
                 }
@@ -47,14 +44,14 @@ export default function JoinConnectionLanguage({ setBody, body }: Props) {
                 base: "max-h-screen overflow-y-auto",
             }} isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent className="bg-neutral-800 text-white">
-                    <ModalHeader className="flex flex-col gap-1 bg-neutral-800">Linguagem desejada</ModalHeader>
+                    <ModalHeader className="flex flex-col gap-1 bg-neutral-800">{l.dashboard.guilds.connections.language}</ModalHeader>
                     <ModalBody>
                         <DefaultInput
                             value={query}
                             placeholder="english"
                             type="text"
                             obrigatory
-                            label="Procure por uma linguagem"
+                            label={l.dashboard.guilds.connections.searchForLanguage}
                             onChange={handleChangeQuery}
                         />
                         <div className="bg-neutral-800 w-full h-full flex flex-col gap-2 max-h-64 overflow-y-auto items-start">
@@ -66,11 +63,6 @@ export default function JoinConnectionLanguage({ setBody, body }: Props) {
                                         key={key}
                                         onClick={() => handleChangeLanguage(key as keyof typeof Languages)}
                                     >
-                                        <Avatar
-                                            src={`https://flagpedia.net/data/flags/w702/${key}.webp`}
-                                            name={key}
-                                            className="w-5 h-5 rounded-sm"
-                                        />
                                         <span>{language}</span>
                                     </button>
                                 ))}

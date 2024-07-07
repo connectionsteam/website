@@ -1,5 +1,5 @@
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/modal";
-import { ChangeEvent, ChangeEventHandler, Dispatch, SetStateAction, useContext, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useContext, useState } from "react";
 import { LuPlusCircle } from "react-icons/lu";
 import CreateConnection from "./CreateConnection";
 import { ConnectionPayload, RequestPost } from "@/types";

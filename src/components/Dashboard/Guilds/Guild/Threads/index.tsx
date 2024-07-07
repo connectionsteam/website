@@ -3,6 +3,7 @@ import { useState } from "react";
 import { MenuProps } from "../Mods";
 import DeleteThread from "./Menu";
 import { api } from "@/utils/api";
+import { useLanguage } from "@/hooks/useLanguage";
 
 interface Props {
     channels: GuildChannelsPayload[];
@@ -28,6 +29,7 @@ export default function Threads({ threads, setThreads, channels, guild }: Props)
 
 function Thread({ thread, setThreads, channels, threads, guild }: ThreadProps) {
     const threadChannels = channels.filter((channel) => thread.children.includes(channel.id));
+    const l = useLanguage();
 
     const [menu, setMenu] = useState<MenuProps>({
         hover: null,
@@ -69,19 +71,19 @@ function Thread({ thread, setThreads, channels, threads, guild }: ThreadProps) {
             <div className="flex gap-2 items-center bg-neutral-900/50 rounded-lg p-3 break-all">
                 <div className="flex flex-col gap-1">
                     <div className="flex gap-1">
-                        <div className="font-semibold">Id de origem:</div>
+                        <div className="font-semibold">{l.dashboard.guilds.threads.thread.originId}:</div>
                         <span>{thread.originId}</span>
                     </div>
                     <div className="flex gap-1">
-                        <div className="font-semibold">Criador da thread:</div>
+                        <div className="font-semibold">{l.dashboard.guilds.threads.thread.creatorId}:</div>
                         <span>{thread.creatorId}</span>
                     </div>
                     <div className="flex items-start text-start gap-2">
-                        <span className="font-semibold">Canais da thread:</span>
+                        <span className="font-semibold">{l.dashboard.guilds.threads.thread.channels}:</span>
                         {threadChannels.map((channel) => channel.name).join(", ")}
                     </div>
                     <div className="text-sm text-neutral-300 flex gap-1">
-                        <div className="font-semibold">Criada em:</div>
+                        <div className="font-semibold">{l.dashboard.guilds.threads.thread.created}:</div>
                         <span>{new Date(thread.createdTimestamp).toLocaleString()}</span>
                     </div>
                 </div>

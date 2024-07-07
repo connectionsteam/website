@@ -1,6 +1,7 @@
 import Avatar from "@/components/Mixed/Avatar";
 import DefaultInput from "@/components/Mixed/Input";
-import { DiscordMember, GuildPayload } from "@/types";
+import { useLanguage } from "@/hooks/useLanguage";
+import { DiscordMember } from "@/types";
 
 interface Props {
     query: string;
@@ -10,13 +11,15 @@ interface Props {
 }
 
 export default function GuildModModal({ query, setQuery, handleAddMod, users }: Props) {
+    const l = useLanguage();
+
     return (
         <>
             <DefaultInput
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder="spyei"
                 type="text"
-                label="Procure por um usuário"
+                label={l.dashboard.guilds.mods.label}
             />
             <div className="flex flex-col gap-3 w-full max-h-96 overflow-y-auto justfy-start">
                 {users ? (
