@@ -61,6 +61,8 @@ export const languages = {
             premium: {
                 features: [
                     "Tudo do Basic Premium",
+                    "Bot próprio e customizavel!",
+                    "Máximo 5 servidores no bot"
                 ]
             }
         }
@@ -127,6 +129,8 @@ export const languages = {
             premium: {
                 features: [
                     "Everything from Basic Premium",
+                    "Own bot and customizable!",
+                    "Max 5 servers in the bot"
                 ]
             }
         }
