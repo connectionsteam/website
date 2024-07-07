@@ -68,7 +68,7 @@ export default function GuildComponent() {
         const fetchGuild = async () => {
             const guildRes = await api.get(`/guilds/${id}`);
             const channelRes = await api.get(`/guilds/${id}/channels`);
-            const membersRes = await api.get(`/guilds/${id}/members`);
+            const membersRes = await api.get(`/guilds/${id}/members?limit=1000`);
 
             setMembers(membersRes.data);
             setThreads(guildRes.data.threads || []);
@@ -94,17 +94,17 @@ export default function GuildComponent() {
                             threads={threads}
                             key={0}
                             guild={guild}
-                        />,
+                        />
                     },
                     {
                         value: "channels",
                         title: "Canais",
-                        content: <Channels setGuild={setGuild} guild={guild} channels={channels} key={0} />,
+                        content: <Channels setGuild={setGuild} guild={guild} channels={channels} key={0} />
                     },
                     {
                         value: "cases",
                         title: "Casos",
-                        content: <Cases members={members} setGuild={setGuild} guild={guild} key={0} />,
+                        content: <Cases members={members} guild={guild} key={0} />
                     },
                     {
                         value: "connections",
@@ -117,7 +117,7 @@ export default function GuildComponent() {
                             channels={channels}
                             setGuild={setGuild}
                             guild={guild}
-                        />,
+                        />
                     }
                 ],
                 selected: tab.selected,
