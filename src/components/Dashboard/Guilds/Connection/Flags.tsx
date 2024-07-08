@@ -17,42 +17,43 @@ export default function GuildConnectionFlags({ connection, guild, setConnection,
 
     const flagsDescriptions: Record<ConnectedConnectionFlags, { title: string, description: string }> = {
         [ConnectedConnectionFlags.Locked]: {
+            title: l.dashboard.guilds.connections.flags.locked,
+            description: l.dashboard.guilds.connections.flags.lockedDescription,
+        },
+        [ConnectedConnectionFlags.Frozen]: {
+            title: l.dashboard.guilds.connections.flags.frozen,
+            description: l.dashboard.guilds.connections.flags.frozenDescription,
+        },
+        [ConnectedConnectionFlags.AllowFiles]: {
             title: l.dashboard.guilds.connections.flags.allowFiles,
             description: l.dashboard.guilds.connections.flags.allowFilesDescription,
         },
-        [ConnectedConnectionFlags.Frozen]: {
+        [ConnectedConnectionFlags.AllowInvites]: {
             title: l.dashboard.guilds.connections.flags.allowInvites,
             description: l.dashboard.guilds.connections.flags.allowInvitesDescription,
         },
-        [ConnectedConnectionFlags.AllowFiles]: {
-            title: l.dashboard.guilds.connections.flags.noIndentification,
-            description: l.dashboard.guilds.connections.flags.noIndentificationDescription,
-        },
-        [ConnectedConnectionFlags.AllowInvites]: {
-            title: l.dashboard.guilds.connections.flags.allowOrigin,
-            description: l.dashboard.guilds.connections.flags.allowOriginDescription,
-        },
         [ConnectedConnectionFlags.AllowLinks]: {
-            title: l.dashboard.guilds.connections.flags.allowEmojis,
-            description: l.dashboard.guilds.connections.flags.allowEmojisDescription,
-        },
-        [ConnectedConnectionFlags.NoIndentification]: {
-            title: l.dashboard.guilds.connections.flags.compactModeEnabled,
-            description: l.dashboard.guilds.connections.flags.compactModeEnabledDescription,
-        },
-        [ConnectedConnectionFlags.AllowOrigin]: {
             title: l.dashboard.guilds.connections.flags.allowLinks,
             description: l.dashboard.guilds.connections.flags.allowLinksDescription,
         },
-        [ConnectedConnectionFlags.AllowEmojis]: {
-            title: l.dashboard.guilds.connections.flags.allowInvites,
-            description: l.dashboard.guilds.connections.flags.allowInvitesDescription,
-        },
-        [ConnectedConnectionFlags.CompactModeEnabled]: {
+        [ConnectedConnectionFlags.NoIndentification]: {
             title: l.dashboard.guilds.connections.flags.noIndentification,
             description: l.dashboard.guilds.connections.flags.noIndentificationDescription,
+        },
+        [ConnectedConnectionFlags.AllowOrigin]: {
+            title: l.dashboard.guilds.connections.flags.allowOrigin,
+            description: l.dashboard.guilds.connections.flags.allowOriginDescription,
+        },
+        [ConnectedConnectionFlags.AllowEmojis]: {
+            title: l.dashboard.guilds.connections.flags.allowEmojis,
+            description: l.dashboard.guilds.connections.flags.allowEmojisDescription,
+        },
+        [ConnectedConnectionFlags.CompactModeEnabled]: {
+            title: l.dashboard.guilds.connections.flags.compactModeEnabled,
+            description: l.dashboard.guilds.connections.flags.compactModeEnabledDescription,
         }
     };
+    
 
     useEffect(() => {
         setFlags(connection.flags);
