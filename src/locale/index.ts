@@ -18,6 +18,7 @@ export const languages = {
                 addServer: "Adicionar servidor",
                 info: {
                     title: "Informações",
+                    description: "Aqui ficará as informações do servidor",
                 },
                 guild: {
                     title: "Servidor",
@@ -25,7 +26,7 @@ export const languages = {
                 },
                 tabs: {
                     connections: "Conexões",
-                    guilds: "Guilds",
+                    guilds: "Servidores",
                     channels: "Canais",
                     infos: "Informações",
                     cases: "Casos"
@@ -85,11 +86,13 @@ export const languages = {
                 },
                 mods: {
                     title: "Moderadores",
-                    addModerator: "Adicionar moderador",
+                    addModerator: "Adicionar Moderador",
+                    moderator: "Moderador",
                     delete: "Remover moderador",
                     deleteConfirm: "Você deseja mesmo remover o moderador",
                     deletetext: "Remover",
                     label: "Procure por um usuário",
+                    description: "Aqui ficará os usuários que podem gerenciar as conexões deste servidor",
                 },
                 threads: {
                     thread: {
@@ -101,11 +104,14 @@ export const languages = {
                         delete: "Deletar thread",
                         deleteConfirm: "Você deseja mesmo deletar a thread",
                         deletetext: "Deletar",
-                    }
+                        noThreads: "Não há threads",
+                        noThreadsDescription: "Não há threads nesse servidor, tente criar uma!"
+                    },
+                    description: "Aqui ficará as threads que você pode gerenciar neste servidor",
                 },
                 cases: {
-                    title: "Casos da guilda",
-                    description: "Aqui ficará o histórico de casos que ocorreram em sua guilda, como banimentos e timeouts.",
+                    title: "Casos do servidor",
+                    description: "Aqui ficará o histórico de casos que ocorreram em seu servidor, como banimentos e timeouts.",
                     ban: "banido",
                     mute: "mutado",
                     by: "por",
@@ -209,6 +215,7 @@ export const languages = {
                 addServer: "Add server",
                 info: {
                     title: "Informations",
+                    description: "Here will be the informations of the guild",
                 },
                 guild: {
                     title: "Server",
@@ -276,11 +283,13 @@ export const languages = {
                 },
                 mods: {
                     title: "Guild moderators",
-                    addModerator: "Add moderator",
+                    addModerator: "Add Moderator",
+                    moderator: "Moderator",
                     delete: "Delete moderator",
                     deleteConfirm: "Are you sure you want to delete the moderator",
                     deletetext: "Delete",
                     label: "Search for a user",
+                    description: "Here will be the users that can manage the connections of this guild",
                 },
                 threads: {
                     thread: {
@@ -292,7 +301,10 @@ export const languages = {
                         delete: "Delete thread",
                         deleteConfirm: "Are you sure you want to delete the thread",
                         deletetext: "Delete",
-                    }
+                        noThreads: "No threads",
+                        noThreadsDescription: "There are no threads in this guild, try to create one!",
+                    },
+                    description: "Here will be the threads that you can manage in this guild",
                 },
                 cases: {
                     title: "Guild cases",
