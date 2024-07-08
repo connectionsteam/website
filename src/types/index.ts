@@ -293,3 +293,21 @@ export interface TabState {
     selected: string;
     connection: boolean;
 }
+
+export interface ConnectionsPageStructure {
+    _id: string,
+    name: string,
+    creatorId: string,
+    createdTimestamp: number,
+    icon?: string,
+    description?: string,
+    votes: ConnectionsPageVote[],
+    promoted?: boolean;
+}   
+
+export interface ConnectionsPageVote {
+    _id: string,
+    userId: string,
+    count: number,
+    lastVoteTimestamp: number,
+}
