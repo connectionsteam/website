@@ -53,14 +53,14 @@ export default function GuildEditConnection({ guild, setGuild, channels, connect
                                 <div>{l.dashboard.guilds.connections.infos.blockedWords}:</div>
                                 <span className="text-neutral-300">
                                     {connection.blockwords
-                                        && connection.blockwords.length > 0 ? connection.blockwords.join(", ") : "Nenhuma"
+                                        && connection.blockwords.length > 0 ? connection.blockwords.join(", ") : l.dashboard.guilds.connections.infos.none
                                     }
                                 </span>
                             </div>
                             <div className="flex gap-1">
                                 <div className="text-start">{l.dashboard.guilds.connections.infos.flags}:</div>
                                 <span className="text-neutral-300">
-                                    {connection.flags.length > 0 ? connection.flags.join(", ") : "Nenhuma"}
+                                    {connection.flags.length > 0 ? connection.flags.join(", ") : l.dashboard.guilds.connections.infos.none}
                                 </span>
                             </div>
                             <div className="flex gap-1">
