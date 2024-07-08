@@ -69,9 +69,15 @@ export default function GuildMods({ guild, setGuild, members }: Props) {
     return (
         <>
             <div className="flex flex-col gap-2">
-                <h1 className="font-semibold text-xl">{l.dashboard.guilds.mods.title}</h1>
-                <div className="grid grid-cols-3 gap-3 w-full tablet:grid-cols-1">
-                    <AnimatePresence>
+                <div className="flex flex-col gap-1">
+                    <div className="flex gap-1 items-end">
+                        <h1 className="font-semibold text-xl">{l.dashboard.guilds.mods.title}</h1>
+                        <span className="text-neutral-300">{Object.keys(guild.mods).length}</span>
+                    </div>
+                    <span className="text-neutral-300">{l.dashboard.guilds.mods.description}</span>
+                </div>
+                <div className="flex flex-col gap-2 min-w-72 tablet:min-w-full">
+                    <div className="flex flex-col gap-2 w-full overflow-x-auto max-h-64">
                         {Object.entries(guild.mods).map(([key, mod], index) => (
                             <GuildModCard
                                 guild={guild}
@@ -83,9 +89,9 @@ export default function GuildMods({ guild, setGuild, members }: Props) {
                                 menu={menu}
                             />
                         ))}
-                    </AnimatePresence>
+                    </div>
                     {Object.entries(guild.mods).find(([id]) => id === user?.id) && (
-                        <DefaultButton onClick={onOpen} className="h-full w-full p-5">
+                        <DefaultButton onClick={onOpen} className="h-full w-full p-4">
                             <LuPlusCircle size={20} />
                             <span>{l.dashboard.guilds.mods.addModerator}</span>
                         </DefaultButton>
