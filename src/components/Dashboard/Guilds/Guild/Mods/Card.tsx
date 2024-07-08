@@ -50,12 +50,11 @@ export default function GuildModCard({ index, mod, handleRemoveMod, menu, setMen
                             />
                         </>
                     )}
-                    <div className="flex gap-3 text-start rounded-lg p-3 bg-neutral-900/50 w-full">
-                        <Avatar className="w-12 h-12" src={`https://cdn.discordapp.com/avatars/${mod.id}/${mod.avatar}.png`} />
-                        <div className="flex flex-col">
-                            <span className="font-semibold text-lg">{mod.username}</span>
-                            <span className="text-neutral-300 text-sm">{mod.id}</span>
+                    <div className="flex gap-3 items-center rounded-lg p-2 bg-neutral-900/50 w-full">
+                        <div className="h-12 w-12">
+                            <Avatar className="w-12 h-12" src={`https://cdn.discordapp.com/avatars/${mod.id}/${mod.avatar}.png`} />
                         </div>
+                        <span className="font-semibold text-lg">{mod.username}</span>
                     </div>
                 </motion.div>
             )}
