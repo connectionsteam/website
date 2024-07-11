@@ -87,7 +87,18 @@ export interface ConnectionPayload {
     description?: string;
     icon?: string;
     name: string;
-    creatorId: string;
+    creator: {
+        id: string;
+        username: string;
+        avatar: string;
+    };
+    votes: {
+        _id: string;
+        userId: string;
+        count: number;
+        lastVoteTimestamp: number;
+    }[];
+    tags: string[];
     createdTimestamp: number;
     maxConnections?: number;
 }
@@ -297,12 +308,17 @@ export interface TabState {
 export interface ConnectionsPageStructure {
     _id: string,
     name: string,
-    creatorId: string,
+    creator: {
+        id: string,
+        username: string,
+        avatar: string
+    }
     createdTimestamp: number,
     icon?: string,
     description?: string,
     votes: ConnectionsPageVote[],
     promoted?: boolean;
+    tags: string[]
 }   
 
 export interface ConnectionsPageVote {
