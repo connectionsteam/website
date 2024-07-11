@@ -3,11 +3,12 @@ import Link from "next/link";
 import { ChangeEvent, useContext, useState } from "react";
 import { GuildPayload } from "@/types";
 import ConnectionsSkeleton from "../ConnectionsSkeleton";
-import { LuPlusCircle } from "react-icons/lu";
+import { LuCrown, LuPlusCircle } from "react-icons/lu";
 import { LanguageContext } from "@/contexts/Language";
 import { languages } from "@/locale";
 import Avatar from "@/components/Mixed/Avatar";
 import { motion } from "framer-motion";
+import { HiSparkles } from "react-icons/hi";
 
 const url = "https://discord.com/oauth2/authorize?client_id=1243234162077470802";
 
@@ -38,9 +39,24 @@ export default function GuildsComponent({ guilds }: { guilds: GuildPayload[] | n
                                 animate={{ opacity: 1, x: 0 }}
                                 exit={{ opacity: 0, x: -20 }}
                                 transition={{ delay: index * 0.1 }}
+                                className={`relative w-full ${"premium" in guild ? "p-0.5 rounded-lg bg-gradient-to-r from-amber-400 to-orange-500" : ""} `}
                             >
-                                <Link href={`/guild/${guild.id}`} className="flex items-center gap-2 p-3 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition relative w-full h-full">
-                                    <Avatar className="w-12 h-12" src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`} key={guild.id} />
+
+                                {"premium" in guild && (
+                                    <div className="absolute z-10 -top-2 -left-2">
+                                        <HiSparkles className="fill-yellow-500" size={28} />
+                                        <StarDust />
+                                    </div>
+                                )}
+                                <Link
+                                    href={`/guild/${guild.id}`}
+                                    className={`flex items-center gap-2 p-3 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition relative w-full h-full`}
+                                >
+                                    <Avatar
+                                        className="w-12 h-12"
+                                        src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`}
+                                        key={guild.id}
+                                    />
                                     <div className="flex flex-col gap-1 text-start">
                                         <span className="font-bold text-lg">{guild.name}</span>
                                         <span className="text-neutral-300 text-sm">{guild.id}</span>
@@ -50,7 +66,10 @@ export default function GuildsComponent({ guilds }: { guilds: GuildPayload[] | n
                         ))
                 ) : <ConnectionsSkeleton key={0} />}
                 <div className="p-[2px] bg-gradient-to-r from-fuchsia-500 to-indigo-500 rounded-lg w-full">
-                    <a target="_blank" href={url} className="flex items-center justify-center gap-2 p-5 h-full w-full rounded-lg bg-neutral-800 hover:bg-transparent transition">
+                    <a
+                        target="_blank" href={url}
+                        className="flex items-center justify-center gap-2 p-5 h-full w-full rounded-lg bg-neutral-800 hover:bg-transparent transition"
+                    >
                         <LuPlusCircle size={23} />
                         <span>{languages[language].dashboard.guilds.addServer}</span>
                     </a>
@@ -60,3 +79,21 @@ export default function GuildsComponent({ guilds }: { guilds: GuildPayload[] | n
     );
 }
 
+const StarDust = () => {
+    const particles = Array.from({ length: 10 });
+
+    return (
+        <>
+            {particles.map((_, index) => (
+                <motion.div
+                    key={index}
+                    initial={{ opacity: 1, y: 0, x: 0 }}
+                    animate={{ opacity: 0, y: 50, x: (Math.random() - 0.1) * 40 }}
+                    transition={{ duration: 2, delay: index * 0.3, repeat: Infinity, repeatDelay: 0.5 }}
+                >
+                    <div className="absolute bg-yellow-500 h-1 w-1 rotate-45 left-2 -top-1" /> 
+                </motion.div>
+            ))}
+        </>
+    );
+};
