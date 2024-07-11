@@ -2,10 +2,10 @@ import { ConnectionsPageStructure } from "@/types";
 import { motion } from "framer-motion";
 import { MdOutlineKeyboardArrowUp } from "react-icons/md";
 import { FaLink } from "react-icons/fa6";
-import { Modal, useDisclosure } from "@nextui-org/modal";
+import { Modal } from "@nextui-org/modal";
 import Avatar from "@/components/Mixed/Avatar";
-import ConnectionsPageModalComponent from "./Modal";
 import Link from "next/link";
+import DefaultButton from "@/components/Mixed/Button";
 
 interface Props {
     connection: ConnectionsPageStructure;
@@ -50,10 +50,10 @@ export default function ConnectionsPageCard({ connection, index, query }: Props)
                     </div>
                 </div>
                 <div className="flex gap-2">
-                    <div className="p-2 bg-neutral-700 rounded-lg transition w-full flex gap-1 items-center">
+                    <DefaultButton className="p-2 bg-neutral-700 rounded-lg transition w-full flex items-center">
                         <MdOutlineKeyboardArrowUp size={20} />
-                        <span>Votar</span>
-                    </div>
+                        <span className="pr-2">Votar</span>
+                    </DefaultButton>
                     <div className="p-2 bg-neutral-700 rounded-lg transition w-full flex gap-2 items-center">
                         <FaLink />
                         <span>Conectar</span>
