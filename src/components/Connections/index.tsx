@@ -45,8 +45,8 @@ export default function ConnectionsPageComponent() {
         <DefaultLayout>
             <div className="flex flex-col w-full gap-3">
                 <div className="flex flex-col gap-1">
-                    <h1 className="text-3xl font-bold">Connections</h1>
-                    <span className="text-neutral-300">Descubra novas conexões para você adicionar no seu servidor</span>
+                    <h1 className="text-3xl font-bold">{l.connection.title}</h1>
+                    <span className="text-neutral-300">{l.connection.description}</span>
                 </div>
                 <Input
                     classNames={{
@@ -54,11 +54,11 @@ export default function ConnectionsPageComponent() {
                     }}
                     onChange={(e) => setQuery(e.target.value)}
                     type="string"
-                    label="Procurar por uma conexão"
+                    label={l.connection.search}
                 />
                 <div className="w-full flex items-center justify-center">
                     <div className="flex gap-1 overflow-x-auto flex-grow">
-                        {["Gamer", "Bate-papo", "Comunidade", "Variado", "Minecraft"].map((tag, index) => (
+                        {l.connection.tags.map((tag, index) => (
                             <button key={index} className="p-1 px-2 flex gap-2 items-center bg-neutral-800 rounded-lg">
                                 <RiHashtag fill="#d946ef" />
                                 <span>{tag}</span>

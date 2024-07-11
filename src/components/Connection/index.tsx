@@ -5,11 +5,11 @@ import { useEffect, useState } from "react";
 import DefaultLayout from "../Mixed/Layout";
 import Avatar from "../Mixed/Avatar";
 import { MdOutlineKeyboardArrowUp } from "react-icons/md";
-import { FaLink } from "react-icons/fa6";
 import ConnectionsPageVoteComponent from "../Connections/Connection/Vote";
 import { RiHashtag } from "react-icons/ri";
 import { useLanguage } from "@/hooks/useLanguage";
 import ConnectionsPageCard from "../Connections/Connection";
+import ConnectConnection from "./Connect";
 
 export default function ConnectionPageComponent() {
     const router = useRouter();
@@ -55,14 +55,11 @@ export default function ConnectionPageComponent() {
                     </div>
                     <div className="flex gap-3 min-w-[450px] justify-start items-start tablet:min-w-full mobile:flex-col">
                         <ConnectionsPageVoteComponent connection={connection} />
-                        <button className="p-3 bg-neutral-700 hover:bg-neutral-600 rounded-lg transition w-full flex gap-2 items-center">
-                            <FaLink />
-                            <span>Conectar</span>
-                        </button>
+                        <ConnectConnection connection={connection} />
                     </div>
                 </div>
                 <div className="flex gap-2 items-center">
-                    <span className="font-bold">Criador(a):</span>
+                    <span className="font-bold">{l.connection.creator}</span>
                     <div className="w-8 h-8">
                         <Avatar className="w-full h-full" src={`https://cdn.discordapp.com/avatars/${connection.creator.id}/${connection.creator.avatar}.png`} />
                     </div>
@@ -79,7 +76,7 @@ export default function ConnectionPageComponent() {
                 <span className="text-sm text-neutral-300">{l.dashboard.guilds.threads.thread.created} {new Date(connection.createdTimestamp).toLocaleString()}</span>
             </div>
             <div className="flex flex-col gap-4 w-full">
-                <span className="font-bold text-2xl">Conexões recomendadas</span>
+                <span className="font-bold text-2xl">{l.connection.recommended}</span>
                 <div className="grid grid-cols-2 gap-4 w-full tablet:grid-cols-1">
                     {recommendedConnections.map((connection, index) => (
                         <ConnectionsPageCard key={index} connection={connection} index={index} query={""} />

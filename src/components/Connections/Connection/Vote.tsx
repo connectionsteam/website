@@ -7,18 +7,19 @@ import { MdOutlineKeyboardArrowUp } from "react-icons/md";
 import { AnimatePresence, motion } from "framer-motion";
 import { api } from "@/utils/api";
 import DefaultButton from "@/components/Mixed/Button";
+import { useLanguage } from "@/hooks/useLanguage";
 
 interface Props {
     connection: ConnectionsPageStructure;
 }
 
 export default function ConnectionsPageVoteComponent({ connection }: Props) {
+    const l = useLanguage();
+
     const { user } = useContext(UserContext);
     const twelve_hours = 12 * 60 * 60 * 1000;
     const lastVoteTimestamp = connection.votes?.find((vote) => vote.userId === user?.id)?.lastVoteTimestamp ?? 0;
     const canVote = (Date.now() - lastVoteTimestamp >= twelve_hours);
-
-    console.log(connection)
 
     const [voteProps, setVoteProps] = useState({
         loading: false,
@@ -59,14 +60,14 @@ export default function ConnectionsPageVoteComponent({ connection }: Props) {
                     voteProps.loading ? (
                         <>
                             <AiOutlineLoading3Quarters className="animate-spin" size={20} />
-                            <span>Votando...</span>
+                            <span>{l.connection.voting}</span>
                         </>
                     ) : voteProps.voted ? (
                         <>
                             <FaCheckCircle className="text-green-500" size={20} />
                             <div className="flex">
-                                <span className="pr-1">Votado</span>
-                                <div className="flex gap-0.">
+                                <span className="pr-1">{l.connection.voted}</span>
+                                <div className="flex">
                                     (
                                     <motion.span
                                         key="voted"
@@ -91,18 +92,22 @@ export default function ConnectionsPageVoteComponent({ connection }: Props) {
                     ) : voteProps.restime ? (
                         <>
                             <MdOutlineKeyboardArrowUp size={20} />
-                            <span className="w-full text-start opacity-80">Volte daqui 12 horas</span>
+                            <span className="w-full text-start opacity-80">{l.connection.returntwelve}</span>
                         </>
                     ) : (
                         <>
                             <MdOutlineKeyboardArrowUp size={20} />
-                            <span>Votar ({connection.votes?.reduce((total, { count }) => total + count, 0) ?? 0})</span>
+                            <span>{l.connection.vote} ({connection.votes?.reduce((total, { count }) => total + count, 0) ?? 0})</span>
                         </>
                     )
                 ) : (
                     <>
                         <MdOutlineKeyboardArrowUp size={20} />
-                        <span className="w-full text-start opacity-80">Volte daqui {getRemainingHours()} {getRemainingHours() === 1 ? "hora" : "horas"}</span>
+                        <span className="w-full text-start opacity-80">
+                            {l.connection.return
+                                .replace("{hours}", getRemainingHours().toString())
+                                .replace("{hour}", getRemainingHours() === 1 ? l.connection.hour : l.connection.hours)}
+                        </span>
                     </>
                 )}
             </AnimatePresence>

@@ -2,10 +2,10 @@ import { ConnectionsPageStructure } from "@/types";
 import { motion } from "framer-motion";
 import { MdOutlineKeyboardArrowUp } from "react-icons/md";
 import { FaLink } from "react-icons/fa6";
-import { Modal } from "@nextui-org/modal";
 import Avatar from "@/components/Mixed/Avatar";
 import Link from "next/link";
 import DefaultButton from "@/components/Mixed/Button";
+import { useLanguage } from "@/hooks/useLanguage";
 
 interface Props {
     connection: ConnectionsPageStructure;
@@ -14,6 +14,8 @@ interface Props {
 }
 
 export default function ConnectionsPageCard({ connection, index, query }: Props) {
+    const l = useLanguage();
+    
     if (query.toLowerCase() === connection.name.toLowerCase()) return null;
 
     return (
@@ -25,7 +27,7 @@ export default function ConnectionsPageCard({ connection, index, query }: Props)
             className="w-full relative"
         >
             {connection.promoted && (
-                <div className="absolute px-2 font-semibold -top-3 flex rounded-full bg-fuchsia-500 left-3">Promoted</div>
+                <div className="absolute px-2 font-semibold -top-3 flex rounded-full bg-fuchsia-500 left-3">{l.connection.promoted}</div>
             )}
             <Link href={`/connection/${connection.name}`} className={`p-3 h-full bg-neutral-800 rounded-lg transition hover:bg-neutral-700/70 w-full flex items-start justify-center ${connection.promoted ? "border-2 border-fuchsia-500" : ""}`}>
                 <div className="flex gap-3 items-center flex-grow h-full">
@@ -52,11 +54,11 @@ export default function ConnectionsPageCard({ connection, index, query }: Props)
                 <div className="flex gap-2">
                     <DefaultButton className="p-2 bg-neutral-700 rounded-lg transition w-full flex items-center">
                         <MdOutlineKeyboardArrowUp size={20} />
-                        <span className="pr-2">Votar</span>
+                        <span className="pr-2">{l.connection.vote}</span>
                     </DefaultButton>
                     <div className="p-2 bg-neutral-700 rounded-lg transition w-full flex gap-2 items-center">
                         <FaLink />
-                        <span>Conectar</span>
+                        <span className="pr-2">{l.connection.connect}</span>
                     </div>
                 </div>
             </Link>
