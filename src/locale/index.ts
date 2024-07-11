@@ -194,6 +194,23 @@ export const languages = {
             title: "Login no Connections",
             description: "Faça login no connections e desbloqueie o uso da dashboard e muito mais!",
             discord: "Entrar com discord",
+        },
+        connection: {
+            title: "Conexões",
+            creator: "Criador(a):",
+            recommended: "Conexões recomendadas",
+            description: "Descubra novas conexões!",
+            vote: "Votar",
+            return: "Volte daqui {hours} {hour}",
+            returntwelve: "Volte daqui 12 {hour}",
+            voted: "Votado",
+            hour: "hora",
+            hours: "horas",
+            voting: "Votando...",
+            connect: "Conectar",
+            promoted: "Promovida",
+            search: "Procurar por uma conexão",
+            tags: ["Gamer", "Bate-papo", "Comunidade", "Variado", "Minecraft"]
         }
     },
     "en-US": {
@@ -391,6 +408,23 @@ export const languages = {
             title: "Login",
             description: "Login to unlock the dashboard and much more!",
             discord: "Login with discord",
+        },
+        connection: {
+            title: "Connections",
+            recommended: "Recommended connections",
+            description: "Discover new connections!",
+            vote: "Vote",
+            voted: "Voted",
+            hour: "hour",
+            hours: "hours",
+            return: "Return in {hours} {hour}",
+            returntwelve: "Return in 12 {hour}",
+            voting: "Voting...",
+            creator: "Creator:",
+            connect: "Connect",
+            promoted: "Promoted",
+            search: "Search for a connection",
+            tags: ["Gamer", "Chat", "Community", "Varied", "Minecraft"]
         }
     }
 }
