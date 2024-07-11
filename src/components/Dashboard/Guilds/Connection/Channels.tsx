@@ -98,20 +98,11 @@ export default function ConnectionChannels({ channels, connection, body, setBody
                             ))}
                         </DropdownMenu>
                     </Dropdown>
-                ) : <div>Loading...</div>}
+                ) : <div className="rounded-lg bg-neutral-900/50 animate-pulse p-5 w-full">
+                    <div className="w-1/3 h-4 rounded-full bg-neutral-700"></div>
+                </div>
+                }
             </div>
-        </div>
-    )
-}
-
-function Card({ title, description, onClick }: { title: string, description: string, onClick?: () => void }) {
-    return (
-        <div className="w-full bg-neutral-900 rounded-lg p-4 flex flex-col gap-3">
-            <div className="text-2xl font-semibold flex items-center gap-2">
-                <Switch color="secondary" />
-                <span>{title}</span>
-            </div>
-            <div className="text-sm">{description}</div>
         </div>
     )
 }
