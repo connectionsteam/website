@@ -8,13 +8,11 @@ import AuthUser from "./User";
 import ChooseLanguage from "./Language";
 import { languages } from "@/locale";
 import { LanguageContext } from "@/contexts/Language";
-import { useIsClient } from "@/contexts/Client";
 
 export default function Header() {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const drawerRef = useRef<HTMLDivElement | null>(null);
     const { language } = useContext(LanguageContext);
-    const isClient = useIsClient();
 
     const handleRecallDrawer = () => {
         setIsDrawerOpen(false);
