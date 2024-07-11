@@ -18,9 +18,20 @@ export interface LanguageContextProps {
     setLanguage: Dispatch<SetStateAction<LanguageType>>;
 }
 
+export enum PremiumType {
+    Normal = 1,
+    Vip,
+}
+
+export interface PremiumPayload {
+    type: PremiumType;
+    expiresAt: number;
+}
+
 export interface GuildPayload {
     name: string;
     icon: string;
+    premium?: PremiumPayload;
     id: string;
     connections: ConnectedConnectionPayload[];
     cases: AnyCase[];
