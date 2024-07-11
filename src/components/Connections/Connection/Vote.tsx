@@ -47,8 +47,6 @@ export default function ConnectionsPageVoteComponent({ connection }: Props) {
         return Math.ceil(remainingTime / (60 * 60 * 1000));
     };
 
-    // p-3 bg-neutral-700 hover:bg-neutral-600 rounded-lg transition w-full flex gap-2 items-center disabled:opacity-50 disabled:hover:bg-neutral-700
-
     return (
         <DefaultButton
             className="p-2.5"
@@ -92,7 +90,10 @@ export default function ConnectionsPageVoteComponent({ connection }: Props) {
                     ) : voteProps.restime ? (
                         <>
                             <MdOutlineKeyboardArrowUp size={20} />
-                            <span className="w-full text-start opacity-80">{l.connection.returntwelve}</span>
+                            <span className="w-full text-start opacity-80">
+                                {l.connection.returntwelve
+                                    .replace("{hour}", getRemainingHours() === 1 ? l.connection.hour : l.connection.hours)}
+                            </span>
                         </>
                     ) : (
                         <>
