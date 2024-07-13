@@ -4,6 +4,7 @@ import { MenuProps } from "../Mods";
 import DeleteThread from "./Menu";
 import { api } from "@/utils/api";
 import { useLanguage } from "@/hooks/useLanguage";
+import usePremium from "@/hooks/usePremium";
 
 interface Props {
     setThreads: (threads: GuildThreadsPayload[]) => void;
@@ -17,13 +18,14 @@ interface ThreadProps extends Props {
 
 export default function Threads({ threads, setThreads, guild }: Props) {
     const l = useLanguage();
+    const premium = usePremium(guild);
 
     return (
         <div className="flex flex-col gap-2 w-full">
             <div className="flex flex-col gap-1">
                 <div className="flex gap-2 items-end">
                     <h1 className="font-semibold text-xl">Threads</h1>
-                    <span className="text-neutral-300">{threads.length}</span>
+                    <span className="text-neutral-300">{threads.length}/{premium.maxThreads}</span>
                 </div>
                 <span className="text-neutral-300 max-w-96 tablet:max-w-full">{l.dashboard.guilds.threads.description}</span>
             </div>
