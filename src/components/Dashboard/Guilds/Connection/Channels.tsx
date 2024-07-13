@@ -16,6 +16,8 @@ export default function ConnectionChannels({ channels, connection, body, setBody
     const [groupedChannels, setGroupedChannels] = useState<Record<string, GuildChannelsPayload[]>>();
     const l = useLanguage();
 
+    const checkUsedChannel = () => channels.filter((channel) => channel.id.includes(connection.channelId)).map((channel) => channel.id);
+
     useEffect(() => {
         const groupChannelsByCategory = () => {
             const grouped: Record<string, GuildChannelsPayload[]> = {};
@@ -65,7 +67,7 @@ export default function ConnectionChannels({ channels, connection, body, setBody
                                 }
                             </button>
                         </DropdownTrigger>
-                        <DropdownMenu aria-label="Channels" className="max-h-56 min-w-52 items-start overflow-auto flex justify-start">
+                        <DropdownMenu disabledKeys={checkUsedChannel()} aria-label="Channels" className="max-h-56 min-w-52 items-start overflow-auto flex justify-start">
                             {Object.entries(groupedChannels).map(([categoryId, categoryChannels]) => (
                                 <DropdownSection aria-label="Channel" className="w-full" classNames={{
                                     heading: "p-2 text-neutral-400"
@@ -82,7 +84,7 @@ export default function ConnectionChannels({ channels, connection, body, setBody
                                             classNames={{
                                                 title: "flex items-center gap-1"
                                             }}
-                                            className="hover:bg-neutral-900/50 transition p-3"
+                                            className="hover:bg-neutral-900/50 transition p-3 disabled:opacity-50"
                                             key={channel.id} onClick={() => setBody({ ...body, channel })}
                                         >
                                             <HiHashtag />
