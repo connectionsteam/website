@@ -1,16 +1,17 @@
 import Avatar from "@/components/Mixed/Avatar";
 import DefaultInput from "@/components/Mixed/Input";
 import { useLanguage } from "@/hooks/useLanguage";
-import { DiscordMember } from "@/types";
+import { DiscordMember, GuildPayload } from "@/types";
 
 interface Props {
     query: string;
     setQuery: (query: string) => void;
     handleAddMod: (user: DiscordMember) => void;
     users: DiscordMember[];
+    guild: GuildPayload;
 }
 
-export default function GuildModModal({ query, setQuery, handleAddMod, users }: Props) {
+export default function GuildModModal({ query, setQuery, handleAddMod, users, guild }: Props) {
     const l = useLanguage();
 
     return (
@@ -25,11 +26,15 @@ export default function GuildModModal({ query, setQuery, handleAddMod, users }: 
                 {users ? (
                     users
                         .filter(user =>
-                            !user.user.bot &&
                             user.user.username.toLowerCase().includes(query.toLowerCase())
                             || user.user.id.toLowerCase().includes(query.toLowerCase())
                             || user.user.global_name?.toLowerCase().includes(query.toLowerCase())
-                        ).map((user, index) => (
+                        )
+                        .filter((user) => 
+                            !Object.keys(guild.mods).includes(user.user.id)
+                            && !user.user.bot
+                        )
+                        .map((user, index) => (
                             <button
                                 className="flex gap-3 text-start w-full rounded-lg p-3 bg-neutral-900/50 hover:bg-neutral-900 transition"
                                 key={index}
