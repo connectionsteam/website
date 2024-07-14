@@ -3,7 +3,7 @@ import DefaultInput from "@/components/Mixed/Input";
 import { GuildPayload, Premium, PremiumType } from "@/types";
 import { api } from "@/utils/api";
 import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/modal";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { HiSparkles } from "react-icons/hi";
 import { motion } from "framer-motion";
 import { BiCheck } from "react-icons/bi";
@@ -36,6 +36,20 @@ export default function ActivePremium({ guild, setShowConfetti, setGuildPremium 
     const handleChangeCode = (event: ChangeEvent<HTMLInputElement>) => {
         setCode(event.target.value);
     }
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Enter") {
+                handleSubmit();
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [code !== ""]);
 
     const handleSubmit = async () => {
         if (code === "") return null;

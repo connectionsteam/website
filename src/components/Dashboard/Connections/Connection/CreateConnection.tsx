@@ -2,7 +2,7 @@ import { LanguageContext } from "@/contexts/Language";
 import { languages } from "@/locale";
 import { ConnectionPayload, RequestPost } from "@/types";
 import { api } from "@/utils/api";
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 interface Props {
@@ -18,6 +18,20 @@ export default function CreateConnection({ post, setErrors, errors, connections,
     const [loading, setLoading] = useState(false);
     const { language } = useContext(LanguageContext);  
 
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Enter") {
+                createConnection();
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [post]);
+    
     const createConnection = async () => {
         setLoading(true);
 
