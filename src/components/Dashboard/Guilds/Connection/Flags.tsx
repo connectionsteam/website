@@ -53,7 +53,7 @@ export default function GuildConnectionFlags({ connection, guild, setConnection,
             description: l.dashboard.guilds.connections.flags.compactModeEnabledDescription,
         }
     };
-    
+
 
     useEffect(() => {
         setFlags(connection.flags);
@@ -76,7 +76,7 @@ export default function GuildConnectionFlags({ connection, guild, setConnection,
         setConnection(updatedConnection);
         setGuild({
             ...guild,
-            connections: guild.connections.map(conn => conn.name === connection.name ? updatedConnection : conn)
+            connections: guild.connections.map(c => c.name === connection.name ? updatedConnection : c)
         });
     }
 
@@ -89,12 +89,14 @@ export default function GuildConnectionFlags({ connection, guild, setConnection,
                 </span>
             </div>
             <div className="gap-4 grid grid-cols-3 tablet:grid-cols-1 items-start">
-                {Object.values(ConnectedConnectionFlags).map((flag, index) => flag !== ConnectedConnectionFlags.Locked && (
+                {Object.values(ConnectedConnectionFlags).map((flag, index) => 
+                    (flag !== ConnectedConnectionFlags.Locked && flag !== ConnectedConnectionFlags.Frozen) && (
                     <div key={index} className="flex flex-col gap-1 p-3 rounded-lg bg-neutral-900 h-full place-content-center">
                         <div className="flex items-center gap-1">
                             <div className="relative">
                                 {connection.flags.includes(ConnectedConnectionFlags.Frozen) && (
-                                    <div className="absolute top-0 left-0 w-14 h-full bg-gradient-to-tr from-cyan-300 via-sky-200 to-sky-500 rounded-full z-50"></div>
+                                    <div className="absolute top-0 left-0 w-14 h-full bg-gradient-to-tr from-cyan-300 via-sky-200 to-sky-500 rounded-full z-50">
+                                    </div>
                                 )}
                                 <Switch
                                     color="secondary"
