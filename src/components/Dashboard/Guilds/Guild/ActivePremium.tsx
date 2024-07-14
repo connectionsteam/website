@@ -13,9 +13,10 @@ interface Props {
     guild: GuildPayload;
     setShowConfetti: (value: boolean) => void;
     setGuildPremium: (value: Premium) => void;
+    setGuild: (guild: GuildPayload) => void;
 }
 
-export default function ActivePremium({ guild, setShowConfetti, setGuildPremium }: Props) {
+export default function ActivePremium({ guild, setShowConfetti, setGuildPremium, setGuild }: Props) {
     const [code, setCode] = useState("");
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -56,7 +57,7 @@ export default function ActivePremium({ guild, setShowConfetti, setGuildPremium 
         setLoading(true);
 
         try {
-            const { data: { type } } = await api.put(`/codes/${code}/guilds/${guild.id}`);
+            const { data: { type, expiresAt } } = await api.put(`/codes/${code}/guilds/${guild.id}`);
 
             setGuildPremium({
                 isPremium: true,
@@ -64,6 +65,14 @@ export default function ActivePremium({ guild, setShowConfetti, setGuildPremium 
                 maxConnections: type === PremiumType.Normal ? 25 : 50,
                 maxMods: 10,
                 premiumType: type,
+            });
+
+            setGuild({
+                ...guild,
+                premium: {
+                    expiresAt,
+                    type
+                },
             });
 
             onOpen();

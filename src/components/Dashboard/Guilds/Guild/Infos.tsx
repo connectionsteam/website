@@ -8,7 +8,6 @@ import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nex
 import ActivePremium from "./ActivePremium";
 import { useState } from "react";
 import Confetti from "react-confetti";
-import usePremium from "@/hooks/usePremium";
 
 interface Props {
     guild: GuildPayload;
@@ -103,6 +102,7 @@ export default function Infos({ guild, setGuild, threads, setThreads, members, p
                         </ModalHeader>
                         <ModalBody>
                             <ActivePremium
+                                setGuild={setGuild}
                                 setGuildPremium={setPremium}
                                 guild={guild}
                                 setShowConfetti={setShowConfetti}
