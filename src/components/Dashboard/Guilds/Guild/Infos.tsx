@@ -1,5 +1,5 @@
 import Avatar from "@/components/Mixed/Avatar";
-import { DiscordMember, GuildChannelsPayload, GuildPayload, GuildThreadsPayload } from "@/types";
+import { DiscordMember, GuildPayload, GuildThreadsPayload, Premium } from "@/types";
 import GuildMods from "./Mods";
 import Threads from "./Threads";
 import { useLanguage } from "@/hooks/useLanguage";
@@ -8,17 +8,19 @@ import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nex
 import ActivePremium from "./ActivePremium";
 import { useState } from "react";
 import Confetti from "react-confetti";
+import usePremium from "@/hooks/usePremium";
 
 interface Props {
     guild: GuildPayload;
     setGuild: (guild: GuildPayload) => void;
     threads: GuildThreadsPayload[];
     setThreads: (threads: GuildThreadsPayload[]) => void;
-    channels: GuildChannelsPayload[];
     members: DiscordMember[];
+    premium: Premium;
+    setPremium: (premium: Premium) => void;
 }
 
-export default function Infos({ guild, setGuild, threads, setThreads, members, channels }: Props) {
+export default function Infos({ guild, setGuild, threads, setThreads, members, premium, setPremium }: Props) {
     const l = useLanguage();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [showConfetti, setShowConfetti] = useState(false);
@@ -54,7 +56,11 @@ export default function Infos({ guild, setGuild, threads, setThreads, members, c
                     <div className="flex w-full tablet:flex-col tablet:gap-4">
                         <div className="flex gap-3 flex-grow">
                             <div className="w-16 h-16">
-                                <Avatar className="w-16 h-16" key={0} src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`} />
+                                <Avatar
+                                    className="w-16 h-16"
+                                    key={0}
+                                    src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`}
+                                />
                             </div>
                             <div className="flex gap-1 flex-col">
                                 <span className="font-bold text-lg">{guild.name}</span>
@@ -70,8 +76,18 @@ export default function Infos({ guild, setGuild, threads, setThreads, members, c
                         </div>
                     </div>
                     <div className="w-full flex tablet:flex-col gap-4">
-                        <GuildMods setGuild={setGuild} guild={guild} members={members} key={0} />
-                        <Threads setThreads={setThreads} guild={guild} threads={threads} />
+                        <GuildMods
+                            premium={premium}
+                            setGuild={setGuild}
+                            guild={guild}
+                            members={members} key={0}
+                        />
+                        <Threads
+                            premium={premium}
+                            setThreads={setThreads}
+                            guild={guild}
+                            threads={threads}
+                        />
                     </div>
                 </div>
             </div>
@@ -82,9 +98,15 @@ export default function Infos({ guild, setGuild, threads, setThreads, members, c
                     base: "max-h-screen overflow-y-auto",
                 }} isOpen={isOpen} onOpenChange={onOpenChange}>
                     <ModalContent className="bg-neutral-800 text-white">
-                        <ModalHeader className="flex flex-col gap-1 bg-neutral-800">Ativar premium</ModalHeader>
+                        <ModalHeader className="flex flex-col gap-1 bg-neutral-800">
+                            Ativar premium
+                        </ModalHeader>
                         <ModalBody>
-                            <ActivePremium guild={guild} setShowConfetti={setShowConfetti} />
+                            <ActivePremium
+                                setGuildPremium={setPremium}
+                                guild={guild}
+                                setShowConfetti={setShowConfetti}
+                            />
                         </ModalBody>
                     </ModalContent>
                 </Modal>
