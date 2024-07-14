@@ -2,9 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+html, body {
     margin: 0;
     padding: 0;
+    height: 100vh;
     box-sizing: border-box;
     background-color: #171717;
 }
@@ -15,12 +16,12 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-    background: #3e3e3e;
+    background: #222222;
     border-radius: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #222222;
+    background: #3e3e3e;
     border-radius: 8px;
 }
 
