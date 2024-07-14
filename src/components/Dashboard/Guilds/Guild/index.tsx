@@ -1,6 +1,6 @@
-"use client"
+"use client";
 import DefaultLayout from "@/components/Mixed/Layout";
-import { ConnectedConnectionPayload, DiscordMember, GuildChannelsPayload, GuildPayload, GuildThreadsPayload, TabState } from "@/types";
+import { ConnectedConnectionPayload, DiscordMember, GuildChannelsPayload, GuildPayload, GuildThreadsPayload, Premium, TabState } from "@/types";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -8,11 +8,12 @@ import { motion } from "framer-motion";
 import GuildSkeleton from "./Skeleton";
 import Infos from "./Infos";
 import Channels from "./Channels";
-import Connections from "./Connecions";
 import GuildEditConnection from "../Connection";
 import ProtectedRoute from "@/components/Mixed/ProtectedRoute";
 import Cases from "./Cases";
 import { useLanguage } from "@/hooks/useLanguage";
+import usePremium from "@/hooks/usePremium";
+import Connections from "./Connecions";
 
 export default function GuildComponent() {
     const router = useRouter();
@@ -22,6 +23,7 @@ export default function GuildComponent() {
     const [threads, setThreads] = useState<GuildThreadsPayload[]>([]);
     const [connection, setConnection] = useState<ConnectedConnectionPayload>(null!);
     const [members, setMembers] = useState<DiscordMember[]>([]);
+    const { premium, setPremium } = usePremium(guild);
     const l = useLanguage();
 
     const [tab, setTab] = useState<TabState>({
@@ -45,6 +47,7 @@ export default function GuildComponent() {
                         value: "connections",
                         title: "Conexões",
                         content: <Connections
+                            premium={premium as Premium}
                             handleSelectConnection={handleSelectConnection}
                             connection={connection}
                             setConnection={setConnection}
@@ -90,17 +93,18 @@ export default function GuildComponent() {
     }, [id]);
 
     useEffect(() => {
-        if (guild && threads) {
+        if (guild && threads && premium) {
             setTab({
                 tabs: [
                     {
                         value: "infos",
                         title: l.dashboard.guilds.tabs.infos,
                         content: <Infos
+                            premium={premium}
+                            setPremium={setPremium}
                             members={members}
                             setGuild={setGuild}
                             setThreads={setThreads}
-                            channels={channels}
                             threads={threads}
                             key={0}
                             guild={guild}
@@ -120,6 +124,7 @@ export default function GuildComponent() {
                         value: "connections",
                         title: l.dashboard.guilds.tabs.connections,
                         content: <Connections
+                            premium={premium}
                             handleSelectConnection={handleSelectConnection}
                             connection={connection}
                             setConnection={setConnection}
@@ -134,7 +139,7 @@ export default function GuildComponent() {
                 connection: tab.connection,
             });
         }
-    }, [guild, threads, channels, connection]);
+    }, [guild, threads, channels, connection, premium]);
 
     return (
         <DefaultLayout>
@@ -146,7 +151,12 @@ export default function GuildComponent() {
                                 <button
                                     key={t.value}
                                     onClick={() => handleChangeTab(t.value)}
-                                    className={`text-white px-4 rounded-lg py-2 cursor-pointer transition-colors duration-300 gap-2 flex ${(tab.connection && t.value === "connections") ? "bg-neutral-700" : ""} ${tab.selected === t.value ? "bg-neutral-700" : ""}`}
+                                    className={`text-white px-4 rounded-lg py-2 
+                                        cursor-pointer transition-colors duration-300 gap-2 flex 
+                                        ${(tab.connection && t.value === "connections")
+                                            ? "bg-neutral-700"
+                                            : ""
+                                        } ${tab.selected === t.value ? "bg-neutral-700" : ""}`}
                                 >
                                     <span>{t.title}</span>
                                 </button>
@@ -155,11 +165,19 @@ export default function GuildComponent() {
                         <div>
                             {tab.tabs.map((t) => (
                                 tab.selected === t.value ? (
-                                    <motion.div key={t.value} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
+                                    <motion.div
+                                        key={t.value}
+                                        initial={{ opacity: 0, x: -20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                    >
                                         {t.content}
                                     </motion.div>
                                 ) : tab.connection && t.value === "connections" ? (
-                                    <motion.div key={t.value} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
+                                    <motion.div
+                                        key={t.value}
+                                        initial={{ opacity: 0, x: -20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                    >
                                         <GuildEditConnection
                                             handleChangeTab={handleChangeTab}
                                             connection={connection}
