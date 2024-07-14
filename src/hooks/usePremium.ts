@@ -1,19 +1,36 @@
-import { GuildPayload, PremiumType } from "@/types";
+import { GuildPayload, Premium as PremiumStructure, PremiumType } from "@/types";
+import { useState } from "react";
 
 export default function usePremium(guild: GuildPayload) {
-    const isPremium = "premium" in guild;
-    const premiumType = PremiumType[guild.premium!.type];
-    const maxMods = guild.premium ? 10 : 5;
-    const maxConnections = guild.premium?.type === PremiumType.Normal ? 25
-        : guild.premium?.type === PremiumType.Vip ? 50 : 5;
-    const maxThreads = guild.premium?.type === PremiumType.Normal ? 5
-        : guild.premium?.type === PremiumType.Vip ? 15 : 0;
+    const [premium, setPremium] = useState<PremiumStructure>(() => {
+        if (!guild.premium) {
+            return {
+                isPremium: false,
+                maxMods: 5,
+                maxConnections: 5,
+                maxThreads: 0,
+                premiumType: PremiumType.None
+            };
+        }
+
+        const premiumType = guild.premium.type;
+        const maxMods = 10;
+        const maxConnections = premiumType === PremiumType.Normal ? 25
+            : premiumType === PremiumType.Vip ? 50 : 5;
+        const maxThreads = premiumType === PremiumType.Normal ? 5
+            : premiumType === PremiumType.Vip ? 15 : 0;
+
+        return {
+            isPremium: true,
+            maxMods,
+            maxConnections,
+            maxThreads,
+            premiumType
+        };
+    });
 
     return {
-        isPremium,
-        maxMods,
-        maxConnections,
-        maxThreads,
-        premiumType
-    }
+        premium,
+        setPremium
+    };
 }
