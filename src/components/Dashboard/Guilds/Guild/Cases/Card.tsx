@@ -14,7 +14,7 @@ export default function CaseCard({ caseItem, moderator, target }: Props) {
 
     return (
         <div key={caseItem.id} className="flex flex-col gap-1 items-start w-full rounded-lg bg-neutral-900 p-4">
-            <div className="flex gap-2 items-center">
+            <div className="flex gap-2 items-center mobile:flex-col mobile:items-start">
                 {target ? (
                     <div className="flex gap-2 items-center">
                         <Avatar className="w-6 h-6" src={`https://cdn.discordapp.com/avatars/${target.user.id}/${target.user.avatar}`} />
