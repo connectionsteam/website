@@ -60,7 +60,7 @@ export default function Header() {
                     <RiMenu3Line fill="#fff" size={30} />
                 </button>
             </div>
-            <div className={`fixed top-0 right-0 w-full h-full bg-opacity-50 z-40 transition-all transform text-white ${isDrawerOpen ? "translate-x-0 backdrop-blur-sm bg-black bg-opacity-20" : "translate-x-full bg-opacity-0"}`}>
+            <div className={`fixed top-0 right-0 w-full h-full bg-opacity-50 z-40 transition-all transform text-white ${isDrawerOpen ? "translate-x-0 backdrop-blur-sm bg-black bg-opacity-20" : "translate-x-[150%] bg-opacity-0"}`}>
                 <div ref={drawerRef} className="fixed top-0 right-0 w-80 h-full bg-neutral-900 p-6">
                     <button
                         onClick={() => setIsDrawerOpen(false)}
