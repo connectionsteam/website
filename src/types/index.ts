@@ -104,6 +104,7 @@ export interface ConnectionPayload {
         username: string;
         avatar: string;
     };
+    creatorId?: string;
     votes: {
         _id: string;
         userId: string;
