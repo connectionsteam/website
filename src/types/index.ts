@@ -19,7 +19,8 @@ export interface LanguageContextProps {
 }
 
 export enum PremiumType {
-    Normal = 1,
+    None,
+    Normal,
     Vip,
 }
 
@@ -337,4 +338,12 @@ export interface ConnectionsPageVote {
     userId: string,
     count: number,
     lastVoteTimestamp: number,
+}
+
+export interface Premium {
+    isPremium: boolean;
+    maxMods: number;
+    maxConnections: number;
+    maxThreads: number;
+    premiumType: PremiumType;
 }
