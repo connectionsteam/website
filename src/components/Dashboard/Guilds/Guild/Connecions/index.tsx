@@ -12,13 +12,12 @@ interface Props {
     guild: GuildPayload;
     setGuild: (guild: GuildPayload) => void;
     channels: GuildChannelsPayload[];
-    connection: ConnectedConnectionPayload;
     setConnection: Dispatch<SetStateAction<ConnectedConnectionPayload>>;
     handleSelectConnection: (connection: ConnectedConnectionPayload) => void;
     premium: Premium;
 }
 
-export default function Connections({ guild, setGuild, channels, connection, handleSelectConnection, premium }: Props) {
+export default function Connections({ guild, setGuild, channels, handleSelectConnection, premium }: Props) {
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     const l = useLanguage();
     const [connectionProps, setConnectionProps] = useState<ConnectedConnectionsState>({
@@ -89,7 +88,6 @@ export default function Connections({ guild, setGuild, channels, connection, han
                                 setGuild={setGuild}
                                 onClose={onClose}
                                 channels={channels}
-                                connection={connection}
                                 guild={guild}
                             />
                         </ModalBody>

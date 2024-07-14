@@ -49,7 +49,6 @@ export default function GuildComponent() {
                         content: <Connections
                             premium={premium as Premium}
                             handleSelectConnection={handleSelectConnection}
-                            connection={connection}
                             setConnection={setConnection}
                             key={0}
                             channels={channels}
@@ -126,7 +125,6 @@ export default function GuildComponent() {
                         content: <Connections
                             premium={premium}
                             handleSelectConnection={handleSelectConnection}
-                            connection={connection}
                             setConnection={setConnection}
                             key={0}
                             channels={channels}

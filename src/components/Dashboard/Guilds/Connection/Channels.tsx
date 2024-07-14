@@ -7,16 +7,17 @@ import { HiHashtag } from "react-icons/hi";
 
 interface Props {
     channels: GuildChannelsPayload[];
-    connection: ConnectedConnectionPayload;
+    connections: ConnectedConnectionPayload[];
     body: ConnectionBody;
     setBody: Dispatch<SetStateAction<ConnectionBody>>;
 };
 
-export default function ConnectionChannels({ channels, connection, body, setBody }: Props) {
+export default function ConnectionChannels({ channels, connections, body, setBody }: Props) {
     const [groupedChannels, setGroupedChannels] = useState<Record<string, GuildChannelsPayload[]>>();
     const l = useLanguage();
 
-    const checkUsedChannel = () => channels.filter((channel) => channel.id.includes(connection.channelId)).map((channel) => channel.id);
+    const checkUsedChannel = () => channels.filter((channel) => connections.map((c) => c.channelId)
+        .includes(channel.id)).map((channel) => channel.id);
 
     useEffect(() => {
         const groupChannelsByCategory = () => {
@@ -40,7 +41,7 @@ export default function ConnectionChannels({ channels, connection, body, setBody
         };
 
         groupChannelsByCategory();
-    }, [channels, connection]);
+    }, [channels, connections]);
 
     return (
         <div className="rounded-lg bg-neutral-800 transition flex flex-col gap-2">
@@ -52,7 +53,8 @@ export default function ConnectionChannels({ channels, connection, body, setBody
                 {groupedChannels && Object.keys(groupedChannels).length > 0 ? (
                     <Dropdown className="bg-neutral-800 text-white rounded-lg outline-none flex justify-start">
                         <DropdownTrigger>
-                            <button className="w-full bg-neutral-900/50 hover:bg-neutral-900 transition p-3 rounded-lg min-w-52 text-start">
+                            <button className="w-full bg-neutral-900/50 hover:bg-neutral-900 
+                                    transition p-3 rounded-lg min-w-52 text-start">
                                 {body.channel.name === ""
                                     ? l.dashboard.guilds.connections.selectchannel :
                                     <div className="flex gap-1 items-center">
@@ -67,7 +69,11 @@ export default function ConnectionChannels({ channels, connection, body, setBody
                                 }
                             </button>
                         </DropdownTrigger>
-                        <DropdownMenu disabledKeys={checkUsedChannel()} aria-label="Channels" className="max-h-56 min-w-52 items-start overflow-auto flex justify-start">
+                        <DropdownMenu
+                            disabledKeys={checkUsedChannel()}
+                            aria-label="Channels"
+                            className="max-h-56 min-w-52 items-start overflow-auto flex justify-start"
+                        >
                             {Object.entries(groupedChannels).map(([categoryId, categoryChannels]) => (
                                 <DropdownSection aria-label="Channel" className="w-full" classNames={{
                                     heading: "p-2 text-neutral-400"
