@@ -1,6 +1,6 @@
 import DefaultPremiumButton from "@/components/Mixed/DefaultPremiumButton";
 import DefaultInput from "@/components/Mixed/Input";
-import { GuildPayload } from "@/types";
+import { GuildPayload, Premium, PremiumType } from "@/types";
 import { api } from "@/utils/api";
 import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/modal";
 import { ChangeEvent, useState } from "react";
@@ -12,9 +12,10 @@ import { useLanguage } from "@/hooks/useLanguage";
 interface Props {
     guild: GuildPayload;
     setShowConfetti: (value: boolean) => void;
+    setGuildPremium: (value: Premium) => void;
 }
 
-export default function ActivePremium({ guild, setShowConfetti }: Props) {
+export default function ActivePremium({ guild, setShowConfetti, setGuildPremium }: Props) {
     const [code, setCode] = useState("");
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -42,6 +43,14 @@ export default function ActivePremium({ guild, setShowConfetti }: Props) {
 
         try {
             const { data: { type } } = await api.put(`/codes/${code}/guilds/${guild.id}`);
+
+            setGuildPremium({
+                isPremium: true,
+                maxThreads: type === PremiumType.Normal ? 5 : 15,
+                maxConnections: type === PremiumType.Normal ? 25 : 50,
+                maxMods: 10,
+                premiumType: type,
+            });  
 
             onOpen();
             setShowConfetti(true);
