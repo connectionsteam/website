@@ -1,24 +1,23 @@
-import { GuildChannelsPayload, GuildPayload, GuildThreadsPayload } from "@/types";
+import { GuildPayload, GuildThreadsPayload, Premium } from "@/types";
 import { useState } from "react";
 import { MenuProps } from "../Mods";
 import DeleteThread from "./Menu";
 import { api } from "@/utils/api";
 import { useLanguage } from "@/hooks/useLanguage";
-import usePremium from "@/hooks/usePremium";
 
 interface Props {
     setThreads: (threads: GuildThreadsPayload[]) => void;
     threads: GuildThreadsPayload[];
     guild: GuildPayload;
+    premium: Premium;
 }
 
 interface ThreadProps extends Props {
     thread: GuildThreadsPayload;
 }
 
-export default function Threads({ threads, setThreads, guild }: Props) {
+export default function Threads({ threads, setThreads, guild, premium }: Props) {
     const l = useLanguage();
-    const premium = usePremium(guild);
 
     return (
         <div className="flex flex-col gap-2 w-full">
@@ -27,14 +26,27 @@ export default function Threads({ threads, setThreads, guild }: Props) {
                     <h1 className="font-semibold text-xl">Threads</h1>
                     <span className="text-neutral-300">{threads.length}/{premium.maxThreads}</span>
                 </div>
-                <span className="text-neutral-300 max-w-96 tablet:max-w-full">{l.dashboard.guilds.threads.description}</span>
+                <span className="text-neutral-300 max-w-96 tablet:max-w-full">
+                    {l.dashboard.guilds.threads.description}
+                </span>
             </div>
             <div className="flex flex-col gap-3 h-full">
                 {threads.length > 0 ? (
-                    threads.map((thread) => <Thread guild={guild} threads={threads} key={thread.id} thread={thread} setThreads={setThreads} />)
+                    threads.map((thread) => (
+                        <Thread
+                            premium={premium}
+                            guild={guild}
+                            threads={threads}
+                            key={thread.id}
+                            thread={thread}
+                            setThreads={setThreads}
+                        />
+                    ))
                 ) : (
                     <div className="flex flex-col gap-2 h-full w-full">
-                        <h1 className="font-bold text-xl mobile:text-lg">{l.dashboard.guilds.threads.thread.noThreads}</h1>
+                        <h1 className="font-bold text-xl mobile:text-lg">
+                            {l.dashboard.guilds.threads.thread.noThreads}
+                        </h1>
                         <span>{l.dashboard.guilds.threads.thread.noThreadsDescription}</span>
                     </div>
                 )}
@@ -99,7 +111,9 @@ function Thread({ thread, setThreads, threads, guild }: ThreadProps) {
                     </div>
                     <div className="text-sm text-neutral-300 flex gap-1 mobile:flex-col">
                         <div className="font-semibold">{l.dashboard.guilds.threads.thread.created}:</div>
-                        <span className="text-neutral-300">{new Date(thread.createdTimestamp).toLocaleString()}</span>
+                        <span className="text-neutral-300">
+                            {new Date(thread.createdTimestamp).toLocaleString()}
+                        </span>
                     </div>
                 </div>
             </div>

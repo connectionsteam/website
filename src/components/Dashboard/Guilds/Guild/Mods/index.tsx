@@ -1,6 +1,6 @@
 "use client";
 import DefaultButton from "@/components/Mixed/Button";
-import { DiscordMember, GuildPayload, ModPermType } from "@/types";
+import { DiscordMember, GuildPayload, ModPermType, Premium } from "@/types";
 import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/modal";
 import { useContext, useState } from "react";
 import { LuPlusCircle } from "react-icons/lu";
@@ -10,12 +10,12 @@ import GuildModModal from "./Modal";
 import { UserContext } from "@/contexts/User";
 import { useLanguage } from "@/hooks/useLanguage";
 import PremiumPopUp from "@/components/Premium/PopUp";
-import usePremium from "@/hooks/usePremium";
 
 interface Props {
     guild: GuildPayload;
     setGuild: (guild: GuildPayload) => void;
     members: DiscordMember[];
+    premium: Premium;
 }
 
 export interface MenuProps {
@@ -23,20 +23,25 @@ export interface MenuProps {
     removing: string | null;
 }
 
-export default function GuildMods({ guild, setGuild, members }: Props) {
+export default function GuildMods({ guild, setGuild, members, premium }: Props) {
     const l = useLanguage();
     const { user } = useContext(UserContext);
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-    const { isOpen: isPremiumOpen, onOpen: onPremiumOpen, onOpenChange: onPremiumChange, onClose: onPremiumClose } = useDisclosure();
+    const {
+        isOpen: isPremiumOpen,
+        onOpen: onPremiumOpen,
+        onOpenChange:
+        onPremiumChange,
+        onClose: onPremiumClose
+    } = useDisclosure();
     const [query, setQuery] = useState("");
-    const premium = usePremium(guild);
     const [menu, setMenu] = useState<MenuProps>({
         hover: null,
         removing: null,
     });
 
     const handleAddMod = async (mod: DiscordMember) => {
-        if (Object.keys(guild.mods).length >= premium.maxMods) return onPremiumOpen(); 
+        if (Object.keys(guild.mods).length >= premium.maxMods) return onPremiumOpen();
 
         await api.put(`/guilds/${guild.id}/mods/${mod.user.id}`);
 
@@ -77,7 +82,9 @@ export default function GuildMods({ guild, setGuild, members }: Props) {
                 <div className="flex flex-col gap-1">
                     <div className="flex gap-1 items-end">
                         <h1 className="font-semibold text-xl">{l.dashboard.guilds.mods.title}</h1>
-                        <span className="text-neutral-300">{Object.keys(guild.mods).length}/{premium.maxMods}</span>
+                        <span className="text-neutral-300">
+                            {Object.keys(guild.mods).length}/{premium.maxMods}
+                        </span>
                     </div>
                     <span className="text-neutral-300">{l.dashboard.guilds.mods.description}</span>
                 </div>
@@ -109,13 +116,27 @@ export default function GuildMods({ guild, setGuild, members }: Props) {
                 base: "max-h-screen overflow-y-auto",
             }} isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent className="bg-neutral-800 text-white">
-                    <ModalHeader className="flex flex-col gap-1 bg-neutral-800">{l.dashboard.guilds.mods.addModerator}</ModalHeader>
+                    <ModalHeader className="flex flex-col gap-1 bg-neutral-800">
+                        {l.dashboard.guilds.mods.addModerator}
+                    </ModalHeader>
                     <ModalBody>
-                        <GuildModModal key={0} query={query} setQuery={setQuery} handleAddMod={handleAddMod} users={members} guild={guild} />
+                        <GuildModModal
+                            key={0}
+                            query={query}
+                            setQuery={setQuery}
+                            handleAddMod={handleAddMod}
+                            users={members}
+                            guild={guild}
+                        />
                     </ModalBody>
                 </ModalContent>
             </Modal>
-            <PremiumPopUp isOpen={isPremiumOpen} onChange={onPremiumChange} onClose={onPremiumClose} text="Precisa do premium amigao" />
+            <PremiumPopUp
+                isOpen={isPremiumOpen}
+                onChange={onPremiumChange}
+                onClose={onPremiumClose}
+                text="Precisa do premium amigao"
+            />
         </>
     )
 }
