@@ -116,7 +116,7 @@ export default function GuildMods({ guild, setGuild, members, premium }: Props) 
                 base: "max-h-screen overflow-y-auto",
             }} isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent className="bg-neutral-800 text-white">
-                    <ModalHeader className="flex flex-col gap-1 bg-neutral-800">
+                    <ModalHeader className="flex flex-col gap-1 bg-neutral-800 pb-0">
                         {l.dashboard.guilds.mods.addModerator}
                     </ModalHeader>
                     <ModalBody>
@@ -135,7 +135,8 @@ export default function GuildMods({ guild, setGuild, members, premium }: Props) 
                 isOpen={isPremiumOpen}
                 onChange={onPremiumChange}
                 onClose={onPremiumClose}
-                text="Precisa do premium amigao"
+                limit={premium.maxMods === 10}
+                text="Parece que você chegou no seu limite de moderadores..."
             />
         </>
     )
