@@ -85,6 +85,7 @@ export default function Connections({ guild, setGuild, channels, handleSelectCon
                         </ModalHeader>
                         <ModalBody>
                             <GuildConnectConnection
+                                premium={premium}
                                 setGuild={setGuild}
                                 onClose={onClose}
                                 channels={channels}

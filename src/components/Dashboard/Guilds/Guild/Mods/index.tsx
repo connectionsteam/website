@@ -39,9 +39,15 @@ export default function GuildMods({ guild, setGuild, members, premium }: Props) 
         hover: null,
         removing: null,
     });
+    const [sonner, setSonner] = useState(false);
 
     const handleAddMod = async (mod: DiscordMember) => {
-        if (Object.keys(guild.mods).length >= premium.maxMods) return onPremiumOpen();
+        if (Object.keys(guild.mods).length >= premium.maxMods) {
+            setSonner(false);
+            setTimeout(() => setSonner(true), 0);
+
+            return onPremiumOpen();
+        };
 
         await api.put(`/guilds/${guild.id}/mods/${mod.user.id}`);
 
@@ -130,14 +136,16 @@ export default function GuildMods({ guild, setGuild, members, premium }: Props) 
                         />
                     </ModalBody>
                 </ModalContent>
+                <PremiumPopUp
+                    isOpen={isPremiumOpen}
+                    sonner={sonner}
+                    onChange={onPremiumChange}
+                    onClose={onPremiumClose}
+                    limitText="Você chegou no limite de moderadores de 10/10"
+                    limit={premium.maxMods === 10}
+                    text="Parece que você chegou no seu limite de moderadores..."
+                />
             </Modal>
-            <PremiumPopUp
-                isOpen={isPremiumOpen}
-                onChange={onPremiumChange}
-                onClose={onPremiumClose}
-                limit={premium.maxMods === 10}
-                text="Parece que você chegou no seu limite de moderadores..."
-            />
         </>
     )
 }
