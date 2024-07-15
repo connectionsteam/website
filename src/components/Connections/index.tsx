@@ -65,7 +65,7 @@ export default function ConnectionsPageComponent() {
                             </button>
                         ))}
                     </div>
-                    <div className="p-1 flex gap-2 items-center bg-neutral-800 rounded-lg relative h-full">
+                    <div className="p-1 flex gap-2 items-center bg-neutral-800 rounded-lg relative h-full mobile:hidden"> 
                         <motion.div
                             animate={{ opacity: 1, x: options.layout === "list" ? -1 : 38 }}
                             className="absolute bg-neutral-700 z-0 w-9 h-[90%] rounded-lg"

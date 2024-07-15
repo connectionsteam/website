@@ -40,10 +40,10 @@ export default function ConnectionPageComponent() {
                         {connection.icon && (
                             <Avatar src={connection.icon} className="w-24 h-24" />
                         )}
-                        <div className="flex flex-col gap-2 items-start">
+                        <div className="flex flex-col gap-2 items-start mobile:items-center">
                             <span className="font-bold text-2xl">{connection.name}</span>
                             {connection.description && (
-                                <div className="flex items-start text-start w-full break-words rounded-lg">
+                                <div className="flex items-start text-start w-full break-words rounded-lg mobile:text-center">
                                     <span>{connection.description}</span>
                                 </div>
                             )}
