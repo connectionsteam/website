@@ -11,30 +11,28 @@ import { useLanguage } from "@/hooks/useLanguage";
 
 interface Props {
     connection: ConnectionsPageStructure;
+    voteProps: any;
+    setVoteProps: (votesProps: any) => void;
 }
 
-export default function ConnectionsPageVoteComponent({ connection }: Props) {
+export default function ConnectionsPageVoteComponent({ connection, voteProps, setVoteProps }: Props) {
     const l = useLanguage();
 
     const { user } = useContext(UserContext);
     const twelve_hours = 12 * 60 * 60 * 1000;
     const lastVoteTimestamp = connection.votes?.find((vote) => vote.userId === user?.id)?.lastVoteTimestamp ?? 0;
-    const canVote = (Date.now() - lastVoteTimestamp >= twelve_hours);
-
-    const [voteProps, setVoteProps] = useState({
-        loading: false,
-        voted: false,
-        restime: false,
-        lastVoteTimestamp,
-        canVote
-    });
 
     const handleVote = async () => {
         setVoteProps({ ...voteProps, loading: true, voted: false });
 
-        const res = await api.post(`/connections/${connection.name}/votes`);
+        const { data: { lastVoteTimestamp } }  = await api.post(`/connections/${connection.name}/votes`);
 
-        setVoteProps({ ...voteProps, loading: false, voted: true, lastVoteTimestamp: res.data.lastVoteTimestamp });
+        setVoteProps({ 
+            ...voteProps, 
+            loading: false, 
+            voted: true, 
+            lastVoteTimestamp: lastVoteTimestamp
+        });
 
         setTimeout(() => {
             setVoteProps({ ...voteProps, restime: true });
@@ -49,7 +47,7 @@ export default function ConnectionsPageVoteComponent({ connection }: Props) {
 
     return (
         <DefaultButton
-            className="p-2.5"
+            className="p-2.5 items-center"
             disabled={!voteProps.canVote || voteProps.restime}
             onClick={handleVote}
         >
@@ -63,7 +61,7 @@ export default function ConnectionsPageVoteComponent({ connection }: Props) {
                     ) : voteProps.voted ? (
                         <>
                             <FaCheckCircle className="text-green-500" size={20} />
-                            <div className="flex">
+                            <div className="flex text-start">
                                 <span className="pr-1">{l.connection.voted}</span>
                                 <div className="flex">
                                     (
@@ -92,13 +90,17 @@ export default function ConnectionsPageVoteComponent({ connection }: Props) {
                             <MdOutlineKeyboardArrowUp size={20} />
                             <span className="w-full text-start opacity-80">
                                 {l.connection.returntwelve
-                                    .replace("{hour}", getRemainingHours() === 1 ? l.connection.hour : l.connection.hours)}
+                                    .replace("{hour}", getRemainingHours() === 1
+                                        ? l.connection.hour : l.connection.hours)}
                             </span>
                         </>
                     ) : (
                         <>
                             <MdOutlineKeyboardArrowUp size={20} />
-                            <span>{l.connection.vote} ({connection.votes?.reduce((total, { count }) => total + count, 0) ?? 0})</span>
+                            <span>
+                                {l.connection.vote}
+                                ({connection.votes?.reduce((total, { count }) => total + count, 0) ?? 0})
+                            </span>
                         </>
                     )
                 ) : (
@@ -107,7 +109,8 @@ export default function ConnectionsPageVoteComponent({ connection }: Props) {
                         <span className="w-full text-start opacity-80">
                             {l.connection.return
                                 .replace("{hours}", getRemainingHours().toString())
-                                .replace("{hour}", getRemainingHours() === 1 ? l.connection.hour : l.connection.hours)}
+                                .replace("{hour}", getRemainingHours() === 1
+                                    ? l.connection.hour : l.connection.hours)}
                         </span>
                     </>
                 )}

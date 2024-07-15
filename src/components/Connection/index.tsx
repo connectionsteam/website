@@ -1,7 +1,7 @@
-import { ConnectionsPageStructure } from "@/types";
+import { ConnectionsPageStructure, VotesPropsStructure } from "@/types";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import DefaultLayout from "../Mixed/Layout";
 import Avatar from "../Mixed/Avatar";
 import { MdOutlineKeyboardArrowUp } from "react-icons/md";
@@ -10,16 +10,27 @@ import { RiHashtag } from "react-icons/ri";
 import { useLanguage } from "@/hooks/useLanguage";
 import ConnectionsPageCard from "../Connections/Connection";
 import ConnectConnection from "./Connect";
+import Link from "next/link";
+import { UserContext } from "@/contexts/User";
 
 export default function ConnectionPageComponent() {
     const router = useRouter();
+    const { user } = useContext(UserContext);
     const { query: { id } } = router;
     const [connection, setConnection] = useState<ConnectionsPageStructure>();
     const [recommendedConnections, setRecommendedConnections] = useState<ConnectionsPageStructure[]>();
+    const [voteProps, setVoteProps] = useState<VotesPropsStructure>({
+        loading: false,
+        voted: false,
+        restime: false,
+        votes: 0,
+        lastVoteTimestamp: 0,
+        canVote: false
+    });
     const l = useLanguage();
 
     useEffect(() => {
-        if (!id) return;
+        if (!connection && !id) return;
 
         const fetchConnection = async () => {
             const connectionRes = await api.get(`/connections/${id}?with_votes=true`);
@@ -31,6 +42,23 @@ export default function ConnectionPageComponent() {
 
         fetchConnection();
     }, [id]);
+
+    useEffect(() => {
+        if (!connection) return;
+        const twelve_hours = 12 * 60 * 60 * 1000;
+        const lastVoteTimestamp = connection.votes?.find((vote) => vote.userId === user?.id)?.lastVoteTimestamp ?? 0;
+        const canVote = (Date.now() - lastVoteTimestamp >= twelve_hours);
+        const votes = connection.votes?.reduce((total, { count }) => total + count, 0) ?? 0
+
+        setVoteProps({
+            loading: false,
+            voted: false,
+            restime: false,
+            votes,
+            lastVoteTimestamp,
+            canVote
+        });
+    }, [connection]);
 
     return connection && recommendedConnections ? (
         <DefaultLayout>
@@ -48,20 +76,28 @@ export default function ConnectionPageComponent() {
                                 </div>
                             )}
                             <div className="text-neutral-300 px-2 bg-neutral-700 rounded-lg flex items-center justify-center transition">
-                                <span>{connection.votes?.reduce((total, { count }) => total + count, 0) ?? 0}</span>
+                                <span>{voteProps.votes}</span>
                                 <MdOutlineKeyboardArrowUp size={20} />
                             </div>
                         </div>
                     </div>
                     <div className="flex gap-3 min-w-[450px] justify-start items-start tablet:min-w-full mobile:flex-col">
-                        <ConnectionsPageVoteComponent connection={connection} />
+                        <ConnectionsPageVoteComponent
+                            connection={connection}
+                            voteProps={voteProps}
+                            setVoteProps={setVoteProps}
+                            key={0}
+                        />
                         <ConnectConnection connection={connection} />
                     </div>
                 </div>
                 <div className="flex gap-2 items-center">
                     <span className="font-bold">{l.connection.creator}</span>
                     <div className="w-8 h-8">
-                        <Avatar className="w-full h-full" src={`https://cdn.discordapp.com/avatars/${connection.creator.id}/${connection.creator.avatar}.png`} />
+                        <Avatar
+                            className="w-full h-full"
+                            src={`https://cdn.discordapp.com/avatars/${connection.creator.id}/${connection.creator.avatar}.png`}
+                        />
                     </div>
                     <span className="font-bold text-lg">{connection.creator.username}</span>
                 </div>
@@ -73,13 +109,21 @@ export default function ConnectionPageComponent() {
                         </button>
                     ))}
                 </div>
-                <span className="text-sm text-neutral-300">{l.dashboard.guilds.threads.thread.created} {new Date(connection.createdTimestamp).toLocaleString()}</span>
+                <span className="text-sm text-neutral-300">
+                    {l.dashboard.guilds.threads.thread.created}
+                    {new Date(connection.createdTimestamp).toLocaleString()}
+                </span>
             </div>
             <div className="flex flex-col gap-4 w-full">
                 <span className="font-bold text-2xl">{l.connection.recommended}</span>
                 <div className="grid grid-cols-2 gap-4 w-full tablet:grid-cols-1">
                     {recommendedConnections.map((connection, index) => (
-                        <ConnectionsPageCard key={index} connection={connection} index={index} query={""} />
+                        <Link
+                            className="w-full h-full flex"
+                            href={`/connection/${connection.name}`} key={index}
+                        >
+                            <ConnectionsPageCard connection={connection} index={index} query={""} />
+                        </Link>
                     ))}
                 </div>
             </div>
