@@ -1,21 +1,24 @@
 "use client"
 import DefaultInput from "@/components/Mixed/Input";
-import { ConnectionBody, GuildChannelsPayload, GuildPayload } from "@/types";
+import { ConnectionBody, GuildChannelsPayload, GuildPayload, Premium } from "@/types";
 import { api } from "@/utils/api";
 import { useState, useEffect } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import ConnectionChannels from "./Channels";
 import JoinConnectionLanguage from "./Languages";
 import { useLanguage } from "@/hooks/useLanguage";
+import { useDisclosure } from "@nextui-org/modal";
+import PremiumPopUp from "@/components/Premium/PopUp";
 
 interface Props {
     guild: GuildPayload;
     channels: GuildChannelsPayload[];
     onClose: () => void;
     setGuild: (guild: GuildPayload) => void;
+    premium: Premium
 };
 
-export default function GuildConnectConnection({ guild, channels, onClose, setGuild }: Props) {
+export default function GuildConnectConnection({ guild, channels, onClose, setGuild, premium }: Props) {
     const l = useLanguage();
     const [body, setBody] = useState<ConnectionBody>({
         channel: {
@@ -33,6 +36,8 @@ export default function GuildConnectConnection({ guild, channels, onClose, setGu
     });
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [loading, setLoading] = useState(false);
+    const [sonner, setSonner] = useState(false);
+    const { isOpen: isPremiumOpen, onOpen: onPremiumOpen, onOpenChange: onPremiumChange, onClose: onPremiumClose } = useDisclosure();
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
@@ -49,6 +54,13 @@ export default function GuildConnectConnection({ guild, channels, onClose, setGu
     }, [body, guild]);
 
     const joinConnection = async () => {
+        if (guild.connections.length >= premium.maxConnections) {
+            setSonner(false);
+            setTimeout(() => setSonner(true), 0);
+
+            return onPremiumOpen();
+        };
+
         setLoading(true);
 
         try {
@@ -131,6 +143,15 @@ export default function GuildConnectConnection({ guild, channels, onClose, setGu
                     ) : <span className="font-semibold">{l.dashboard.guilds.connections.connect}</span>}
                 </button>
             </div>
+            <PremiumPopUp
+                isOpen={isPremiumOpen}
+                sonner={sonner}
+                onChange={onPremiumChange}
+                onClose={onPremiumClose}
+                limitText={`Você chegou no limite de conexões de ${guild.connections.length}/${premium.maxConnections}`}
+                limit={guild.connections.length === 50}
+                text="Parece que você chegou no seu limite de conexões..."
+            />
         </div>
     );
 }
