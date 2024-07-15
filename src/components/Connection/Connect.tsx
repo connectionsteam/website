@@ -1,11 +1,10 @@
 "use client"
 import { ConnectionBody, ConnectionsPageStructure, GuildPayload } from "@/types";
 import { api } from "@/utils/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/modal";
 import { FaLink } from "react-icons/fa6";
-import useSWR from "swr";
 import ConnectionsPageChannels from "./Options";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
 import Avatar from "../Mixed/Avatar";
@@ -17,8 +16,7 @@ interface Props {
 export default function ConnectConnection({ connection }: Props) {
     const l = useLanguage();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const { data: guilds } = useSWR<{ data: GuildPayload[] }>(`/users/@me/guilds`, api.get);
-
+    const [guilds, setGuilds] = useState<GuildPayload[]>();
     const [body, setBody] = useState<ConnectionBody>({
         channel: {
             id: "",
@@ -35,9 +33,23 @@ export default function ConnectConnection({ connection }: Props) {
     });
     const [guild, setGuild] = useState<GuildPayload>();
 
+    useEffect(() => {
+        const fetchGuilds = async () => {
+            const { data } = await api.get(`/users/@me/guilds`);
+
+            setGuilds(data);
+        };
+
+        fetchGuilds();
+    }, []);
+
     return (
         <>
-            <button onClick={onOpen} className="p-3 bg-neutral-700 hover:bg-neutral-600 rounded-lg transition w-full flex gap-2 items-center">
+            <button
+                onClick={onOpen}
+                className="p-3 bg-neutral-700 hover:bg-neutral-600 rounded-lg transition 
+                w-full flex gap-2 items-center tablet:text-center tablet:items-center tablet:justify-center"
+            >
                 <FaLink />
                 <span>{l.connection.connect}</span>
             </button>
@@ -60,31 +72,38 @@ export default function ConnectConnection({ connection }: Props) {
                                             <button className="w-full rounded-lg bg-neutral-900/50 p-3 text-start">
                                                 {guild ? (
                                                     <div className="flex items-center gap-2">
-                                                        <Avatar className="w-8 h-8" src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`} />
+                                                        <Avatar
+                                                            className="w-8 h-8"
+                                                            src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`}
+                                                        />
                                                         <span className="font-bold">{guild.name}</span>
                                                     </div>
                                                 ) : "Selecione um servidor"}
                                             </button>
                                         </DropdownTrigger>
                                         <DropdownMenu className="w-full flex flex-col gap-1" aria-label="guilds">
-                                            {guilds.data
-                                                .filter((guild) => guild.connections.length < 5 && guild.connections.findIndex((c) => c.name === connection.name))
+                                            {guilds
+                                                .filter((guild) => guild.connections.length < 5
+                                                    && guild.connections.findIndex((c) => c.name === connection.name))
                                                 .map((guild) => (
-                                                <DropdownItem
-                                                    aria-label={guild.name}
-                                                    classNames={{
-                                                        title: "flex items-center gap-1"
-                                                    }}
-                                                    className="hover:bg-neutral-900 transition p-3 w-full bg-neutral-800"
-                                                    key={guild.id}
-                                                    onClick={() => setGuild(guild)}
-                                                >
-                                                    <div className="flex items-center gap-2">
-                                                        <Avatar className="w-8 h-8" src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`} />
-                                                        <span className="font-bold">{guild.name}</span>
-                                                    </div>
-                                                </DropdownItem>
-                                            ))}
+                                                    <DropdownItem
+                                                        aria-label={guild.name}
+                                                        classNames={{
+                                                            title: "flex items-center gap-1"
+                                                        }}
+                                                        className="hover:bg-neutral-900 transition p-3 w-full bg-neutral-800"
+                                                        key={guild.id}
+                                                        onClick={() => setGuild(guild)}
+                                                    >
+                                                        <div className="flex items-center gap-2">
+                                                            <Avatar
+                                                                className="w-8 h-8"
+                                                                src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`}
+                                                            />
+                                                            <span className="font-bold">{guild.name}</span>
+                                                        </div>
+                                                    </DropdownItem>
+                                                ))}
 
                                         </DropdownMenu>
                                     </Dropdown>
@@ -92,7 +111,12 @@ export default function ConnectConnection({ connection }: Props) {
                                     <div className="w-full rounded-lg bg-neutral-900/50 p-6"></div>
                                 )}
                             </div>
-                            {guild && <ConnectionsPageChannels setBody={setBody} body={body} connection={connection} guild={guild} />}
+                            {guild && <ConnectionsPageChannels
+                                setBody={setBody}
+                                body={body}
+                                connection={connection}
+                                guild={guild}
+                            />}
                         </div>
                     </ModalBody>
                 </ModalContent>
