@@ -13,7 +13,7 @@ export default function DefaultButton({ children, className, onClick, disabled }
             <button
                 disabled={disabled || false}
                 onClick={onClick}
-                className={`${className} flex items-center justify-center gap-2 ph-full w-full rounded-lg bg-neutral-800 hover:bg-transparent transition disabled:hover:bg-neutral-800`}
+                className={`${className} flex gap-2 ph-full w-full rounded-lg bg-neutral-800 hover:bg-transparent transition disabled:hover:bg-neutral-800`}
             >
                 {children}
             </button>
