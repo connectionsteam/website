@@ -348,3 +348,12 @@ export interface Premium {
     maxThreads: number;
     premiumType: PremiumType;
 }
+
+export interface VotesPropsStructure {
+    loading: boolean;
+    voted: boolean;
+    restime: boolean;
+    votes: number;
+    lastVoteTimestamp: number;
+    canVote: boolean;
+}
