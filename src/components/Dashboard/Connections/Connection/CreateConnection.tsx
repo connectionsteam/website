@@ -49,8 +49,6 @@ export default function CreateConnection({ post, setErrors, errors, connections,
                 }
             }
 
-            console.log(postBody);
-
             const req = await api.post("/users/@me/connections", postBody);
 
             setLoading(false);
