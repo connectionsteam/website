@@ -34,7 +34,7 @@ export default function Plans({ plans, setMorePlans }: { plans: PlanStructure[],
                             animate={{ x: 0, opacity: 1 }}
                             transition={{ delay: index * 0.2 }}
                             key={index}
-                            className="flex flex-col gap-4 p-6 rounded-lg bg-neutral-800 items-start relative h-full w-[350px] tabelt:w-full min-h-[460px]"
+                            className="flex flex-col gap-4 p-6 rounded-lg bg-neutral-800 items-start relative h-full w-[350px] tablet:w-full min-h-[460px]"
                         >
                             {plan.popular && <div className="absolute px-2 font-semibold -top-3 flex rounded-full bg-fuchsia-500 left-3">Popular</div>}
                             <div className="flex gap-3 flex-col">
@@ -61,7 +61,7 @@ export default function Plans({ plans, setMorePlans }: { plans: PlanStructure[],
                     if (!plan.popular) return PlanComponent;
 
                     return (
-                        <BackgroundGradient initial={{ x: -30, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: index * 0.2 }} className="h-full" key={index}>
+                        <BackgroundGradient initial={{ x: -30, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: index * 0.2 }} className="h-full tablet:w-full" key={index}>
                             {PlanComponent}
                         </BackgroundGradient>
                     );
