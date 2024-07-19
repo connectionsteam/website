@@ -65,7 +65,7 @@ export default function Page() {
                             >
                                 <DefaultButton
                                     href="/dashboard"
-                                    className="items-center justify-start p-3 px-8 tablet:w-full w-36"
+                                    className="items-center justify-start p-3 px-8 tablet:w-full min-w-36"
                                     divclass="tablet:w-full w-37"
                                 >
                                     <TbLayoutDashboardFilled />
@@ -223,29 +223,27 @@ export default function Page() {
                             </span>
                         </div>
                         <div className="gap-4 grid grid-cols-2 tablet:grid-cols-1 text-start">
-                            <AnimatePresence mode="wait">
-                                {Object.values(InitialPageConnectedConnectionFlags).map((flag, index) => (
-                                    <motion.div
-                                        initial={{ opacity: 0, y: -30 }}
-                                        whileInView={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: 0.1 * index }}
-                                        key={index}
-                                        className="flex flex-col gap-1 p-3 rounded-lg 
+                            {Object.values(InitialPageConnectedConnectionFlags).map((flag, index) => (
+                                <motion.div
+                                    initial={{ opacity: 0, y: -30 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.1 * index }}
+                                    key={index}
+                                    className="flex flex-col gap-1 p-3 rounded-lg 
                                         bg-neutral-900 h-full place-content-center max-w-96">
-                                        <div className="flex items-center gap-1">
-                                            <div className="relative">
-                                                <Switch color="secondary" />
-                                            </div>
-                                            <span className="font-bold">
-                                                {flagsDescriptions[flag].title}
-                                            </span>
+                                    <div className="flex items-center gap-1">
+                                        <div className="relative">
+                                            <Switch color="secondary" />
                                         </div>
-                                        <span className="text-sm text-neutral-300">
-                                            {flagsDescriptions[flag].description}
+                                        <span className="font-bold">
+                                            {flagsDescriptions[flag].title}
                                         </span>
-                                    </motion.div>
-                                ))}
-                            </AnimatePresence>
+                                    </div>
+                                    <span className="text-sm text-neutral-300">
+                                        {flagsDescriptions[flag].description}
+                                    </span>
+                                </motion.div>
+                            ))}
                         </div>
                         <div className="bg-neutral-900 p-3 rounded-lg items-center justify-center text-center w-full">
                             <span>{l.home.custom.moreOptions}</span>
