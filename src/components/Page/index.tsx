@@ -1,84 +1,93 @@
 "use client";
 import { MdKeyboardDoubleArrowDown } from "react-icons/md";
-import DefaultLayout from "../Mixed/Layout";
 import Image from "next/image";
 import { HiHashtag } from "react-icons/hi";
 import TypingAnimation from "../ui/Type";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion, useInView } from "framer-motion";
 import { useLanguage } from "@/hooks/useLanguage";
 import UserEmbed from "./UserEmbed";
-import ConnectionsEmbedProps from "./ConnectionsEmbed";
 import ConnectionsEmbed from "./ConnectionsEmbed";
-import { ConnectedConnectionFlags } from "@/types";
+import { ConnectedConnectionFlags, InitialPageConnectedConnectionFlags } from "@/types";
 import { Switch } from "@nextui-org/switch";
 import DefaultButton from "../Mixed/Button";
 import { TbLayoutDashboardFilled } from "react-icons/tb";
-import { LuPlusCircle } from "react-icons/lu";
+import { LuPlusCircle } from "react-icons/lu"
+import { BackgroundColoredGradient } from "../ui/BgGradient";
+import Link from "next/link";
 
 export default function Page() {
     const l = useLanguage();
-
+    const url = "https://discord.com/oauth2/authorize?client_id=1243234162077470802";
     const flagsDescriptions = {
-        [ConnectedConnectionFlags.Locked]: {
-            title: l.dashboard.guilds.connections.flags.locked,
-            description: l.dashboard.guilds.connections.flags.lockedDescription,
+        [ConnectedConnectionFlags.CompactModeEnabled]: {
+            title: l.dashboard.guilds.connections.flags.compactModeEnabled,
+            description: l.dashboard.guilds.connections.flags.compactModeEnabledDescription,
         },
-        [ConnectedConnectionFlags.Frozen]: {
-            title: l.dashboard.guilds.connections.flags.frozen,
-            description: l.dashboard.guilds.connections.flags.frozenDescription,
-        },
-        [ConnectedConnectionFlags.AllowFiles]: {
-            title: l.dashboard.guilds.connections.flags.allowFiles,
-            description: l.dashboard.guilds.connections.flags.allowFilesDescription,
-        },
-        [ConnectedConnectionFlags.AllowInvites]: {
-            title: l.dashboard.guilds.connections.flags.allowInvites,
-            description: l.dashboard.guilds.connections.flags.allowInvitesDescription,
-        },
-        [ConnectedConnectionFlags.AllowLinks]: {
-            title: l.dashboard.guilds.connections.flags.allowLinks,
-            description: l.dashboard.guilds.connections.flags.allowLinksDescription,
+        [ConnectedConnectionFlags.AutoTranslate]: {
+            title: l.dashboard.guilds.connections.flags.autoTranslate,
+            description: l.dashboard.guilds.connections.flags.autoTranslateDescription,
         },
         [ConnectedConnectionFlags.NoIndentification]: {
             title: l.dashboard.guilds.connections.flags.noIndentification,
             description: l.dashboard.guilds.connections.flags.noIndentificationDescription,
         },
+        [ConnectedConnectionFlags.AllowLinks]: {
+            title: l.dashboard.guilds.connections.flags.allowLinks,
+            description: l.dashboard.guilds.connections.flags.allowLinksDescription,
+        },
         [ConnectedConnectionFlags.AllowOrigin]: {
             title: l.dashboard.guilds.connections.flags.allowOrigin,
             description: l.dashboard.guilds.connections.flags.allowOriginDescription,
         },
-        [ConnectedConnectionFlags.AllowEmojis]: {
-            title: l.dashboard.guilds.connections.flags.allowEmojis,
-            description: l.dashboard.guilds.connections.flags.allowEmojisDescription,
-        },
-        [ConnectedConnectionFlags.CompactModeEnabled]: {
-            title: l.dashboard.guilds.connections.flags.compactModeEnabled,
-            description: l.dashboard.guilds.connections.flags.compactModeEnabledDescription,
+        [ConnectedConnectionFlags.AllowFiles]: {
+            title: l.dashboard.guilds.connections.flags.allowFiles,
+            description: l.dashboard.guilds.connections.flags.allowFilesDescription,
         }
     };
 
     return (
-        <div className="flex justify-center items-center tablet:mt-20">
+        <div className="flex justify-center items-center tablet:mt-20 overflow-x-hidden">
             <div className="flex flex-col max-w-[1100px] text-white">
-                <div className="tablet:flex-col flex h-screen mobile:h-auto items-center w-full gap-6">
-                    <div className="flex flex-col gap-4 w-[62%] items-start justify-start tablet:items-center tablet:justify-center">
+                <div className="tablet:flex-col flex h-screen tablet:h-auto items-center w-full gap-6 bg-dot-neutral-800/[0.6]">
+                    <div className="flex flex-col gap-4 w-[62%] items-start justify-start tablet:items-center tablet:justify-center mobile:w-full">
                         <h1 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r
-                        from-fuchsia-500 to-indigo-500">
+                        from-fuchsia-500 to-indigo-500 mobile:text-4xl">
                             Connections
                         </h1>
-                        <p className="text-neutral-300 text-lg mobile:text-xs tablet:text-center">
+                        <p className="text-neutral-300 text-lg mobile:text-sm tablet:text-center">
                             {l.home.description}
                         </p>
-                        <div className="flex gap-2 items-center w-full">
-                            <DefaultButton href="/dashboard" className="items-center justify-start p-3 px-8">
-                                <TbLayoutDashboardFilled />
-                                <span>Painel</span>
-                            </DefaultButton>
-                            <button className="bg-neutral-800 flex items-center justify-start
-                            p-4 px-5 rounded-lg transition w-full gap-3">
-                                <LuPlusCircle size={20} />
-                                <span>Adicionar Connections</span>
-                            </button>
+                        <div className="flex gap-2 items-center w-full tablet:flex-col mobile:max-w-[318px]">
+                            <motion.div
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 0.9, y: 0 }}
+                                className="tablet:w-full w-37"
+                            >
+                                <DefaultButton
+                                    href="/dashboard"
+                                    className="items-center justify-start p-3 px-8 tablet:w-full w-36"
+                                    divclass="tablet:w-full w-37"
+                                >
+                                    <TbLayoutDashboardFilled />
+                                    <span>Painel</span>
+                                </DefaultButton>
+                            </motion.div>
+                            <motion.div
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 0.9, y: 0 }}
+                                transition={{ delay: 0.2 }}
+                                className="w-full"
+                            >
+                                <a
+                                    target="_blank"
+                                    href={url}
+                                    className="bg-neutral-800 flex items-center justify-start
+                            p-4 px-5 rounded-lg transition w-full gap-3 hover:bg-neutral-700"
+                                >
+                                    <LuPlusCircle size={20} />
+                                    <span>Adicionar Connections</span>
+                                </a>
+                            </motion.div>
                         </div>
                     </div>
                     <div className="flex flex-row gap-4 items-start mobile w-full tablet:justify-center tablet:items-center mobile:flex-col">
@@ -197,12 +206,19 @@ export default function Page() {
                         </div>
                     </div>
                 </div>
-                <div className="p-10 w-full bg-neutral-900 bg-grid-small-white/[0.1] relative flex items-center justify-center">
+                <div
+                    className="p-10 w-full bg-neutral-900 h-screen tablet:h-auto 
+                    bg-grid-small-white/[0.2] relative flex items-center justify-center flex-col"
+                >
                     <div className="absolute pointer-events-none inset-0 flex items-center 
                     justify-center bg-neutral-900 
                     [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]"></div>
-                    <div className="flex text-white flex-col items-center justiify-center gap-6 text-center">
-                        <div className="flex flex-col gap-2 ">
+                    <motion.div
+                        initial={{ opacity: 0, y: 100 }}
+                        whileInView={{ opacity: 0.9, y: 0 }}
+                        className="flex text-white flex-col items-center justiify-center gap-3 text-center"
+                    >
+                        <div className="flex flex-col gap-2">
                             <h1 className="font-extrabold text-4xl">Totalmente customizavel</h1>
                             <span className="max-w-[800px]">
                                 Connections é um bot totalmente personalizável, onde 90% dos recursos
@@ -211,9 +227,12 @@ export default function Page() {
                             </span>
                         </div>
                         <div className="gap-4 grid grid-cols-2 tablet:grid-cols-1 text-start">
-                            {Object.values(ConnectedConnectionFlags).map((flag, index) =>
-                                (flag !== ConnectedConnectionFlags.Locked) && (
-                                    <div
+                            <AnimatePresence mode="wait">
+                                {Object.values(InitialPageConnectedConnectionFlags).map((flag, index) => (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: -30 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: 0.1 * index }}
                                         key={index}
                                         className="flex flex-col gap-1 p-3 rounded-lg 
                                         bg-neutral-900 h-full place-content-center max-w-96">
@@ -221,13 +240,72 @@ export default function Page() {
                                             <div className="relative">
                                                 <Switch color="secondary" />
                                             </div>
-                                            <span className="font-bold">{flagsDescriptions[flag].title}</span>
+                                            <span className="font-bold">
+                                                {flagsDescriptions[flag].title}
+                                            </span>
                                         </div>
-                                        <span className="text-sm text-neutral-300">{flagsDescriptions[flag].description}</span>
-                                    </div>
+                                        <span className="text-sm text-neutral-300">
+                                            {flagsDescriptions[flag].description}
+                                        </span>
+                                    </motion.div>
                                 ))}
+                            </AnimatePresence>
                         </div>
-                    </div>
+                        <div className="bg-neutral-900 p-3 rounded-lg items-center justify-center text-center w-full">
+                            <span>E muito mais opções!</span>
+                        </div>
+                    </motion.div>
+                </div>
+                <div
+                    className="flex items-center justify-center w-full tablet:w-screen tablet:px-3 
+                    h-[60vh] bg-dot-neutral-800/[0.5]"
+                >
+                    <BackgroundColoredGradient>
+                        <div className="bg-neutral-900 rounded-lg w-full p-8 flex items-center justify-center flex-col">
+                            <div className="justify-center py-4 flex-col text-center items-center gap-2 mobile:w-full w-[76%] flex">
+                                <motion.h1
+                                    initial={{ opacity: 0, x: 10 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    className="font-bold text-3xl mobile:text-xl"
+                                >
+                                    Adicione o Connections
+                                </motion.h1>
+                                <motion.span
+                                    initial={{ opacity: 0, x: -10 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: 0.2 }}
+                                    className="text-neutral-300"
+                                >
+                                    Um bot moderno e exclusivo de conexões para engajar seu servidor e torná-lo mais ativo
+                                </motion.span>
+                            </div>
+                            <div className="border-neutral-800 flex tablet:flex-col tablet:gap-2">
+                                <Link
+                                    className="hover:bg-neutral-800 transition 
+                                        rounded-lg rounded-r-none p-4 w-56 border-2 border-neutral-800
+                                        border-r-0 flex items-center justify-start gap-2
+                                        tablet:w-full tablet:rounded-lg tablet:border-2"
+                                    href="/dashboard"
+                                >
+                                    <TbLayoutDashboardFilled />
+                                    <span className="text-neutral-300 text-lg font-bold">
+                                        Painel
+                                    </span>
+                                </Link>
+                                <a
+                                    target="_blank"
+                                    href={url}
+                                    className="hover:bg-neutral-800 transition
+                                        rounded-lg rounded-l-none p-4 border-2 border-neutral-800 
+                                        w-72 flex gap-2 items-center justify-start font-bold
+                                        tablet:rounded-lg tablet:border-2 tablet:w-full mobile:text-sm"
+                                >
+                                    <LuPlusCircle size={20} />
+                                    <span>Adicionar Connections</span>
+                                </a>
+                            </div>
+                        </div>
+                    </BackgroundColoredGradient>
                 </div>
             </div>
             <div className="absolute bottom-2 flex justify-center items-center mobile:hidden">
