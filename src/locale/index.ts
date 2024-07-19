@@ -9,7 +9,46 @@ export const languages = {
                     dashboard: "Painel",
                 }
             },
+            footer: {
+                links: {
+                    title: "Links Úteis",
+                    addConnections: "Adicionar Connections",
+                    panel: "Painel",
+                    connections: "Conexões",
+                },
+                legal: {
+                    title: "Legal",
+                    terms: "Termos de Uso",
+                    policy: "Política de Privacidade",
+                },
+                title: "Connections, o bot que está à frente",
+            },
             description: "Connections é um bot criado para facilitar conexões entre servidores, promovendo engajamento e dinamismo.",
+            embeds: {
+                hour: "Hoje às 16:28",
+            },
+            addConnections: "Adicionar Connections",
+            conversation: {
+                spyei: {
+                    message: "Eae mano, como vai?",
+                    server: "Servidor de spyei",
+                },
+                unreal: {
+                    message: "Estou bem!",
+                    server: "Servidor de unreal",
+                    typing: "Unreal está digitando",
+                },
+                connectedChannel: "canal-conectado",
+            },
+            custom: {
+                title: "Totalmente customizavel",
+                description: "Connections é um bot totalmente personalizável, onde 99.9% dos recursos podem ser ajustados conforme suas preferências, permitindo que você o configure exatamente do seu jeito.",
+                moreOptions: "E muito mais opções!",
+            },
+            addConnectionsEmbed: {
+                title: "Adicione o Connections",
+                description: "Um bot moderno e exclusivo de conexões para engajar seu servidor e torná-lo mais ativo",
+            }
         },
         dashboard: {
             guilds: {
@@ -186,11 +225,12 @@ export const languages = {
                 features: [
                     "Tudo do Basic Premium",
                     "Bot próprio e customizavel!",
-                    "Máximo 5 servidores no bot"
+                    "Até 5 servidores premium"
                 ]
             },
             buy: "Comprar",
             month: "mês",
+            seeplans: "Ver planos",
         },
         login: {
             title: "Login no Connections",
@@ -207,12 +247,25 @@ export const languages = {
             returntwelve: "Volte daqui 12 {hour}",
             voted: "Votado",
             hour: "hora",
+            connectionServer: "Servidor da conexão",
+            connectionServerPlaceholder: "Selecione um servidor",
             hours: "horas",
             voting: "Votando...",
             connect: "Conectar",
             promoted: "Promovida",
             search: "Procurar por uma conexão",
-            tags: ["Gamer", "Bate-papo", "Comunidade", "Variado", "Minecraft"]
+            tags: ["Gamer", "Bate-papo", "Comunidade", "Variado", "Minecraft"],
+            noConnections: "Ops... Parece que não encontramos nenhuma conexão",
+            filters: {
+                title: "Filtros",
+                sort: "Ordenar por",
+                tag: "Tag",
+                query: "Pesquisar por",
+                votes: "Votos",
+                creationDate: "Data de criação",
+                typehere: "Digite aqui",
+                reset: "Redefinir filtros",
+            }
         }
     },
     "en-US": {
@@ -225,7 +278,46 @@ export const languages = {
                     dashboard: "Dashboard",
                 }
             },
+            footer: {
+                links: {
+                    title: "Useful links",
+                    addConnections: "Add Connections",
+                    panel: "Panel",
+                    connections: "Connections",
+                },
+                legal: {
+                    title: "Legal",
+                    terms: "Terms of Use",
+                    policy: "Privacy Policy",
+                },
+                title: "Connections, the bot that's ahead",
+            },
             description: "Connections is a bot designed to facilitate connections between servers, enhancing engagement and dynamism in your server.",
+            embeds: {
+                hour: "Today at 4:28",
+            },
+            addConnections: "Invite Connections",
+            conversation: {
+                spyei: {
+                    message: "What's up bro?",
+                    server: "Spyei's Guild",
+                },
+                unreal: {
+                    message: "I'm fine!",
+                    server: "Unreal's Guild",
+                    typing: "Unreal is typing",
+                },
+                connectedChannel: "connected-channel",
+            },
+            custom: {
+                title: "Fully customizable",
+                description: "Connections is a fully customizable bot, where 99.9% of the resources can be adjusted according to your preferences, allowing you to configure it exactly the way you want.",
+                moreOptions: "And much more options!",
+            },
+            addConnectionsEmbed: {
+                title: "Add Connections",
+                description: "A modern and exclusive bot for connecting your server and making it more active",
+            }
         },
         dashboard: {
             guilds: {
@@ -407,6 +499,7 @@ export const languages = {
             },
             buy: "Buy",
             month: "month",
+            seeplans: "See plans",
         },
         login: {
             title: "Login",
@@ -426,9 +519,22 @@ export const languages = {
             voting: "Voting...",
             creator: "Creator:",
             connect: "Connect",
+            connectionServer: "Connection guild",
+            connectionServerPlaceholder: "Select a guild",
             promoted: "Promoted",
             search: "Search for a connection",
-            tags: ["Gamer", "Chat", "Community", "Varied", "Minecraft"]
+            tags: ["Gamer", "Chat", "Community", "Varied", "Minecraft"],
+            noConnections: "Ops... It seems that we don't have any connections",
+            filters: {
+                title: "Filters",
+                sort: "Sort by",
+                tag: "Tag",
+                query: "Search for",
+                votes: "Votes",
+                creationDate: "Creation date",
+                typehere: "Type here",
+                reset: "Reset filters",
+            }
         }
     }
 }

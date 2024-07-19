@@ -3,7 +3,7 @@ import { MdKeyboardDoubleArrowDown } from "react-icons/md";
 import Image from "next/image";
 import { HiHashtag } from "react-icons/hi";
 import TypingAnimation from "../ui/Type";
-import { AnimatePresence, motion, useInView } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useLanguage } from "@/hooks/useLanguage";
 import UserEmbed from "./UserEmbed";
 import ConnectionsEmbed from "./ConnectionsEmbed";
@@ -69,7 +69,7 @@ export default function Page() {
                                     divclass="tablet:w-full w-37"
                                 >
                                     <TbLayoutDashboardFilled />
-                                    <span>Painel</span>
+                                    <span>{l.home.header.menu.dashboard}</span>
                                 </DefaultButton>
                             </motion.div>
                             <motion.div
@@ -85,7 +85,7 @@ export default function Page() {
                             p-4 px-5 rounded-lg transition w-full gap-3 hover:bg-neutral-700"
                                 >
                                     <LuPlusCircle size={20} />
-                                    <span>Adicionar Connections</span>
+                                    <span>{l.home.addConnections}</span>
                                 </a>
                             </motion.div>
                         </div>
@@ -101,12 +101,12 @@ export default function Page() {
                                         alt="Spyei's Guild"
                                         className="rounded-full"
                                     />
-                                    <span className="text-lg font-semibold">Servidor de spyei</span>
+                                    <span className="text-lg font-semibold">{l.home.conversation.spyei.server}</span>
                                 </div>
                                 <div className="flex flex-col gap-2 border-l-neutral-700 border-l-2">
                                     <div className="text-neutral-400 flex items-center gap-2 px-1">
                                         <HiHashtag />
-                                        <span>canal-conectado</span>
+                                        <span>{l.home.conversation.connectedChannel}</span>
                                     </div>
                                     <div className="flex items-start gap-3 px-2">
                                         <Image
@@ -119,12 +119,14 @@ export default function Page() {
                                         <div className="flex flex-col">
                                             <div className="flex gap-1">
                                                 <span className="font-bold">Spyei</span>
-                                                <span className="text-neutral-400 text-xs mt-1">Hoje às 16:28</span>
+                                                <span className="text-neutral-400 text-xs mt-1">
+                                                    {l.home.embeds.hour}
+                                                </span>
                                             </div>
                                             <TypingAnimation
                                                 duration={50}
                                                 className="text-neutral-200 text-base text-start font-normal"
-                                                text="Eae mano, como vai?"
+                                                text={l.home.conversation.spyei.message}
                                             />
                                         </div>
                                     </div>
@@ -134,8 +136,8 @@ export default function Page() {
                                             username: "unreal"
                                         }}
                                         delay={5}
-                                        server="Servidor de unreal"
-                                        message="Estou bem!"
+                                        server={l.home.conversation.unreal.server}
+                                        message={l.home.conversation.unreal.message}
                                     />
                                 </div>
                             </div>
@@ -147,15 +149,17 @@ export default function Page() {
                                         width={40}
                                         height={40}
                                         src="/guilds/unreal.png"
-                                        alt="Spyei's Guild"
+                                        alt="Unreal's Guild"
                                         className="rounded-full"
                                     />
-                                    <span className="text-lg font-semibold">Servidor de unreal</span>
+                                    <span className="text-lg font-semibold">
+                                        {l.home.conversation.unreal.server}
+                                    </span>
                                 </div>
                                 <div className="flex flex-col gap-2 border-l-neutral-700 border-l-2 relative">
                                     <div className="text-neutral-400 flex items-center gap-2 px-1">
                                         <HiHashtag />
-                                        <span>canal-conectado</span>
+                                        <span>{l.home.conversation.connectedChannel}</span>
                                     </div>
                                     <ConnectionsEmbed
                                         author={{
@@ -163,8 +167,8 @@ export default function Page() {
                                             username: "spyei"
                                         }}
                                         delay={1.5}
-                                        server="Servidor de spyei"
-                                        message="Eae mano, como vai?"
+                                        server={l.home.conversation.spyei.server}
+                                        message={l.home.conversation.spyei.message}
                                     />
                                     <UserEmbed
                                         author={{
@@ -172,7 +176,7 @@ export default function Page() {
                                             username: "Unreal"
                                         }}
                                         delay={4.5}
-                                        message="Estou bem!"
+                                        message={l.home.conversation.unreal.message}
                                     />
                                     <motion.div
                                         initial={{ display: "none" }}
@@ -198,7 +202,7 @@ export default function Page() {
                                                     />
                                                 ))}
                                             </div>
-                                            <span>Unreal está digitando</span>
+                                            <span>{l.home.conversation.unreal.typing}</span>
                                         </div>
                                     </motion.div>
                                 </div>
@@ -219,11 +223,9 @@ export default function Page() {
                         className="flex text-white flex-col items-center justiify-center gap-3 text-center"
                     >
                         <div className="flex flex-col gap-2">
-                            <h1 className="font-extrabold text-4xl">Totalmente customizavel</h1>
+                            <h1 className="font-extrabold text-4xl">{l.home.custom.title}</h1>
                             <span className="max-w-[800px]">
-                                Connections é um bot totalmente personalizável, onde 90% dos recursos
-                                podem ser ajustados conforme suas preferências, permitindo que você
-                                o configure exatamente do seu jeito.
+                                {l.home.custom.description}
                             </span>
                         </div>
                         <div className="gap-4 grid grid-cols-2 tablet:grid-cols-1 text-start">
@@ -252,7 +254,7 @@ export default function Page() {
                             </AnimatePresence>
                         </div>
                         <div className="bg-neutral-900 p-3 rounded-lg items-center justify-center text-center w-full">
-                            <span>E muito mais opções!</span>
+                            <span>{l.home.custom.moreOptions}</span>
                         </div>
                     </motion.div>
                 </div>
@@ -268,7 +270,7 @@ export default function Page() {
                                     whileInView={{ opacity: 1, x: 0 }}
                                     className="font-bold text-3xl mobile:text-xl"
                                 >
-                                    Adicione o Connections
+                                    {l.home.addConnectionsEmbed.title}
                                 </motion.h1>
                                 <motion.span
                                     initial={{ opacity: 0, x: -10 }}
@@ -276,7 +278,7 @@ export default function Page() {
                                     transition={{ delay: 0.2 }}
                                     className="text-neutral-300"
                                 >
-                                    Um bot moderno e exclusivo de conexões para engajar seu servidor e torná-lo mais ativo
+                                    {l.home.addConnectionsEmbed.description}
                                 </motion.span>
                             </div>
                             <div className="border-neutral-800 flex tablet:flex-col tablet:gap-2">
@@ -289,7 +291,7 @@ export default function Page() {
                                 >
                                     <TbLayoutDashboardFilled />
                                     <span className="text-neutral-300 text-lg font-bold">
-                                        Painel
+                                        {l.home.header.menu.dashboard}
                                     </span>
                                 </Link>
                                 <a
@@ -301,7 +303,7 @@ export default function Page() {
                                         tablet:rounded-lg tablet:border-2 tablet:w-full mobile:text-sm"
                                 >
                                     <LuPlusCircle size={20} />
-                                    <span>Adicionar Connections</span>
+                                    <span>{l.home.addConnections}</span>
                                 </a>
                             </div>
                         </div>

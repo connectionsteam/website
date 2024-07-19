@@ -1,3 +1,4 @@
+import { useLanguage } from "@/hooks/useLanguage";
 import { ModalBody, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/modal"
 import { HiHashtag } from "react-icons/hi";
 import { LuCalendar } from "react-icons/lu";
@@ -17,6 +18,8 @@ interface Props {
 }
 
 export default function Filters({ filters, setFilters }: Props) {
+    const l = useLanguage();
+
     const handleResetFilters = () => {
         setFilters({
             tag: "",
@@ -28,13 +31,17 @@ export default function Filters({ filters, setFilters }: Props) {
     return (
         <ModalContent className="text-white bg-neutral-900">
             <ModalHeader className="flex items-center">
-                <div className="flex flex-col gap-1 pb-2 font-bold text-lg flex-grow">Filtros</div>
+                <div className="flex flex-col gap-1 pb-2 font-bold text-lg flex-grow">
+                    {l.connection.filters.title}
+                </div>
                 <button className="text-blue-500"></button>
             </ModalHeader>
             <ModalBody className="flex gap-2">
                 <div className="flex flex-col gap-2 text-start bg-neutral-900/50 w-full rounded-lg py-2">
                     <div className="flex flex-col gap-2">
-                        <div className="font-semibold">Ordenar por</div>
+                        <div className="font-semibold">
+                            {l.connection.filters.sort}
+                        </div>
                         <div className="flex flex-col w-48 text-start items-start justify-start">
                             <button
                                 className={`w-full rounded-lg transition p-2 text-start flex
@@ -42,7 +49,7 @@ export default function Filters({ filters, setFilters }: Props) {
                                 onClick={() => setFilters({ ...filters, sort: "" })}
                             >
                                 <MdOutlineKeyboardArrowUp />
-                                Votos
+                                {l.connection.filters.votes}
                             </button>
                             <button
                                 className={`w-full rounded-lg transition p-2 text-start items-center gap-2
@@ -50,7 +57,7 @@ export default function Filters({ filters, setFilters }: Props) {
                                 onClick={() => setFilters({ ...filters, sort: "new" })}
                             >
                                 <LuCalendar />
-                                Data de criação
+                                {l.connection.filters.creationDate}
                             </button>
                         </div>
                     </div>
@@ -62,7 +69,7 @@ export default function Filters({ filters, setFilters }: Props) {
                                 className="outline-none w-full bg-neutral-900/50 rounded-lg p-2"
                                 value={filters.tag}
                                 onChange={(e) => setFilters({ ...filters, tag: e.target.value })}
-                                placeholder="Digite aqui"
+                                placeholder={l.connection.filters.typehere}
                                 type="text"
                             />
                         </div>
@@ -76,7 +83,7 @@ export default function Filters({ filters, setFilters }: Props) {
                     justify-center font-semibold border-blue-500 border-2 
                     transition hover:bg-blue-500 p-2 rounded-lg px-4"
                 >
-                    Redefinir filtros
+                    {l.connection.filters.reset}
                 </button>
             </ModalFooter>
         </ModalContent>

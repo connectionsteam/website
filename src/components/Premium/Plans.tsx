@@ -18,7 +18,7 @@ export default function Plans({ plans, setMorePlans }: { plans: PlanStructure[],
                     <div className="w-full flex items-center text-center">
                         <button className="flex gap-2 items-center transition hover:bg-neutral-700 bg-neutral-800 p-2 rounded-lg group" onClick={() => setMorePlans(false)}>
                             <LuArrowLeft size={20} />
-                            <span>Voltar</span>
+                            <span>{l.dashboard.guilds.connections.infos.back}</span>
                         </button>
                         <span className="font-bold text-2xl w-full text-center mr-[88px]">Connections</span>
                     </div>

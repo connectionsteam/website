@@ -53,7 +53,7 @@ export default function ConnectionsPageChannels({ setBody, body, connection, gui
         } catch (error: any) {
             const errors = {
                 404: "Unknown connection",
-                409: "This server already joinned this connection", 
+                409: "This server already joinned this connection",
             }
 
             if (error.response.status in errors) {
@@ -74,18 +74,27 @@ export default function ConnectionsPageChannels({ setBody, body, connection, gui
     return (
         <>
             <JoinConnectionLanguage body={body} setBody={setBody} key={0} />
-            <ConnectionChannels channels={channels} setBody={setBody} body={body} connections={guild.connections} key={0} />
+            <ConnectionChannels
+                channels={channels}
+                setBody={setBody}
+                body={body}
+                connections={guild.connections} key={0}
+            />
             {errors.api && <div className="text-red-500">{errors.api}</div>}
             <div className="p-[2px] bg-gradient-to-r from-fuchsia-500 to-indigo-500 rounded-lg w-full">
                 <button
                     disabled={loading}
                     onClick={joinConnection}
-                    className={`flex items-center justify-center gap-2 p-4 h-full w-full rounded-lg bg-neutral-800 hover:bg-transparent transition ${loading ? "cursor-wait hover:bg-neutral-800" : "bg-opacity-100"}`}
+                    className={`flex items-center justify-center gap-2 p-4 h-full w-full rounded-lg
+                        bg-neutral-800 hover:bg-transparent transition 
+                        ${loading ? "cursor-wait hover:bg-neutral-800" : "bg-opacity-100"}`}
                 >
                     {loading ? (
                         <div className="flex gap-2 items-center w-full justify-center">
                             <AiOutlineLoading3Quarters className="animate-spin" />
-                            <span className="font-semibold">{l.dashboard.guilds.connections.connecting}</span>
+                            <span className="font-semibold">
+                                {l.dashboard.guilds.connections.connecting}
+                            </span>
                         </div>
                     ) : <span className="font-semibold">{l.dashboard.guilds.connections.connect}</span>}
                 </button>

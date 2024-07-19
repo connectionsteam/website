@@ -62,10 +62,12 @@ export default function ConnectionsPageCard({ connection, index, query }: Props)
                     </div>
                 </div>
                 <div className="flex gap-2 mobile:w-full">
-                    <DefaultButton className="p-2 bg-neutral-700 rounded-lg transition w-full flex items-center">
-                        <MdOutlineKeyboardArrowUp size={20} />
-                        <span className="pr-2">{l.connection.vote}</span>
-                    </DefaultButton>
+                    <div>
+                        <DefaultButton className="p-2 bg-neutral-700 rounded-lg transition w-full flex items-center">
+                            <MdOutlineKeyboardArrowUp size={20} />
+                            <span className="pr-2">{l.connection.vote}</span>
+                        </DefaultButton>
+                    </div>
                     <div className="p-2 bg-neutral-700 rounded-lg transition w-full flex gap-2 items-center">
                         <FaLink />
                         <span className="pr-2">{l.connection.connect}</span>

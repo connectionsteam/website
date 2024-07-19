@@ -60,12 +60,12 @@ export default function ConnectConnection({ connection }: Props) {
             }} isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent className="bg-neutral-800 text-white">
                     <ModalHeader className="flex flex-col gap-1 bg-neutral-800">
-                        Conectar a {connection.name}
+                        {l.connection.connect} {connection.name}
                     </ModalHeader>
                     <ModalBody>
                         <div className="flex w-full flex-col gap-4">
                             <div className="flex flex-col gap-1 w-full">
-                                <span className="text-neutral-300 flex gap-1">Servidor da conexão</span>
+                                <span className="text-neutral-300 flex gap-1">{l.connection.connectionServer}</span>
                                 {guilds ? (
                                     <Dropdown className="bg-neutral-800 text-white w-full max-h-56 overflow-x-auto">
                                         <DropdownTrigger>
@@ -78,7 +78,7 @@ export default function ConnectConnection({ connection }: Props) {
                                                         />
                                                         <span className="font-bold">{guild.name}</span>
                                                     </div>
-                                                ) : "Selecione um servidor"}
+                                                ) : l.connection.connectionServerPlaceholder}
                                             </button>
                                         </DropdownTrigger>
                                         <DropdownMenu className="w-full flex flex-col gap-1" aria-label="guilds">

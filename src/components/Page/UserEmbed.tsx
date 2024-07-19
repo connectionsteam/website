@@ -1,3 +1,4 @@
+import { useLanguage } from "@/hooks/useLanguage";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
@@ -11,6 +12,8 @@ interface Props {
 }
 
 export default function UserEmbed({ author, delay, message }: Props) {
+    const l = useLanguage();
+
     return (
         <motion.div
             initial={{ opacity: 0, x: -10 }}
@@ -28,7 +31,9 @@ export default function UserEmbed({ author, delay, message }: Props) {
             <div className="flex flex-col">
                 <div className="flex gap-1">
                     <span className="font-bold">{author.username}</span>
-                    <span className="text-neutral-400 text-xs mt-1">Hoje às 16:28</span>
+                    <span className="text-neutral-400 text-xs mt-1">
+                        {l.home.embeds.hour}
+                    </span>
                 </div>
                 <span>{message}</span>
             </div>

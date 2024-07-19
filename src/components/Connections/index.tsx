@@ -127,7 +127,7 @@ export default function ConnectionsPageComponent() {
                             >
                                 {connections.length <= 0 && (
                                     <div className="w-full flex items-center text-center mt-2 justify-center">
-                                        <span>Ops... Parece que não encontramos nenhuma conexão</span>
+                                        <span>{l.connection.noConnections}</span>
                                     </div>
                                 )}
                                 {connections.map((connection, index) => (

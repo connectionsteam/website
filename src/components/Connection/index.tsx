@@ -128,5 +128,5 @@ export default function ConnectionPageComponent() {
                 </div>
             </div>
         </DefaultLayout>
-    ) : <div>Loading...</div>;
+    ) : <div>FAZER LOADING</div>;
 }
