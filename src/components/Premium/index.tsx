@@ -17,13 +17,13 @@ export default function PremiumComponent() {
     const plans = [
         {
             name: "Premium",
-            price: 49.99,
+            price: 29.99,
             features: languages[language].plans.premium.features,
             popular: true
         },
         {
             name: "Basic Premium",
-            price: 19.99,
+            price: 9.99,
             features: languages[language].plans.basicpremium.features,
             popular: false
         }
