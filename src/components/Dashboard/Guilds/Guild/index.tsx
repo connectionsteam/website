@@ -144,20 +144,39 @@ export default function GuildComponent() {
             <ProtectedRoute loading={<GuildSkeleton />}>
                 {guild ? (
                     <div className="flex flex-col gap-4 w-full">
-                        <div className="flex mb-1 bg-neutral-800 rounded-lg p-1 overflow-x-auto">
+                        <div className="flex mb-1 bg-neutral-800 rounded-lg p-1 overflow-x-auto relative">
                             {tab.tabs.map((t) => (
-                                <button
-                                    key={t.value}
-                                    onClick={() => handleChangeTab(t.value)}
-                                    className={`text-white px-4 rounded-lg py-2 
-                                        cursor-pointer transition-colors duration-300 gap-2 flex 
-                                        ${(tab.connection && t.value === "connections")
-                                            ? "bg-neutral-700"
-                                            : ""
-                                        } ${tab.selected === t.value ? "bg-neutral-700" : ""}`}
-                                >
-                                    <span>{t.title}</span>
-                                </button>
+                                <>
+                                    <button
+                                        onClick={() => handleChangeTab(t.value)}
+                                        className={`text-white px-4 rounded-lg py-2 
+                                        cursor-pointer transition-colors duration-300 gap-2 flex z-20`}
+                                    >
+                                        <span>{t.title}</span>
+                                    </button>
+                                    <motion.div
+                                        key={t.value}
+                                        animate={{
+                                            width: tab.selected === "channels" ? "75px"
+                                            : tab.selected === "cases" ? "75px"
+                                            : tab.selected === "connections" ? "100px"
+                                            : tab.selected === "infos" ? "120px" : "100px",
+                                            x: tab.selected === "channels" ? 130
+                                            : tab.selected === "cases" ? 212
+                                            : tab.selected === "connections" ? 290
+                                            : (tab.connection && t.value === "connections") ? 290
+                                            : tab.selected === "infos" ? 0 : 290
+                                        }}
+                                        transition={{
+                                            type: "spring",
+                                            bounce: 0.3,
+                                            duration: 0.5,
+                                        }}
+                                        className="absolute bg-neutral-700 z-10 h-[84%] w-12 rounded-xl
+                                        -translate-y-1/2 -translate-x-1"
+                                    >
+                                    </motion.div>
+                                </>
                             ))}
                         </div>
                         <div>
