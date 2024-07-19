@@ -231,6 +231,7 @@ export const languages = {
             buy: "Comprar",
             month: "mês",
             seeplans: "Ver planos",
+            description: "Obtenha recursos avançados, menor cooldown e controle aprimorado com o Basic Premium. O Premium oferece tudo isso mais um bot customizável e suporte para até 5 servidores."
         },
         login: {
             title: "Login no Connections",
@@ -500,6 +501,7 @@ export const languages = {
             buy: "Buy",
             month: "month",
             seeplans: "See plans",
+            description: "Get advanced features, smaller cooldown and improved moderation with the Basic Premium. The Premium offers everything plus a customizable bot and support for up to 5 servers."
         },
         login: {
             title: "Login",

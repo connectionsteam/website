@@ -38,9 +38,9 @@ export default function PremiumComponent() {
                             <h1 className="mobile:text-4xl text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-500 to-indigo-500">Premium</h1>
                         </div>
                         <div className="max-w-[70%]">
-                            <TextGenerateEffect words="Connections premium é um premium daora e bonito, nao penso muito mas faço programda." className="text-neutral-300 text-lg" />
+                            <span className="text-neutral-30">{l.plans.description}</span>
                         </div>
-                        <div className="max-w-60 mt-10 tablet:w-full tablet:max-w-[350px] mobile:max-w-60">
+                        <div className="max-w-60 mt-4 tablet:w-full tablet:max-w-[350px] mobile:max-w-60">
                             <DefaultButton onClick={() => setMorePlans(true)} className="p-3 group flex">
                                 <span>{l.plans.seeplans}</span>
                                 <IoIosArrowForward className="group-hover:translate-x-2 transition-all" />
