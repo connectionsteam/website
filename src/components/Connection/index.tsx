@@ -12,6 +12,7 @@ import ConnectionsPageCard from "../Connections/Connection";
 import ConnectConnection from "./Connect";
 import Link from "next/link";
 import { UserContext } from "@/contexts/User";
+import ConnectionPageSkeleton from "./Skeleton";
 
 export default function ConnectionPageComponent() {
     const router = useRouter();
@@ -128,5 +129,5 @@ export default function ConnectionPageComponent() {
                 </div>
             </div>
         </DefaultLayout>
-    ) : <div>FAZER LOADING</div>;
+    ) : <ConnectionPageSkeleton />;
 }
