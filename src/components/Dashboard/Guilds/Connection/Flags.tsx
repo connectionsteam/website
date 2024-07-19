@@ -51,6 +51,10 @@ export default function GuildConnectionFlags({ connection, guild, setConnection,
         [ConnectedConnectionFlags.CompactModeEnabled]: {
             title: l.dashboard.guilds.connections.flags.compactModeEnabled,
             description: l.dashboard.guilds.connections.flags.compactModeEnabledDescription,
+        },
+        [ConnectedConnectionFlags.AutoTranslate]: {
+            title: l.dashboard.guilds.connections.flags.autoTranslate,
+            description: l.dashboard.guilds.connections.flags.autoTranslateDescription,
         }
     };
 
