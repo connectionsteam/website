@@ -46,9 +46,9 @@ export default function Page() {
     };
 
     return (
-        <div className="flex justify-center items-center tablet:mt-20 overflow-x-hidden">
+        <div className="flex justify-center items-center tablet:mt-20 overflow-x-hidden bg-dot-neutral-800/[0.6]">
             <div className="flex flex-col max-w-[1100px] text-white">
-                <div className="tablet:flex-col flex h-screen tablet:h-auto items-center w-full gap-6 bg-dot-neutral-800/[0.6]">
+                <div className="tablet:flex-col flex h-screen tablet:h-auto items-center w-full gap-6">
                     <div className="flex flex-col gap-4 w-[62%] items-start justify-start tablet:items-center tablet:justify-center mobile:w-full">
                         <h1 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r
                         from-fuchsia-500 to-indigo-500 mobile:text-4xl">
@@ -210,13 +210,7 @@ export default function Page() {
                         </div>
                     </div>
                 </div>
-                <div
-                    className="p-10 w-full bg-neutral-900 h-screen tablet:h-auto 
-                    bg-grid-small-white/[0.2] relative flex items-center justify-center flex-col"
-                >
-                    <div className="absolute pointer-events-none inset-0 flex items-center 
-                    justify-center bg-neutral-900 
-                    [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]"></div>
+                <div className="p-10 w-full h-screen tablet:h-auto relative flex items-center justify-center flex-col">
                     <motion.div
                         initial={{ opacity: 0, y: 100 }}
                         whileInView={{ opacity: 0.9, y: 0 }}
