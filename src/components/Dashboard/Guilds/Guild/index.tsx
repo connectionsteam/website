@@ -1,6 +1,6 @@
 "use client";
 import DefaultLayout from "@/components/Mixed/Layout";
-import { ConnectedConnectionPayload, DiscordMember, GuildChannelsPayload, GuildPayload, GuildThreadsPayload, Premium, TabState } from "@/types";
+import { ConnectedConnectionPayload, DiscordMember, GuildChannelsPayload, GuildPayload, GuildTab, GuildThreadsPayload, Language, Premium, TabState } from "@/types";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -137,7 +137,56 @@ export default function GuildComponent() {
                 connection: tab.connection,
             });
         }
-    }, [guild, threads, channels, connection, premium]);
+    }, [guild, threads, channels, connection, premium, l]);
+
+    const animations = (
+        t: { value: string },
+        language: Language,
+        selectedTab: GuildTab,
+        connection: boolean
+    ) => {
+        const pxs: Record<Language, Record<GuildTab, string>> = {
+            "pt-BR": {
+                channels: "75px",
+                cases: "75px",
+                connections: "100px",
+                infos: "120px",
+                width: "75px"
+            },
+            "en-US": {
+                channels: "96px",
+                cases: "75px",
+                connections: "120px",
+                infos: "125px",
+                width: "95px"
+            }
+        };
+
+        const position: Record<Language, Record<GuildTab, number>> = {
+            "pt-BR": {
+                channels: 130,
+                cases: 212,
+                connections: 290,
+                infos: 0,
+                width: 290
+            },
+            "en-US": {
+                channels: 130,
+                cases: 232,
+                connections: 313,
+                infos: 0,
+                width: 290
+            }
+        };
+
+        const width = pxs[language][selectedTab];
+        const x = selectedTab === "connections" || (connection && t.value === "connections")
+            ? position[language]["connections"]
+            : position[language][selectedTab];
+
+        return { width, x };
+    };
+
 
     return (
         <DefaultLayout>
@@ -156,17 +205,7 @@ export default function GuildComponent() {
                                     </button>
                                     <motion.div
                                         key={t.value}
-                                        animate={{
-                                            width: tab.selected === "channels" ? "75px"
-                                            : tab.selected === "cases" ? "75px"
-                                            : tab.selected === "connections" ? "100px"
-                                            : tab.selected === "infos" ? "120px" : "100px",
-                                            x: tab.selected === "channels" ? 130
-                                            : tab.selected === "cases" ? 212
-                                            : tab.selected === "connections" ? 290
-                                            : (tab.connection && t.value === "connections") ? 290
-                                            : tab.selected === "infos" ? 0 : 290
-                                        }}
+                                        animate={animations(t, l.language, tab.selected as GuildTab, tab.connection)}
                                         transition={{
                                             type: "spring",
                                             bounce: 0.3,
