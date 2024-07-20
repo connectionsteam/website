@@ -6,6 +6,10 @@ export interface UserStructure {
     avatar: string;
 }
 
+export type Language = "pt-BR" | "en-US";
+
+export type GuildTab = "channels" | "cases" | "connections" | "infos" | "width"; 
+
 export type LanguageType = "pt-BR" | "en-US";
 
 export interface UserContextProps {
