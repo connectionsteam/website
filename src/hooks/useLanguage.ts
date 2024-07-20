@@ -5,5 +5,8 @@ import { useContext } from "react";
 export function useLanguage() {
     const { language } = useContext(LanguageContext);
     
-    return languages[language];
+    return {
+        ...languages[language],
+        language,
+    }
 }
