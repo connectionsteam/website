@@ -75,7 +75,7 @@ export default function ConnectionsPageComponent() {
                                 className="p-1 px-2 flex gap-2 items-center bg-neutral-800 rounded-lg"
                             >
                                 <RiHashtag fill="#d946ef" />
-                                <span>{tag}</span>
+                                <span className="whitespace-nowrap">{tag}</span>
                             </button>
                         ))}
                     </div>
@@ -121,7 +121,7 @@ export default function ConnectionsPageComponent() {
                             <motion.div
                                 key={options.layout}
                                 className={options.layout === "grid" ?
-                                    "grid grid-cols-2 gap-3 w-full"
+                                    "grid grid-cols-2 gap-3 w-full mobile:grid-cols-1"
                                     : "flex flex-col gap-2 w-full"
                                 }
                             >
@@ -132,6 +132,7 @@ export default function ConnectionsPageComponent() {
                                 )}
                                 {connections.map((connection, index) => (
                                     <ConnectionsPageCard
+                                        layout={options.layout}
                                         query={filters.query}
                                         key={index}
                                         connection={connection}
