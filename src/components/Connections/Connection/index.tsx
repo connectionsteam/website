@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import { ConnectionsPageStructure } from "@/types";
 import { motion } from "framer-motion";
 import { MdOutlineKeyboardArrowUp } from "react-icons/md";
@@ -12,20 +13,28 @@ interface Props {
     index: number;
     query: string;
     layout: string;
+    connections: ConnectionsPageStructure[];
 }
 
-export default function ConnectionsPageCard({ connection, index, query, layout }: Props) {
+const ConnectionsPageCard = forwardRef<HTMLDivElement, Props>(({ connection, index, query, layout, connections }, ref) => {
     const l = useLanguage();
+
+    const animation = connections.length < 16
+        ? {
+              initial: { opacity: 0, y: 30 },
+              animate: { opacity: 1, y: 0 },
+              exit: { opacity: 0, y: -30 },
+              transition: { delay: 0.09 * index, duration: 0.09 },
+          }
+        : {};
 
     if (query.toLowerCase() === connection.name.toLowerCase()) return null;
 
     return (
         <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -30 }}
-            transition={{ delay: 0.09 * index, duration: 0.09 }} 
+            {...animation}
             className="w-full relative"
+            ref={ref}
         >
             {connection.promoted && (
                 <div className="absolute px-2 font-semibold -top-3 flex rounded-full bg-fuchsia-500 left-3">
@@ -88,4 +97,8 @@ export default function ConnectionsPageCard({ connection, index, query, layout }
             </Link>
         </motion.div>
     );
-}
+});
+
+ConnectionsPageCard.displayName = "ConnectionsPageCard";
+
+export default ConnectionsPageCard;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import DefaultLayout from "../Mixed/Layout";
 import { ConnectionsPageStructure } from "@/types";
 import { api } from "@/utils/api";
@@ -12,6 +12,7 @@ import { RiHashtag } from "react-icons/ri";
 import { IoFilter } from "react-icons/io5";
 import { Modal, useDisclosure } from "@nextui-org/modal";
 import Filters from "./Filters";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export default function ConnectionsPageComponent() {
     const l = useLanguage();
@@ -19,6 +20,9 @@ export default function ConnectionsPageComponent() {
     if (!useIsClient()) return null;
 
     const [connections, setConnections] = useState<ConnectionsPageStructure[]>([]);
+    const [page, setPage] = useState(0);
+    const [loading, setLoading] = useState(false);
+    const [hasMore, setHasMore] = useState(true); // Flag para controlar se há mais conexões para carregar
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [filters, setFilters] = useState({
         tag: "",
@@ -27,29 +31,71 @@ export default function ConnectionsPageComponent() {
     });
     const [options, setOptions] = useState(() => {
         const savedLayout = localStorage.getItem("layout");
-
         return savedLayout ? { layout: savedLayout } : { layout: "grid" };
     });
+
+    const observer = useRef<IntersectionObserver | null>(null);
+    const lastConnectionElementRef = useRef<HTMLDivElement | null>(null);
 
     const handleToggleLayout = () => {
         setOptions(prevOptions => {
             const newLayout = prevOptions.layout === "grid" ? "list" : "grid";
             localStorage.setItem("layout", newLayout);
-
             return { layout: newLayout };
         });
     };
 
+    const fetchConnections = async (page = 0, append = false) => {
+        setLoading(true);
+        const reqfilters = `${filters.tag !== "" ? `&tag=${filters.tag}` : ""}${filters.sort === "new" ? `&sort=new` : ""}`;
+        const { data } = await api.get(`/connections?query=${filters.query}${reqfilters}&start_at=${page * 10}&end_at=${(page + 1) * 10}`);
+        
+        if (data.length === 0) {
+            setHasMore(false);
+        } else {
+            setConnections(prevConnections => append ? [...prevConnections, ...data] : data);
+        }
+
+        setLoading(false);
+    };
+
     useEffect(() => {
-        const fetchConnections = async () => {
-            const reqfilters = `${filters.tag !== "" ? `&tag=${filters.tag}` : ""}${filters.sort === "new" ? `&sort=new` : ""}`;
-
-            const { data } = await api.get(`/connections?query=${filters.query}${reqfilters}`);
-            setConnections(data);
-        };
-
         fetchConnections();
     }, [filters]);
+
+    useEffect(() => {
+        if (page > 0) {
+            fetchConnections(page, true);
+        }
+    }, [page]);
+
+    useEffect(() => {
+        if (loading || !hasMore) return;
+
+        if (observer.current) observer.current.disconnect();
+
+        const options = {
+            root: null,
+            rootMargin: "20px",
+            threshold: 1.0,
+        };
+
+        observer.current = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                setPage(prevPage => prevPage + 1);
+            }
+        }, options);
+
+        if (lastConnectionElementRef.current) {
+            observer.current.observe(lastConnectionElementRef.current);
+        }
+
+        return () => {
+            if (observer.current) {
+                observer.current.disconnect();
+            }
+        };
+    }, [loading, connections, hasMore]);
 
     return (
         <DefaultLayout>
@@ -127,11 +173,13 @@ export default function ConnectionsPageComponent() {
                             >
                                 {connections.map((connection, index) => (
                                     <ConnectionsPageCard
+                                        connections={connections}
                                         layout={options.layout}
                                         query={filters.query}
                                         key={index}
                                         connection={connection}
                                         index={index}
+                                        ref={index === connections.length - 1 ? lastConnectionElementRef : null}
                                     />
                                 ))}
                             </motion.div>
@@ -141,6 +189,11 @@ export default function ConnectionsPageComponent() {
                 {connections.length <= 0 && (
                     <div className="w-full flex items-center text-center justify-center">
                         <span>{l.connection.noConnections}</span>
+                    </div>
+                )}
+                {loading && (
+                    <div className="w-full flex items-center text-center justify-center mt-2">
+                        <AiOutlineLoading3Quarters className="animate-spin" size={30} />
                     </div>
                 )}
             </div>
