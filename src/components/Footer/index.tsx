@@ -35,19 +35,19 @@ export default function Footer() {
                             </a>
                             <Link
                                 className="transition duration-300 group ease-in-out text-neutral-300"
-                                href="/terms"
+                                href="/premium"
                             >
                                 <Underline premium>Premium</Underline>
                             </Link>
                             <Link
                                 className="transition duration-300 group ease-in-out text-neutral-300"
-                                href="/terms"
+                                href="/dashboard"
                             >
                                 <Underline>{l.home.footer.links.panel}</Underline>
                             </Link>
                             <Link
                                 className="transition duration-300 group ease-in-out text-neutral-300"
-                                href="/terms"
+                                href="/connections"
                             >
                                 <Underline>{l.home.footer.links.connections}</Underline>
                             </Link>
@@ -62,7 +62,7 @@ export default function Footer() {
                             </Link>
                             <Link
                                 className="transition duration-300 group ease-in-out text-neutral-300"
-                                href="/terms"
+                                href="/tos"
                             >
                                 <Underline>{l.home.footer.legal.terms}</Underline>
                             </Link>
