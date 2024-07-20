@@ -84,11 +84,10 @@ export default function ConnectionsComponent({ connections, setConnections }: Pr
                                     openModal={openModal}
                                 />
                             ))
-                    ) : <ConnectionsSkeleton key={0} />}
+                    ) : <ConnectionsSkeleton />}
                 </AnimatePresence>
                 {connections &&
                     <CreateConnectionForm
-                        key={0}
                         connections={connections}
                         setConnections={setConnections as Dispatch<SetStateAction<ConnectionPayload[]>>}
                     />
@@ -101,7 +100,7 @@ export default function ConnectionsComponent({ connections, setConnections }: Pr
                     <ModalContent className="bg-neutral-800 text-white">
                         <ModalHeader className="flex flex-col gap-1 bg-neutral-800">{languages[language].dashboard.connections.edit.title} {connectionProps?.connection?.name}</ModalHeader>
                         <ModalBody>
-                            <ConnectionComponent key={0} connection={connectionProps.connection as ConnectionPayload} />
+                            <ConnectionComponent connection={connectionProps.connection as ConnectionPayload} />
                         </ModalBody>
                     </ModalContent>
                 </Modal>

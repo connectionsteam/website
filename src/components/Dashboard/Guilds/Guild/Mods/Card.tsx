@@ -36,14 +36,12 @@ export default function GuildModCard({ index, mod, handleRemoveMod, menu, setMen
                         <>
                             <div className="w-full relative tabletdesk:invisible">
                                 <RemoveGuildMod
-                                    key={0}
                                     mod={{ avatar: mod.avatar, id: mod.id, username: mod.username }}
                                     open={true}
                                     handleRemove={() => handleRemoveMod(mod.id)}
                                 />
                             </div>
                             <RemoveGuildMod
-                                key={0}
                                 mod={{ avatar: mod.avatar, id: mod.id, username: mod.username }}
                                 open={menu.hover === mod.id}
                                 handleRemove={() => handleRemoveMod(mod.id)}

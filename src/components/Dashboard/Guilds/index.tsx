@@ -64,7 +64,7 @@ export default function GuildsComponent({ guilds }: { guilds: GuildPayload[] | n
                                 </Link>
                             </motion.div>
                         ))
-                ) : <ConnectionsSkeleton key={0} />}
+                ) : <ConnectionsSkeleton />}
                 <div className="p-[2px] bg-gradient-to-r from-fuchsia-500 to-indigo-500 rounded-lg w-full">
                     <a
                         target="_blank" href={url}

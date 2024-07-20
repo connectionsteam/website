@@ -88,7 +88,6 @@ export default function CreateConnectionForm({ connections, setConnections }: Pr
                     </ModalBody>
                     <ModalFooter className="w-full">
                         <CreateConnection
-                            key={0}
                             setConnections={setConnections}
                             connections={connections}
                             errors={errors}

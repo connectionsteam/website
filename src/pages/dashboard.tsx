@@ -33,7 +33,7 @@ export default function DashboardPage() {
     }, []);
 
     return (
-        <ProtectedRoute loading={<ConnectionsProtectedSkeleton key={0} />}>
+        <ProtectedRoute loading={<ConnectionsProtectedSkeleton />}>
             <DefaultLayout className="mt-24">
                 <div className="flex w-full flex-col items-center tablet:items-start">
                     <Tabs classNames={{

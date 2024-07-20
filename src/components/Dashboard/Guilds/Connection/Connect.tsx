@@ -114,7 +114,6 @@ export default function GuildConnectConnection({ guild, channels, onClose, setGu
                 value={body.name}
                 obrigatory
                 onChange={(event) => setBody({ ...body, name: event.target.value })}
-                key={0}
                 label={l.dashboard.guilds.connections.connectionName}
                 type="text"
                 placeholder={l.dashboard.guilds.connections.connectionPlaceholder}

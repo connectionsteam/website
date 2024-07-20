@@ -32,7 +32,6 @@ export default function ConnectionCard(
                 >
                     <div className="w-full relative tabletdesk:invisible">
                         <DeleteConnection
-                            key={0}
                             handleRemove={handleDeleteConnection}
                             open={true}
                             id={connection.name}
@@ -40,7 +39,6 @@ export default function ConnectionCard(
                         />
                     </div>
                     <DeleteConnection
-                            key={0}
                             handleRemove={handleDeleteConnection}
                             open={connectionProps.hover === connection.name}
                             id={connection.name}

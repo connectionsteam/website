@@ -87,7 +87,6 @@ export default function ConnectionPageComponent() {
                             connection={connection}
                             voteProps={voteProps}
                             setVoteProps={setVoteProps}
-                            key={0}
                         />
                         <ConnectConnection connection={connection} />
                     </div>

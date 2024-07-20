@@ -1,19 +1,28 @@
-"use client";
-import DefaultLayout from "@/components/Mixed/Layout";
-import { ConnectedConnectionPayload, DiscordMember, GuildChannelsPayload, GuildPayload, GuildTab, GuildThreadsPayload, Language, Premium, TabState } from "@/types";
-import { api } from "@/utils/api";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import DefaultLayout from "@/components/Mixed/Layout";
+import ProtectedRoute from "@/components/Mixed/ProtectedRoute";
+import { LanguageContext } from "@/contexts/Language";
+import { api } from "@/utils/api";
 import GuildSkeleton from "./Skeleton";
 import Infos from "./Infos";
 import Channels from "./Channels";
-import GuildEditConnection from "../Connection";
-import ProtectedRoute from "@/components/Mixed/ProtectedRoute";
 import Cases from "./Cases";
-import { useLanguage } from "@/hooks/useLanguage";
+import GuildEditConnection from "../Connection";
+import { languages } from "@/locale";
 import usePremium from "@/hooks/usePremium";
+import { ConnectedConnectionPayload, DiscordMember, GuildChannelsPayload, GuildPayload, GuildTab, GuildThreadsPayload, Language, Premium, TabState } from "@/types";
 import Connections from "./Connecions";
+
+export function useLanguage() {
+    const { language } = useContext(LanguageContext);
+    
+    return {
+        ...languages[language],
+        language,
+    }
+}
 
 export default function GuildComponent() {
     const router = useRouter();
@@ -38,7 +47,7 @@ export default function GuildComponent() {
     };
 
     const handleChangeTab = (selected: string) => {
-        if (connection && selected === "connections")
+        if (connection && selected === "connections") {
             return setTab({
                 connection: false, selected,
                 tabs: [
@@ -50,7 +59,6 @@ export default function GuildComponent() {
                             premium={premium as Premium}
                             handleSelectConnection={handleSelectConnection}
                             setConnection={setConnection}
-                            key={0}
                             channels={channels}
                             setGuild={setGuild}
                             guild={guild as GuildPayload}
@@ -58,12 +66,56 @@ export default function GuildComponent() {
                     }
                 ]
             });
+        }
 
         setTab({
             ...tab,
             connection: false,
             selected
         });
+    };
+
+    const createTabs = () => {
+        if (guild && threads && premium) {
+            return [
+                {
+                    value: "infos",
+                    title: l.dashboard.guilds.tabs.infos,
+                    content: <Infos
+                        premium={premium}
+                        setPremium={setPremium}
+                        members={members}
+                        setGuild={setGuild}
+                        setThreads={setThreads}
+                        threads={threads}
+                        guild={guild}
+                    />
+                },
+                {
+                    value: "channels",
+                    title: l.dashboard.guilds.tabs.channels,
+                    content: <Channels setGuild={setGuild} guild={guild} channels={channels} />
+                },
+                {
+                    value: "cases",
+                    title: l.dashboard.guilds.tabs.cases,
+                    content: <Cases members={members} guild={guild} />
+                },
+                {
+                    value: "connections",
+                    title: l.dashboard.guilds.tabs.connections,
+                    content: <Connections
+                        premium={premium}
+                        handleSelectConnection={handleSelectConnection}
+                        setConnection={setConnection}
+                        channels={channels}
+                        setGuild={setGuild}
+                        guild={guild}
+                    />
+                }
+            ];
+        }
+        return [];
     };
 
     useEffect(() => {
@@ -92,52 +144,11 @@ export default function GuildComponent() {
     }, [id]);
 
     useEffect(() => {
-        if (guild && threads && premium) {
-            setTab({
-                tabs: [
-                    {
-                        value: "infos",
-                        title: l.dashboard.guilds.tabs.infos,
-                        content: <Infos
-                            premium={premium}
-                            setPremium={setPremium}
-                            members={members}
-                            setGuild={setGuild}
-                            setThreads={setThreads}
-                            threads={threads}
-                            key={0}
-                            guild={guild}
-                        />
-                    },
-                    {
-                        value: "channels",
-                        title: l.dashboard.guilds.tabs.channels,
-                        content: <Channels setGuild={setGuild} guild={guild} channels={channels} key={0} />
-                    },
-                    {
-                        value: "cases",
-                        title: l.dashboard.guilds.tabs.cases,
-                        content: <Cases members={members} guild={guild} key={0} />
-                    },
-                    {
-                        value: "connections",
-                        title: l.dashboard.guilds.tabs.connections,
-                        content: <Connections
-                            premium={premium}
-                            handleSelectConnection={handleSelectConnection}
-                            setConnection={setConnection}
-                            key={0}
-                            channels={channels}
-                            setGuild={setGuild}
-                            guild={guild}
-                        />
-                    }
-                ],
-                selected: tab.selected,
-                connection: tab.connection,
-            });
-        }
-    }, [guild, threads, channels, connection, premium, l]);
+        setTab((prevTab) => ({
+            ...prevTab,
+            tabs: createTabs(),
+        }));
+    }, [guild, threads, channels, premium, l.language]);
 
     const animations = (
         t: { value: string },
@@ -186,7 +197,6 @@ export default function GuildComponent() {
 
         return { width, x };
     };
-
 
     return (
         <DefaultLayout>

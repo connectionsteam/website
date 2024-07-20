@@ -54,7 +54,7 @@ export default function Header() {
                     </Link>
                 </div>
                 <div className="w-full flex justify-end gap-1">
-                    <AuthUser key={0} handleRecallDrawer={handleRecallDrawer} type="desktop" />
+                    <AuthUser handleRecallDrawer={handleRecallDrawer} type="desktop" />
                     <ChooseLanguage />
                 </div>
                 <button onClick={() => setIsDrawerOpen(true)} className="tabletdesk:hidden">
@@ -68,7 +68,7 @@ export default function Header() {
                         className="text-white mb-4 flex justify-end w-full">
                         <FaX size={20} />
                     </button>
-                    <AuthUser key={0} handleRecallDrawer={handleRecallDrawer} type="mobile" />
+                    <AuthUser handleRecallDrawer={handleRecallDrawer} type="mobile" />
                     <div className="flex gap-4 justify-center text-lg flex-col">
                         <Link
                             onClick={handleRecallDrawer}

@@ -73,12 +73,12 @@ export default function ConnectionsPageChannels({ setBody, body, connection, gui
 
     return (
         <>
-            <JoinConnectionLanguage body={body} setBody={setBody} key={0} />
+            <JoinConnectionLanguage body={body} setBody={setBody} />
             <ConnectionChannels
                 channels={channels}
                 setBody={setBody}
                 body={body}
-                connections={guild.connections} key={0}
+                connections={guild.connections}
             />
             {errors.api && <div className="text-red-500">{errors.api}</div>}
             <div className="p-[2px] bg-gradient-to-r from-fuchsia-500 to-indigo-500 rounded-lg w-full">

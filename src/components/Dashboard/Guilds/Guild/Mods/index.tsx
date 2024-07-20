@@ -127,7 +127,6 @@ export default function GuildMods({ guild, setGuild, members, premium }: Props) 
                     </ModalHeader>
                     <ModalBody>
                         <GuildModModal
-                            key={0}
                             query={query}
                             setQuery={setQuery}
                             handleAddMod={handleAddMod}

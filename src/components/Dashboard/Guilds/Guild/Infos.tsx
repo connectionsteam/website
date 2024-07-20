@@ -57,7 +57,6 @@ export default function Infos({ guild, setGuild, threads, setThreads, members, p
                             <div className="w-16 h-16">
                                 <Avatar
                                     className="w-16 h-16"
-                                    key={0}
                                     src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`}
                                 />
                             </div>
@@ -79,7 +78,7 @@ export default function Infos({ guild, setGuild, threads, setThreads, members, p
                             premium={premium}
                             setGuild={setGuild}
                             guild={guild}
-                            members={members} key={0}
+                            members={members}
                         />
                         <Threads
                             premium={premium}
