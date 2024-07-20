@@ -125,11 +125,6 @@ export default function ConnectionsPageComponent() {
                                     : "flex flex-col gap-2 w-full"
                                 }
                             >
-                                {connections.length <= 0 && (
-                                    <div className="w-full flex items-center text-center mt-2 justify-center">
-                                        <span>{l.connection.noConnections}</span>
-                                    </div>
-                                )}
                                 {connections.map((connection, index) => (
                                     <ConnectionsPageCard
                                         layout={options.layout}
@@ -143,6 +138,11 @@ export default function ConnectionsPageComponent() {
                         </AnimatePresence>
                     </div>
                 </div>
+                {connections.length <= 0 && (
+                    <div className="w-full flex items-center text-center justify-center">
+                        <span>{l.connection.noConnections}</span>
+                    </div>
+                )}
             </div>
         </DefaultLayout>
     );
