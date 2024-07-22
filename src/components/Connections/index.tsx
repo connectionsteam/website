@@ -22,7 +22,7 @@ export default function ConnectionsPageComponent() {
     const [connections, setConnections] = useState<ConnectionsPageStructure[]>([]);
     const [page, setPage] = useState(0);
     const [loading, setLoading] = useState(false);
-    const [hasMore, setHasMore] = useState(true); // Flag para controlar se há mais conexões para carregar
+    const [hasMore, setHasMore] = useState(true);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [filters, setFilters] = useState({
         tag: "",
