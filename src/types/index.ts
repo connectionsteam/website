@@ -8,7 +8,7 @@ export interface UserStructure {
 
 export type Language = "pt-BR" | "en-US";
 
-export type GuildTab = "channels" | "cases" | "connections" | "infos" | "width"; 
+export type GuildTab = "channels" | "cases" | "connections" | "infos" | "width";
 
 export type LanguageType = "pt-BR" | "en-US";
 
@@ -354,7 +354,7 @@ export interface ConnectionsPageStructure {
     votes: ConnectionsPageVote[],
     promoted?: boolean;
     tags: string[]
-}   
+}
 
 export interface ConnectionsPageVote {
     _id: string,
@@ -378,4 +378,11 @@ export interface VotesPropsStructure {
     votes: number;
     lastVoteTimestamp: number;
     canVote: boolean;
+}
+
+export interface ModsFiltersStructure {
+    mod_id: null | string,
+    target_id: null | string,
+    type: null | number,
+    connection: null | string
 }
