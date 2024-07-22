@@ -151,6 +151,8 @@ export const languages = {
                     description: "Aqui ficará as threads que você pode gerenciar neste servidor",
                 },
                 cases: {
+                    case: "Caso",
+                    was: "foi",
                     title: "Casos do servidor",
                     description: "Aqui ficará o histórico de casos que ocorreram em seu servidor, como banimentos e timeouts.",
                     ban: "banido",
@@ -421,6 +423,8 @@ export const languages = {
                     description: "Here will be the threads that you can manage in this guild",
                 },
                 cases: {
+                    case: "Case",
+                    was: "was",
                     title: "Guild cases",
                     description: "Here will be the history of cases that occurred in your guild, like bans and timeouts.",
                     ban: "banned",
