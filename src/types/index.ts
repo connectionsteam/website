@@ -62,6 +62,14 @@ export interface BaseCase<Type extends CaseTypes> {
     reason?: string;
     connection: string;
     targetId: string;
+    target: {
+        username: string;
+        avatar: string;
+    },
+    moderator: {
+        username: string;
+        avatar: string;
+    }
     moderatorId: string;
     createdTimestamp: number;
 }
