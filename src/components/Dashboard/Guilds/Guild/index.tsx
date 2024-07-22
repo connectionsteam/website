@@ -31,7 +31,6 @@ export default function GuildComponent() {
     const [channels, setChannels] = useState<GuildChannelsPayload[]>([]);
     const [threads, setThreads] = useState<GuildThreadsPayload[]>([]);
     const [connection, setConnection] = useState<ConnectedConnectionPayload>(null!);
-    const [members, setMembers] = useState<DiscordMember[]>([]);
     const { premium, setPremium } = usePremium(guild);
     const l = useLanguage();
 
@@ -84,7 +83,6 @@ export default function GuildComponent() {
                     content: <Infos
                         premium={premium}
                         setPremium={setPremium}
-                        members={members}
                         setGuild={setGuild}
                         setThreads={setThreads}
                         threads={threads}
@@ -99,7 +97,7 @@ export default function GuildComponent() {
                 {
                     value: "cases",
                     title: l.dashboard.guilds.tabs.cases,
-                    content: <Cases members={members} guild={guild} />
+                    content: <Cases guild={guild} />
                 },
                 {
                     value: "connections",
@@ -128,19 +126,13 @@ export default function GuildComponent() {
             setThreads(guildRes.data.threads);
         };
 
-        const fetchMembers = async () => {
-            const membersRes = await api.get(`/guilds/${id}/members?limit=1000`);
-
-            setMembers(membersRes.data);
-        };
-
         const fetchChannels = async () => {
             const channelRes = await api.get(`/guilds/${id}/channels`);
 
             setChannels(channelRes.data);
         };
 
-        Promise.all([fetchGuild(), fetchMembers(), fetchChannels()]);
+        Promise.all([fetchGuild(), fetchChannels()]);
     }, [id]);
 
     useEffect(() => {

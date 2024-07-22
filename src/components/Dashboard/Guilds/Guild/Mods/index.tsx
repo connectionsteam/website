@@ -2,7 +2,7 @@
 import DefaultButton from "@/components/Mixed/Button";
 import { DiscordMember, GuildPayload, ModPermType, Premium } from "@/types";
 import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/modal";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { LuPlusCircle } from "react-icons/lu";
 import { api } from "@/utils/api";
 import GuildModCard from "./Card";
@@ -14,7 +14,6 @@ import PremiumPopUp from "@/components/Premium/PopUp";
 interface Props {
     guild: GuildPayload;
     setGuild: (guild: GuildPayload) => void;
-    members: DiscordMember[];
     premium: Premium;
 }
 
@@ -23,8 +22,9 @@ export interface MenuProps {
     removing: string | null;
 }
 
-export default function GuildMods({ guild, setGuild, members, premium }: Props) {
+export default function GuildMods({ guild, setGuild, premium }: Props) {
     const l = useLanguage();
+
     const { user } = useContext(UserContext);
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     const {
@@ -130,7 +130,6 @@ export default function GuildMods({ guild, setGuild, members, premium }: Props) 
                             query={query}
                             setQuery={setQuery}
                             handleAddMod={handleAddMod}
-                            users={members}
                             guild={guild}
                         />
                     </ModalBody>

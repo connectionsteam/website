@@ -1,5 +1,5 @@
 import Avatar from "@/components/Mixed/Avatar";
-import { DiscordMember, GuildPayload, GuildThreadsPayload, Premium } from "@/types";
+import { GuildPayload, GuildThreadsPayload, Premium } from "@/types";
 import GuildMods from "./Mods";
 import Threads from "./Threads";
 import { useLanguage } from "@/hooks/useLanguage";
@@ -14,12 +14,11 @@ interface Props {
     setGuild: (guild: GuildPayload) => void;
     threads: GuildThreadsPayload[];
     setThreads: (threads: GuildThreadsPayload[]) => void;
-    members: DiscordMember[];
     premium: Premium;
     setPremium: (premium: Premium) => void;
 }
 
-export default function Infos({ guild, setGuild, threads, setThreads, members, premium, setPremium }: Props) {
+export default function Infos({ guild, setGuild, threads, setThreads, premium, setPremium }: Props) {
     const l = useLanguage();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [showConfetti, setShowConfetti] = useState(false);
@@ -78,7 +77,6 @@ export default function Infos({ guild, setGuild, threads, setThreads, members, p
                             premium={premium}
                             setGuild={setGuild}
                             guild={guild}
-                            members={members}
                         />
                         <Threads
                             premium={premium}

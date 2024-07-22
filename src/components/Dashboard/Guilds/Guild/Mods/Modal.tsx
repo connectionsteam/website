@@ -2,17 +2,30 @@ import Avatar from "@/components/Mixed/Avatar";
 import DefaultInput from "@/components/Mixed/Input";
 import { useLanguage } from "@/hooks/useLanguage";
 import { DiscordMember, GuildPayload } from "@/types";
+import { api } from "@/utils/api";
+import { useEffect, useState } from "react";
 
 interface Props {
     query: string;
     setQuery: (query: string) => void;
     handleAddMod: (user: DiscordMember) => void;
-    users: DiscordMember[];
     guild: GuildPayload;
 }
 
-export default function GuildModModal({ query, setQuery, handleAddMod, users, guild }: Props) {
+export default function GuildModModal({ query, setQuery, handleAddMod, guild }: Props) {
     const l = useLanguage();
+
+    const [members, setMembers] = useState<DiscordMember[] | null>(null);
+
+    useEffect(() => {
+        const fetchMembers = async () => {
+            const membersRes = await api.get(`/guilds/${guild.id}/members?limit=1000`);
+
+            setMembers(membersRes.data);
+        };
+
+        fetchMembers();
+    }, []);
 
     return (
         <>
@@ -23,14 +36,14 @@ export default function GuildModModal({ query, setQuery, handleAddMod, users, gu
                 label={l.dashboard.guilds.mods.label}
             />
             <div className="flex flex-col gap-3 w-full max-h-96 overflow-y-auto justfy-start">
-                {users ? (
-                    users
+                {members ? (
+                    members
                         .filter(user =>
                             user.user.username.toLowerCase().includes(query.toLowerCase())
                             || user.user.id.toLowerCase().includes(query.toLowerCase())
                             || user.user.global_name?.toLowerCase().includes(query.toLowerCase())
                         )
-                        .filter((user) => 
+                        .filter((user) =>
                             !Object.keys(guild.mods).includes(user.user.id)
                             && !user.user.bot
                         )
@@ -48,7 +61,18 @@ export default function GuildModModal({ query, setQuery, handleAddMod, users, gu
                             </button>
                         ))
                 ) : (
-                    <div>Loading...</div>
+                    Array.from({ length: 6 }).map((_, index) => (
+                        <div
+                            className="bg-neutral-900/50 w-full min-h-[72px] rounded-lg flex items-center p-3 gap-3" 
+                            key={index}
+                        >
+                            <div className="w-12 h-12 rounded-full bg-neutral-700 animate-pulse"></div>
+                            <div className="flex flex-col gap-2">
+                                <div className="bg-neutral-700 rounded-full h-5 animate-pulse w-24"></div>
+                                <div className="bg-neutral-700 rounded-full h-3 animate-pulse w-20"></div>
+                            </div>
+                        </div>
+                    ))
                 )}
             </div>
         </>
