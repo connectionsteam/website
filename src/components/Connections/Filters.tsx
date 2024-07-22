@@ -3,6 +3,7 @@ import { ModalBody, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/m
 import { HiHashtag } from "react-icons/hi";
 import { LuCalendar } from "react-icons/lu";
 import { MdOutlineKeyboardArrowUp } from "react-icons/md";
+import { motion } from "framer-motion";
 
 interface Props {
     filters: {
@@ -30,8 +31,8 @@ export default function Filters({ filters, setFilters }: Props) {
 
     return (
         <ModalContent className="text-white bg-neutral-900">
-            <ModalHeader className="flex items-center">
-                <div className="flex flex-col gap-1 pb-2 font-bold text-lg flex-grow">
+            <ModalHeader className="flex items-center pb-0">
+                <div className="flex flex-col gap-1 font-bold text-lg flex-grow">
                     {l.connection.filters.title}
                 </div>
                 <button className="text-blue-500"></button>
@@ -42,23 +43,37 @@ export default function Filters({ filters, setFilters }: Props) {
                         <div className="font-semibold">
                             {l.connection.filters.sort}
                         </div>
-                        <div className="flex flex-col w-48 text-start items-start justify-start">
+                        <div className="flex flex-col w-48 text-start items-start justify-start relative">
                             <button
-                                className={`w-full rounded-lg transition p-2 text-start flex
-                            items-center gap-2 ${filters.sort === "" ? "bg-neutral-800" : ""}`}
+                                className="w-full rounded-lg transition p-2 text-start flex
+                            items-center gap-2 z-20"
                                 onClick={() => setFilters({ ...filters, sort: "" })}
                             >
                                 <MdOutlineKeyboardArrowUp />
                                 {l.connection.filters.votes}
                             </button>
                             <button
-                                className={`w-full rounded-lg transition p-2 text-start items-center gap-2
-                            flex ${filters.sort === "new" ? "bg-neutral-800" : ""}`}
+                                className="w-full rounded-lg transition p-2 text-start items-center gap-2
+                            flex z-20"
                                 onClick={() => setFilters({ ...filters, sort: "new" })}
                             >
                                 <LuCalendar />
                                 {l.connection.filters.creationDate}
                             </button>
+                            <motion.div
+                                animate={{
+                                    y: filters.sort === "" ? 0 : 40,
+                                    width: filters.sort === "" ? "90px" : "160px",
+                                }}
+                                transition={{
+                                    type: "spring",
+                                    bounce: 0.3,
+                                    duration: 0.5,
+                                }}
+                                className="absolute bg-neutral-800 z-10 h-10 w-12 rounded-xl
+                                        -translate-y-1/2 -translate-x-1"
+                            >
+                            </motion.div>
                         </div>
                     </div>
                     <div className="flex flex-col gap-2">
