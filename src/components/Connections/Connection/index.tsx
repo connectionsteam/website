@@ -16,7 +16,7 @@ interface Props {
     connections: ConnectionsPageStructure[];
 }
 
-const ConnectionsPageCard = forwardRef<HTMLDivElement, Props>(({ connection, index, query, layout, connections }, ref) => {
+const ConnectionsPageCard = forwardRef<HTMLDivElement, Props>(({ connection, index, query, layout, connections = []}, ref) => {
     const l = useLanguage();
 
     const animation = connections.length < 16
