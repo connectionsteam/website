@@ -42,6 +42,7 @@ export default function Cases({ guild }: Props) {
 
                             return (
                                 <div
+                                    className="cursor-pointer"
                                     onClick={() => fetchCase(caseItem.id)}
                                     key={caseItem.id}>
                                     <CaseCard

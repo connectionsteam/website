@@ -17,7 +17,7 @@ import Connections from "./Connecions";
 
 export function useLanguage() {
     const { language } = useContext(LanguageContext);
-    
+
     return {
         ...languages[language],
         language,
@@ -182,10 +182,14 @@ export default function GuildComponent() {
             }
         };
 
+        if (connection)
+            return {
+                width: pxs[language]["connections"],
+                x: position[language]["connections"]
+            };
+
         const width = pxs[language][selectedTab];
-        const x = selectedTab === "connections" || (connection && t.value === "connections")
-            ? position[language]["connections"]
-            : position[language][selectedTab];
+        const x = position[language][selectedTab];
 
         return { width, x };
     };
@@ -230,7 +234,7 @@ export default function GuildComponent() {
                                     >
                                         {t.content}
                                     </motion.div>
-                                ) : tab.connection && t.value === "connections" ? (
+                                ) : (tab.connection && t.value === "connections") ? (
                                     <motion.div
                                         key={t.value}
                                         initial={{ opacity: 0, x: -20 }}
