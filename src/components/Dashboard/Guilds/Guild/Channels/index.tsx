@@ -67,7 +67,7 @@ export default function Channels({ channels, guild, setGuild }: Props) {
             <div className="w-full">
                 {Object.entries(groupedChannels).map(([categoryId, categoryChannels]) => (
                     <button className="w-full flex gap-1 flex-col" key={categoryId}>
-                        <div className="font-bold my-1">
+                        <div className="font-bold my-1 text-start">
                             {channels.find((channel) => channel.id === categoryId)?.name || ""}
                         </div>
                         {categoryChannels.map((channel) => {
