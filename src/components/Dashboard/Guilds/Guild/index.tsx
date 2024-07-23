@@ -46,27 +46,6 @@ export default function GuildComponent() {
     };
 
     const handleChangeTab = (selected: string) => {
-        if (connection && selected === "connections") {
-            return setTab({
-                connection: false, selected,
-                tabs: [
-                    ...tab.tabs.filter((t) => t.value !== "connections"),
-                    {
-                        value: "connections",
-                        title: "Conexões",
-                        content: <Connections
-                            premium={premium as Premium}
-                            handleSelectConnection={handleSelectConnection}
-                            setConnection={setConnection}
-                            channels={channels}
-                            setGuild={setGuild}
-                            guild={guild as GuildPayload}
-                        />
-                    }
-                ]
-            });
-        }
-
         setTab({
             ...tab,
             connection: false,
