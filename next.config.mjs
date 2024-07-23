@@ -21,12 +21,12 @@ const nextConfig = {
         return [
             {
                 source: "/api/:path*",
-                destination: `${process.env.proxy_url}/api/:path*` 
+                destination: `${process.env.PROXY_URL}/api/:path*` 
             }
         ];
     },
     env: {
-        proxy_url: process.env.PROXY_URL,
+        PROXY_URL: process.env.PROXY_URL,
     }
 };
 
