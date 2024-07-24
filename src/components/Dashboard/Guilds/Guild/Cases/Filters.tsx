@@ -26,7 +26,7 @@ export default function ModsFilters({ filters, setFilters, guild }: Props) {
             type: null,
             connection: null
         });
-    }
+    };
 
     const [mod, setMod] = useState(Object.values(Object.entries(guild.mods)
         .find(([id]) => id === filters.target_id) ?? {})[0]);
@@ -39,14 +39,13 @@ export default function ModsFilters({ filters, setFilters, guild }: Props) {
                 <div className="flex flex-col gap-1 font-bold text-lg flex-grow">
                     {l.connection.filters.title}
                 </div>
-                <button className="text-blue-500"></button>
             </ModalHeader>
             <ModalBody className="flex gap-2">
                 <div className="flex flex-col gap-2 text-start bg-neutral-900/50 w-full rounded-lg py-2">
                     <div className="flex flex-col gap-4">
                         <div className="flex flex-col gap-2">
                             <div className="font-bold">
-                                Tipo
+                                {l.dashboard.guilds.cases.filters.type}
                             </div>
                             <div className="flex flex-col w-48 text-start items-start justify-start">
                                 <button
@@ -71,7 +70,7 @@ export default function ModsFilters({ filters, setFilters, guild }: Props) {
                                     onClick={() => setFilters({ ...filters, type: null })}
                                 >
                                     <GoArrowBoth size={18} />
-                                    Ambos
+                                    {l.dashboard.guilds.cases.filters.ambos}
                                 </button>
                                 <motion.div
                                     animate={{
@@ -92,7 +91,7 @@ export default function ModsFilters({ filters, setFilters, guild }: Props) {
                         </div>
                         <div className="flex flex-col gap-2">
                             <div className="font-bold">
-                                Usuário
+                                {l.dashboard.guilds.cases.filters.user}
                             </div>
                             <div className="bg-neutral-700/60 rounded-lg">
                                 <DefaultInput
@@ -100,13 +99,13 @@ export default function ModsFilters({ filters, setFilters, guild }: Props) {
                                     type="text"
                                     onChange={(e) =>
                                         setFilters({ ...filters, target_id: e.target.value })}
-                                    placeholder="ID do usuário que deseja filtrar"
+                                    placeholder={l.dashboard.guilds.cases.filters.userID}
                                 />
                             </div>
                         </div>
                         <div className="flex flex-col gap-2">
                             <div className="font-bold">
-                                Moderador
+                                {l.dashboard.guilds.cases.filters.moderator}
                             </div>
                             <div>
                                 <Dropdown className="bg-neutral-800 text-white w-full 
@@ -121,7 +120,7 @@ export default function ModsFilters({ filters, setFilters, guild }: Props) {
                                                     />
                                                     <span className="font-bold">{mod.username}</span>
                                                 </div>
-                                            ) : "Clique aqui e selecione um moderador"}
+                                            ) : l.dashboard.guilds.cases.filters.selectModerator}
                                         </button>
                                     </DropdownTrigger>
                                     <DropdownMenu className="w-full flex flex-col gap-1" aria-label="guilds">
@@ -173,7 +172,7 @@ export default function ModsFilters({ filters, setFilters, guild }: Props) {
                                                         {connection.name}
                                                     </span>
                                                 </div>
-                                            ) : "Clique aqui e selecione uma conexão"}
+                                            ) : l.dashboard.guilds.cases.filters.selectConnection}
                                         </button>
                                     </DropdownTrigger>
                                     <DropdownMenu
@@ -227,6 +226,6 @@ export default function ModsFilters({ filters, setFilters, guild }: Props) {
                     {l.connection.filters.reset}
                 </button>
             </ModalFooter>
-        </ModalContent >
+        </ModalContent>
     );
 }
