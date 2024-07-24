@@ -190,7 +190,13 @@ export default function GuildComponent() {
                                     </button>
                                     <motion.div
                                         key={t.value}
-                                        animate={animations(t, l.language, tab.selected as GuildTab, tab.connection)}
+                                        animate={
+                                            animations(t, 
+                                                l.language, 
+                                                tab.selected as GuildTab, 
+                                                tab.connection
+                                            )
+                                        }
                                         transition={{
                                             type: "spring",
                                             bounce: 0.3,
