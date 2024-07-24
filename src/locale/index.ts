@@ -159,6 +159,15 @@ export const languages = {
                     mute: "mutado",
                     by: "por",
                     reason: "Motivo",
+                    filters: {
+                        type: "Tipo",
+                        user: "Usuário",
+                        moderator: "Moderador",
+                        ambos: "Ambos",
+                        selectModerator: "Clique aqui e selecione um moderador",
+                        selectConnection: "Clique aqui e selecione uma conexão",
+                        userID: "ID do usuário que deseja filtrar",
+                    }
                 },
                 channels: {
                     title: "Editar Canais bloqueados",
@@ -431,6 +440,15 @@ export const languages = {
                     mute: "muted",
                     by: "by",
                     reason: "Reason",
+                    filters: {
+                        type: "Type",
+                        user: "User",
+                        moderator: "Moderator",
+                        ambos: "Both",
+                        selectModerator: "Click here and select a moderator",
+                        selectConnection: "Click here and select a connection",
+                        userID: "User ID to filter",
+                    }
                 },
                 channels: {
                     title: "Edit locked channels",
