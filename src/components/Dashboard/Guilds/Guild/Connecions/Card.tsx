@@ -5,17 +5,18 @@ import { motion } from "framer-motion";
 import { Dispatch, SetStateAction } from "react";
 import Avatar from "@/components/Mixed/Avatar";
 import Image from "next/image";
+import Link from "next/link";
 
 interface Props {
     connection: ConnectedConnectionPayload;
     connectionProps: ConnectedConnectionsState;
     setConnectionProps: Dispatch<SetStateAction<ConnectedConnectionsState>>;
     handleRemoveConnection: (connectionName: string) => void;
-    handleSelectConnection: (connection: ConnectedConnectionPayload) => void;
+    guild: GuildPayload;
 }
 
 export default function ConnectedConnnectionCard(
-    { connection, connectionProps, setConnectionProps, handleRemoveConnection, handleSelectConnection }: Props
+    { connection, connectionProps, setConnectionProps, handleRemoveConnection, guild }: Props
 ) {
     return (
         <AnimatePresence key={connection.name}>
@@ -48,9 +49,10 @@ export default function ConnectedConnnectionCard(
                         connection={connection}
                         onRemove={() => handleRemoveConnection(connection.name)}
                     />
-                    <button
-                        onClick={() => handleSelectConnection(connection)}
-                        className="flex items-center gap-2 p-3 rounded-lg bg-neutral-900/50 hover:bg-neutral-900 transition relative z-10 w-full"
+                    <Link
+                        href={`/guild/${guild.id}/connection/${connection.name}`}
+                        className="flex items-center gap-2 p-3 rounded-lg bg-neutral-900/50
+                        hover:bg-neutral-900 transition relative z-10 w-full"
                     >
                         <Avatar className="w-12 h-12" src={connection.icon || ""} />
                         <div className="flex flex-col gap-1 text-start">
@@ -64,7 +66,7 @@ export default function ConnectedConnnectionCard(
                                 </span>
                             }
                         </div>
-                    </button>
+                    </Link>
                 </motion.div>
             )}
         </AnimatePresence>

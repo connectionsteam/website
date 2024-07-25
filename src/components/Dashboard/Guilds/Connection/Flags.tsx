@@ -1,21 +1,22 @@
 import { useLanguage } from "@/hooks/useLanguage";
-import { ConnectedConnectionFlags, ConnectedConnectionPayload, GuildPayload } from "@/types";
+import { ConnectedConnectionFlags, ConnectedConnectionPayload } from "@/types";
 import { api } from "@/utils/api";
 import { Switch } from "@nextui-org/switch";
 import { useState, useEffect } from "react";
 
 interface Props {
-    guild: GuildPayload;
     connection: ConnectedConnectionPayload;
     setConnection: (connection: ConnectedConnectionPayload) => void;
-    setGuild: (guild: GuildPayload) => void;
+    guildId: string;
 }
 
-export default function GuildConnectionFlags({ connection, guild, setConnection, setGuild }: Props) {
+export default function GuildConnectionFlags({ connection, guildId, setConnection }: Props) {
     const [flags, setFlags] = useState(connection.flags || []);
     const l = useLanguage();
 
-    const flagsDescriptions: Record<ConnectedConnectionFlags, { title: string, description: string }> = {
+    const flagsDescriptions: Record<ConnectedConnectionFlags, {
+        title: string, description: string
+    }> = {
         [ConnectedConnectionFlags.Locked]: {
             title: l.dashboard.guilds.connections.flags.locked,
             description: l.dashboard.guilds.connections.flags.lockedDescription,
@@ -73,15 +74,11 @@ export default function GuildConnectionFlags({ connection, guild, setConnection,
             flags: updatedFlags,
         };
 
-        await api.patch(`/guilds/${guild.id}/connections/${connection.name}`, {
+        await api.patch(`/guilds/${guildId}/connections/${connection.name}`, {
             flags: updatedFlags,
         });
 
         setConnection(updatedConnection);
-        setGuild({
-            ...guild,
-            connections: guild.connections.map(c => c.name === connection.name ? updatedConnection : c)
-        });
     }
 
     return (
@@ -93,26 +90,36 @@ export default function GuildConnectionFlags({ connection, guild, setConnection,
                 </span>
             </div>
             <div className="gap-4 grid grid-cols-3 tablet:grid-cols-1 items-start">
-                {Object.values(ConnectedConnectionFlags).map((flag, index) => 
-                    (flag !== ConnectedConnectionFlags.Locked && flag !== ConnectedConnectionFlags.Frozen) && (
-                    <div key={index} className="flex flex-col gap-1 p-3 rounded-lg bg-neutral-900 h-full place-content-center">
-                        <div className="flex items-center gap-1">
-                            <div className="relative">
-                                {connection.flags.includes(ConnectedConnectionFlags.Frozen) && (
-                                    <div className="absolute top-0 left-0 w-14 h-full bg-gradient-to-tr from-cyan-300 via-sky-200 to-sky-500 rounded-full z-50">
-                                    </div>
-                                )}
-                                <Switch
-                                    color="secondary"
-                                    isSelected={flags.includes(flag)}
-                                    onChange={e => handleFlagChange(flag, e.target.checked)}
-                                />
+                {Object.values(ConnectedConnectionFlags).map((flag, index) =>
+                    (
+                        flag !== ConnectedConnectionFlags.Locked
+                        && flag !== ConnectedConnectionFlags.Frozen
+                    ) && (
+                        <div
+                            key={index}
+                            className="flex flex-col gap-1 p-3 rounded-lg bg-neutral-900 
+                        h-full place-content-center"
+                        >
+                            <div className="flex items-center gap-1">
+                                <div className="relative">
+                                    {connection.flags.includes(ConnectedConnectionFlags.Frozen) && (
+                                        <div className="absolute top-0 left-0 w-14 h-full 
+                                        bg-gradient-to-tr from-cyan-300 via-sky-200 to-sky-500 rounded-full z-50">
+                                        </div>
+                                    )}
+                                    <Switch
+                                        color="secondary"
+                                        isSelected={flags.includes(flag)}
+                                        onChange={e => handleFlagChange(flag, e.target.checked)}
+                                    />
+                                </div>
+                                <span className="font-bold">{flagsDescriptions[flag].title}</span>
                             </div>
-                            <span className="font-bold">{flagsDescriptions[flag].title}</span>
+                            <span className="text-sm text-neutral-300">
+                                {flagsDescriptions[flag].description}
+                            </span>
                         </div>
-                        <span className="text-sm text-neutral-300">{flagsDescriptions[flag].description}</span>
-                    </div>
-                ))}
+                    ))}
             </div>
         </div>
     );

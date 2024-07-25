@@ -1,25 +1,26 @@
 import Avatar from "@/components/Mixed/Avatar";
 import { ConnectedConnectionFlags, ConnectedConnectionPayload, GuildChannelsPayload, GuildPayload } from "@/types";
 import BlockedWords from "./BlockedWords";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction } from "react";
 import GuildConnectionFlags from "./Flags";
 import Image from "next/image";
 import { HiHashtag } from "react-icons/hi";
 import { BiLeftArrowAlt } from "react-icons/bi";
 import { useLanguage } from "@/hooks/useLanguage";
+import Link from "next/link";
 
 interface Props {
-    guild: GuildPayload;
-    setGuild: (guild: GuildPayload) => void;
+    guildId: string;
     channels: GuildChannelsPayload[];
     connection: ConnectedConnectionPayload;
     setConnection: Dispatch<SetStateAction<ConnectedConnectionPayload>>;
-    handleChangeTab: (selected: string) => void;
 }
 
-export default function GuildEditConnection({ guild, setGuild, channels, connection, setConnection, handleChangeTab }: Props) {
+export default function GuildEditConnection(
+    { channels, connection, setConnection, guildId }: Props
+) {
     const l = useLanguage();
-    
+
     return (
         <div className="relative w-full">
             {connection.flags.includes(ConnectedConnectionFlags.Frozen) && (
@@ -32,11 +33,17 @@ export default function GuildEditConnection({ guild, setGuild, channels, connect
             )}
             <div className="w-full rounded-lg bg-neutral-800 p-6 transition flex flex-col gap-4">
                 <div className="flex gap-4 items-center">
-                    <button onClick={() => handleChangeTab("connections")} className="flex gap-2 items-center bg-neutral-900/50 p-2 text-sm rounded-lg transition hover:bg-neutral-900/100">
+                    <Link
+                        href={`/guild/${guildId}`}
+                        className="flex gap-2 items-center bg-neutral-900/50 p-2 text-sm 
+                        rounded-lg transition hover:bg-neutral-900/100"
+                    >
                         <BiLeftArrowAlt />
                         <span>{l.dashboard.guilds.connections.infos.back}</span>
-                    </button>
-                    <h1 className="font-bold text-xl">{l.dashboard.guilds.connections.infos.title} {connection.name}</h1>
+                    </Link>
+                    <h1 className="font-bold text-xl">
+                        {l.dashboard.guilds.connections.infos.title} {connection.name}
+                    </h1>
                 </div>
                 <div className="flex flex-col gap-6">
                     <div className="flex gap-3">
@@ -47,36 +54,59 @@ export default function GuildEditConnection({ guild, setGuild, channels, connect
                         </div>
                     </div>
                     <div className="flex flex-col gap-2">
-                        <h1 className="font-bold text-xl">{l.dashboard.guilds.connections.infos.informations}</h1>
+                        <h1 className="font-bold text-xl">
+                            {l.dashboard.guilds.connections.infos.informations}
+                        </h1>
                         <div className="flex flex-col gap-1">
                             <div className="flex items-center gap-1">
                                 <div>{l.dashboard.guilds.connections.infos.blockedWords}:</div>
                                 <span className="text-neutral-300">
                                     {connection.blockwords
-                                        && connection.blockwords.length > 0 ? connection.blockwords.join(", ") : l.dashboard.guilds.connections.infos.none
+                                        && connection.blockwords.length > 0
+                                        ? connection.blockwords.join(", ")
+                                        : l.dashboard.guilds.connections.infos.none
                                     }
                                 </span>
                             </div>
                             <div className="flex gap-1">
-                                <div className="text-start">{l.dashboard.guilds.connections.infos.flags}:</div>
+                                <div className="text-start">
+                                    {l.dashboard.guilds.connections.infos.flags}:
+                                </div>
                                 <span className="text-neutral-300">
-                                    {connection.flags.length > 0 ? connection.flags.join(", ") : l.dashboard.guilds.connections.infos.none}
+                                    {connection.flags.length > 0 ? connection.flags.join(", ")
+                                        : l.dashboard.guilds.connections.infos.none}
                                 </span>
                             </div>
                             <div className="flex gap-1">
-                                <div className="text-start">{l.dashboard.guilds.connections.infos.channel}:</div>
-                                <div className="text-neutral-300 flex gap-2 bg-neutral-900/50 rounded-lg p-1 text-sm items-center">
-                                    <HiHashtag/>
-                                    <span>{channels.find((channel) => channel.id === connection.channelId)?.name}</span>
+                                <div className="text-start">
+                                    {l.dashboard.guilds.connections.infos.channel}:
+                                </div>
+                                <div className="text-neutral-300 flex gap-2 bg-neutral-900/50 
+                                rounded-lg p-1 text-sm items-center">
+                                    <HiHashtag />
+                                    <span>
+                                        {channels.find((channel) =>
+                                            channel.id === connection.channelId)?.name}
+                                    </span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className="flex flex-col gap-2">
-                        <h1 className="font-bold text-xl">{l.dashboard.guilds.connections.infos.configure}</h1>
+                        <h1 className="font-bold text-xl">
+                            {l.dashboard.guilds.connections.infos.configure}
+                        </h1>
                         <div className="flex flex-col gap-3">
-                            <BlockedWords setGuild={setGuild} setConnection={setConnection} guild={guild} connection={connection} />
-                            <GuildConnectionFlags setGuild={setGuild} setConnection={setConnection} guild={guild} connection={connection} />
+                            <BlockedWords
+                                setConnection={setConnection}
+                                guildId={guildId}
+                                connection={connection}
+                            />
+                            <GuildConnectionFlags
+                                setConnection={setConnection}
+                                guildId={guildId}
+                                connection={connection}
+                            />
                         </div>
                     </div>
                 </div>

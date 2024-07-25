@@ -8,13 +8,12 @@ import { FaCheckCircle } from "react-icons/fa";
 import { useLanguage } from "@/hooks/useLanguage";
 
 interface Props {
-    guild: GuildPayload;
     connection: ConnectedConnectionPayload;
     setConnection: (connection: ConnectedConnectionPayload) => void;
-    setGuild: (guild: GuildPayload) => void;
+    guildId: string;
 }
 
-export default function BlockedWords({ connection, guild, setConnection, setGuild }: Props) {
+export default function BlockedWords({ connection, setConnection, guildId }: Props) {
     const [words, setWords] = useState(connection.blockwords || []);
     const [word, setWord] = useState("");
     const [loading, setLoading] = useState({ loading: false, check: false });
@@ -24,22 +23,11 @@ export default function BlockedWords({ connection, guild, setConnection, setGuil
         try {
             setLoading({ loading: true, check: false });
 
-            await api.patch(`/guilds/${guild.id}/connections/${connection.name}`, { blockwords: words });
+            await api.patch(`/guilds/${guildId}/connections/${connection.name}`, { blockwords: words });
 
             setConnection({
                 ...connection,
                 blockwords: words
-            });
-
-            setGuild({
-                ...guild,
-                connections: [
-                    ...guild.connections.filter(c => c.name !== connection.name),
-                    {
-                        ...connection,
-                        blockwords: words
-                    }
-                ]
             });
 
             setLoading({ loading: false, check: true });

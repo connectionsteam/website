@@ -9,10 +9,9 @@ import GuildSkeleton from "./Skeleton";
 import Infos from "./Infos";
 import Channels from "./Channels";
 import Cases from "./Cases";
-import GuildEditConnection from "../Connection";
 import { languages } from "@/locale";
 import usePremium from "@/hooks/usePremium";
-import { ConnectedConnectionPayload, DiscordMember, GuildChannelsPayload, GuildPayload, GuildTab, GuildThreadsPayload, Language, Premium, TabState } from "@/types";
+import { ConnectedConnectionPayload, GuildChannelsPayload, GuildPayload, GuildTab, GuildThreadsPayload, Language, TabState } from "@/types";
 import Connections from "./Connecions";
 
 export function useLanguage() {
@@ -30,7 +29,6 @@ export default function GuildComponent() {
     const [guild, setGuild] = useState<GuildPayload>();
     const [channels, setChannels] = useState<GuildChannelsPayload[]>([]);
     const [threads, setThreads] = useState<GuildThreadsPayload[]>([]);
-    const [connection, setConnection] = useState<ConnectedConnectionPayload>(null!);
     const { premium, setPremium } = usePremium(guild);
     const l = useLanguage();
 
@@ -39,11 +37,6 @@ export default function GuildComponent() {
         selected: "infos",
         connection: false,
     });
-
-    const handleSelectConnection = async (connection: ConnectedConnectionPayload) => {
-        setTab({ ...tab, connection: true, selected: connection.name });
-        setConnection(connection);
-    };
 
     const handleChangeTab = (selected: string) => {
         setTab({
@@ -83,8 +76,6 @@ export default function GuildComponent() {
                     title: l.dashboard.guilds.tabs.connections,
                     content: <Connections
                         premium={premium}
-                        handleSelectConnection={handleSelectConnection}
-                        setConnection={setConnection}
                         channels={channels}
                         setGuild={setGuild}
                         guild={guild}
@@ -178,22 +169,24 @@ export default function GuildComponent() {
             <ProtectedRoute loading={<GuildSkeleton />}>
                 {guild ? (
                     <div className="flex flex-col gap-4 w-full">
-                        <div className="flex mb-1 bg-neutral-800 rounded-lg p-1 overflow-x-auto relative">
+                        <div className="flex mb-1 bg-neutral-800 rounded-lg 
+                        p-1 overflow-x-auto relative">
                             {tab.tabs.map((t) => (
                                 <>
                                     <button
                                         onClick={() => handleChangeTab(t.value)}
                                         className={`text-white px-4 rounded-lg py-2 
-                                        cursor-pointer transition-colors duration-300 gap-2 flex z-20`}
+                                        cursor-pointer transition-colors duration-300 
+                                        gap-2 flex z-20`}
                                     >
                                         <span>{t.title}</span>
                                     </button>
                                     <motion.div
                                         key={t.value}
                                         animate={
-                                            animations(t, 
-                                                l.language, 
-                                                tab.selected as GuildTab, 
+                                            animations(t,
+                                                l.language,
+                                                tab.selected as GuildTab,
                                                 tab.connection
                                             )
                                         }
@@ -202,8 +195,8 @@ export default function GuildComponent() {
                                             bounce: 0.3,
                                             duration: 0.5,
                                         }}
-                                        className="absolute bg-neutral-700 z-10 h-[84%] w-12 rounded-xl
-                                        -translate-y-1/2 -translate-x-1"
+                                        className="absolute bg-neutral-700 z-10 h-[84%] 
+                                        w-12 rounded-lg -translate-y-1/2 -translate-x-1"
                                     >
                                     </motion.div>
                                 </>
@@ -219,24 +212,8 @@ export default function GuildComponent() {
                                     >
                                         {t.content}
                                     </motion.div>
-                                ) : (tab.connection && t.value === "connections") ? (
-                                    <motion.div
-                                        key={t.value}
-                                        initial={{ opacity: 0, x: -20 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                    >
-                                        <GuildEditConnection
-                                            handleChangeTab={handleChangeTab}
-                                            connection={connection}
-                                            channels={channels}
-                                            key={connection.name}
-                                            setGuild={setGuild}
-                                            guild={guild as GuildPayload}
-                                            setConnection={setConnection}
-                                        />
-                                    </motion.div>
-                                ) : null)
-                            )}
+                                ) : null
+                            ))}
                         </div>
                     </div>
                 ) : (
