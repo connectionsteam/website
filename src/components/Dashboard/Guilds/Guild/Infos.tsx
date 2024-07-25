@@ -22,6 +22,12 @@ export default function Infos({ guild, setGuild, threads, setThreads, premium, s
     const l = useLanguage();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [showConfetti, setShowConfetti] = useState(false);
+    
+    const premiums = {
+        0: "None",
+        1: "Premium",
+        2: "VIP",
+    }
 
     return (
         <>
@@ -72,6 +78,22 @@ export default function Infos({ guild, setGuild, threads, setThreads, premium, s
                             />
                         </div>
                     </div>
+                    {guild.premium && (
+                        <div className="flex gap-2 flex-col">
+                            <div className="flex gap-1">
+                                <span className="font-bold">Premium</span>
+                                <div className="bg-gradient-to-r from-yellow-500 to-amber-400
+                                bg-clip-text text-transparent font-bold text-lg">
+                                    {premiums[guild.premium.type]}
+                                </div>
+                            </div>
+                            <span className="font-bold">
+                                {l.dashboard.guilds.info.premiumexpires
+                                    .replace("{date}", new Date(guild.premium.expiresAt)
+                                        .toLocaleDateString(l.language))}
+                            </span>
+                        </div>
+                    )}
                     <div className="w-full flex tablet:flex-col gap-4">
                         <GuildMods
                             premium={premium}
@@ -99,6 +121,7 @@ export default function Infos({ guild, setGuild, threads, setThreads, premium, s
                         </ModalHeader>
                         <ModalBody>
                             <ActivePremium
+                                premiums={premiums}
                                 setGuild={setGuild}
                                 setGuildPremium={setPremium}
                                 guild={guild}

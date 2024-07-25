@@ -14,20 +14,16 @@ interface Props {
     setShowConfetti: (value: boolean) => void;
     setGuildPremium: (value: Premium) => void;
     setGuild: (guild: GuildPayload) => void;
+    premiums: Record<PremiumType, string>;
 }
 
-export default function ActivePremium({ guild, setShowConfetti, setGuildPremium, setGuild }: Props) {
+export default function ActivePremium({ guild, setShowConfetti, setGuildPremium, setGuild, premiums }: Props) {
     const [code, setCode] = useState("");
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     const [premium, setPremium] = useState(1);
     const l = useLanguage();
-
-    const premiums = {
-        1: "Premium",
-        2: "VIP",
-    }
 
     const advantages = {
         1: l.plans.basicpremium.features,

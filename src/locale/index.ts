@@ -58,6 +58,7 @@ export const languages = {
                 info: {
                     title: "Informações",
                     description: "Aqui ficará as informações do servidor",
+                    premiumexpires: "Expira em {date}",
                 },
                 guild: {
                     title: "Servidor",
@@ -348,6 +349,8 @@ export const languages = {
                 info: {
                     title: "Informations",
                     description: "Here will be the informations of the guild",
+                    premiumexpires: "Expires on {date}",
+                    
                 },
                 guild: {
                     title: "Server",
