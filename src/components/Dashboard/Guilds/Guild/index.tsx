@@ -11,7 +11,7 @@ import Channels from "./Channels";
 import Cases from "./Cases";
 import { languages } from "@/locale";
 import usePremium from "@/hooks/usePremium";
-import { ConnectedConnectionPayload, GuildChannelsPayload, GuildPayload, GuildTab, GuildThreadsPayload, Language, TabState } from "@/types";
+import { GuildChannelsPayload, GuildPayload, GuildTab, GuildThreadsPayload, Language, TabState } from "@/types";
 import Connections from "./Connecions";
 
 export function useLanguage() {
@@ -168,7 +168,7 @@ export default function GuildComponent() {
         <DefaultLayout>
             <ProtectedRoute loading={<GuildSkeleton />}>
                 {guild ? (
-                    <div className="flex flex-col gap-4 w-full">
+                    <div className="flex flex-col gap-4 w-full overflow-x-hidden">
                         <div className="flex mb-1 bg-neutral-800 rounded-lg 
                         p-1 overflow-x-auto relative">
                             {tab.tabs.map((t) => (
@@ -202,7 +202,7 @@ export default function GuildComponent() {
                                 </>
                             ))}
                         </div>
-                        <div>
+                        <div className="overflow-x-hidden">
                             {tab.tabs.map((t) => (
                                 tab.selected === t.value ? (
                                     <motion.div

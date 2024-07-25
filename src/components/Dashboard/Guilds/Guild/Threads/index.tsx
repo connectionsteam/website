@@ -24,7 +24,11 @@ export default function Threads({ threads, setThreads, guild, premium }: Props) 
             <div className="flex flex-col gap-1">
                 <div className="flex gap-2 items-end">
                     <h1 className="font-semibold text-xl">Threads</h1>
-                    <span className="text-neutral-300">{threads.length}/{premium.maxThreads}</span>
+                    <div className="text-neutral-300">{threads.length}/
+                        <span className={guild.premium ? "text-yellow-500 font-bold" : ""}>
+                            {premium.maxThreads}
+                        </span>
+                    </div>
                 </div>
                 <span className="text-neutral-300 max-w-96 tablet:max-w-full">
                     {l.dashboard.guilds.threads.description}
@@ -66,7 +70,7 @@ function Thread({ thread, setThreads, threads, guild }: ThreadProps) {
     const handleRemoveThread = async () => {
         setMenu({ ...menu, removing: thread.id });
 
-        await api.get(`/guilds/${guild.id}/threads/${thread.id}`);
+        await api.delete(`/guilds/${guild.id}/threads/${thread.id}`);
 
         const filtredThreads = threads.filter((thread) => thread.id !== thread.id);
 

@@ -43,9 +43,12 @@ export default function Connections({ guild, setGuild, channels, premium }: Prop
             <div className="flex flex-col">
                 <div className="flex gap-1 items-end">
                     <h1 className="font-semibold text-xl">{l.dashboard.connections.title}</h1>
-                    <span className="text-neutral-300">
-                        {guild.connections.length}/{premium.maxConnections}
-                    </span>
+                    <div className="text-neutral-300">
+                        {guild.connections.length}/
+                        <span className={guild.premium ? "text-yellow-500 font-bold" : ""}>
+                            {premium.maxConnections}
+                        </span>
+                    </div>
                 </div>
                 <span className="text-neutral-300">{l.dashboard.connections.description}</span>
             </div>
