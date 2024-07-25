@@ -15,21 +15,21 @@ export default function DashboardPage() {
     const [connections, setConnections] = useState<ConnectionPayload[] | null>(null);
     const [guilds, setGuilds] = useState<GuildPayload[] | null>(null);
 
+    const fetchGuilds = async () => {
+        const { data } = await api.get("/users/@me/guilds");
+
+        setGuilds(data);
+    };
+
     useEffect(() => {
         const fetchConnections = async () => {
-            const res = await api.get("/users/@me/connections");
+            const { data } = await api.get("/users/@me/connections");
 
-            setConnections(res.data);
+            setConnections(data);
         };
 
-        const fetchGuilds = async () => {
-            const response = await api.get("/users/@me/guilds");
-
-            setGuilds(response.data);
-        };
-
-        fetchGuilds();
-        fetchConnections();
+        
+        Promise.all([fetchGuilds(), fetchConnections()]);
     }, []);
 
     return (
@@ -41,11 +41,25 @@ export default function DashboardPage() {
                         tabList: "bg-neutral-800",
                         base: "pl-3"
                     }} aria-label="Options">
-                        <Tab className="flex items-start w-full" key="connections" title={languages[language].dashboard.connections.title}>
-                            <ConnectionsComponent connections={connections} setConnections={setConnections} />
+                        <Tab
+                            className="flex items-start w-full"
+                            key="connections"
+                            title={languages[language].dashboard.connections.title}
+                        >
+                            <ConnectionsComponent
+                                connections={connections}
+                                setConnections={setConnections}
+                            />
                         </Tab>
-                        <Tab className="flex items-start w-full" key="guilds" title={languages[language].dashboard.guilds.title}>
-                            <GuildsComponent guilds={guilds} />
+                        <Tab
+                            className="flex items-start w-full"
+                            key="guilds"
+                            title={languages[language].dashboard.guilds.title}
+                        >
+                            <GuildsComponent
+                                fetchGuilds={fetchGuilds}
+                                guilds={guilds}
+                            />
                         </Tab>
                     </Tabs>
                 </div>
