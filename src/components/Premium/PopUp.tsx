@@ -2,6 +2,7 @@ import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, UseDisclosure
 import DefaultPremiumButton from "../Mixed/DefaultPremiumButton";
 import Sonner from "../Mixed/Sonner";
 import { useEffect, useState } from "react";
+import { useLanguage } from "@/hooks/useLanguage";
 
 interface Props extends UseDisclosureProps {
     text: string;
@@ -12,6 +13,7 @@ interface Props extends UseDisclosureProps {
 
 export default function PremiumPopUp({ isOpen, onChange, text, limit, limitText, sonner }: Props) {
     const [active, setActive] = useState(false);
+    const l = useLanguage();
 
     useEffect(() => {
         if (sonner) {
@@ -29,7 +31,7 @@ export default function PremiumPopUp({ isOpen, onChange, text, limit, limitText,
         }} isOpen={isOpen} onOpenChange={onChange} >
             <ModalContent className="bg-neutral-800 text-white">
                 <ModalHeader className="flex flex-col gap-1 bg-neutral-800">
-                    Comprar Premium
+                    {l.plans.popUp.title}
                 </ModalHeader>
                 <ModalBody className="flex gap-2">
                     <div>{text}</div>

@@ -99,14 +99,14 @@ export default function ActivePremium({ guild, setShowConfetti, setGuildPremium,
                     minChars={0}
                     onChange={handleChangeCode}
                     value={code}
-                    label="Código de ativação"
+                    label={l.plans.popUp.code}
                     type="text"
-                    placeholder="Digite aqui o código de ativação"
+                    placeholder={l.plans.popUp.placeholder}
                 />
                 {errors.api && <div className="text-red-500">{errors.api}</div>}
                 <DefaultPremiumButton
                     onClick={handleSubmit}
-                    text="Ativar Premium"
+                    text={l.plans.popUp.activate}
                     loading={loading}
                     disabled={loading}
                 />
@@ -118,7 +118,7 @@ export default function ActivePremium({ guild, setShowConfetti, setGuildPremium,
             }} size="xl" isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent className="p-0.5 bg-neutral-800 text-white bg-gradient-to-r from-yellow-500 to-amber-500 rounded-lg w-full">
                     <ModalHeader className="flex flex-col gap-1 bg-neutral-800 rounded-lg rounded-b-none pb-0">
-                        Ativação de premium
+                        {l.plans.popUp.premiumActivate}
                     </ModalHeader>
                     <ModalBody className="flex flexl-col items-center justify-center gap-2 rounded-lg rounded-t-none bg-neutral-800 p-6">
                         <HiSparkles className="text-yellow-500 text-6xl" />
@@ -126,9 +126,9 @@ export default function ActivePremium({ guild, setShowConfetti, setGuildPremium,
                             <span className="bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-transparent text-3xl font-bold">
                                 {premiums[premium as keyof typeof premiums]}
                             </span>
-                            <span className="text-2xl">foi ativado em seu servidor com sucesso!</span>
+                            <span className="text-2xl">{l.plans.popUp.success}</span>
                             <div className="flex flex-col gap-2 w-full items-start">
-                                <span className="font-bold text-lg">Vantagens obtidas</span>
+                                <span className="font-bold text-lg">{l.plans.popUp.advantages}</span>
                                 {advantages[premium as keyof typeof advantages].map((feature, index) => (
                                     <motion.div
                                         initial={{ x: -30, opacity: 0 }}

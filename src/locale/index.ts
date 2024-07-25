@@ -239,6 +239,15 @@ export const languages = {
                     "Até 5 servidores premium"
                 ]
             },
+            popUp: {
+                title: "Comprar Premium",
+                code: "Código de ativação",
+                placeholder: "Digite aqui o código de ativação",
+                activate: "Ativar Premium",
+                premiumActivate: "Ativação de Premium",
+                success: "Foi ativado em seu servidor com sucesso!",
+                advantages: "Vantagens obtidas"
+            },
             buy: "Comprar",
             month: "mês",
             seeplans: "Ver planos",
@@ -519,6 +528,15 @@ export const languages = {
                     "Own bot and customizable!",
                     "Max 5 servers in the bot"
                 ]
+            },
+            popUp: {
+                title: "Buy Premium",
+                code: "Activation code",
+                placeholder: "Type here the activation code",
+                activate: "Activate Premium",
+                premiumActivate: "Premium activation",
+                success: "Was activated on your server successfully!",
+                advantages: "Advantages obtained"
             },
             buy: "Buy",
             month: "month",

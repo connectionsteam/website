@@ -68,7 +68,7 @@ export default function Infos({ guild, setGuild, threads, setThreads, premium, s
                             <DefaultPremiumButton
                                 onClick={onOpen}
                                 className="px-6"
-                                text="Ativar Premium"
+                                text={l.plans.popUp.activate}
                             />
                         </div>
                     </div>
@@ -95,7 +95,7 @@ export default function Infos({ guild, setGuild, threads, setThreads, premium, s
                 }} isOpen={isOpen} onOpenChange={onOpenChange}>
                     <ModalContent className="bg-neutral-800 text-white">
                         <ModalHeader className="flex flex-col gap-1 bg-neutral-800">
-                            Ativar premium
+                            {l.plans.popUp.activate}
                         </ModalHeader>
                         <ModalBody>
                             <ActivePremium
