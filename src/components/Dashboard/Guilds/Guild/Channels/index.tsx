@@ -44,7 +44,7 @@ export default function Channels({ channels, guild, setGuild }: Props) {
 
         if (!connection) return;
 
-        if (connection.flags.includes(ConnectedConnectionFlags.Locked)) return;
+        if (connection.flags.includes(ConnectedConnectionFlags.Frozen)) return;
 
         const flags = connection.flags.includes(ConnectedConnectionFlags.Locked)
             ? connection.flags.filter((flag) => flag !== ConnectedConnectionFlags.Locked)
