@@ -1,4 +1,5 @@
 import GuildEditConnection from "@/components/Dashboard/Guilds/Connection";
+import ConnectionGuildPageSkeleton from "@/components/Dashboard/Guilds/Connection/Skeleton";
 import DefaultLayout from "@/components/Mixed/Layout";
 import { ConnectedConnectionPayload, GuildChannelsPayload } from "@/types";
 import { api } from "@/utils/api";
@@ -38,5 +39,5 @@ export default function GuildConnection() {
                 setConnection={setConnection as Dispatch<SetStateAction<ConnectedConnectionPayload>>}
             />
         </DefaultLayout>
-    ) : null;
+    ) : <ConnectionGuildPageSkeleton />;
 }
