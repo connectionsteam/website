@@ -69,7 +69,7 @@ export default function DeskModsFilters({ filters, setFilters, guild }: Props) {
                                     onClick={() => setFilters({ ...filters, type: null })}
                                 >
                                     <GoArrowBoth size={18} />
-                                    Ambos
+                                    {l.dashboard.guilds.cases.filters.ambos}
                                 </button>
                                 <motion.div
                                     animate={{
