@@ -44,6 +44,8 @@ export default function Channels({ channels, guild, setGuild }: Props) {
 
         if (!connection) return;
 
+        if (connection.flags.includes(ConnectedConnectionFlags.Locked)) return;
+
         const flags = connection.flags.includes(ConnectedConnectionFlags.Locked)
             ? connection.flags.filter((flag) => flag !== ConnectedConnectionFlags.Locked)
             : [...connection.flags, ConnectedConnectionFlags.Locked];
@@ -52,7 +54,8 @@ export default function Channels({ channels, guild, setGuild }: Props) {
 
         setGuild({
             ...guild,
-            connections: guild.connections.map((connection) => connection.name === connectionName ? { ...connection, flags } : connection)
+            connections: guild.connections.map((connection) => connection.name === connectionName
+                ? { ...connection, flags } : connection)
         });
     };
 
@@ -71,22 +74,35 @@ export default function Channels({ channels, guild, setGuild }: Props) {
                             {channels.find((channel) => channel.id === categoryId)?.name || ""}
                         </div>
                         {categoryChannels.map((channel) => {
-                            const connection = guild.connections.find((connection) => connection.channelId === channel.id);
+                            const connection = guild.connections
+                                .find((connection) => connection.channelId === channel.id);
 
                             return connection ? (
                                 <div
                                     onClick={() => handleToggleLocked(connection.name)}
                                     key={channel.id}
-                                    className="hover:bg-neutral-900/50 transition flex gap-2 items-center w-full rounded-lg"
+                                    className="hover:bg-neutral-900/50 transition flex gap-2 
+                                    items-center w-full rounded-lg"
                                 >
-                                    <div className="p-3 flex gap-2 flex-grow w-full items-center justify-start">
+                                    <div className="p-3 flex gap-2 flex-grow w-full items-center 
+                                    justify-start">
                                         <HiHashtag />
-                                        <span>{channel.name} - <strong>{connection.name}</strong></span>
+                                        <span>
+                                            {channel.name} - <strong>{connection.name}</strong>
+                                        </span>
                                     </div>
-                                    <div className="flex gap-2 items-center pr-3">
+                                    <div className="flex gap-2 items-center pr-3 relative">
+                                        {connection.flags
+                                            .includes(ConnectedConnectionFlags.Frozen) && (
+                                                <div className="absolute top-0 left-0 w-[34px] h-full 
+                                                    bg-gradient-to-tr from-cyan-300 via-sky-200 to-sky-500 rounded-lg z-50">
+                                                </div>
+                                            )}
                                         <div
-                                            className={`transition text-black rounded-lg flex gap-2 p-1 items-center w-full
-                                                ${connection.flags.includes(ConnectedConnectionFlags.Locked)
+                                            className={`transition text-black rounded-lg flex 
+                                                gap-2 p-1 items-center w-full
+                                                ${connection.flags
+                                                    .includes(ConnectedConnectionFlags.Locked)
                                                     ? "bg-red-500"
                                                     : "bg-green-500"}
                                                 `}
