@@ -279,6 +279,7 @@ export const languages = {
             tags: ["Gamer", "Bate-papo", "Comunidade", "Variado", "Minecraft"],
             noConnections: "Ops... Parece que não encontramos nenhuma conexão",
             filters: {
+                save: "Salvar",
                 title: "Filtros",
                 sort: "Ordenar por",
                 tag: "Tag",
@@ -571,6 +572,7 @@ export const languages = {
             tags: ["Gamer", "Chat", "Community", "Varied", "Minecraft"],
             noConnections: "Ops... It seems that we don't have any connections",
             filters: {
+                save: "Save",
                 title: "Filters",
                 sort: "Sort by",
                 tag: "Tag",
