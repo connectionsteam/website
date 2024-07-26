@@ -4,29 +4,40 @@ import { HiHashtag } from "react-icons/hi";
 import { LuCalendar } from "react-icons/lu";
 import { MdOutlineKeyboardArrowUp } from "react-icons/md";
 import { motion } from "framer-motion";
+import { ConnectionsPageFilters } from "@/types";
+import { BiSearch } from "react-icons/bi";
 
 interface Props {
-    filters: {
-        tag: string;
-        sort: string;
-        query: string;
-    };
-    setFilters: (filters: {
-        tag: string;
-        sort: string;
-        query: string;
-    }) => void;
+    filters: ConnectionsPageFilters
+    setFilters: (filters: ConnectionsPageFilters) => void;
+    setSubmited: (submited: boolean) => void;
+    closeForm: () => void;
 }
 
-export default function Filters({ filters, setFilters }: Props) {
+export default function Filters({ filters, setFilters, setSubmited, closeForm }: Props) {
     const l = useLanguage();
 
+    const handleChangeSort = (filtersort: string) => {
+        const { sort } = filters;
+
+        if (filtersort === sort) return;
+
+        setFilters({ ...filters, sort: filtersort });
+        closeForm();
+        setSubmited(true);
+    };
+
     const handleResetFilters = () => {
+        if (Object.values(filters).filter(value => value !== "").length <= 1) return;
+
         setFilters({
             tag: "",
             sort: "",
             query: "",
+            search: false
         });
+
+        setSubmited(true);
     }
 
     return (
@@ -35,7 +46,6 @@ export default function Filters({ filters, setFilters }: Props) {
                 <div className="flex flex-col gap-1 font-bold text-lg flex-grow">
                     {l.connection.filters.title}
                 </div>
-                <button className="text-blue-500"></button>
             </ModalHeader>
             <ModalBody className="flex gap-2">
                 <div className="flex flex-col gap-2 text-start bg-neutral-900/50 w-full rounded-lg py-2">
@@ -47,7 +57,7 @@ export default function Filters({ filters, setFilters }: Props) {
                             <button
                                 className="w-full rounded-lg transition p-2 text-start flex
                             items-center gap-2 z-20"
-                                onClick={() => setFilters({ ...filters, sort: "" })}
+                                onClick={() => handleChangeSort("")}
                             >
                                 <MdOutlineKeyboardArrowUp />
                                 {l.connection.filters.votes}
@@ -55,7 +65,7 @@ export default function Filters({ filters, setFilters }: Props) {
                             <button
                                 className="w-full rounded-lg transition p-2 text-start items-center gap-2
                             flex z-20"
-                                onClick={() => setFilters({ ...filters, sort: "new" })}
+                                onClick={() => handleChangeSort("new")}
                             >
                                 <LuCalendar />
                                 {l.connection.filters.creationDate}
@@ -78,20 +88,38 @@ export default function Filters({ filters, setFilters }: Props) {
                     </div>
                     <div className="flex flex-col gap-2">
                         <div className="font-semibold">Tag</div>
-                        <div className="flex gap-2 p-2 items-center bg-neutral-800 rounded-lg">
-                            <HiHashtag className="fill-fuchsia-500" size={20} />
-                            <input
-                                className="outline-none w-full bg-neutral-900/50 rounded-lg p-2"
-                                value={filters.tag}
-                                onChange={(e) => setFilters({ ...filters, tag: e.target.value })}
-                                placeholder={l.connection.filters.typehere}
-                                type="text"
-                            />
+                        <div className="flex gap-2 p-0.5 items-center bg-neutral-800 rounded-lg">
+                            <div className="flex gap-1 items-center h-full">
+                                <div className="flex items-center rounded-lg bg-neutral-700/50 m-2 mr-0 px-1">
+                                    <HiHashtag className="fill-fuchsia-500" size={20} />
+                                    <input
+                                        className="outline-none w-full rounded-lg p-2 bg-transparent"
+                                        value={filters.tag}
+                                        onChange={(e) => setFilters({ ...filters, tag: e.target.value })}
+                                        placeholder={l.connection.filters.typehere}
+                                        type="text"
+                                    />
+                                </div>
+                                <button
+                                    onClick={() => {
+                                        if (filters.tag === "") return;
+
+                                        closeForm();
+                                        setSubmited(true);
+                                    }}
+                                    className="flex items-center h-full p-2 justify-center pl-0"
+                                >
+                                    <div className="bg-neutral-700/50 h-full rounded-lg text-center 
+                                    items-center flex justify-center p-3 transition hover:bg-neutral-700/100">
+                                        <BiSearch />
+                                    </div>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </ModalBody>
-            <ModalFooter className="flex w-full justify-end gap-2">
+            <ModalFooter className="flex w-full gap-2 justify-start">
                 <button
                     onClick={handleResetFilters}
                     className="flex gap-2 items-center 
