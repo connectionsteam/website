@@ -11,12 +11,11 @@ import { useLanguage } from "@/hooks/useLanguage";
 interface Props {
     connection: ConnectionsPageStructure;
     index: number;
-    query: string;
     layout: string;
     connections: ConnectionsPageStructure[];
 }
 
-const ConnectionsPageCard = forwardRef<HTMLDivElement, Props>(({ connection, index, query, layout, connections = []}, ref) => {
+const ConnectionsPageCard = forwardRef<HTMLDivElement, Props>(({ connection, index, layout, connections = []}, ref) => {
     const l = useLanguage();
 
     const animation = connections.length < 16
@@ -27,8 +26,6 @@ const ConnectionsPageCard = forwardRef<HTMLDivElement, Props>(({ connection, ind
               transition: { delay: 0.09 * index, duration: 0.09 },
           }
         : {};
-
-    if (query.toLowerCase() === connection.name.toLowerCase()) return null;
 
     return (
         <motion.div
@@ -82,7 +79,9 @@ const ConnectionsPageCard = forwardRef<HTMLDivElement, Props>(({ connection, ind
                         </div>
                     </div>
                 </div>
-                <div className="flex gap-2 mobile:w-full">
+                <div className={`flex gap-2 mobile:w-full
+                    ${layout === "grid" ? "flex-col" : ""}
+                `}>
                     <div>
                         <DefaultButton className="p-2 bg-neutral-700 rounded-lg transition w-full flex items-center">
                             <MdOutlineKeyboardArrowUp size={20} />
