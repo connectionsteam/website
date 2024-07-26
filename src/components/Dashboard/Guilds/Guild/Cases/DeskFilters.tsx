@@ -211,7 +211,7 @@ export default function DeskModsFilters({ filters, setFilters, guild }: Props) {
                     </div>
                 </div>
             </div>
-            <div className="flex w-full justify-end gap-2">
+            <div className="flex w-full gap-2">
                 <button
                     onClick={handleResetFilters}
                     className="flex gap-2 items-center 
