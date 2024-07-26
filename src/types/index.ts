@@ -386,3 +386,10 @@ export interface ModsFiltersStructure {
     type: null | number,
     connection: null | string
 }
+
+export interface ConnectionsPageFilters {
+    tag: string;
+    sort: string;
+    query: string;
+    search: boolean;
+}
