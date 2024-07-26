@@ -10,11 +10,23 @@ interface Props {
     textArea?: boolean;
     maxChars?: number;
     minChars?: number;
+    onClick?: () => void;
 }
 
-export default function DefaultInput({ label, type, placeholder, onChange, obrigatory, value, textArea, maxChars, minChars }: Props) {
+export default function DefaultInput({
+    label,
+    type,
+    placeholder,
+    onChange,
+    obrigatory,
+    value,
+    textArea,
+    maxChars,
+    minChars,
+    onClick
+}: Props) {
     return (
-        <div className="flex flex-col gap-2 w-full">
+        <div onClick={onClick} className="flex flex-col gap-2 w-full">
             {label || obrigatory && (
                 <label className="text-neutral-300 flex gap-1">
                     {label && <div>{label}</div>}

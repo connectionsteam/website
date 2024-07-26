@@ -42,16 +42,14 @@ export default function Cases({ guild }: Props) {
 
     useEffect(() => {
         const fetchCases = async () => {
-            const queryParams = new URLSearchParams();
+            const query = new URLSearchParams();
 
-            if (filters.mod_id !== null) queryParams.append("moderator_id", filters.mod_id);
-            if (filters.target_id !== null) queryParams.append("target_id", filters.target_id);
-            if (filters.type !== null) queryParams.append("type", filters.type.toString());
-            if (filters.connection !== null) queryParams.append("connection", filters.connection);
+            if (filters.mod_id !== null) query.append("moderator_id", filters.mod_id);
+            if (filters.target_id !== null) query.append("target_id", filters.target_id);
+            if (filters.type !== null) query.append("type", filters.type.toString());
+            if (filters.connection !== null) query.append("connection", filters.connection);
 
-            const queryString = queryParams.toString();
-
-            const { data } = await api.get(`/guilds/${guild.id}/cases?${queryString}`);
+            const { data } = await api.get(`/guilds/${guild.id}/cases?${query.toString()}`);
 
             setGuildCases(data);
         };
