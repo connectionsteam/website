@@ -24,7 +24,7 @@ export default function Plans({ plans, setMorePlans }: { plans: PlanStructure[],
                     </div>
                     <h1 className="text-6xl p-2 font-bold bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-500 to-indigo-500">Premium</h1>
                 </div>
-                <TextGenerateEffect className="text-center flex items-center text-lg text-neutral-300" words="Acesse o melhor nível do Connections. Use premium." />
+                <TextGenerateEffect className="text-center flex items-center text-lg text-neutral-300" words={l.plans.pageDescription} />
             </div>
             <div className="gap-4 w-full flex justify-center mt-6 mb-10 flex-wrap">
                 {plans.map((plan, index) => {

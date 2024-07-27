@@ -223,6 +223,7 @@ export const languages = {
             }
         },
         plans: {
+            pageDescription: "Acesse o melhor nível do Connections. Use premium.",
             basicpremium: {
                 features: [
                     "+ Threads",
@@ -516,6 +517,7 @@ export const languages = {
             },
         },
         plans: {
+            pageDescription: "Access the best level of Connections. Use premium.",
             basicpremium: {
                 features: [
                     "+ Threads",
