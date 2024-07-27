@@ -137,14 +137,17 @@ export default function ConnectionsPageComponent() {
                 <div className="w-full flex items-center justify-center gap-2 h-full">
                     <div className="flex gap-1 overflow-x-auto flex-grow">
                         {l.connection.tags.map((tag, index) => (
-                            <Link
-                                href={`/connections/search?tag=${tag}`}
+                            <button
+                                onClick={() => {
+                                    setFilters({ ...filters, tag });
+                                    setSubmited(true);
+                                }}
                                 key={index}
                                 className="p-1 px-2 flex gap-2 items-center bg-neutral-800 rounded-lg"
                             >
                                 <RiHashtag fill="#d946ef" />
                                 <span className="whitespace-nowrap">{tag}</span>
-                            </Link>
+                            </button>
                         ))}
                     </div>
                     <div className="p-1 flex gap-2 items-center bg-neutral-800 rounded-lg relative h-full mobile:hidden">

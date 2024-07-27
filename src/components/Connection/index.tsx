@@ -122,7 +122,12 @@ export default function ConnectionPageComponent() {
                             className="w-full h-full flex"
                             href={`/connection/${connection.name}`} key={index}
                         >
-                            <ConnectionsPageCard connection={connection} index={index} query={""} />
+                            <ConnectionsPageCard
+                                layout=""
+                                connections={[]}
+                                connection={connection}
+                                index={index}
+                            />
                         </Link>
                     ))}
                 </div>
