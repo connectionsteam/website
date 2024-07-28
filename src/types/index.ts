@@ -306,6 +306,7 @@ export interface TabsStructure {
 export interface ConnectionBody {
     channel: GuildChannelsPayload;
     name: string;
+    hashInvite?: string;
     language?: {
         language: Languages | "";
         key: keyof typeof Languages | "";
