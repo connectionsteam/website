@@ -109,9 +109,9 @@ export default function ConnectionPageComponent() {
                         </button>
                     ))}
                 </div>
-                <span className="text-sm text-neutral-300">
-                    {l.dashboard.guilds.threads.thread.created}
-                    {new Date(connection.createdTimestamp).toLocaleString()}
+                <span className="text-sm text-neutral-300 flex gap-1">
+                    <span>{l.dashboard.guilds.threads.thread.created}</span>
+                    {new Date(connection.createdTimestamp).toLocaleString(l.language)}
                 </span>
             </div>
             <div className="flex flex-col gap-4 w-full">

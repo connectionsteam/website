@@ -28,11 +28,11 @@ export default function JoinConnectionLanguage({ setBody, body }: Props) {
     return (
         <div className="flex flex-col gap-2 w-full">
             <div className="text-neutral-300 flex gap-1">
-                <div>Linguagem da conexão</div>
+                <div>{l.dashboard.guilds.connections.languageTitle}</div>
             </div>
             <button onClick={onOpen} className="p-3 bg-neutral-900/50 transition rounded-lg text-start w-full">
                 {(body.language?.key === "" && body.language?.language === "")
-                    ? "Clique aqui e selecione uma linguagem" :
+                    ? l.dashboard.guilds.connections.languageclick :
                     <div className="w-full flex gap-2 items-center">
                         <span>{body.language?.language}</span>
                     </div>
