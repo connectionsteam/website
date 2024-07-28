@@ -37,6 +37,7 @@ export interface GuildPayload {
     name: string;
     icon: string;
     premium?: PremiumPayload;
+    prefix?: string;
     id: string;
     connections: ConnectedConnectionPayload[];
     cases: AnyCase[];

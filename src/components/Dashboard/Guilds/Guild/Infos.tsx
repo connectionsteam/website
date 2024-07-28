@@ -8,6 +8,9 @@ import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nex
 import ActivePremium from "./ActivePremium";
 import { useState } from "react";
 import Confetti from "react-confetti";
+import { api } from "@/utils/api";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { FaCheckCircle } from "react-icons/fa";
 
 interface Props {
     guild: GuildPayload;
@@ -22,7 +25,27 @@ export default function Infos({ guild, setGuild, threads, setThreads, premium, s
     const l = useLanguage();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [showConfetti, setShowConfetti] = useState(false);
-    
+    const [prefix, setPrefix] = useState(guild.prefix);
+    const [loading, setLoading] = useState({ loading: false, check: false });
+
+    const patchPrefix = (prefix: string | undefined) => async () => {
+        if (!prefix) return;
+        if (guild.prefix === prefix) return;
+        if (prefix === "") return;
+
+        setLoading({ loading: true, check: false });
+
+        await api.patch(`/guilds/${guild.id}`, { prefix });
+
+        setGuild({ ...guild, prefix });
+
+        setLoading({ loading: false, check: true });
+
+        setTimeout(() => {
+            setLoading({ ...loading, check: false });
+        }, 2000);
+    };
+
     const premiums = {
         0: "None",
         1: "Premium",
@@ -76,6 +99,28 @@ export default function Infos({ guild, setGuild, threads, setThreads, premium, s
                                 className="px-6"
                                 text={l.plans.popUp.activate}
                             />
+                        </div>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                        <div className="flex flex-col">
+                            <span className="font-bold text-lg">{l.dashboard.guilds.info.prefix}</span>
+                            <span>{l.dashboard.guilds.info.prefixdescription}</span>
+                        </div>
+                        <div className="flex gap-1">
+                            <input
+                                className="rounded-lg p-2 max-w-32 outline-none bg-neutral-900/50"
+                                value={prefix !== undefined ? prefix : "c"}
+                                onChange={(e) => setPrefix(e.target.value)}
+                            />
+                            <button
+                                className="p-3 bg-neutral-900/50 transition hover:bg-neutral-900
+                                rounded-lg justify-center flex gap-2 items-center px-4"
+                                onClick={patchPrefix(prefix)}
+                            >
+                                <span>{l.dashboard.guilds.info.save}</span>
+                                {loading.loading && <AiOutlineLoading3Quarters className="animate-spin" size={18} />}
+                                {loading.check && <FaCheckCircle className="text-green-500" size={18} />}
+                            </button>
                         </div>
                     </div>
                     {guild.premium && (

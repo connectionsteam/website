@@ -56,6 +56,9 @@ export const languages = {
                 description: "Selecione o servidor que deseja gerenciar",
                 addServer: "Adicionar servidor",
                 info: {
+                    prefix: "Prefixo",
+                    prefixdescription: "Digite abaixo o prefixo que deseja usar para executar os comandos do Connections",
+                    save: "Salvar",
                     title: "Informações",
                     description: "Aqui ficará as informações do servidor",
                     premiumexpires: "Expira em {date}",
@@ -125,6 +128,8 @@ export const languages = {
                     connect: "Conectar",
                     language: "Linguagem desejada",
                     searchForLanguage: "Procure por uma linguagem",
+                    languageTitle: "Linguagem",
+                    languageclick: "Clique aqui para selecionar a linguagem",
                 },
                 mods: {
                     title: "Moderadores",
@@ -349,6 +354,9 @@ export const languages = {
                 description: "Select the server you want to manage",
                 addServer: "Add server",
                 info: {
+                    prefix: "Prefix",
+                    prefixdescription: "Type below the prefix you want to use to run the Connections commands",
+                    save: "Save",
                     title: "Informations",
                     description: "Here will be the informations of the guild",
                     premiumexpires: "Expires on {date}",
@@ -419,6 +427,8 @@ export const languages = {
                     connect: "Connect",
                     language: "Language desired",
                     searchForLanguage: "Search for a language",
+                    languageTitle: "Language",
+                    languageclick: "Click here to select the language",
                 },
                 mods: {
                     title: "Guild moderators",
