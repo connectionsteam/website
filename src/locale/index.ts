@@ -51,6 +51,14 @@ export const languages = {
             }
         },
         dashboard: {
+            joinPrivateConnection: {
+                title: "Entrar em uma conexão privada",
+                description: "Você pode entrar em uma conexão privada usando o código abaixo",
+                button: "Entrar",
+                modal: {
+                    title: "Entrar em uma conexão privada",
+                }
+            },
             guilds: {
                 title: "Servidores",
                 description: "Selecione o servidor que deseja gerenciar",
@@ -130,6 +138,10 @@ export const languages = {
                     searchForLanguage: "Procure por uma linguagem",
                     languageTitle: "Linguagem",
                     languageclick: "Clique aqui para selecionar a linguagem",
+                    hashLabel: "Código de hash",
+                    hashPlaceholder: "Digite o código de hash",
+                    public: "Pública",
+                    private: "Privada",
                 },
                 mods: {
                     title: "Moderadores",
@@ -349,6 +361,14 @@ export const languages = {
             }
         },
         dashboard: {
+            joinPrivateConnection: {
+                title: "Join a private connection",
+                description: "You can join a private connection by using the code below",
+                button: "Join",
+                modal: {
+                    title: "Join a private connection",
+                }
+            },
             guilds: {
                 title: "Servers",
                 description: "Select the server you want to manage",
@@ -429,6 +449,10 @@ export const languages = {
                     searchForLanguage: "Search for a language",
                     languageTitle: "Language",
                     languageclick: "Click here to select the language",
+                    hashLabel: "Hash code",
+                    hashPlaceholder: "Enter the hash code",
+                    public: "Public",
+                    private: "Private",
                 },
                 mods: {
                     title: "Guild moderators",

@@ -1,6 +1,6 @@
-"use client"
+"use client";
 import DefaultInput from "@/components/Mixed/Input";
-import { ConnectionBody, GuildChannelsPayload, GuildPayload, Premium } from "@/types";
+import { ConnectionBody, GuildChannelsPayload, GuildPayload, Language, Premium } from "@/types";
 import { api } from "@/utils/api";
 import { useState, useEffect } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
@@ -9,6 +9,7 @@ import JoinConnectionLanguage from "./Languages";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useDisclosure } from "@nextui-org/modal";
 import PremiumPopUp from "@/components/Premium/PopUp";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface Props {
     guild: GuildPayload;
@@ -38,6 +39,7 @@ export default function GuildConnectConnection({ guild, channels, onClose, setGu
     const [loading, setLoading] = useState(false);
     const [sonner, setSonner] = useState(false);
     const { isOpen: isPremiumOpen, onOpen: onPremiumOpen, onOpenChange: onPremiumChange, onClose: onPremiumClose } = useDisclosure();
+    const [tab, setTab] = useState<"public" | "private">("public");
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
@@ -74,16 +76,18 @@ export default function GuildConnectConnection({ guild, channels, onClose, setGu
                 delete reqBody.language;
             }
 
-            const req = await api.put(`/guilds/${guild.id}/connections`, reqBody);
+            const { data } = await api.put(body.hashInvite
+                ? ` /guilds/${guild.id}/connections/${body.name}/invites/${body.hashInvite}`
+                : `/guilds/${guild.id}/connections`, reqBody);
 
             setLoading(false);
             onClose();
             setGuild({
                 ...guild,
                 connections: [
-                    ...guild.connections.filter(c => c.name !== req.data.name),
+                    ...guild.connections.filter(c => c.name !== data.name),
                     {
-                        ...req.data,
+                        ...data,
                     }
                 ]
             });
@@ -110,6 +114,41 @@ export default function GuildConnectConnection({ guild, channels, onClose, setGu
 
     return (
         <div className="flex w-full flex-col gap-4">
+            <div className="relative w-full flex transition">
+                {["public", "private"].map((name: string, index) => (
+                    <>
+                        <button
+                            key={index}
+                            onClick={() => setTab(name as "public" | "private")}
+                            className="text-white px-4 rounded-lg py-2 
+                        cursor-pointer transition-colors duration-300 
+                        gap-2 flex z-20 items-center justify-center w-[50%]"
+                        >
+                            <span>
+                                {index === 0
+                                    ? l.dashboard.guilds.connections.public
+                                    : l.dashboard.guilds.connections.private}
+                            </span>
+                        </button>
+                        <motion.div
+                            key={index}
+                            animate={{
+                                width: "50%",
+                                x: tab === "public" ? 0 : "100%",
+                                y: 3
+                            }}
+                            transition={{
+                                type: "spring",
+                                bounce: 0.3,
+                                duration: 0.5,
+                            }}
+                            className="absolute bg-neutral-700 z-10 h-[84%] 
+                        w-12 rounded-lg -translate-y-1/2 -translate-x-1"
+                        >
+                        </motion.div>
+                    </>
+                ))}
+            </div>
             <DefaultInput
                 value={body.name}
                 obrigatory
@@ -118,6 +157,25 @@ export default function GuildConnectConnection({ guild, channels, onClose, setGu
                 type="text"
                 placeholder={l.dashboard.guilds.connections.connectionPlaceholder}
             />
+            <AnimatePresence>
+                {tab === "private" && (
+                    <motion.div
+                        key={tab}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -20 }}
+                    >
+                        <DefaultInput
+                            value={body.hashInvite || ""}
+                            obrigatory
+                            onChange={(event) => setBody({ ...body, hashInvite: event.target.value })}
+                            label={l.dashboard.guilds.connections.hashLabel}
+                            type="text"
+                            placeholder={l.dashboard.guilds.connections.hashPlaceholder}
+                        />
+                    </motion.div>
+                )}
+            </AnimatePresence>
             <JoinConnectionLanguage setBody={setBody} body={body} />
             <ConnectionChannels
                 setBody={setBody}
