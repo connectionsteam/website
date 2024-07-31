@@ -6,19 +6,17 @@ import { useLanguage } from "@/hooks/useLanguage";
 
 interface Props {
     id: string;
-    closeForm: () => void;
     open: boolean;
     handleRemove: () => void;
 }
 
-export default function DeleteConnection({ id, closeForm, open, handleRemove }: Props) {
+export default function DeleteConnection({ id, open, handleRemove }: Props) {
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     const l = useLanguage();
 
     const handleDeleteConnection = async () => {
         handleRemove();
         onClose();
-        closeForm();
     };
 
     return (

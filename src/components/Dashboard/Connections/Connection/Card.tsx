@@ -4,19 +4,18 @@ import { ConnectionState } from "..";
 import { ConnectionPayload } from "@/types";
 import DeleteConnection from "./DeleteConnection";
 import Avatar from "@/components/Mixed/Avatar";
+import Link from "next/link";
 
 interface Props {
     connection: ConnectionPayload;
     connectionProps: ConnectionState;
     setConnectionProps: Dispatch<SetStateAction<ConnectionState>>;
     index: number;
-    closeForm: () => void;
-    openModal: (connection: ConnectionPayload) => void;
     handleDeleteConnection: () => void;
 }
 
 export default function ConnectionCard(
-    { connection, connectionProps, setConnectionProps, index, closeForm, openModal, handleDeleteConnection }: Props
+    { connection, connectionProps, setConnectionProps, index, handleDeleteConnection }: Props
 ) {
     return (
         <AnimatePresence key={index}>
@@ -35,18 +34,16 @@ export default function ConnectionCard(
                             handleRemove={handleDeleteConnection}
                             open={true}
                             id={connection.name}
-                            closeForm={closeForm}
                         />
                     </div>
                     <DeleteConnection
-                            handleRemove={handleDeleteConnection}
-                            open={connectionProps.hover === connection.name}
-                            id={connection.name}
-                            closeForm={closeForm}
-                        />
-                    <button
+                        handleRemove={handleDeleteConnection}
+                        open={connectionProps.hover === connection.name}
+                        id={connection.name}
+                    />
+                    <Link
+                        href={`/dashboard/connection/${connection.name}`}
                         className="flex items-center gap-2 p-3 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition relative w-full h-full"
-                        onClick={() => openModal(connection)}
                     >
                         <Avatar className="w-12 h-12" src={connection.icon || ""} key={connection.name} />
                         <div className="flex flex-col gap-1 text-start">
@@ -60,7 +57,7 @@ export default function ConnectionCard(
                                 </span>
                             }
                         </div>
-                    </button>
+                    </Link>
                 </motion.div>
             ) : null}
         </AnimatePresence>

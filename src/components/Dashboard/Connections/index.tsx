@@ -25,17 +25,11 @@ export interface ConnectionState {
 export default function ConnectionsComponent({ connections, setConnections }: Props) {
     const [searchQuery, setSearchQuery] = useState("");
     const { language } = useContext(LanguageContext);
-    const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     const [connectionProps, setConnectionProps] = useState<ConnectionState>({
         connection: null!,
         hover: null,
         removing: null
     });
-
-    const openModal = (connection: ConnectionPayload) => {
-        setConnectionProps({ ...connectionProps, connection });
-        onOpen();
-    };
 
     const handleChangeQuery = (event: ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(event.target.value);
@@ -76,12 +70,10 @@ export default function ConnectionsComponent({ connections, setConnections }: Pr
                                 <ConnectionCard
                                     handleDeleteConnection={handleDeleteConnection}
                                     key={index}
-                                    closeForm={onClose}
                                     connection={connection}
                                     connectionProps={connectionProps}
                                     setConnectionProps={setConnectionProps}
                                     index={index}
-                                    openModal={openModal}
                                 />
                             ))
                     ) : <ConnectionsSkeleton />}
@@ -92,18 +84,6 @@ export default function ConnectionsComponent({ connections, setConnections }: Pr
                         setConnections={setConnections as Dispatch<SetStateAction<ConnectionPayload[]>>}
                     />
                 }
-                <Modal classNames={{
-                    closeButton: "transition hover:bg-neutral-700",
-                    wrapper: "overflow-y-hidden",
-                    base: "max-h-screen overflow-y-auto",
-                }} isOpen={isOpen} onOpenChange={onOpenChange}>
-                    <ModalContent className="bg-neutral-800 text-white">
-                        <ModalHeader className="flex flex-col gap-1 bg-neutral-800">{languages[language].dashboard.connections.edit.title} {connectionProps?.connection?.name}</ModalHeader>
-                        <ModalBody>
-                            <ConnectionComponent connection={connectionProps.connection as ConnectionPayload} />
-                        </ModalBody>
-                    </ModalContent>
-                </Modal>
             </div>
         </div>
     );
