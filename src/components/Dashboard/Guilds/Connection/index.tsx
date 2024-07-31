@@ -29,7 +29,7 @@ export default function GuildEditConnection(
                     height={50}
                     src="/backgrounds/frozenborder.png"
                     alt="Frozen border"
-                    className="absolute -top-5 -left-4 z-0" />
+                    className="absolute -top-5 -right-4 z-0" />
             )}
             <div className="w-full rounded-lg bg-neutral-800 p-6 transition flex flex-col gap-4">
                 <div className="flex gap-4 items-center">
