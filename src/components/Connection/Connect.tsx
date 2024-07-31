@@ -83,7 +83,7 @@ export default function ConnectConnection({ connection }: Props) {
                                         </DropdownTrigger>
                                         <DropdownMenu className="w-full flex flex-col gap-1" aria-label="guilds">
                                             {guilds
-                                                .filter((guild) => guild.connections.length < 5
+                                                .filter((guild) => guild.connections?.length < 5
                                                     && guild.connections.findIndex((c) => c.name === connection.name))
                                                 .map((guild) => (
                                                     <DropdownItem
