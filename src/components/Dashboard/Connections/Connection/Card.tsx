@@ -24,7 +24,7 @@ export default function ConnectionCard(
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
-                    transition={{ delay: index * 0.1 }}
+                    transition={{ delay: index * 0.1, duration: 0.09 }}
                     onMouseEnter={() => setConnectionProps({ ...connectionProps, hover: connection.name })}
                     onMouseLeave={() => setConnectionProps({ ...connectionProps, hover: null })}
                     className="w-full relative"
