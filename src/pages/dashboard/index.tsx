@@ -27,7 +27,6 @@ export default function DashboardPage() {
 
             setConnections(data);
         };
-
         
         Promise.all([fetchGuilds(), fetchConnections()]);
     }, []);
