@@ -122,6 +122,8 @@ export interface ConnectionPayload {
     description?: string;
     icon?: string;
     name: string;
+    private?: boolean;
+    hashInvite?: string;
     creator: {
         id: string;
         username: string;
