@@ -221,7 +221,7 @@ export const languages = {
                     title: "Deletar conexão",
                     description: "Você deseja mesmo deletar a conexão",
                     button: "Deletar",
-                    descriptionpage: "Ao deletar sua conexão, você irá perder todos os dados associados a ela, incluindo as conversas, mensagens, guildas que se conectaram na sua conexão e outros dados.",
+                    descriptionpage: "Ao deletar sua conexão, você irá perder todos os dados associados a ela como mensagens e guildas que se conectaram na sua conexão e outros dados.",
                 },
                 edit: {
                     title: "Editar conexão",
@@ -537,7 +537,7 @@ export const languages = {
                     title: "Delete connection",
                     description: "Are you sure you want to delete the connection",
                     button: "Delete",
-                    descriptionpage: "When you delete your connection, you will lose all the data associated with it, including conversations, messages, guilds that were connected to your connection and other data.",
+                    descriptionpage: "When you delete your connection, you will lose all the data associated with it, including messages and guilds that were connected to your connection and other data.",
                 },
                 edit: {
                     title: "Edit connection",
