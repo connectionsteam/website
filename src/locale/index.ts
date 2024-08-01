@@ -240,6 +240,7 @@ export const languages = {
                 }
             },
             misc: {
+                cancel: "Cancelar",
                 filterConnections: "Filtrar conexão",
                 filterGuilds: "Filtrar servidor",
             }
@@ -312,7 +313,49 @@ export const languages = {
                 typehere: "Digite aqui",
                 reset: "Redefinir filtros",
             }
-        }
+        },
+        tos: {
+            title: "Termos de serviço",
+            intro1: "Ao acessar e utilizar o site Connections e o Bot Connections, você concorda com os seguintes termos e condições.",
+            intro2: "Estes termos são projetados para assegurar que tanto o site quanto o bot sejam utilizados de maneira adequada e em conformidade com as leis aplicáveis.",
+            intro3: "O seu acesso e uso de nossos serviços estão sujeitos a essas diretrizes, que visam proteger tanto a integridade dos nossos serviços quanto a segurança e os direitos dos nossos usuários. Ao utilizar o site ou o bot, você declara estar ciente de e aceitar todas as condições descritas a seguir. É sua responsabilidade ler e entender essas regras, e você concorda em cumprir todas as disposições estabelecidas aqui.",
+            prohibited: {
+                title: "É proibido:",
+                item1: "Minerar ou coletar dados sem autorização.",
+                item2: "Utilizar ferramentas ou técnicas que comprometam a integridade ou segurança do site ou do bot.",
+                item3: "Remover, copiar ou reproduzir conteúdo protegido por direitos autorais do site ou do bot.",
+                item4: "Emoldurar ou fazer reprodução não autorizada de qualquer parte do site ou do bot.",
+                item5: "Utilizar o Conteúdo do Usuário sem nossa permissão e a permissão dos próprios usuários.",
+                item6: "Usar o site ou o bot de maneira maliciosa, incluindo tentativas de comprometer seu funcionamento ou segurança.",
+                item7: "Violação de direitos autorais relacionados ao site e ao bot, incluindo a utilização não autorizada de logotipos, emotes e outros materiais.",
+                item8: "Tentar imitar ou copiar serviços e funcionalidades oferecidos pelo Connections."
+            },
+            discordRules: {
+                title: "Para garantir um funcionamento adequado e seguro do Bot Connections em seus servidores Discord, observe as seguintes regras:",
+                item1: "Proibição de Exploração: É proibido tentar explorar o Bot Connections para obter vantagens injustas ou prejudicar outros usuários. Isso inclui qualquer tentativa de manipulação ou modificação não autorizada do bot.",
+                item2: "Conformidade com Termos do Discord: O uso do Bot Connections deve estar em total conformidade com os Termos de Serviço do Discord. Qualquer violação desses termos será considerada uma infração das nossas políticas também.",
+                item3: "Políticas do Connections: Todos os usos do Bot Connections devem respeitar as políticas e diretrizes estabelecidas no site Connections. Qualquer infração pode resultar em ações corretivas."
+            },
+            limitations: {
+                title: "Enquanto nos esforçamos para oferecer um serviço de alta qualidade, o site e o Bot Connections estão sujeitos a certas limitações:",
+                item1: "Garantias: Não garantimos que o site ou o bot estejam livres de erros, bugs ou falhas. A disponibilidade contínua e a operação dos serviços não são garantidas.",
+                item2: "Condições e Responsabilidades: Não oferecemos garantias específicas além das expressamente estabelecidas neste Termo de Serviço. O uso do site e do bot é por sua conta e risco.",
+                item3: "Direitos Autorais: Comprometemo-nos a remover ou revogar imediatamente qualquer conteúdo que infrinja direitos autorais. Nosso objetivo é respeitar o trabalho de outros e corrigir prontamente quaisquer violações."
+            }
+        },
+        policy: {
+            title: "Política de Privacidade",
+            intro: "Nós da equipe Connections temos total cuidado e responsabilidade com todas as informações pessoais dos usuários que são coletadas legalmente. Não temos qualquer intenção de prejudicar qualquer um que utilize nossos serviços. Todas as informações solicitadas são dados do próprio Discord, já que dependemos dele. Não compartilhamos nem vendemos os dados e informações pessoais coletadas. Não solicitamos informações externas ou dados sensíveis que possam prejudicar o uso do usuário.",
+            dataCollection: "Todos os dados que solicitamos são os necessários para o funcionamento da aplicação. Todos os dados que coletamos estão citados abaixo:",
+            username: "Nome de Usuário, ID e Avatar do Discord: Coletamos seu nome de usuário, ID e avatar do Discord para identificar você em nossos sistemas, gerenciar sua conta e personalizar sua experiência.",
+            serverInfo: "Informações de Servidor: Coletamos dados sobre os servidores Discord onde você utiliza o bot Connections, como nome do servidor e ID do servidor.",
+            messages: "Mensagens Enviadas ao Bot: Armazenamos apenas o ID da mensagem e o ID do canal quando uma mensagem é enviada em alguma conexão.",
+            activities: "Atividades e Interações: Registramos suas atividades e interações com o bot para oferecer uma experiência personalizada e melhorada.",
+            noSensitiveData: "Não solicitamos quaisquer dados que possam prejudicar a experiência de quem utiliza os nossos serviços.",
+            dataSecurity: "Estamos comprometidos com a segurança dos dados e implementamos medidas apropriadas para proteger suas informações contra acesso não autorizado, alteração, divulgação ou destruição. O Connections não se responsabiliza por qualquer dano direto, indireto, incidental, especial ou consequente resultante do uso ou da incapacidade de usar nossos serviços. Os usuários têm o direito de acessar, corrigir ou excluir suas informações pessoais a qualquer momento. Para exercer esses direitos, entre em contato conosco via e-mail (connectionsteamoficial@gmail.com) e tentaremos responder o mais rápido possível.",
+            changes: "Alterações podem ser feitas em nossos Termos e Políticas a qualquer momento. Deixaremos você ciente quando essas mudanças ocorrerem. Ao utilizar nossos serviços, você consente com a coleta e uso de suas informações conforme descrito nesta Política de Privacidade. Este Termo de Serviço será regido e interpretado de acordo com as leis vigentes do país em que operamos.",
+            contact: "Se você tiver alguma dúvida sobre a nossa Política de Privacidade, entre em contato conosco via e-mail (connectionsteamoficial@gmail.com) e tentaremos responder o mais rápido possível."
+        },
     },
     "en-US": {
         home: {
@@ -385,7 +428,7 @@ export const languages = {
                     title: "Informations",
                     description: "Here will be the informations of the guild",
                     premiumexpires: "Expires on {date}",
-                    
+
                 },
                 guild: {
                     title: "Server",
@@ -556,6 +599,7 @@ export const languages = {
                 }
             },
             misc: {
+                cancel: "Cancel",
                 filterConnections: "Filter connection",
                 filterGuilds: "Filter guild",
             },
@@ -628,6 +672,47 @@ export const languages = {
                 typehere: "Type here",
                 reset: "Reset filters",
             }
-        }
+        }, tos: {
+            title: "Terms of Service",
+            intro1: "By accessing and using the Connections website and the Connections Bot, you agree to the following terms and conditions.",
+            intro2: "These terms are designed to ensure that both the website and the bot are used appropriately and in accordance with applicable laws.",
+            intro3: "Your access and use of our services are subject to these guidelines, which aim to protect both the integrity of our services and the safety and rights of our users. By using the website or the bot, you acknowledge and accept all the conditions described below. It is your responsibility to read and understand these rules, and you agree to comply with all the provisions set forth herein.",
+            prohibited: {
+                title: "Prohibited Actions:",
+                item1: "Mining or collecting data without authorization.",
+                item2: "Using tools or techniques that compromise the integrity or security of the website or the bot.",
+                item3: "Removing, copying, or reproducing copyrighted content from the website or the bot.",
+                item4: "Framing or unauthorized reproduction of any part of the website or the bot.",
+                item5: "Using User Content without our permission and the permission of the respective users.",
+                item6: "Using the website or the bot maliciously, including attempts to compromise its functionality or security.",
+                item7: "Violating copyright related to the website and the bot, including unauthorized use of logos, emotes, and other materials.",
+                item8: "Attempting to imitate or copy services and features offered by Connections."
+            },
+            discordRules: {
+                title: "To ensure proper and secure operation of the Connections Bot in your Discord servers, please observe the following rules:",
+                item1: "Exploitation Prohibition: It is forbidden to attempt to exploit the Connections Bot for unfair advantages or to harm other users. This includes any attempt to manipulate or modify the bot without authorization.",
+                item2: "Compliance with Discord Terms: The use of the Connections Bot must fully comply with Discord's Terms of Service. Any violation of these terms will also be considered a breach of our policies.",
+                item3: "Connections Policies: All uses of the Connections Bot must adhere to the policies and guidelines set forth on the Connections website. Any infraction may result in corrective actions."
+            },
+            limitations: {
+                title: "While we strive to provide a high-quality service, the Connections website and Bot are subject to certain limitations:",
+                item1: "Warranties: We do not guarantee that the website or the bot will be free from errors, bugs, or failures. Continuous availability and operation of the services are not guaranteed.",
+                item2: "Conditions and Responsibilities: We do not offer specific warranties beyond those expressly stated in these Terms of Service. Use of the website and the bot is at your own risk.",
+                item3: "Copyright: We are committed to promptly removing or revoking any content that infringes on copyrights. Our goal is to respect the work of others and promptly correct any violations."
+            }
+        },
+        policy: {
+            title: "Privacy Policy",
+            intro: "At Connections, we are fully responsible for and take great care of all the personal information of users that is legally collected. We have no intention of harming anyone who uses our services. All requested information is from Discord itself, as we rely on it. We do not share or sell the collected personal data and information. We do not request external or sensitive information that may harm the user's experience.",
+            dataCollection: "All the data we request is necessary for the application's operation. All the data we collect is listed below:",
+            username: "Username, ID, and Discord Avatar: We collect your username, ID, and Discord avatar to identify you in our systems, manage your account, and personalize your experience.",
+            serverInfo: "Server Information: We collect data about the Discord servers where you use the Connections bot, such as server name and server ID.",
+            messages: "Messages Sent to the Bot: We only store the message ID and channel ID when a message is sent in any connection.",
+            activities: "Activities and Interactions: We record your activities and interactions with the bot to provide a personalized and improved experience.",
+            noSensitiveData: "We do not request any data that may harm the experience of those who use our services.",
+            dataSecurity: "We are committed to data security and have implemented appropriate measures to protect your information from unauthorized access, alteration, disclosure, or destruction. Connections is not responsible for any direct, indirect, incidental, special, or consequential damage resulting from the use or inability to use our services. Users have the right to access, correct, or delete their personal information at any time. To exercise these rights, contact us via email (connectionsteamoficial@gmail.com), and we will try to respond as quickly as possible.",
+            changes: "Changes can be made to our Terms and Policies at any time. We will notify you when these changes occur. By using our services, you consent to the collection and use of your information as described in this Privacy Policy. These Terms of Service will be governed and interpreted in accordance with the laws of the country in which we operate.",
+            contact: "If you have any questions about our Privacy Policy, contact us via email (connectionsteamoficial@gmail.com), and we will try to respond as quickly as possible."
+        },
     }
 }
