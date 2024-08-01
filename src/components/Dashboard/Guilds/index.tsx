@@ -26,6 +26,12 @@ export default function GuildsComponent({ guilds, fetchGuilds }: Props) {
         setSearchQuery(event.target.value);
     };
 
+    const handleClick = () => {
+        fetchGuilds();
+        setClicked(true);
+        setTimeout(() => setClicked(false), 5000);
+    };
+
     return (
         <div className="flex w-full items-start flex-col gap-4 z-10 tablet:px-3">
             <div className="flex flex-col gap-2">
@@ -41,13 +47,10 @@ export default function GuildsComponent({ guilds, fetchGuilds }: Props) {
                     inputWrapper: "rounded-lg bg-neutral-800 group-hover:bg-neutral-700",
                 }} onChange={handleChangeQuery} type="string" label={l.dashboard.misc.filterGuilds} />
                 <button
-                    onClick={() => {
-                        fetchGuilds();
-                        setClicked(true);
-                        setTimeout(() => setClicked(false), 1000);
-                    }}
+                    disabled={clicked}
+                    onClick={handleClick}
                     className="w-14 bg-neutral-800 rounded-lg items-center flex justify-center
-                    group hover:bg-neutral-700 transition"
+                    group hover:bg-neutral-700 transition disabled:hover:bg-neutral-800 disabled:opacity-50"
                 >
                     <MdOutlineSync
                         className={`${clicked ? "rotate-[360deg]" : ""} transition`}
