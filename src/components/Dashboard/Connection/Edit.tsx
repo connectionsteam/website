@@ -65,7 +65,7 @@ export default function EditConnectionComponent(
                     <Avatar src={editedConnection.icon || ""} className="h-full w-full rounded-full" />
                 </div>
                 <div className="flex gap-1 flex-col w-full">
-                    <h1 className="font-bold text-3xl">
+                    <h1 className="font-bold text-2xl">
                         {connection.name}
                     </h1>
                     {edit ? (

@@ -2,7 +2,7 @@ import DefaultLayout from "@/components/Mixed/Layout";
 import { ConnectionPayload } from "@/types";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { LuPenSquare } from "react-icons/lu";
 import EditConnectionComponent from "./Edit";
 import { useLanguage } from "@/hooks/useLanguage";
@@ -10,6 +10,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
 import ConnectionPrivateInvite from "./Invite";
 import DeleteConnectionPage from "./Delete";
+import ConnectionPageSkeleton from "./Skeleton";
 
 export interface EditConnection {
     description: string;
@@ -117,7 +118,7 @@ export default function ConnectionPageComponent() {
                                         <button
                                             onClick={saveEditedConnection}
                                             className="rounded-lg bg-green-500 text-white transition
-                                        p-2 px-4 hover:bg-green-600 flex gap-1 items-center"
+                                            p-2 px-4 hover:bg-green-600 flex gap-1 items-center"
                                         >
                                             <span>
                                                 {l.dashboard.guilds.connections.blockedWords.save}
@@ -134,8 +135,8 @@ export default function ConnectionPageComponent() {
                                         </button>
                                         <button
                                             onClick={resetEditedConnection}
-                                            className="rounded-lg bg-blue-500 text-white transition
-                                        p-2 px-4 hover:bg-blue-600"
+                                            className="rounded-lg bg-blue-500 text-white 
+                                            transition p-2 px-4 hover:bg-blue-600"
                                         >
                                             {l.dashboard.connections.edit.redefine}
                                         </button>
@@ -160,9 +161,7 @@ export default function ConnectionPageComponent() {
                         </button>
                     </div>
                 </div>
-            ) : (
-                <div></div>
-            )}
+            ) : <ConnectionPageSkeleton />}
         </DefaultLayout>
     );
 }
