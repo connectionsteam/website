@@ -73,6 +73,7 @@ export default function GuildComponent() {
                 }
             ];
         }
+        
         return [];
     };
 
@@ -80,16 +81,16 @@ export default function GuildComponent() {
         if (!id) return;
 
         const fetchGuild = async () => {
-            const guildRes = await api.get(`/guilds/${id}`);
+            const { data } = await api.get(`/guilds/${id}`);
 
-            setGuild(guildRes.data);
-            setThreads(guildRes.data.threads);
+            setGuild(data);
+            setThreads(data.threads);
         };
 
         const fetchChannels = async () => {
-            const channelRes = await api.get(`/guilds/${id}/channels`);
+            const { data } = await api.get(`/guilds/${id}/channels`);
 
-            setChannels(channelRes.data);
+            setChannels(data);
         };
 
         Promise.all([fetchGuild(), fetchChannels()]);
