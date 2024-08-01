@@ -2,7 +2,6 @@ import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure
 import { AnimatePresence } from "framer-motion";
 import { LuTrash } from "react-icons/lu";
 import { motion } from "framer-motion";
-import Avatar from "@/components/Mixed/Avatar";
 import { useLanguage } from "@/hooks/useLanguage";
 
 interface Props {
@@ -17,9 +16,9 @@ interface Props {
 
 export default function RemoveGuildMod({ mod, open, handleRemove }: Props) {
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-    const l = useLanguage();   
+    const l = useLanguage();
 
-    const handleDeleteConnection = () => {
+    const handleRemoveModerator = () => {
         handleRemove();
         onClose();
     };
@@ -48,21 +47,25 @@ export default function RemoveGuildMod({ mod, open, handleRemove }: Props) {
                 base: "max-h-screen overflow-y-auto",
             }} isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent className="bg-neutral-800 text-white">
-                    <ModalHeader className="flex flex-col gap-1 bg-neutral-800">{l.dashboard.guilds.mods.delete}</ModalHeader>
+                    <ModalHeader className="flex flex-col gap-1 bg-neutral-800 pb-1">{l.dashboard.guilds.mods.delete}</ModalHeader>
                     <ModalBody className="flex gap-2">
-                        <div className="flex flex-col gap-3">
-                            <div className="flex gap-3 text-start rounded-lg p-3 bg-neutral-900/50 transition w-full">
-                                <Avatar className="w-12 h-12" src={`https://cdn.discordapp.com/avatars/${mod.id}/${mod.avatar}.png`} />
-                                <div className="flex flex-col">
-                                    <span className="font-semibold text-lg">{mod.username}</span>
-                                    <span className="text-neutral-300 text-sm">{mod.id}</span>
-                                </div>
-                            </div>
-                            <div>{l.dashboard.guilds.mods.deleteConfirm} <strong>{mod.username}</strong>?</div>
-                        </div>
+                        <div>{l.dashboard.guilds.mods.deleteConfirm} <strong>{mod.username}</strong>?</div>
                     </ModalBody>
-                    <ModalFooter className="flex w-full justify-center">
-                        <button onClick={handleDeleteConnection} className="flex gap-2 w-1/2 items-center justify-center font-semibold text-center border-red-500 border-2 transition hover:bg-red-500 p-2 rounded-lg">
+                    <ModalFooter className="flex w-full justify-end border-t rounded-t-xl
+                    border-neutral-700 mt-2">
+                        <button
+                            onClick={onClose}
+                            className="rounded-lg bg-neutral-700 transition hover:bg-neutral-700/50 
+                            p-2 px-3"
+                        >
+                            {l.dashboard.misc.cancel}
+                        </button>
+                        <button
+                            onClick={handleRemoveModerator}
+                            className="flex gap-2 font-semibold items-center text-center 
+                            bg-red-500 transition hover:bg-red-600 p-2 px-3 rounded-lg"
+                        >
+                            <LuTrash className="mb-0.5" size={18} />
                             <span className="text-center">{l.dashboard.guilds.mods.deletetext}</span>
                         </button>
                     </ModalFooter>
