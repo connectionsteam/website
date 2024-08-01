@@ -1,7 +1,7 @@
 import { useLanguage } from "@/hooks/useLanguage";
-import { ConnectedConnectionPayload, GuildPayload } from "@/types";
-import { api } from "@/utils/api";
+import { ConnectedConnectionPayload } from "@/types";
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/modal";
+import { AiOutlineDisconnect } from "react-icons/ai";
 import { LuTrash } from "react-icons/lu";
 
 interface Props {
@@ -29,12 +29,27 @@ export const DeleteConnectedConnection = ({ connection, onRemove }: Props) => {
                 base: "max-h-screen overflow-y-auto",
             }} isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent className="bg-neutral-800 text-white">
-                    <ModalHeader className="flex flex-col gap-1 bg-neutral-800">{l.dashboard.guilds.connections.disconnect.title}</ModalHeader>
+                    <ModalHeader className="pb-1 font-bold">
+                        <span>{l.dashboard.guilds.connections.disconnect.title}</span>
+                    </ModalHeader>
                     <ModalBody className="flex gap-2">
                         <div>{l.dashboard.guilds.connections.disconnect.disconnectConfirm} <strong>{connection.name}</strong>?</div>
                     </ModalBody>
-                    <ModalFooter className="flex w-full justify-center">
-                        <button onClick={handleDelete} className="flex gap-2 w-1/2 items-center justify-center font-semibold text-center border-red-500 border-2 transition hover:bg-red-500 p-2 rounded-lg">
+                    <ModalFooter className="flex w-full justify-end border-t rounded-t-xl
+                    border-neutral-700 mt-2">
+                        <button
+                            onClick={onClose}
+                            className="rounded-lg bg-neutral-700 transition hover:bg-neutral-700/50 
+                            p-2 px-3"
+                        >
+                            {l.dashboard.misc.cancel}
+                        </button>
+                        <button
+                            onClick={handleDelete}
+                            className="flex gap-2 font-semibold items-center text-center 
+                            bg-red-500 transition hover:bg-red-600 p-2 px-3 rounded-lg"
+                        >
+                            <AiOutlineDisconnect className="mb-0.5" size={18} />
                             <span className="text-center">{l.dashboard.guilds.connections.disconnect.disconnect}</span>
                         </button>
                     </ModalFooter>
