@@ -9,6 +9,7 @@ import { useLanguage } from "@/hooks/useLanguage";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
 import ConnectionPrivateInvite from "./Invite";
+import DeleteConnectionPage from "./Delete";
 
 export interface EditConnection {
     description: string;
@@ -102,7 +103,7 @@ export default function ConnectionPageComponent() {
         <DefaultLayout>
             {connection ? (
                 <div className="w-full p-6 rounded-lg bg-neutral-800 text-white">
-                    <div className="flex items-start">
+                    <div className="flex items-start relative">
                         <div className="flex flex-col gap-8 w-full">
                             <div className="flex flex-col gap-4">
                                 <EditConnectionComponent
@@ -149,8 +150,12 @@ export default function ConnectionPageComponent() {
                                 setEditedConnection={setEditedConnection}
                                 loading={loading}
                             />
+                            <DeleteConnectionPage id={connection.name} />
                         </div>
-                        <button onClick={() => setEdit(!edit)}>
+                        <button
+                            className="absolute right-0"
+                            onClick={() => setEdit(!edit)}
+                        >
                             <LuPenSquare size={20} />
                         </button>
                     </div>
