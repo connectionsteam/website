@@ -45,7 +45,7 @@ export default function DeleteConnection({ id, open, handleRemove }: Props) {
                 <ModalContent className="bg-neutral-800 text-white">
                     <ModalHeader className="flex flex-col gap-1 bg-neutral-800">{l.dashboard.connections.delete.title}</ModalHeader>
                     <ModalBody className="flex gap-2">
-                        <div>{l.dashboard.connections.delete.description} <strong>${id}</strong>?</div>
+                        <div>{l.dashboard.connections.delete.description} <strong>{id}</strong>?</div>
                     </ModalBody>
                     <ModalFooter className="flex w-full justify-center">
                         <button onClick={handleDeleteConnection} className="flex gap-2 w-1/2 items-center justify-center font-semibold text-center border-red-500 border-2 transition hover:bg-red-500 p-2 rounded-lg">
