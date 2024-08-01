@@ -201,6 +201,10 @@ export const languages = {
                 connectToConnection: "Conectar a uma conexão",
                 connection: {
                     title: "Conexão",
+                    typetag: "Digite abaixo algumas tags separadas por um espaço (tag1 tag2 ...)",
+                    icon: "Icone da conexão",
+                    private: "Conexão privada",
+                    privateDescription: "Ao habilitar esta opção, a conexão não irá aparecer na lista de conexões públicas e será apenas conectável por pessoas com o link de convite abaixo.",
                     form: {
                         name: "Nome",
                         description: "Descrição",
@@ -217,6 +221,7 @@ export const languages = {
                     title: "Deletar conexão",
                     description: "Você deseja mesmo deletar a conexão",
                     button: "Deletar",
+                    descriptionpage: "Ao deletar sua conexão, você irá perder todos os dados associados a ela, incluindo as conversas, mensagens, guildas que se conectaram na sua conexão e outros dados.",
                 },
                 edit: {
                     title: "Editar conexão",
@@ -512,6 +517,10 @@ export const languages = {
                 connectToConnection: "Connect to a connection",
                 connection: {
                     title: "Connection",
+                    typetag: "Type here some tags separated by a space (tag1 tag2 ...)",
+                    icon: "Connection icon",
+                    private: "Private connection",
+                    privateDescription: "When enabled, the connection will not appear in the public connection list and will only be accessible to people with the invite link below.",
                     form: {
                         name: "Name",
                         description: "Description",
@@ -528,6 +537,7 @@ export const languages = {
                     title: "Delete connection",
                     description: "Are you sure you want to delete the connection",
                     button: "Delete",
+                    descriptionpage: "When you delete your connection, you will lose all the data associated with it, including conversations, messages, guilds that were connected to your connection and other data.",
                 },
                 edit: {
                     title: "Edit connection",
