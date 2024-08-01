@@ -7,6 +7,7 @@ import { MdOutlineContentCopy, MdOutlineSync } from "react-icons/md";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { BiCheck } from "react-icons/bi";
 import { api } from "@/utils/api";
+import { useLanguage } from "@/hooks/useLanguage";
 
 interface Props {
     editedConnection: EditConnection;
@@ -29,6 +30,7 @@ export default function ConnectionPrivateInvite(
     { editedConnection, setEditedConnection, loading, connection, setLoading, setConnection }: Props
 ) {
     const [showHash, setShowHash] = useState(false);
+    const l = useLanguage();
 
     const privateConnection = async () => {
         setLoading({ loading: true, check: false, loader: "private" });
@@ -99,12 +101,10 @@ export default function ConnectionPrivateInvite(
                         isSelected={editedConnection.private}
                         onChange={privateConnection}
                     />
-                    <div className="font-bold text-lg">Conexão privada</div>
+                    <div className="font-bold text-lg">{l.dashboard.connections.connection.private}</div>
                 </div>
                 <span className="text-neutral-300">
-                    Ao habilitar esta opção, a conexão não irá aparecer na lista de
-                    conexões públicas e será apenas conectável por pessoas com o link de
-                    convite abaixo.
+                    {l.dashboard.connections.connection.privateDescription}
                 </span>
             </div>
             {editedConnection.private && (

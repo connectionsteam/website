@@ -5,8 +5,6 @@ import ConnectionsSkeleton from "../ConnectionsSkeleton";
 import CreateConnectionForm from "./Connection/FormCreateConnection";
 import { LanguageContext } from "@/contexts/Language";
 import { languages } from "@/locale";
-import ConnectionComponent from "./Connection";
-import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/modal";
 import { api } from "@/utils/api";
 import ConnectionCard from "./Connection/Card";
 import { AnimatePresence } from "framer-motion";
