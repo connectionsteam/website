@@ -249,19 +249,26 @@ export const languages = {
             pageDescription: "Acesse o melhor nível do Connections. Use premium.",
             basicpremium: {
                 features: [
-                    "+ Threads",
+                    "+ 5 Threads",
+                    "+ 10 Limite de moderadores",
+                    "+ 25 Conexões conectadas",
                     "Cooldown de mensagens diminuido",
-                    "Congelar mensagens nas conexões conectadas",
-                    "+ Conexões conectadas",
+                    "Congelar mensagens",
                     "Sistema de moderação melhorado",
                     "E muito mais!"
                 ]
             },
             premium: {
                 features: [
-                    "Tudo do Basic Premium",
+                    "+ 15 Threads",
+                    "+ 10 Limite de moderadores",
+                    "+ 50 Conexões conectadas",
+                    "Cooldown de mensagens diminuido",
+                    "Congelar mensagens",
+                    "Sistema de moderação melhorado",
                     "Bot próprio e customizavel!",
-                    "Até 5 servidores premium"
+                    "Até 5 servidores premium",
+                    "E muito mais!"
                 ]
             },
             popUp: {
