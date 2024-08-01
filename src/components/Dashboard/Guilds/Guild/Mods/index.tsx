@@ -2,7 +2,7 @@
 import DefaultButton from "@/components/Mixed/Button";
 import { DiscordMember, GuildPayload, ModPermType, Premium } from "@/types";
 import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/modal";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { LuPlusCircle } from "react-icons/lu";
 import { api } from "@/utils/api";
 import GuildModCard from "./Card";
@@ -10,6 +10,7 @@ import GuildModModal from "./Modal";
 import { UserContext } from "@/contexts/User";
 import { useLanguage } from "@/hooks/useLanguage";
 import PremiumPopUp from "@/components/Premium/PopUp";
+import { AnimatePresence } from "framer-motion";
 
 interface Props {
     guild: GuildPayload;
@@ -34,12 +35,13 @@ export default function GuildMods({ guild, setGuild, premium }: Props) {
         onPremiumChange,
         onClose: onPremiumClose
     } = useDisclosure();
-    const [query, setQuery] = useState("");
     const [menu, setMenu] = useState<MenuProps>({
         hover: null,
         removing: null,
     });
     const [sonner, setSonner] = useState(false);
+    const [loaded, setLoaded] = useState(false);
+    const [members, setMembers] = useState<DiscordMember[] | null>(null);
 
     const handleAddMod = async (mod: DiscordMember) => {
         if (Object.keys(guild.mods).length >= premium.maxMods) {
@@ -82,6 +84,16 @@ export default function GuildMods({ guild, setGuild, premium }: Props) {
         }, 500);
     };
 
+    const fetchMembers = async () => {
+        onOpen();
+        if (loaded) return;
+
+        const { data } = await api.get(`/guilds/${guild.id}/members?limit=1000`);
+
+        setMembers(data);
+        setLoaded(true);
+    };
+
     return (
         <>
             <div className="flex flex-col gap-2">
@@ -98,21 +110,23 @@ export default function GuildMods({ guild, setGuild, premium }: Props) {
                     <span className="text-neutral-300">{l.dashboard.guilds.mods.description}</span>
                 </div>
                 <div className="flex flex-col gap-2 min-w-72 tablet:min-w-full">
-                    <div className="flex flex-col gap-2 w-full overflow-x-auto max-h-64">
+                    <div className="flex flex-col gap-2 w-full max-h-64 overflow-x-hidden">
                         {Object.entries(guild.mods).map(([key, mod], index) => (
-                            <GuildModCard
-                                guild={guild}
-                                key={index}
-                                setMenu={setMenu}
-                                index={index}
-                                mod={{ avatar: mod.avatar, id: key, username: mod.username }}
-                                handleRemoveMod={handleRemoveMod}
-                                menu={menu}
-                            />
+                            <AnimatePresence mode="wait" key={index}>
+                                <GuildModCard
+                                    guild={guild}
+                                    key={index}
+                                    setMenu={setMenu}
+                                    index={index}
+                                    mod={{ avatar: mod.avatar, id: key, username: mod.username }}
+                                    handleRemoveMod={handleRemoveMod}
+                                    menu={menu}
+                                />
+                            </AnimatePresence>
                         ))}
                     </div>
                     {Object.entries(guild.mods).find(([id]) => id === user?.id) && (
-                        <DefaultButton onClick={onOpen} className="h-full w-full p-4">
+                        <DefaultButton onClick={fetchMembers} className="h-full w-full p-4">
                             <LuPlusCircle size={20} />
                             <span>{l.dashboard.guilds.mods.addModerator}</span>
                         </DefaultButton>
@@ -130,8 +144,7 @@ export default function GuildMods({ guild, setGuild, premium }: Props) {
                     </ModalHeader>
                     <ModalBody>
                         <GuildModModal
-                            query={query}
-                            setQuery={setQuery}
+                            members={members}
                             handleAddMod={handleAddMod}
                             guild={guild}
                         />

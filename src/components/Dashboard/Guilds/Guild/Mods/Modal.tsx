@@ -2,30 +2,17 @@ import Avatar from "@/components/Mixed/Avatar";
 import DefaultInput from "@/components/Mixed/Input";
 import { useLanguage } from "@/hooks/useLanguage";
 import { DiscordMember, GuildPayload } from "@/types";
-import { api } from "@/utils/api";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface Props {
-    query: string;
-    setQuery: (query: string) => void;
     handleAddMod: (user: DiscordMember) => void;
     guild: GuildPayload;
+    members: DiscordMember[] | null;
 }
 
-export default function GuildModModal({ query, setQuery, handleAddMod, guild }: Props) {
+export default function GuildModModal({ handleAddMod, guild, members }: Props) {
     const l = useLanguage();
-
-    const [members, setMembers] = useState<DiscordMember[] | null>(null);
-
-    useEffect(() => {
-        const fetchMembers = async () => {
-            const membersRes = await api.get(`/guilds/${guild.id}/members?limit=1000`);
-
-            setMembers(membersRes.data);
-        };
-
-        fetchMembers();
-    }, []);
+    const [query, setQuery] = useState("");
 
     return (
         <>
@@ -53,7 +40,10 @@ export default function GuildModModal({ query, setQuery, handleAddMod, guild }: 
                                 key={index}
                                 onClick={() => handleAddMod(user)}
                             >
-                                <Avatar className="w-12 h-12" src={`https://cdn.discordapp.com/avatars/${user.user.id}/${user.user.avatar}.png`} />
+                                <Avatar
+                                    className="w-12 h-12"
+                                    src={`https://cdn.discordapp.com/avatars/${user.user.id}/${user.user.avatar}.png`}
+                                />
                                 <div className="flex flex-col">
                                     <span className="font-semibold text-lg">{user.user.global_name || user.user.username}</span>
                                     <span className="text-neutral-300 text-sm">@{user.user.username}</span>
@@ -63,7 +53,7 @@ export default function GuildModModal({ query, setQuery, handleAddMod, guild }: 
                 ) : (
                     Array.from({ length: 6 }).map((_, index) => (
                         <div
-                            className="bg-neutral-900/50 w-full min-h-[72px] rounded-lg flex items-center p-3 gap-3" 
+                            className="bg-neutral-900/50 w-full min-h-[72px] rounded-lg flex items-center p-3 gap-3"
                             key={index}
                         >
                             <div className="w-12 h-12 rounded-full bg-neutral-700 animate-pulse"></div>
