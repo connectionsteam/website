@@ -29,13 +29,6 @@ export default function ConnectionCard(
                     onMouseLeave={() => setConnectionProps({ ...connectionProps, hover: null })}
                     className="w-full relative"
                 >
-                    <div className="w-full relative tabletdesk:invisible">
-                        <DeleteConnection
-                            handleRemove={handleDeleteConnection}
-                            open={true}
-                            id={connection.name}
-                        />
-                    </div>
                     <DeleteConnection
                         handleRemove={handleDeleteConnection}
                         open={connectionProps.hover === connection.name}
