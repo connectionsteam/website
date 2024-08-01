@@ -1,19 +1,17 @@
-"use client"
-import { useContext, useEffect, useRef, useState } from "react";
+"use client";
+import { useEffect, useRef, useState } from "react";
 import { RiMenu3Line } from "react-icons/ri";
 import Link from "next/link";
 import Underline from "../Mixed/Underline";
 import { FaX } from "react-icons/fa6";
 import AuthUser from "./User";
 import ChooseLanguage from "./Language";
-import { languages } from "@/locale";
-import { LanguageContext } from "@/contexts/Language";
-import { Navbar } from "@nextui-org/react";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export default function Header() {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const drawerRef = useRef<HTMLDivElement | null>(null);
-    const { language } = useContext(LanguageContext);
+    const l = useLanguage();
 
     const handleRecallDrawer = () => {
         setIsDrawerOpen(false);
@@ -23,16 +21,16 @@ export default function Header() {
         const handleClickOutside = (event: MouseEvent) => {
             if (drawerRef.current && !drawerRef.current.contains(event.target as Node)) {
                 setIsDrawerOpen(false);
-            }
-        }
+            };
+        };
 
         document.addEventListener("mousedown", handleClickOutside);
 
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
-        }
+        };
     }, []);
-    
+
     return (
         <header className="w-screen flex justify-center text-white tablet:px-2 fixed top-1 inset-x-0 max-w-[1100px] mx-auto z-50">
             <div className="mt-2 flex gap-4 items-center w-full p-1 px-2 tablet:p-2 bg-black bg-opacity-20 backdrop-blur-sm rounded-lg">
@@ -44,18 +42,18 @@ export default function Header() {
                 <div className="flex gap-4 justify-center text-lg font-bold tablet:hidden">
                     <Link className="transition duration-300 group ease-in-out" href="/premium"><Underline>Premium</Underline></Link>
                     <a className="transition duration-300 group ease-in-out" href="https://discord.gg/RXBRraTWeY" about="_blank">
-                        <Underline>{languages[language].home.header.support}</Underline>
+                        <Underline>{l.home.header.support}</Underline>
                     </a>
                     <Link className="transition duration-300 group ease-in-out" href="/docs">
-                        <Underline>{languages[language].home.header.documentation}</Underline>
+                        <Underline>{l.home.header.documentation}</Underline>
                     </Link>
                     <Link className="transition duration-300 group ease-in-out" href="/connections">
-                        <Underline>{languages[language].dashboard.connections.title}</Underline>
+                        <Underline>{l.dashboard.connections.title}</Underline>
                     </Link>
                 </div>
                 <div className="w-full flex justify-end gap-1">
                     <AuthUser handleRecallDrawer={handleRecallDrawer} type="desktop" />
-                    <ChooseLanguage />
+                    <ChooseLanguage mobile />
                 </div>
                 <button onClick={() => setIsDrawerOpen(true)} className="tabletdesk:hidden">
                     <RiMenu3Line fill="#fff" size={30} />
@@ -65,10 +63,13 @@ export default function Header() {
                 <div ref={drawerRef} className="fixed top-0 right-0 w-80 h-full bg-neutral-900 p-6">
                     <button
                         onClick={() => setIsDrawerOpen(false)}
-                        className="text-white mb-4 flex justify-end w-full">
+                        className="text-white flex justify-end w-full">
                         <FaX size={20} />
                     </button>
-                    <AuthUser handleRecallDrawer={handleRecallDrawer} type="mobile" />
+                    <div className="flex gap-2 items-center">
+                        <AuthUser handleRecallDrawer={handleRecallDrawer} type="mobile" />
+                        <ChooseLanguage />
+                    </div>
                     <div className="flex gap-4 justify-center text-lg flex-col">
                         <Link
                             onClick={handleRecallDrawer}
@@ -83,13 +84,16 @@ export default function Header() {
                             href="https://discord.gg/RXBRraTWeY"
                             about="_blank"
                         >
-                            <Underline>{languages[language].home.header.support}</Underline>
+                            <Underline>{l.home.header.support}</Underline>
                         </a>
                         <Link
                             className="transition duration-300 group ease-in-out"
                             href="/docs"
                         >
-                            <Underline>{languages[language].home.header.documentation}</Underline>
+                            <Underline>{l.home.header.documentation}</Underline>
+                        </Link>
+                        <Link className="transition duration-300 group ease-in-out" href="/connections">
+                            <Underline>{l.dashboard.connections.title}</Underline>
                         </Link>
                     </div>
                 </div>
