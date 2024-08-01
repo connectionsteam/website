@@ -90,7 +90,7 @@ export default function EditConnectionComponent(
                     {edit ? (
                         <>
                             <span className="text-neutral-300">
-                                Digite as tags separando-as por um espaço (tag1 tag2 ...)
+                                {l.dashboard.connections.connection.typetag}
                             </span>
                             <div className="flex flex-wrap gap-2 p-3 rounded-lg bg-neutral-900/50 
                             min-h-14 min-w-full">
@@ -139,7 +139,7 @@ export default function EditConnectionComponent(
             {edit && (
                 <DefaultInput
                     type="text"
-                    label="Icone da conexão"
+                    label={l.dashboard.connections.connection.icon}
                     placeholder={connection.icon || ""}
                     value={editedConnection.icon}
                     onChange={(e) => setEditedConnection({
