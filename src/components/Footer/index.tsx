@@ -7,7 +7,7 @@ export default function Footer() {
     const l = useLanguage();
 
     return (
-        <footer className="flex flex-col gap-2 w-full items-center border-t-1 border-neutral-700 mt-10 text-white">
+        <footer className="flex flex-col gap-2 w-full items-center border-t-1 border-neutral-800 mt-10 text-white">
             <div className="max-w-[1100px] flex w-full tablet:px-3 py-4">
                 <div className="flex w-full gap-6 mobile:flex-col">
                     <div className="flex flex-col flex-grow mobile:flex-grow-0 gap-1">
