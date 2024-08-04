@@ -1,4 +1,4 @@
-import { useLanguage } from "@/hooks/useLanguage";
+import { useLanguage } from "../../hooks/useLanguage";
 import { motion } from "framer-motion";
 import Image from "next/image";
 

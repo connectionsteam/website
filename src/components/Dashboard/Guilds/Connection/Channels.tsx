@@ -1,6 +1,6 @@
-"use client"
-import { useLanguage } from "@/hooks/useLanguage";
-import { ConnectedConnectionPayload, ConnectionBody, GuildChannelsPayload } from "@/types";
+"use client";
+import { useLanguage } from "../../../../hooks/useLanguage";
+import { ConnectedConnectionPayload, ConnectionBody, GuildChannelsPayload } from "../../../../types";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger, Switch } from "@nextui-org/react";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { HiHashtag } from "react-icons/hi";

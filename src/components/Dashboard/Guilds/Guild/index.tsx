@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
-import DefaultLayout from "@/components/Mixed/Layout";
-import ProtectedRoute from "@/components/Mixed/ProtectedRoute";
-import { api } from "@/utils/api";
+import DefaultLayout from "../../../../components/Mixed/Layout";
+import ProtectedRoute from "../../../../components/Mixed/ProtectedRoute";
+import { api } from "../../../../utils/api";
 import GuildSkeleton from "./Skeleton";
 import Infos from "./Infos";
 import Channels from "./Channels";
 import Cases from "./Cases";
-import usePremium from "@/hooks/usePremium";
-import { GuildChannelsPayload, GuildPayload, GuildTab, GuildThreadsPayload, Language, TabState } from "@/types";
+import usePremium from "../../../../hooks/usePremium";
+import { GuildChannelsPayload, GuildPayload, GuildTab, GuildThreadsPayload, Language, TabState } from "../../../../types";
 import Connections from "./Connecions";
-import { useLanguage } from "@/hooks/useLanguage";
+import { useLanguage } from "../../../../hooks/useLanguage";
 
 export default function GuildComponent() {
     const router = useRouter();

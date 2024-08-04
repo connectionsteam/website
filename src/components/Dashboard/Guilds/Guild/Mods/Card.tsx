@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import RemoveGuildMod from "./Menu";
-import Avatar from "@/components/Mixed/Avatar";
-import { GuildPayload, ModPermType } from "@/types";
-import { UserContext } from "@/contexts/User";
+import Avatar from "../../../../../components/Mixed/Avatar";
+import { GuildPayload, ModPermType } from "../../../../../types";
+import { UserContext } from "../../../../../contexts/User";
 import { useContext } from "react";
 
 interface Props {

@@ -1,9 +1,9 @@
-import { ConnectedConnectionFlags, ConnectedConnectionPayload, ConnectedConnectionsState, GuildPayload } from "@/types";
+import { ConnectedConnectionFlags, ConnectedConnectionPayload, ConnectedConnectionsState, GuildPayload } from "../../../../../types";
 import { AnimatePresence } from "framer-motion";
 import FloatingMenu from "./Menu";
 import { motion } from "framer-motion";
 import { Dispatch, SetStateAction } from "react";
-import Avatar from "@/components/Mixed/Avatar";
+import Avatar from "../../../../../components/Mixed/Avatar";
 import Image from "next/image";
 import Link from "next/link";
 

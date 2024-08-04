@@ -2,7 +2,7 @@ import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure
 import { AnimatePresence } from "framer-motion";
 import { LuTrash } from "react-icons/lu";
 import { motion } from "framer-motion";
-import { useLanguage } from "@/hooks/useLanguage";
+import { useLanguage } from "../../../../hooks/useLanguage";
 
 interface Props {
     id: string;

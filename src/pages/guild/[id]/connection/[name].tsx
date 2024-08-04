@@ -1,8 +1,8 @@
-import GuildEditConnection from "@/components/Dashboard/Guilds/Connection";
-import ConnectionGuildPageSkeleton from "@/components/Dashboard/Guilds/Connection/Skeleton";
-import DefaultLayout from "@/components/Mixed/Layout";
-import { ConnectedConnectionPayload, GuildChannelsPayload } from "@/types";
-import { api } from "@/utils/api";
+import GuildEditConnection from "../../../../components/Dashboard/Guilds/Connection";
+import ConnectionGuildPageSkeleton from "../../../../components/Dashboard/Guilds/Connection/Skeleton";
+import DefaultLayout from "../../../../components/Mixed/Layout";
+import { ConnectedConnectionPayload, GuildChannelsPayload } from "../../../../types";
+import { api } from "../../../../utils/api";
 import { useRouter } from "next/router";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 

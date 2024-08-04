@@ -1,10 +1,10 @@
-import { ConnectionBody, ConnectionsPageStructure, GuildChannelsPayload, GuildPayload } from "@/types";
+import { ConnectionBody, ConnectionsPageStructure, GuildChannelsPayload, GuildPayload } from "../../types";
 import ConnectionChannels from "../Dashboard/Guilds/Connection/Channels";
 import JoinConnectionLanguage from "../Dashboard/Guilds/Connection/Languages";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { api } from "@/utils/api";
+import { api } from "../../utils/api";
 import { useRouter } from "next/router";
-import { useLanguage } from "@/hooks/useLanguage";
+import { useLanguage } from "../../hooks/useLanguage";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 interface Props {

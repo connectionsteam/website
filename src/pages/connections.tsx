@@ -1,4 +1,4 @@
-import ConnectionsPageComponent from "@/components/Connections";
+import ConnectionsPageComponent from "../components/Connections";
 import Head from "next/head";
 
 export default function ConnectionsPage() {

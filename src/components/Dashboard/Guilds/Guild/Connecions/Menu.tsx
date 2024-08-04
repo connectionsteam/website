@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { ConnectedConnectionPayload } from "@/types";
+import { ConnectedConnectionPayload } from "../../../../../types";
 import { DeleteConnectedConnection } from "./Delete";
 
 interface Props {

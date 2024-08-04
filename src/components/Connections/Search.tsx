@@ -1,12 +1,12 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { ConnectionsPageFilters, ConnectionsPageStructure } from "@/types";
-import { useLanguage } from "@/hooks/useLanguage";
+import { ConnectionsPageFilters, ConnectionsPageStructure } from "../../types";
+import { useLanguage } from "../../hooks/useLanguage";
 import { RiHashtag } from "react-icons/ri";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { api } from "@/utils/api";
+import { api } from "../../utils/api";
 import DefaultInput from "../Mixed/Input";
 import ConnectionPageCard from "./Card";
-import debounce from "@/utils/debounce";
+import debounce from "../../utils/debounce";
 
 interface Props {
     actualConnections: ConnectionsPageStructure[];

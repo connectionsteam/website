@@ -1,12 +1,12 @@
-import Avatar from "@/components/Mixed/Avatar";
-import { ConnectedConnectionFlags, ConnectedConnectionPayload, GuildChannelsPayload, GuildPayload } from "@/types";
+import Avatar from "../../../../components/Mixed/Avatar";
+import { ConnectedConnectionFlags, ConnectedConnectionPayload, GuildChannelsPayload, GuildPayload } from "../../../../types";
 import BlockedWords from "./BlockedWords";
 import { Dispatch, SetStateAction } from "react";
 import GuildConnectionFlags from "./Flags";
 import Image from "next/image";
 import { HiHashtag } from "react-icons/hi";
 import { BiLeftArrowAlt } from "react-icons/bi";
-import { useLanguage } from "@/hooks/useLanguage";
+import { useLanguage } from "../../../../hooks/useLanguage";
 import Link from "next/link";
 
 interface Props {

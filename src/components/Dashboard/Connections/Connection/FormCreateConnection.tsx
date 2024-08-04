@@ -2,10 +2,10 @@ import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure
 import { ChangeEvent, Dispatch, SetStateAction, useContext, useState } from "react";
 import { LuPlusCircle } from "react-icons/lu";
 import CreateConnection from "./CreateConnection";
-import { ConnectionPayload, RequestPost } from "@/types";
-import { LanguageContext } from "@/contexts/Language";
-import { languages } from "@/locale";
-import DefaultInput from "@/components/Mixed/Input";
+import { ConnectionPayload, RequestPost } from "../../../../types";
+import { LanguageContext } from "../../../../contexts/Language";
+import { languages } from "../../../../locale";
+import DefaultInput from "../../../../components/Mixed/Input";
 
 interface Props {
     connections: ConnectionPayload[];

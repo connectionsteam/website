@@ -1,5 +1,5 @@
-import { LanguageContext } from "@/contexts/Language";
-import { languages } from "@/locale";
+import { LanguageContext } from "../contexts/Language";
+import { languages } from "../locale";
 import { useContext } from "react";
 
 export function useLanguage() {

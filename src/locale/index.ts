@@ -615,19 +615,26 @@ export const languages = {
             pageDescription: "Access the best level of Connections. Use premium.",
             basicpremium: {
                 features: [
-                    "+ Threads",
-                    "Reduced message cooldown",
-                    "Freeze messages in connected connections",
-                    "+ Connected connections",
-                    "Improved moderation system",
-                    "And much more!"
+                    "+ 5 Threads",
+                    "+ 10 Moderators limit",
+                    "+ 25 Connected connections",
+                    "Cooldown of messages reduced",
+                    "Freeze messages",
+                    "Moderation system improved",
+                    "And much more!",
                 ]
             },
             premium: {
                 features: [
-                    "Everything from Basic Premium",
+                    "+ 15 Threads",
+                    "+ 10 Moderators limit",
+                    "+ 50 Connected connections",
+                    "Cooldown of messages reduced",
+                    "Freeze messages",
+                    "Moderation system improved",
                     "Own bot and customizable!",
-                    "Max 5 servers in the bot"
+                    "Max 5 servers in the bot",
+                    "And much more!",
                 ]
             },
             popUp: {

@@ -1,14 +1,14 @@
-import Avatar from "@/components/Mixed/Avatar";
-import { DiscordMember, GuildPayload, GuildThreadsPayload, Premium } from "@/types";
+import Avatar from "../../../../components/Mixed/Avatar";
+import { DiscordMember, GuildPayload, GuildThreadsPayload, Premium } from "../../../../types";
 import GuildMods from "./Mods";
 import Threads from "./Threads";
-import { useLanguage } from "@/hooks/useLanguage";
-import DefaultPremiumButton from "@/components/Mixed/DefaultPremiumButton";
+import { useLanguage } from "../../../../hooks/useLanguage";
+import DefaultPremiumButton from "../../../../components/Mixed/DefaultPremiumButton";
 import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/modal";
 import ActivePremium from "./ActivePremium";
 import { useState } from "react";
 import Confetti from "react-confetti";
-import { api } from "@/utils/api";
+import { api } from "../../../../utils/api";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
 

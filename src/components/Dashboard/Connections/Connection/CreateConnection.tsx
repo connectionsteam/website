@@ -1,7 +1,7 @@
-import { LanguageContext } from "@/contexts/Language";
-import { languages } from "@/locale";
-import { ConnectionPayload, RequestPost } from "@/types";
-import { api } from "@/utils/api";
+import { LanguageContext } from "../../../../contexts/Language";
+import { languages } from "../../../../locale";
+import { ConnectionPayload, RequestPost } from "../../../../types";
+import { api } from "../../../../utils/api";
 import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 

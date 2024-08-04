@@ -1,6 +1,6 @@
 "use client"
 import React, { createContext, useState, ReactNode, useEffect, FC } from "react";
-import { LanguageContextProps, LanguageType } from "@/types";
+import { LanguageContextProps, LanguageType } from "../types";
 import { useIsClient } from "./Client";
 
 const replaceLanguage = (text: string) => {

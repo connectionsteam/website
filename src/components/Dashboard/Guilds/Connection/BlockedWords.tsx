@@ -1,11 +1,11 @@
-import { ConnectedConnectionFlags, ConnectedConnectionPayload, GuildPayload } from "@/types";
-import { api } from "@/utils/api";
+import { ConnectedConnectionFlags, ConnectedConnectionPayload, GuildPayload } from "../../../../types";
+import { api } from "../../../../utils/api";
 import { ChangeEvent, KeyboardEvent, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BiX } from "react-icons/bi";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
-import { useLanguage } from "@/hooks/useLanguage";
+import { useLanguage } from "../../../../hooks/useLanguage";
 
 interface Props {
     connection: ConnectedConnectionPayload;

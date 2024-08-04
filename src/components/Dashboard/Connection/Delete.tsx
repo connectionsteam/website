@@ -1,8 +1,8 @@
-import { useLanguage } from "@/hooks/useLanguage";
+import { useLanguage } from "../../../hooks/useLanguage";
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/modal";
 import { LuTrash } from "react-icons/lu";
 import { useRouter } from "next/router";
-import { api } from "@/utils/api";
+import { api } from "../../../utils/api";
 
 export default function DeleteConnectionPage({ id }: { id: string }) {
     const l = useLanguage();

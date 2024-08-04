@@ -1,8 +1,8 @@
-import { AnyCase, GuildPayload, ModsFiltersStructure } from "@/types";
+import { AnyCase, GuildPayload, ModsFiltersStructure } from "../../../../../types";
 import CaseCard from "./Card";
-import { useLanguage } from "@/hooks/useLanguage";
+import { useLanguage } from "../../../../../hooks/useLanguage";
 import { useEffect, useState } from "react";
-import { api } from "@/utils/api";
+import { api } from "../../../../../utils/api";
 import { IoFilter } from "react-icons/io5";
 import { Modal, useDisclosure } from "@nextui-org/modal";
 import ModsFilters from "./Filters";

@@ -1,6 +1,6 @@
 "use client"
 import React, { createContext, useState, useEffect, ReactNode } from "react";
-import { UserContextProps, UserStructure } from "@/types";
+import { UserContextProps, UserStructure } from "../types";
 import Cookies from "js-cookie";
 import axios from "axios";
 

@@ -1,5 +1,5 @@
-import DefaultLayout from "@/components/Mixed/Layout";
-import { useLanguage } from "@/hooks/useLanguage";
+import DefaultLayout from "../components/Mixed/Layout";
+import { useLanguage } from "../hooks/useLanguage";
 import { BsDiscord } from "react-icons/bs";
 
 const { NEXT_PUBLIC_AUTH_LINK } = process.env;

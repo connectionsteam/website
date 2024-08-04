@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { GuildPayload, Premium as PremiumStructure, PremiumType } from "@/types";
+import { GuildPayload, Premium as PremiumStructure, PremiumType } from "../types";
 
 export default function usePremium(guild: GuildPayload | undefined) {
     const [premium, setPremium] = useState<PremiumStructure>();

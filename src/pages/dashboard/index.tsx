@@ -1,12 +1,12 @@
-import ConnectionsComponent from "@/components/Dashboard/Connections";
-import ConnectionsProtectedSkeleton from "@/components/Dashboard/Connections/Skeleton";
-import GuildsComponent from "@/components/Dashboard/Guilds";
-import DefaultLayout from "@/components/Mixed/Layout";
-import ProtectedRoute from "@/components/Mixed/ProtectedRoute";
-import { LanguageContext } from "@/contexts/Language";
-import { languages } from "@/locale";
-import { ConnectionPayload, GuildPayload } from "@/types";
-import { api } from "@/utils/api";
+import ConnectionsComponent from "../../components/Dashboard/Connections";
+import ConnectionsProtectedSkeleton from "../../components/Dashboard/Connections/Skeleton";
+import GuildsComponent from "../../components/Dashboard/Guilds";
+import DefaultLayout from "../../components/Mixed/Layout";
+import ProtectedRoute from "../../components/Mixed/ProtectedRoute";
+import { LanguageContext } from "../../contexts/Language";
+import { languages } from "../../locale";
+import { ConnectionPayload, GuildPayload } from "../../types";
+import { api } from "../../utils/api";
 import { Tab, Tabs } from "@nextui-org/tabs";
 import { useContext, useEffect, useState } from "react";
 

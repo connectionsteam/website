@@ -1,9 +1,9 @@
 import { Input } from "@nextui-org/input";
 import ConnectionsSkeleton from "../ConnectionsSkeleton";
 import { useContext } from "react";
-import { LanguageContext } from "@/contexts/Language";
-import { languages } from "@/locale";
-import DefaultLayout from "@/components/Mixed/Layout";
+import { LanguageContext } from "../../../contexts/Language";
+import { languages } from "../../../locale";
+import DefaultLayout from "../../../components/Mixed/Layout";
 import { Tab, Tabs } from "@nextui-org/tabs";
 
 export default function ConnectionsProtectedSkeleton() {

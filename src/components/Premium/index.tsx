@@ -4,10 +4,9 @@ import DefaultLayout from "../Mixed/Layout";
 import { useState } from "react";
 import Carousel from "./Carousel";
 import { IoIosArrowForward } from "react-icons/io";
-import { TextGenerateEffect } from "../ui/Text";
 import Plans from "./Plans";
 import { motion } from "framer-motion";
-import { useLanguage } from "@/hooks/useLanguage";
+import { useLanguage } from "../../hooks/useLanguage";
 
 export default function PremiumComponent() {
     const [morePlans, setMorePlans] = useState(false);
@@ -32,7 +31,7 @@ export default function PremiumComponent() {
         <DefaultLayout className="overflow-x-hidden">
             {!morePlans ? (
                 <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="flex w-full gap-6 tablet:flex-col tablet:items-center">
-                    <div className="flex-grow flex flex-col gap-4 tablet:items-center mobile:items-start mobile:px-2">
+                    <div className="flex-grow flex flex-col gap-4 tablet:items-center mobile:items-center mobile:text-center mobile:px-2">
                         <div className="flex items-end gap-2 mobile:flex-col mobile:items-start">
                             <span className="text-3xl mobile:text-2xl font-bold text-center">Connections</span>
                             <h1 className="mobile:text-4xl text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-500 to-indigo-500">Premium</h1>
@@ -40,7 +39,7 @@ export default function PremiumComponent() {
                         <div className="max-w-[70%]">
                             <span className="text-neutral-30">{l.plans.description}</span>
                         </div>
-                        <div className="max-w-60 mt-4 tablet:w-full tablet:max-w-[350px] mobile:max-w-60">
+                        <div className="max-w-60 mt-4 tablet:w-full tablet:max-w-[350px] mobile:min-w-[328px] mobile:px-2">
                             <DefaultButton onClick={() => setMorePlans(true)} className="p-3 group flex">
                                 <span>{l.plans.seeplans}</span>
                                 <IoIosArrowForward className="group-hover:translate-x-2 transition-all" />

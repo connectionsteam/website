@@ -1,9 +1,9 @@
-import { useLanguage } from "@/hooks/useLanguage";
+import { useLanguage } from "../../hooks/useLanguage";
 import { HiHashtag } from "react-icons/hi";
 import { LuCalendar } from "react-icons/lu";
 import { MdOutlineKeyboardArrowUp } from "react-icons/md";
 import { motion } from "framer-motion";
-import { ConnectionsPageFilters } from "@/types";
+import { ConnectionsPageFilters } from "../../types";
 import { useEffect } from "react";
 import { BiSearch } from "react-icons/bi";
 

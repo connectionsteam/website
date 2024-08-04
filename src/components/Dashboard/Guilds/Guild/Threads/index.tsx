@@ -1,9 +1,9 @@
-import { GuildPayload, GuildThreadsPayload, Premium } from "@/types";
+import { GuildPayload, GuildThreadsPayload, Premium } from "../../../../../types";
 import { useState } from "react";
 import { MenuProps } from "../Mods";
 import DeleteThread from "./Menu";
-import { api } from "@/utils/api";
-import { useLanguage } from "@/hooks/useLanguage";
+import { api } from "../../../../../utils/api";
+import { useLanguage } from "../../../../../hooks/useLanguage";
 
 interface Props {
     setThreads: (threads: GuildThreadsPayload[]) => void;

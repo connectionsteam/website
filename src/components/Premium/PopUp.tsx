@@ -2,7 +2,7 @@ import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, UseDisclosure
 import DefaultPremiumButton from "../Mixed/DefaultPremiumButton";
 import Sonner from "../Mixed/Sonner";
 import { useEffect, useState } from "react";
-import { useLanguage } from "@/hooks/useLanguage";
+import { useLanguage } from "../../hooks/useLanguage";
 
 interface Props extends UseDisclosureProps {
     text: string;

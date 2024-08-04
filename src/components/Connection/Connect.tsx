@@ -1,8 +1,8 @@
 "use client"
-import { ConnectionBody, ConnectionsPageStructure, GuildPayload } from "@/types";
-import { api } from "@/utils/api";
+import { ConnectionBody, ConnectionsPageStructure, GuildPayload } from "../../types";
+import { api } from "../../utils/api";
 import { useEffect, useState } from "react";
-import { useLanguage } from "@/hooks/useLanguage";
+import { useLanguage } from "../../hooks/useLanguage";
 import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/modal";
 import { FaLink } from "react-icons/fa6";
 import ConnectionsPageChannels from "./Options";

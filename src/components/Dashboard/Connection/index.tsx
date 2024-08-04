@@ -1,11 +1,11 @@
-import DefaultLayout from "@/components/Mixed/Layout";
-import { ConnectionPayload } from "@/types";
-import { api } from "@/utils/api";
+import DefaultLayout from "../../../components/Mixed/Layout";
+import { ConnectionPayload } from "../../../types";
+import { api } from "../../../utils/api";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { LuPenSquare } from "react-icons/lu";
 import EditConnectionComponent from "./Edit";
-import { useLanguage } from "@/hooks/useLanguage";
+import { useLanguage } from "../../../hooks/useLanguage";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
 import ConnectionPrivateInvite from "./Invite";

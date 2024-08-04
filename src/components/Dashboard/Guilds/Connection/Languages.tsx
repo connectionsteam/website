@@ -1,6 +1,6 @@
-import DefaultInput from "@/components/Mixed/Input";
-import { useLanguage } from "@/hooks/useLanguage";
-import { ConnectionBody, Languages } from "@/types";
+import DefaultInput from "../../../../components/Mixed/Input";
+import { useLanguage } from "../../../../hooks/useLanguage";
+import { ConnectionBody, Languages } from "../../../../types";
 import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/react";
 import { ChangeEvent, Dispatch, useState } from "react";
 

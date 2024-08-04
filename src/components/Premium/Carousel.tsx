@@ -1,11 +1,13 @@
-"use client"
+"use client";
 import { BiCheck } from "react-icons/bi";
 import DefaultButton from "../Mixed/Button";
 import Slider, { CustomArrowProps, Settings } from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { PlanStructure } from "@/types";
-import { useLanguage } from "@/hooks/useLanguage";
+import { PlanStructure } from "../../types";
+import { useLanguage } from "../../hooks/useLanguage";
+import { Modal, useDisclosure } from "@nextui-org/modal";
+import PopUpBuy from "./Buy";
 
 export default function Carousel({ plans }: { plans: PlanStructure[] }) {
     const l = useLanguage();
@@ -19,15 +21,17 @@ export default function Carousel({ plans }: { plans: PlanStructure[] }) {
         autoplay: true,
         autoplaySpeed: 10000,
         nextArrow: <NextArrow />,
-        prevArrow: <PrevArrow />,
+        prevArrow: <PrevArrow />
     };
+
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     return (
         <div className="max-w-[350px] mobile:max-w-screen mobile:px-2 h-full rounded-lg">
             <Slider className="h-full rounded-lg" {...settings}>
                 {plans.map((plan, index) => {
                     const Component = (
-                        <div key={index} className="flex flex-col p-6 rounded-lg bg-neutral-800 items-start relative h-[460px]">
+                        <div key={index} className="flex flex-col p-6 rounded-lg bg-neutral-800 items-start relative h-[480px]">
                             <div className="flex gap-3 flex-col w-full">
                                 <div className="flex items-start w-full">
                                     <span className="font-bold text-3xl flex flex-grow">{plan.name}</span>
@@ -38,7 +42,7 @@ export default function Carousel({ plans }: { plans: PlanStructure[] }) {
                                     <span className="text-neutral-300 text-sm">/{l.plans.month}</span>
                                 </h1>
                             </div>
-                            <div className="h-[270px] mt-3 flex flex-col gap-2">
+                            <div className="h-[270px] flex flex-col gap-0.5 flex-grow mt-2">
                                 {plan.features.map((feature, index) => (
                                     <div key={index} className="flex gap-1 items-center">
                                         <div className="w-6">
@@ -48,7 +52,7 @@ export default function Carousel({ plans }: { plans: PlanStructure[] }) {
                                     </div>
                                 ))}
                             </div>
-                            <DefaultButton onClick={() => window.location.href = "https://www.youtube.com/watch?v=xvFZjo5PgG0"} className="p-3">
+                            <DefaultButton onClick={onOpen} className="p-3">
                                 <div className="font-bold">{l.plans.buy}</div>
                             </DefaultButton>
                         </div>
@@ -63,6 +67,13 @@ export default function Carousel({ plans }: { plans: PlanStructure[] }) {
                     );
                 })}
             </Slider>
+            <Modal classNames={{
+                closeButton: "transition hover:bg-neutral-700",
+                wrapper: "overflow-y-hidden",
+                base: "max-h-screen overflow-y-auto",
+            }} isOpen={isOpen} onOpenChange={onOpenChange} size="5xl">
+                <PopUpBuy/>
+            </Modal>
         </div>
     )
 }

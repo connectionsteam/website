@@ -1,12 +1,12 @@
 import { forwardRef } from "react";
-import { ConnectionsPageStructure } from "@/types";
+import { ConnectionsPageStructure } from "../../../types";
 import { motion } from "framer-motion";
 import { MdOutlineKeyboardArrowUp } from "react-icons/md";
 import { FaLink } from "react-icons/fa6";
-import Avatar from "@/components/Mixed/Avatar";
+import Avatar from "../../../components/Mixed/Avatar";
 import Link from "next/link";
-import DefaultButton from "@/components/Mixed/Button";
-import { useLanguage } from "@/hooks/useLanguage";
+import DefaultButton from "../../../components/Mixed/Button";
+import { useLanguage } from "../../../hooks/useLanguage";
 
 interface Props {
     connection: ConnectionsPageStructure;

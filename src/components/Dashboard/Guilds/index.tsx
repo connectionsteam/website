@@ -1,14 +1,14 @@
 import { Input } from "@nextui-org/input";
 import Link from "next/link";
 import { ChangeEvent, useState } from "react";
-import { GuildPayload } from "@/types";
+import { GuildPayload } from "../../../types";
 import ConnectionsSkeleton from "../ConnectionsSkeleton";
 import { LuPlusCircle } from "react-icons/lu";
-import Avatar from "@/components/Mixed/Avatar";
+import Avatar from "../../../components/Mixed/Avatar";
 import { motion } from "framer-motion";
 import { HiSparkles } from "react-icons/hi";
 import { MdOutlineSync } from "react-icons/md";
-import { useLanguage } from "@/hooks/useLanguage";
+import { useLanguage } from "../../../hooks/useLanguage";
 
 const url = "https://discord.com/oauth2/authorize?client_id=1243234162077470802";
 

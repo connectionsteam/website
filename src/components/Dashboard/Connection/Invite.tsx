@@ -2,12 +2,12 @@ import { Switch } from "@nextui-org/switch";
 import { EditConnection } from ".";
 import { ChangeEvent, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
-import { ConnectionPayload } from "@/types";
+import { ConnectionPayload } from "../../../types";
 import { MdOutlineContentCopy, MdOutlineSync } from "react-icons/md";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { BiCheck } from "react-icons/bi";
-import { api } from "@/utils/api";
-import { useLanguage } from "@/hooks/useLanguage";
+import { api } from "../../../utils/api";
+import { useLanguage } from "../../../hooks/useLanguage";
 
 interface Props {
     editedConnection: EditConnection;

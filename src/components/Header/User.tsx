@@ -1,14 +1,14 @@
-import { UserContext } from "@/contexts/User";
+import { UserContext } from "../../contexts/User";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/dropdown";
 import { useContext } from "react";
 import { LuLogOut } from "react-icons/lu";
 import Cookies from "js-cookie";
-import { useIsClient } from "@/contexts/Client";
+import { useIsClient } from "../../contexts/Client";
 import axios from "axios";
 import Link from "next/link";
 import Avatar from "../Mixed/Avatar";
-import { LanguageContext } from "@/contexts/Language";
-import { languages } from "@/locale";
+import { LanguageContext } from "../../contexts/Language";
+import { languages } from "../../locale";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 
 export default function AuthUser({ type, handleRecallDrawer }: { type: "mobile" | "desktop"; handleRecallDrawer: () => void; }) {

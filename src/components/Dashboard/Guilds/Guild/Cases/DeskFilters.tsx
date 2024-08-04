@@ -1,7 +1,7 @@
-import Avatar from "@/components/Mixed/Avatar";
-import DefaultInput from "@/components/Mixed/Input";
-import { useLanguage } from "@/hooks/useLanguage";
-import { CaseTypes, GuildPayload, ModsFiltersStructure } from "@/types";
+import Avatar from "../../../../../components/Mixed/Avatar";
+import DefaultInput from "../../../../../components/Mixed/Input";
+import { useLanguage } from "../../../../../hooks/useLanguage";
+import { CaseTypes, GuildPayload, ModsFiltersStructure } from "../../../../../types";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
 import { motion } from "framer-motion";
 import { useState } from "react";

@@ -1,5 +1,4 @@
-import ConnectionPageComponent from "@/components/Connection";
-import GuildComponent from "@/components/Dashboard/Guilds/Guild";
+import ConnectionPageComponent from "../../components/Connection";
 
 export default function ConnectionPage() {
     return <ConnectionPageComponent />

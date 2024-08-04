@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { api } from "@/utils/api";
-import { useIsClient } from "@/contexts/Client";
+import { api } from "../utils/api";
+import { useIsClient } from "../contexts/Client";
 
 const useAuth = () => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);

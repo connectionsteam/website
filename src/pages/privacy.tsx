@@ -1,5 +1,5 @@
-import DefaultLayout from "@/components/Mixed/Layout";
-import { useLanguage } from "@/hooks/useLanguage";
+import DefaultLayout from "../components/Mixed/Layout";
+import { useLanguage } from "../hooks/useLanguage";
 
 export default function PolicyPage() {
     const l = useLanguage();

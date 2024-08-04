@@ -1,11 +1,11 @@
 import { Input } from "@nextui-org/input";
 import { ChangeEvent, Dispatch, SetStateAction, useContext, useState } from "react";
-import { ConnectionPayload } from "@/types";
+import { ConnectionPayload } from "../../../types";
 import ConnectionsSkeleton from "../ConnectionsSkeleton";
 import CreateConnectionForm from "./Connection/FormCreateConnection";
-import { LanguageContext } from "@/contexts/Language";
-import { languages } from "@/locale";
-import { api } from "@/utils/api";
+import { LanguageContext } from "../../../contexts/Language";
+import { languages } from "../../../locale";
+import { api } from "../../../utils/api";
 import ConnectionCard from "./Connection/Card";
 import { AnimatePresence } from "framer-motion";
 

@@ -1,6 +1,6 @@
-import { useLanguage } from "@/hooks/useLanguage";
-import { ConnectedConnectionFlags, ConnectedConnectionPayload, GuildChannelsPayload, GuildPayload } from "@/types";
-import { api } from "@/utils/api";
+import { useLanguage } from "../../../../../hooks/useLanguage";
+import { ConnectedConnectionFlags, ConnectedConnectionPayload, GuildChannelsPayload, GuildPayload } from "../../../../../types";
+import { api } from "../../../../../utils/api";
 import { useEffect, useState } from "react";
 import { HiHashtag } from "react-icons/hi";
 import { LuLock, LuUnlock } from "react-icons/lu";

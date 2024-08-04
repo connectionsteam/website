@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Underline from "../Mixed/Underline";
 import { BsDiscord } from "react-icons/bs";
-import { useLanguage } from "@/hooks/useLanguage";
+import { useLanguage } from "../../hooks/useLanguage";
 
 export default function Footer() {
     const l = useLanguage();

@@ -6,7 +6,7 @@ import Underline from "../Mixed/Underline";
 import { FaX } from "react-icons/fa6";
 import AuthUser from "./User";
 import ChooseLanguage from "./Language";
-import { useLanguage } from "@/hooks/useLanguage";
+import { useLanguage } from "../../hooks/useLanguage";
 
 export default function Header() {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);

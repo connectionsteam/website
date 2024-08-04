@@ -1,6 +1,6 @@
-import { useLanguage } from "@/hooks/useLanguage";
-import { ConnectedConnectionFlags, ConnectedConnectionPayload } from "@/types";
-import { api } from "@/utils/api";
+import { useLanguage } from "../../../../hooks/useLanguage";
+import { ConnectedConnectionFlags, ConnectedConnectionPayload } from "../../../../types";
+import { api } from "../../../../utils/api";
 import { Switch } from "@nextui-org/switch";
 import { useState, useEffect } from "react";
 

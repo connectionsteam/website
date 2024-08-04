@@ -1,9 +1,9 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Dispatch, SetStateAction } from "react";
 import { ConnectionState } from "..";
-import { ConnectionPayload } from "@/types";
+import { ConnectionPayload } from "../../../../types";
 import DeleteConnection from "./DeleteConnection";
-import Avatar from "@/components/Mixed/Avatar";
+import Avatar from "../../../../components/Mixed/Avatar";
 import Link from "next/link";
 
 interface Props {

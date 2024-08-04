@@ -1,7 +1,7 @@
-import Footer from "@/components/Footer";
+import Footer from "../components/Footer";
 import "../app/globals.css";
-import Header from "@/components/Header";
-import Providers from "@/providers";
+import Header from "../components/Header";
+import Providers from "../providers";
 import { AppProps } from "next/app";
 import { Inter } from "next/font/google";
 

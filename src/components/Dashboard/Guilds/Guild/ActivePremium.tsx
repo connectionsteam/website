@@ -1,13 +1,13 @@
-import DefaultPremiumButton from "@/components/Mixed/DefaultPremiumButton";
-import DefaultInput from "@/components/Mixed/Input";
-import { GuildPayload, Premium, PremiumType } from "@/types";
-import { api } from "@/utils/api";
+import DefaultPremiumButton from "../../../../components/Mixed/DefaultPremiumButton";
+import DefaultInput from "../../../../components/Mixed/Input";
+import { GuildPayload, Premium, PremiumType } from "../../../../types";
+import { api } from "../../../../utils/api";
 import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/modal";
 import { ChangeEvent, useEffect, useState } from "react";
 import { HiSparkles } from "react-icons/hi";
 import { motion } from "framer-motion";
 import { BiCheck } from "react-icons/bi";
-import { useLanguage } from "@/hooks/useLanguage";
+import { useLanguage } from "../../../../hooks/useLanguage";
 
 interface Props {
     guild: GuildPayload;

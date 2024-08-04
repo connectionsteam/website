@@ -1,5 +1,5 @@
-import { ConnectionsPageStructure, VotesPropsStructure } from "@/types";
-import { api } from "@/utils/api";
+import { ConnectionsPageStructure, VotesPropsStructure } from "../../types";
+import { api } from "../../utils/api";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import DefaultLayout from "../Mixed/Layout";
@@ -7,11 +7,11 @@ import Avatar from "../Mixed/Avatar";
 import { MdOutlineKeyboardArrowUp } from "react-icons/md";
 import ConnectionsPageVoteComponent from "../Connections/Connection/Vote";
 import { RiHashtag } from "react-icons/ri";
-import { useLanguage } from "@/hooks/useLanguage";
+import { useLanguage } from "../../hooks/useLanguage";
 import ConnectionsPageCard from "../Connections/Connection";
 import ConnectConnection from "./Connect";
 import Link from "next/link";
-import { UserContext } from "@/contexts/User";
+import { UserContext } from "../../contexts/User";
 import ConnectionPageSkeleton from "./Skeleton";
 
 export default function ConnectionPageComponent() {

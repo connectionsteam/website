@@ -1,14 +1,14 @@
 "use client";
-import DefaultInput from "@/components/Mixed/Input";
-import { ConnectionBody, GuildChannelsPayload, GuildPayload, Language, Premium } from "@/types";
-import { api } from "@/utils/api";
+import DefaultInput from "../../../../components/Mixed/Input";
+import { ConnectionBody, GuildChannelsPayload, GuildPayload, Language, Premium } from "../../../../types";
+import { api } from "../../../../utils/api";
 import { useState, useEffect } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import ConnectionChannels from "./Channels";
 import JoinConnectionLanguage from "./Languages";
-import { useLanguage } from "@/hooks/useLanguage";
+import { useLanguage } from "../../../../hooks/useLanguage";
 import { useDisclosure } from "@nextui-org/modal";
-import PremiumPopUp from "@/components/Premium/PopUp";
+import PremiumPopUp from "../../../../components/Premium/PopUp";
 import { AnimatePresence, motion } from "framer-motion";
 
 interface Props {

@@ -1,12 +1,12 @@
 "use client"
-import { PlanStructure } from "@/types";
+import { PlanStructure } from "../../types";
 import { TextGenerateEffect } from "../ui/Text";
 import { motion } from "framer-motion";
 import { BiCheck } from "react-icons/bi";
 import DefaultButton from "../Mixed/Button";
 import { BackgroundGradient } from "../ui/Gradient";
 import { LuArrowLeft } from "react-icons/lu";
-import { useLanguage } from "@/hooks/useLanguage";
+import { useLanguage } from "../../hooks/useLanguage";
 
 export default function Plans({ plans, setMorePlans }: { plans: PlanStructure[], setMorePlans: (value: boolean) => void }) {
     const l = useLanguage();

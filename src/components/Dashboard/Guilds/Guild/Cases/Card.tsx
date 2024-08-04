@@ -1,6 +1,6 @@
-import Avatar from "@/components/Mixed/Avatar";
-import { useLanguage } from "@/hooks/useLanguage";
-import { AnyCase, CaseTypes } from "@/types";
+import Avatar from "../../../../../components/Mixed/Avatar";
+import { useLanguage } from "../../../../../hooks/useLanguage";
+import { AnyCase, CaseTypes } from "../../../../../types";
 import moment from "moment";
 import { IoIosArrowDown } from "react-icons/io";
 

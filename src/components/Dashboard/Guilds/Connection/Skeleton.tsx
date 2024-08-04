@@ -1,4 +1,4 @@
-import DefaultLayout from "@/components/Mixed/Layout";
+import DefaultLayout from "../../../../components/Mixed/Layout";
 
 export default function ConnectionGuildPageSkeleton() {
     return (

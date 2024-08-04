@@ -1,13 +1,13 @@
-import { UserContext } from "@/contexts/User";
-import { ConnectionsPageStructure } from "@/types";
+import { UserContext } from "../../../contexts/User";
+import { ConnectionsPageStructure } from "../../../types";
 import { useContext, useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
 import { MdOutlineKeyboardArrowUp } from "react-icons/md";
 import { AnimatePresence, motion } from "framer-motion";
-import { api } from "@/utils/api";
-import DefaultButton from "@/components/Mixed/Button";
-import { useLanguage } from "@/hooks/useLanguage";
+import { api } from "../../../utils/api";
+import DefaultButton from "../../../components/Mixed/Button";
+import { useLanguage } from "../../../hooks/useLanguage";
 
 interface Props {
     connection: ConnectionsPageStructure;

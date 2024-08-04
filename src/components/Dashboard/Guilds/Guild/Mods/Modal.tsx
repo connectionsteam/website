@@ -1,7 +1,7 @@
-import Avatar from "@/components/Mixed/Avatar";
-import DefaultInput from "@/components/Mixed/Input";
-import { useLanguage } from "@/hooks/useLanguage";
-import { DiscordMember, GuildPayload } from "@/types";
+import Avatar from "../../../../../components/Mixed/Avatar";
+import DefaultInput from "../../../../../components/Mixed/Input";
+import { useLanguage } from "../../../../../hooks/useLanguage";
+import { DiscordMember, GuildPayload } from "../../../../../types";
 import { useState } from "react";
 
 interface Props {

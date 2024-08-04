@@ -1,12 +1,12 @@
-import { Dispatch, SetStateAction, useState } from "react";
-import { ConnectedConnectionPayload, ConnectedConnectionsState, GuildChannelsPayload, GuildPayload, Premium } from "@/types";
+import { useState } from "react";
+import { ConnectedConnectionsState, GuildChannelsPayload, GuildPayload, Premium } from "../../../../../types";
 import ConnectionsSkeleton from "../../../ConnectionsSkeleton";
 import { LuPlusCircle } from "react-icons/lu";
 import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/modal";
 import GuildConnectConnection from "../../Connection/Connect";
 import ConnectedConnnectionCard from "./Card";
-import { api } from "@/utils/api";
-import { useLanguage } from "@/hooks/useLanguage";
+import { api } from "../../../../../utils/api";
+import { useLanguage } from "../../../../../hooks/useLanguage";
 
 interface Props {
     guild: GuildPayload;

@@ -1,5 +1,5 @@
-import { useLanguage } from "@/hooks/useLanguage";
-import { ConnectedConnectionPayload } from "@/types";
+import { useLanguage } from "../../../../../hooks/useLanguage";
+import { ConnectedConnectionPayload } from "../../../../../types";
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/modal";
 import { AiOutlineDisconnect } from "react-icons/ai";
 import { LuTrash } from "react-icons/lu";

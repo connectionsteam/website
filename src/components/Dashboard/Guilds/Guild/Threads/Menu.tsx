@@ -1,9 +1,9 @@
-import { GuildThreadsPayload } from "@/types";
+import { GuildThreadsPayload } from "../../../../../types";
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/modal";
 import { AnimatePresence } from "framer-motion";
 import { LuTrash } from "react-icons/lu";
 import { motion } from "framer-motion";
-import { useLanguage } from "@/hooks/useLanguage";
+import { useLanguage } from "../../../../../hooks/useLanguage";
 
 interface Props {
     thread: GuildThreadsPayload;

@@ -1,7 +1,7 @@
-import { ConnectionsPageStructure } from "@/types";
+import { ConnectionsPageStructure } from "../../types";
 import Link from "next/link";
 import Avatar from "../Mixed/Avatar";
-import abbreviateNumber from "@/utils/abbreviate";
+import abbreviateNumber from "../../utils/abbreviate";
 import { MdOutlineKeyboardArrowUp } from "react-icons/md";
 
 export default function ConnectionPageCard({ connection }: { connection: ConnectionsPageStructure }) {

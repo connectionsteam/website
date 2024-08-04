@@ -1,15 +1,15 @@
 "use client";
-import DefaultButton from "@/components/Mixed/Button";
-import { DiscordMember, GuildPayload, ModPermType, Premium } from "@/types";
+import DefaultButton from "../../../../../components/Mixed/Button";
+import { DiscordMember, GuildPayload, ModPermType, Premium } from "../../../../../types";
 import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/modal";
 import { useContext, useState } from "react";
 import { LuPlusCircle } from "react-icons/lu";
-import { api } from "@/utils/api";
+import { api } from "../../../../../utils/api";
 import GuildModCard from "./Card";
 import GuildModModal from "./Modal";
-import { UserContext } from "@/contexts/User";
-import { useLanguage } from "@/hooks/useLanguage";
-import PremiumPopUp from "@/components/Premium/PopUp";
+import { UserContext } from "../../../../../contexts/User";
+import { useLanguage } from "../../../../../hooks/useLanguage";
+import PremiumPopUp from "../../../../../components/Premium/PopUp";
 import { AnimatePresence } from "framer-motion";
 
 interface Props {

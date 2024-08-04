@@ -1,6 +1,6 @@
 import { ReactNode, useEffect } from "react";
 import { useRouter } from "next/router";
-import useAuth from "@/hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 
 const ProtectedRoute = ({ children, loading }: { children: ReactNode, loading: ReactNode }) => {
     const { isAuthenticated } = useAuth();

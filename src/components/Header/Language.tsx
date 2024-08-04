@@ -2,9 +2,9 @@ import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-o
 import FlagBr from "../Flags/br";
 import FlagEn from "../Flags/en";
 import { useContext, useEffect, useState } from "react";
-import { useIsClient } from "@/contexts/Client";
-import { LanguageContext } from "@/contexts/Language";
-import { LanguageType } from "@/types";
+import { useIsClient } from "../../contexts/Client";
+import { LanguageContext } from "../../contexts/Language";
+import { LanguageType } from "../../types";
 
 export default function ChooseLanguage({ mobile }: { mobile?: boolean }) {
     const isClient = useIsClient();
