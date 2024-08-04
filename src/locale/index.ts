@@ -315,8 +315,8 @@ export const languages = {
                 sort: "Ordenar por",
                 tag: "Tag",
                 query: "Pesquisar por",
-                votes: "Votos",
-                creationDate: "Data de criação",
+                votes: "Top", 
+                creationDate: "Novo",
                 typehere: "Digite aqui",
                 reset: "Redefinir filtros",
             }
@@ -681,8 +681,8 @@ export const languages = {
                 sort: "Sort by",
                 tag: "Tag",
                 query: "Search for",
-                votes: "Votes",
-                creationDate: "Creation date",
+                votes: "Top",
+                creationDate: "New",
                 typehere: "Type here",
                 reset: "Reset filters",
             }
