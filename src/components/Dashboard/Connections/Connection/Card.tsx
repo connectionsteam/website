@@ -21,8 +21,8 @@ export default function ConnectionCard(
         <AnimatePresence key={index}>
             {connectionProps.removing !== connection.name ? (
                 <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
                     exit={{ opacity: 0, x: -20 }}
                     transition={{ delay: index * 0.1, duration: 0.09 }}
                     onMouseEnter={() => setConnectionProps({ ...connectionProps, hover: connection.name })}

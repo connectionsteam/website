@@ -66,9 +66,8 @@ export default function GuildsComponent({ guilds, fetchGuilds }: Props) {
                         .map((guild, index) => (
                             <motion.div
                                 key={index}
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: -20 }}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
                                 transition={{ delay: index * 0.1 }}
                                 className={`relative w-full 
                                     ${"premium" in guild ?

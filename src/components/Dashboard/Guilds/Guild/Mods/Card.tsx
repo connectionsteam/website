@@ -22,8 +22,8 @@ export default function GuildModCard({ index, mod, handleRemoveMod, menu, setMen
 
     return menu.removing !== mod.id && (
         <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0, x: -20 }}
             onMouseEnter={() => setMenu({ ...menu, hover: mod.id })}
             onMouseLeave={() => setMenu({ ...menu, hover: "" })}

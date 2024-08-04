@@ -30,7 +30,7 @@ export default function PremiumComponent() {
     return (
         <DefaultLayout className="overflow-x-hidden">
             {!morePlans ? (
-                <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="flex w-full gap-6 tablet:flex-col tablet:items-center">
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, x: 0 }} className="flex w-full gap-6 tablet:flex-col tablet:items-center">
                     <div className="flex-grow flex flex-col gap-4 tablet:items-center mobile:items-center mobile:text-center mobile:px-2">
                         <div className="flex items-end gap-2 mobile:flex-col mobile:items-start">
                             <span className="text-3xl mobile:text-2xl font-bold text-center">Connections</span>
