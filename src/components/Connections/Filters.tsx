@@ -1,11 +1,11 @@
 import { useLanguage } from "../../hooks/useLanguage";
 import { ModalBody, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/modal"
 import { HiHashtag } from "react-icons/hi";
-import { LuCalendar } from "react-icons/lu";
-import { MdOutlineKeyboardArrowUp } from "react-icons/md";
 import { motion } from "framer-motion";
 import { ConnectionsPageFilters } from "../../types";
 import { BiSearch } from "react-icons/bi";
+import { FaFireAlt } from "react-icons/fa";
+import { BsStars } from "react-icons/bs";
 
 interface Props {
     filters: ConnectionsPageFilters
@@ -38,7 +38,7 @@ export default function Filters({ filters, setFilters, setSubmited, closeForm }:
         });
 
         setSubmited(true);
-    }
+    };
 
     return (
         <ModalContent className="text-white bg-neutral-900">
@@ -59,7 +59,7 @@ export default function Filters({ filters, setFilters, setSubmited, closeForm }:
                             items-center gap-2 z-20"
                                 onClick={() => handleChangeSort("")}
                             >
-                                <MdOutlineKeyboardArrowUp />
+                                <FaFireAlt />
                                 {l.connection.filters.votes}
                             </button>
                             <button
@@ -67,13 +67,13 @@ export default function Filters({ filters, setFilters, setSubmited, closeForm }:
                             flex z-20"
                                 onClick={() => handleChangeSort("new")}
                             >
-                                <LuCalendar />
+                                <BsStars />
                                 {l.connection.filters.creationDate}
                             </button>
                             <motion.div
                                 animate={{
-                                    y: filters.sort === "" ? 0 : 40,
-                                    width: filters.sort === "" ? "90px" : "160px",
+                                    y: filters.sort === "" ? 0 : "100%",
+                                    width: "100%"
                                 }}
                                 transition={{
                                     type: "spring",
