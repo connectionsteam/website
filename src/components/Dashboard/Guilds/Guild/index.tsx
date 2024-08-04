@@ -12,6 +12,7 @@ import usePremium from "../../../../hooks/usePremium";
 import { GuildChannelsPayload, GuildPayload, GuildTab, GuildThreadsPayload, Language, TabState } from "../../../../types";
 import Connections from "./Connecions";
 import { useLanguage } from "../../../../hooks/useLanguage";
+import Head from "next/head";
 
 export default function GuildComponent() {
     const router = useRouter();
@@ -73,7 +74,7 @@ export default function GuildComponent() {
                 }
             ];
         }
-        
+
         return [];
     };
 
@@ -113,7 +114,7 @@ export default function GuildComponent() {
             "pt-BR": {
                 channels: "75px",
                 cases: "75px",
-                connections: "100px",
+                connections: "110px",
                 infos: "120px",
                 width: "75px"
             },
@@ -156,61 +157,69 @@ export default function GuildComponent() {
     };
 
     return (
-        <DefaultLayout>
-            <ProtectedRoute loading={<GuildSkeleton />}>
-                {guild ? (
-                    <div className="flex flex-col gap-4 w-full overflow-x-hidden">
-                        <div className="flex mb-1 bg-neutral-800 rounded-lg 
+        <>
+            <Head>
+                <title>{guild?.name || "Guild"}</title>
+                <meta name="og:image" content={guild?.icon} />
+                <meta name="og:title" content={guild?.name} />
+                <meta name="theme-color" content="#D946EF" />
+            </Head>
+            <DefaultLayout>
+                <ProtectedRoute loading={<GuildSkeleton />}>
+                    {guild ? (
+                        <div className="flex flex-col gap-4 w-full overflow-x-hidden">
+                            <div className="flex mb-1 bg-neutral-800 rounded-lg 
                         p-1 overflow-x-auto relative">
-                            {tab.tabs.map((t) => (
-                                <>
-                                    <button
-                                        onClick={() => handleChangeTab(t.value)}
-                                        className={`text-white px-4 rounded-lg py-2 
+                                {tab.tabs.map((t) => (
+                                    <>
+                                        <button
+                                            onClick={() => handleChangeTab(t.value)}
+                                            className={`text-white px-4 rounded-lg py-2 
                                         cursor-pointer transition-colors duration-300 
                                         gap-2 flex z-20`}
-                                    >
-                                        <span>{t.title}</span>
-                                    </button>
-                                    <motion.div
-                                        key={t.value}
-                                        animate={
-                                            animations(t,
-                                                l.language,
-                                                tab.selected as GuildTab,
-                                                tab.connection
-                                            )
-                                        }
-                                        transition={{
-                                            type: "spring",
-                                            bounce: 0.3,
-                                            duration: 0.5,
-                                        }}
-                                        className="absolute bg-neutral-700 z-10 h-[84%] 
+                                        >
+                                            <span>{t.title}</span>
+                                        </button>
+                                        <motion.div
+                                            key={t.value}
+                                            animate={
+                                                animations(t,
+                                                    l.language,
+                                                    tab.selected as GuildTab,
+                                                    tab.connection
+                                                )
+                                            }
+                                            transition={{
+                                                type: "spring",
+                                                bounce: 0.3,
+                                                duration: 0.5,
+                                            }}
+                                            className="absolute bg-neutral-700 z-10 h-[84%] 
                                         w-12 rounded-lg -translate-y-1/2 -translate-x-1"
-                                    >
-                                    </motion.div>
-                                </>
-                            ))}
+                                        >
+                                        </motion.div>
+                                    </>
+                                ))}
+                            </div>
+                            <div className="overflow-x-hidden">
+                                {tab.tabs.map((t) => (
+                                    tab.selected === t.value ? (
+                                        <motion.div
+                                            key={t.value}
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                        >
+                                            {t.content}
+                                        </motion.div>
+                                    ) : null
+                                ))}
+                            </div>
                         </div>
-                        <div className="overflow-x-hidden">
-                            {tab.tabs.map((t) => (
-                                tab.selected === t.value ? (
-                                    <motion.div
-                                        key={t.value}
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                    >
-                                        {t.content}
-                                    </motion.div>
-                                ) : null
-                            ))}
-                        </div>
-                    </div>
-                ) : (
-                    <GuildSkeleton />
-                )}
-            </ProtectedRoute>
-        </DefaultLayout>
+                    ) : (
+                        <GuildSkeleton />
+                    )}
+                </ProtectedRoute>
+            </DefaultLayout>
+        </>
     );
 }

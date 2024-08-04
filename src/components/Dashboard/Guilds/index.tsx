@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import { HiSparkles } from "react-icons/hi";
 import { MdOutlineSync } from "react-icons/md";
 import { useLanguage } from "../../../hooks/useLanguage";
+import Head from "next/head";
 
 const url = "https://discord.com/oauth2/authorize?client_id=1243234162077470802";
 
@@ -33,85 +34,94 @@ export default function GuildsComponent({ guilds, fetchGuilds }: Props) {
     };
 
     return (
-        <div className="flex w-full items-start flex-col gap-4 z-10 tablet:px-3">
-            <div className="flex flex-col gap-2">
-                <h1 className="font-bold text-3xl">
-                    {l.dashboard.guilds.title}
-                </h1>
-                <span className="text-neutral-300">
-                    {l.dashboard.guilds.description}
-                </span>
-            </div>
-            <div className="flex w-full h-full gap-1">
-                <Input classNames={{
-                    inputWrapper: "rounded-lg bg-neutral-800 group-hover:bg-neutral-700",
-                }} onChange={handleChangeQuery} type="string" label={l.dashboard.misc.filterGuilds} />
-                <button
-                    disabled={clicked}
-                    onClick={handleClick}
-                    className="w-14 bg-neutral-800 rounded-lg items-center flex justify-center
+        <>
+            <Head>
+                <title>{l.dashboard.guilds.title}</title>
+                <meta name="description" content={l.dashboard.guilds.description} />
+                <meta name="og:title" content={l.dashboard.guilds.title} />
+                <meta name="og:description" content={l.dashboard.guilds.description} />
+                <meta name="theme-color" content="#D946EF" />
+            </Head>
+            <div className="flex w-full items-start flex-col gap-4 z-10 tablet:px-3">
+                <div className="flex flex-col gap-2">
+                    <h1 className="font-bold text-3xl">
+                        {l.dashboard.guilds.title}
+                    </h1>
+                    <span className="text-neutral-300">
+                        {l.dashboard.guilds.description}
+                    </span>
+                </div>
+                <div className="flex w-full h-full gap-1">
+                    <Input classNames={{
+                        inputWrapper: "rounded-lg bg-neutral-800 group-hover:bg-neutral-700",
+                    }} onChange={handleChangeQuery} type="string" label={l.dashboard.misc.filterGuilds} />
+                    <button
+                        disabled={clicked}
+                        onClick={handleClick}
+                        className="w-14 bg-neutral-800 rounded-lg items-center flex justify-center
                     group hover:bg-neutral-700 transition disabled:hover:bg-neutral-800 disabled:opacity-50"
-                >
-                    <MdOutlineSync
-                        className={`${clicked ? "rotate-[360deg]" : ""} transition`}
-                        size={20}
-                    />
-                </button>
-            </div>
-            <div className="grid grid-cols-3 gap-3 w-full tablet:grid-cols-2 mobile:grid-cols-1">
-                {guilds ? (
-                    guilds
-                        .filter((guild) => guild.id.includes(searchQuery)
-                            || guild.name.toLowerCase().includes(searchQuery.toLocaleLowerCase()))
-                        .map((guild, index) => (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ delay: index * 0.1 }}
-                                className={`relative w-full 
-                                    ${"premium" in guild ?
-                                        "p-0.5 rounded-lg bg-gradient-to-r from-amber-400 to-orange-500" : ""} 
-                                    `}
-                            >
-
-                                {"premium" in guild && (
-                                    <div className="absolute z-10 -top-2 -left-2">
-                                        <HiSparkles className="fill-yellow-500" size={28} />
-                                        <StarDust />
-                                    </div>
-                                )}
-                                <Link
-                                    href={`/guild/${guild.id}`}
-                                    className="flex items-center gap-2 p-3 rounded-lg 
-                                        bg-neutral-800 hover:bg-neutral-700 transition relative w-full h-full"
-                                >
-                                    <Avatar
-                                        className="w-12 h-12"
-                                        src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`}
-                                        key={guild.id}
-                                    />
-                                    <div className="flex flex-col gap-1 text-start">
-                                        <span className="font-bold text-lg">{guild.name}</span>
-                                        <span className="text-neutral-300 text-sm">{guild.id}</span>
-                                    </div>
-                                </Link>
-                            </motion.div>
-                        ))
-                ) : <ConnectionsSkeleton />}
-                <div className="p-[2px] bg-gradient-to-r from-fuchsia-500 
-                to-indigo-500 rounded-lg w-full">
-                    <a
-                        target="_blank" href={url}
-                        className="flex items-center justify-center gap-2 p-5 
-                        h-full w-full rounded-lg bg-neutral-800 hover:bg-transparent transition"
                     >
-                        <LuPlusCircle size={23} />
-                        <span>{l.dashboard.guilds.addServer}</span>
-                    </a>
+                        <MdOutlineSync
+                            className={`${clicked ? "rotate-[360deg]" : ""} transition`}
+                            size={20}
+                        />
+                    </button>
+                </div>
+                <div className="grid grid-cols-3 gap-3 w-full tablet:grid-cols-2 mobile:grid-cols-1">
+                    {guilds ? (
+                        guilds
+                            .filter((guild) => guild.id.includes(searchQuery)
+                                || guild.name.toLowerCase().includes(searchQuery.toLocaleLowerCase()))
+                            .map((guild, index) => (
+                                <motion.div
+                                    key={index}
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: index * 0.1 }}
+                                    className={`relative w-full 
+                                    ${"premium" in guild ?
+                                            "p-0.5 rounded-lg bg-gradient-to-r from-amber-400 to-orange-500" : ""} 
+                                    `}
+                                >
+
+                                    {"premium" in guild && (
+                                        <div className="absolute z-10 -top-2 -left-2">
+                                            <HiSparkles className="fill-yellow-500" size={28} />
+                                            <StarDust />
+                                        </div>
+                                    )}
+                                    <Link
+                                        href={`/guild/${guild.id}`}
+                                        className="flex items-center gap-2 p-3 rounded-lg 
+                                        bg-neutral-800 hover:bg-neutral-700 transition relative w-full h-full"
+                                    >
+                                        <Avatar
+                                            className="w-12 h-12"
+                                            src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`}
+                                            key={guild.id}
+                                        />
+                                        <div className="flex flex-col gap-1 text-start">
+                                            <span className="font-bold text-lg">{guild.name}</span>
+                                            <span className="text-neutral-300 text-sm">{guild.id}</span>
+                                        </div>
+                                    </Link>
+                                </motion.div>
+                            ))
+                    ) : <ConnectionsSkeleton />}
+                    <div className="p-[2px] bg-gradient-to-r from-fuchsia-500 
+                to-indigo-500 rounded-lg w-full">
+                        <a
+                            target="_blank" href={url}
+                            className="flex items-center justify-center gap-2 p-5 
+                        h-full w-full rounded-lg bg-neutral-800 hover:bg-transparent transition"
+                        >
+                            <LuPlusCircle size={23} />
+                            <span>{l.dashboard.guilds.addServer}</span>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 
