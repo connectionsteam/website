@@ -102,6 +102,7 @@ export default function EditConnectionComponent(
                                             animate={{ opacity: 1, x: 0 }}
                                             className="px-3 p-1 rounded-lg bg-neutral-700 flex items-center gap-2"
                                         >
+                                            <RiHashtag fill="#d946ef" />
                                             <span>{tag}</span>
                                             <button onClick={() => removeTag(tag)}>
                                                 <BiX
