@@ -1,6 +1,6 @@
 import { UserContext } from "../../../contexts/User";
-import { ConnectionsPageStructure } from "../../../types";
-import { useContext, useState } from "react";
+import { ConnectionsPageStructure, VotesPropsStructure } from "../../../types";
+import { useContext } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
 import { MdOutlineKeyboardArrowUp } from "react-icons/md";
@@ -11,8 +11,8 @@ import { useLanguage } from "../../../hooks/useLanguage";
 
 interface Props {
     connection: ConnectionsPageStructure;
-    voteProps: any;
-    setVoteProps: (votesProps: any) => void;
+    voteProps: VotesPropsStructure;
+    setVoteProps: (votesProps: VotesPropsStructure) => void;
 }
 
 export default function ConnectionsPageVoteComponent({ connection, voteProps, setVoteProps }: Props) {
