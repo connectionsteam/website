@@ -11,9 +11,10 @@ import Avatar from "../Mixed/Avatar";
 
 interface Props {
     connection: ConnectionsPageStructure;
+    small: boolean;
 }
 
-export default function ConnectConnection({ connection }: Props) {
+export default function ConnectConnection({ connection, small }: Props) {
     const l = useLanguage();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [guilds, setGuilds] = useState<GuildPayload[]>();
@@ -34,6 +35,8 @@ export default function ConnectConnection({ connection }: Props) {
     const [guild, setGuild] = useState<GuildPayload>();
 
     useEffect(() => {
+        if (!isOpen) return;
+
         const fetchGuilds = async () => {
             const { data } = await api.get(`/users/@me/guilds`);
 
@@ -41,14 +44,14 @@ export default function ConnectConnection({ connection }: Props) {
         };
 
         fetchGuilds();
-    }, []);
+    }, [isOpen]);
 
     return (
         <>
             <button
                 onClick={onOpen}
-                className="p-3 bg-neutral-700 hover:bg-neutral-600 rounded-lg transition 
-                w-full flex gap-2 items-center tablet:text-center tablet:items-center tablet:justify-center"
+                className={!small ? "p-3 bg-neutral-700 hover:bg-neutral-600 rounded-lg transition w-full flex gap-2 items-center tablet:text-center tablet:items-center tablet:justify-center"
+                    : "p-2 bg-neutral-700 rounded-lg transition w-full flex gap-2 items-center"}
             >
                 <FaLink />
                 <span>{l.connection.connect}</span>
@@ -114,7 +117,6 @@ export default function ConnectConnection({ connection }: Props) {
                             {guild && <ConnectionsPageChannels
                                 setBody={setBody}
                                 body={body}
-                                connection={connection}
                                 guild={guild}
                             />}
                         </div>
