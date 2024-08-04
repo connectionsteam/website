@@ -11,6 +11,7 @@ import { FaCheckCircle } from "react-icons/fa";
 import ConnectionPrivateInvite from "./Invite";
 import DeleteConnectionPage from "./Delete";
 import ConnectionPageSkeleton from "./Skeleton";
+import Head from "next/head";
 
 export interface EditConnection {
     description: string;
@@ -31,7 +32,7 @@ export default function ConnectionPageComponent() {
         private: connection?.private || false,
         invite: connection?.hashInvite || ""
     });
-    const [edit, setEdit] = useState(false);
+    const [edit, setEdit] = useState(true);
     const [loading, setLoading] = useState({ loading: false, check: false, loader: "" });
 
     const resetEditedConnection = () => {
@@ -77,8 +78,8 @@ export default function ConnectionPageComponent() {
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key === "Enter") {
                 saveEditedConnection();
-            }
-        }
+            };
+        };
 
         document.addEventListener("keydown", handleKeyDown);
 
@@ -101,67 +102,76 @@ export default function ConnectionPageComponent() {
     }, [name]);
 
     return (
-        <DefaultLayout>
-            {connection ? (
-                <div className="w-full p-6 rounded-lg bg-neutral-800 text-white">
-                    <div className="flex items-start relative">
-                        <div className="flex flex-col gap-8 w-full">
-                            <div className="flex flex-col gap-4">
-                                <EditConnectionComponent
+        <>
+            <Head>
+                <title>{connection ? connection.name : "loading"}</title>
+                <meta name="description" content={connection ? connection.description : "loading"} />
+                <meta property="og:title" content={connection ? connection.name : "loading"} />
+                <meta property="og:description" content={connection ? connection.description : "loading"} />
+                <meta property="og:image" content={connection ? connection.icon : "/default-icon.png"} />
+            </Head>
+            <DefaultLayout>
+                {connection ? (
+                    <div className="w-full p-6 rounded-lg bg-neutral-800 text-white">
+                        <div className="flex items-start relative">
+                            <div className="flex flex-col gap-8 w-full">
+                                <div className="flex flex-col gap-4">
+                                    <EditConnectionComponent
+                                        connection={connection}
+                                        editedConnection={editedConnection}
+                                        setEditedConnection={setEditedConnection}
+                                        edit={edit}
+                                    />
+                                    {edit && (
+                                        <div className="flex gap-2">
+                                            <button
+                                                onClick={saveEditedConnection}
+                                                className="rounded-lg hover:bg-green-500 text-white transition
+                                            p-2 px-4 border-green-500 border-2 flex gap-1 items-center"
+                                            >
+                                                <span>
+                                                    {l.dashboard.guilds.connections.blockedWords.save}
+                                                </span>
+                                                {(loading.loading && loading.loader === "connection") &&
+                                                    <AiOutlineLoading3Quarters
+                                                        className="animate-spin"
+                                                        size={18}
+                                                    />
+                                                }
+                                                {(loading.check && loading.loader === "connection")
+                                                    && <FaCheckCircle size={18} />
+                                                }
+                                            </button>
+                                            <button
+                                                onClick={resetEditedConnection}
+                                                className="rounded-lg hover:bg-blue-500 text-white 
+                                            transition p-2 px-4 border-blue-500 border-2"
+                                            >
+                                                {l.dashboard.connections.edit.redefine}
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                                <ConnectionPrivateInvite
+                                    setConnection={setConnection}
+                                    setLoading={setLoading}
                                     connection={connection}
                                     editedConnection={editedConnection}
                                     setEditedConnection={setEditedConnection}
-                                    edit={edit}
+                                    loading={loading}
                                 />
-                                {edit && (
-                                    <div className="flex gap-2">
-                                        <button
-                                            onClick={saveEditedConnection}
-                                            className="rounded-lg bg-green-500 text-white transition
-                                            p-2 px-4 hover:bg-green-600 flex gap-1 items-center"
-                                        >
-                                            <span>
-                                                {l.dashboard.guilds.connections.blockedWords.save}
-                                            </span>
-                                            {(loading.loading && loading.loader === "connection") &&
-                                                <AiOutlineLoading3Quarters
-                                                    className="animate-spin"
-                                                    size={18}
-                                                />
-                                            }
-                                            {(loading.check && loading.loader === "connection")
-                                                && <FaCheckCircle size={18} />
-                                            }
-                                        </button>
-                                        <button
-                                            onClick={resetEditedConnection}
-                                            className="rounded-lg bg-blue-500 text-white 
-                                            transition p-2 px-4 hover:bg-blue-600"
-                                        >
-                                            {l.dashboard.connections.edit.redefine}
-                                        </button>
-                                    </div>
-                                )}
+                                <DeleteConnectionPage id={connection.name} />
                             </div>
-                            <ConnectionPrivateInvite
-                                setConnection={setConnection}
-                                setLoading={setLoading}
-                                connection={connection}
-                                editedConnection={editedConnection}
-                                setEditedConnection={setEditedConnection}
-                                loading={loading}
-                            />
-                            <DeleteConnectionPage id={connection.name} />
+                            <button
+                                className="absolute right-0"
+                                onClick={() => setEdit(!edit)}
+                            >
+                                <LuPenSquare size={25} />
+                            </button>
                         </div>
-                        <button
-                            className="absolute right-0"
-                            onClick={() => setEdit(!edit)}
-                        >
-                            <LuPenSquare size={20} />
-                        </button>
                     </div>
-                </div>
-            ) : <ConnectionPageSkeleton />}
-        </DefaultLayout>
+                ) : <ConnectionPageSkeleton />}
+            </DefaultLayout>
+        </>
     );
 }

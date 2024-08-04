@@ -17,7 +17,7 @@ export default function DeleteConnectionPage({ id }: { id: string }) {
     };
 
     return (
-        <div className="w-full p-4 bg-red-500/30 rounded-lg flex-col gap-3 flex">
+        <div className="w-full p-4 border-2 border-red-500 rounded-lg flex-col gap-3 flex">
             <div className="flex flex-col gap-1">
                 <span className="font-bold text-xl">{l.dashboard.connections.delete.title}</span>
                 <p className="text-sm text-neutral-300">
