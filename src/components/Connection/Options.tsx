@@ -1,4 +1,4 @@
-import { ConnectionBody, ConnectionsPageStructure, GuildChannelsPayload, GuildPayload } from "../../types";
+import { ConnectionBody, GuildChannelsPayload, GuildPayload } from "../../types";
 import ConnectionChannels from "../Dashboard/Guilds/Connection/Channels";
 import JoinConnectionLanguage from "../Dashboard/Guilds/Connection/Languages";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -10,11 +10,10 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 interface Props {
     setBody: Dispatch<SetStateAction<ConnectionBody>>;
     body: ConnectionBody;
-    connection: ConnectionsPageStructure;
     guild: GuildPayload;
 }
 
-export default function ConnectionsPageChannels({ setBody, body, connection, guild }: Props) {
+export default function ConnectionsPageChannels({ setBody, body, guild }: Props) {
     const [channels, setChannels] = useState<GuildChannelsPayload[]>([]);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [loading, setLoading] = useState(false);

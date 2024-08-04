@@ -43,12 +43,30 @@ export default function DeleteConnection({ id, open, handleRemove }: Props) {
                 base: "max-h-screen overflow-y-auto",
             }} isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent className="bg-neutral-800 text-white">
-                    <ModalHeader className="flex flex-col gap-1 bg-neutral-800">{l.dashboard.connections.delete.title}</ModalHeader>
+                    <ModalHeader className="pb-1 font-bold">
+                        <span>{l.dashboard.connections.delete.title}</span>
+                    </ModalHeader>
                     <ModalBody className="flex gap-2">
-                        <div>{l.dashboard.connections.delete.description} <strong>{id}</strong>?</div>
+                        <div>
+                            {l.dashboard.connections.delete.description}{" "}
+                            <strong>{id}</strong>?
+                        </div>
                     </ModalBody>
-                    <ModalFooter className="flex w-full justify-center">
-                        <button onClick={handleDeleteConnection} className="flex gap-2 w-1/2 items-center justify-center font-semibold text-center border-red-500 border-2 transition hover:bg-red-500 p-2 rounded-lg">
+                    <ModalFooter className="flex w-full justify-end border-t rounded-t-xl
+                    border-neutral-700 mt-2">
+                        <button
+                            onClick={onClose}
+                            className="rounded-lg bg-neutral-700 transition hover:bg-neutral-700/50 
+                            p-2 px-3"
+                        >
+                            {l.dashboard.misc.cancel}
+                        </button>
+                        <button
+                            onClick={handleDeleteConnection}
+                            className="flex gap-2 font-semibold items-center text-center 
+                            bg-red-500 transition hover:bg-red-600 p-2 px-3 rounded-lg"
+                        >
+                            <LuTrash className="mb-0.5" size={18} />
                             <span className="text-center">{l.dashboard.connections.delete.button}</span>
                         </button>
                     </ModalFooter>
