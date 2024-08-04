@@ -1,12 +1,13 @@
-import { forwardRef } from "react";
+import { forwardRef, useContext } from "react";
 import { ConnectionsPageStructure } from "../../../types";
 import { motion } from "framer-motion";
 import { MdOutlineKeyboardArrowUp } from "react-icons/md";
-import { FaLink } from "react-icons/fa6";
 import Avatar from "../../../components/Mixed/Avatar";
 import Link from "next/link";
 import DefaultButton from "../../../components/Mixed/Button";
 import { useLanguage } from "../../../hooks/useLanguage";
+import { UserContext } from "../../../contexts/User";
+import ConnectConnection from "../../Connection/Connect";
 
 interface Props {
     connection: ConnectionsPageStructure;
@@ -15,17 +16,23 @@ interface Props {
     connections: ConnectionsPageStructure[];
 }
 
-const ConnectionsPageCard = forwardRef<HTMLDivElement, Props>(({ connection, index, layout, connections = []}, ref) => {
+const ConnectionsPageCard = forwardRef<HTMLDivElement, Props>(({ connection, index, layout, connections = [] }, ref) => {
     const l = useLanguage();
+    const { user } = useContext(UserContext);
 
     const animation = connections.length < 16
         ? {
-              initial: { opacity: 0, y: 30 },
-              animate: { opacity: 1, y: 0 },
-              exit: { opacity: 0, y: -30 },
-              transition: { delay: 0.09 * index, duration: 0.09 },
-          }
+            initial: { opacity: 0, y: 30 },
+            animate: { opacity: 1, y: 0 },
+            exit: { opacity: 0, y: -30 },
+            transition: { delay: 0.09 * index, duration: 0.09 },
+        }
         : {};
+
+    const twelve_hours = 12 * 60 * 60 * 1000;
+    const lastVoteTimestamp = connection.votes?.find((vote) => vote.userId === user?.id)
+        ?.lastVoteTimestamp ?? 0;
+    const canVote = (Date.now() - lastVoteTimestamp >= twelve_hours);
 
     return (
         <motion.div
@@ -38,15 +45,15 @@ const ConnectionsPageCard = forwardRef<HTMLDivElement, Props>(({ connection, ind
                     {l.connection.promoted}
                 </div>
             )}
-            <Link
-                href={`/connection/${connection.name}`}
+            <div
                 className={`p-3 h-full bg-neutral-800 rounded-lg transition mobile:gap-2
                     hover:bg-neutral-700/70 w-full flex items-start justify-center mobile:flex-col
                     mobile:items-center
-                    ${layout === "grid" ? "tablet:flex-col tablet:items-center" : ""}
+                    ${layout === "grid" ? "flex-col items-start tablet:items-center gap-2.5" : ""}
                     ${connection.promoted ? "border-2 border-fuchsia-500" : ""}`}
             >
-                <div
+                <Link
+                    href={`/connection/${connection.name}`}
                     className={`flex gap-3 mobile:flex-col items-center flex-grow h-full
                     ${layout === "grid" ? "tablet:flex-col" : ""}
                 `}
@@ -78,22 +85,18 @@ const ConnectionsPageCard = forwardRef<HTMLDivElement, Props>(({ connection, ind
                             <MdOutlineKeyboardArrowUp size={20} />
                         </div>
                     </div>
-                </div>
-                <div className={`flex gap-2 mobile:w-full
-                    ${layout === "grid" ? "flex-col" : ""}
-                `}>
-                    <div>
-                        <DefaultButton className="p-2 bg-neutral-700 rounded-lg transition w-full flex items-center">
+                </Link>
+                <div className="flex gap-2 mobile:w-full">
+                    <div className={canVote ? "" : "opacity-30"}>
+                        <DefaultButton disabled={!canVote} className="p-2 bg-neutral-700 rounded-lg 
+                        transition w-full flex items-center disabled:hover:bg-neutral-700">
                             <MdOutlineKeyboardArrowUp size={20} />
                             <span className="pr-2">{l.connection.vote}</span>
                         </DefaultButton>
                     </div>
-                    <div className="p-2 bg-neutral-700 rounded-lg transition w-full flex gap-2 items-center">
-                        <FaLink />
-                        <span className="pr-2">{l.connection.connect}</span>
-                    </div>
+                    <ConnectConnection connection={connection} small={true} />
                 </div>
-            </Link>
+            </div>
         </motion.div>
     );
 });
