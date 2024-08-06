@@ -1,6 +1,6 @@
 "use client";
 import DefaultInput from "../../../../components/Mixed/Input";
-import { ConnectionBody, GuildChannelsPayload, GuildPayload, Language, Premium } from "../../../../types";
+import { ConnectionBody, GuildChannelsPayload, GuildPayload, Premium } from "../../../../types";
 import { api } from "../../../../utils/api";
 import { useState, useEffect } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
