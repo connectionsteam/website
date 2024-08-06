@@ -13,11 +13,27 @@ interface Props {
     guildId: string;
 }
 
+const regex_identifier = "RE_";
+
 export default function BlockedWords({ connection, setConnection, guildId }: Props) {
     const [words, setWords] = useState(connection.blockwords || []);
     const [word, setWord] = useState("");
     const [loading, setLoading] = useState({ loading: false, check: false });
+    const [regex, setRegex] = useState({
+        focus: false,
+        modal: false,
+        regex: "",
+    });
     const l = useLanguage();
+
+    const saveRegex = (regex: string) => {
+        setRegex({
+            modal: false,
+            focus: false,
+            regex: ""
+        });
+        return setWords([...words, regex_identifier + regex]);
+    };
 
     const handleSaveWords = async () => {
         try {
@@ -40,10 +56,29 @@ export default function BlockedWords({ connection, setConnection, guildId }: Pro
 
     const addNewWord = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
+
+        if (regex.modal && regex.focus) {
+            return setRegex({
+                ...regex,
+                modal: true,
+                regex: value
+            });
+        }
+
+        if (value.trim().startsWith(regex_identifier)) {
+            setWord("");
+            return setRegex({
+                ...regex,
+                modal: true,
+                regex: ""
+            });
+        }
+
         setWord(value);
 
         if (value.trim().includes(",")) {
-            const newWords = value.split(",").map(w => w.trim()).filter(w => w.length > 0 && !words.includes(w));
+            const newWords = value.split(",")
+                .map(w => w.trim()).filter(w => w.length > 0 && !words.includes(w));
 
             if (newWords.length > 0) {
                 setWords([...words, ...newWords]);
@@ -54,6 +89,10 @@ export default function BlockedWords({ connection, setConnection, guildId }: Pro
     };
 
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (regex.modal && regex.focus && event.key === "Enter") {
+            return saveRegex(regex.regex.replace(regex_identifier, ""));
+        }
+
         if (event.key === "Backspace" && word === "") {
             setWord(words.reverse()[0]);
             setWords(words.reverse().splice(0, words.length - 1));
@@ -62,6 +101,13 @@ export default function BlockedWords({ connection, setConnection, guildId }: Pro
 
     const removeWord = (word: string) => {
         setWords(words.filter(w => w !== word));
+    };
+
+    const focusedInput = (focus: boolean) => () => {
+        setRegex({
+            ...regex,
+            focus
+        });
     };
 
     return (
@@ -75,10 +121,14 @@ export default function BlockedWords({ connection, setConnection, guildId }: Pro
             <div className="w-full relative">
                 {connection.flags.includes(ConnectedConnectionFlags.Frozen) && (
                     <>
-                        <div className="bg-gradient-to-tr from-cyan-300 via-sky-200 to-sky-500 absolute z-10 opacity-80 w-[25%] h-full rounded-l-lg"></div>
-                        <div className="bg-gradient-to-br from-sky-500 via-sky-200 to-cyan-300 absolute z-10 opacity-80 left-[25%] w-[25%] h-full"></div>
-                        <div className="bg-gradient-to-tr from-cyan-300 via-sky-200 to-sky-500 absolute z-10 opacity-80 left-[50%] w-[25%] h-full"></div>
-                        <div className="bg-gradient-to-br from-sky-500 via-sky-200 to-cyan-300 absolute z-10 opacity-80 left-[75%] w-[25%] h-full rounded-r-lg"></div>
+                        <div className="bg-gradient-to-tr from-cyan-300 via-sky-200 to-sky-500 
+                        absolute z-10 opacity-80 w-[25%] h-full rounded-l-lg"></div>
+                        <div className="bg-gradient-to-br from-sky-500 via-sky-200 to-cyan-300 
+                        absolute z-10 opacity-80 left-[25%] w-[25%] h-full"></div>
+                        <div className="bg-gradient-to-tr from-cyan-300 via-sky-200 to-sky-500 
+                        absolute z-10 opacity-80 left-[50%] w-[25%] h-full"></div>
+                        <div className="bg-gradient-to-br from-sky-500 via-sky-200 to-cyan-300 
+                        absolute z-10 opacity-80 left-[75%] w-[25%] h-full rounded-r-lg"></div>
                     </>
                 )}
                 <div className="flex gap-2 flex-col">
@@ -94,7 +144,8 @@ export default function BlockedWords({ connection, setConnection, guildId }: Pro
                                     <span>{word}</span>
                                     <button onClick={() => removeWord(word)}>
                                         <BiX
-                                            className="hover:fill-red-500 hover:bg-neutral-800 transition rounded-full font-bold"
+                                            className="hover:fill-red-500 hover:bg-neutral-800 
+                                            transition rounded-full font-bold"
                                             size={23}
                                         />
                                     </button>
@@ -106,12 +157,34 @@ export default function BlockedWords({ connection, setConnection, guildId }: Pro
                             placeholder={l.dashboard.guilds.connections.blockedWords.type}
                             type="text"
                             value={word}
+                            onClick={focusedInput(false)}
                             onKeyDown={handleKeyDown}
                             onChange={addNewWord}
                         />
+                        {regex.modal && (
+                            <div className="flex gap-2 bg-neutral-800 rounded-lg p-0.5 pl-2">
+                                <input
+                                    className="outline-none bg-transparent flex-grow flex"
+                                    placeholder={l.dashboard.guilds.connections.blockedWords.type}
+                                    type="text"
+                                    value={regex.regex}
+                                    onKeyDown={handleKeyDown}
+                                    onChange={addNewWord}
+                                    onClick={focusedInput(true)}
+                                />
+                                <button
+                                    className="p-2 text-sm bg-neutral-900 transition hover:bg-neutral-900/50 rounded-lg
+                                    max-w-28 justify-center flex gap-2 items-center"
+                                    onClick={() => saveRegex(regex.regex.replace(regex_identifier, ""))}
+                                >
+                                    <span>{l.dashboard.guilds.connections.blockedWords.save}</span>
+                                </button>
+                            </div>
+                        )}
                     </div>
                     <button
-                        className="p-3 bg-neutral-900 transition hover:bg-neutral-900/50 rounded-lg max-w-28 justify-center flex gap-2 items-center"
+                        className="p-3 bg-neutral-900 transition hover:bg-neutral-900/50 rounded-lg
+                        max-w-28 justify-center flex gap-2 items-center"
                         onClick={handleSaveWords}
                     >
                         <span>{l.dashboard.guilds.connections.blockedWords.save}</span>
