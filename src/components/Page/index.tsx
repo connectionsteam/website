@@ -14,10 +14,13 @@ import { TbLayoutDashboardFilled } from "react-icons/tb";
 import { LuPlusCircle } from "react-icons/lu"
 import { BackgroundColoredGradient } from "../ui/BgGradient";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Page() {
     const l = useLanguage();
     const url = "https://discord.com/oauth2/authorize?client_id=1243234162077470802";
+    const [changed, setChanged] = useState(false);
+
     const flagsDescriptions = {
         [ConnectedConnectionFlags.CompactModeEnabled]: {
             title: l.dashboard.guilds.connections.flags.compactModeEnabled,
@@ -44,6 +47,14 @@ export default function Page() {
             description: l.dashboard.guilds.connections.flags.allowFilesDescription,
         }
     };
+
+    useEffect(() => {
+        setChanged(true);
+
+        setTimeout(() => {
+            setChanged(false);
+        }, 1000);
+    }, []);
 
     return (
         <div className="flex justify-center items-center tablet:mt-20 overflow-x-hidden bg-dot-neutral-800/[0.6]">
@@ -123,11 +134,17 @@ export default function Page() {
                                                     {l.home.embeds.hour}
                                                 </span>
                                             </div>
-                                            <TypingAnimation
-                                                duration={50}
-                                                className="text-neutral-200 text-base text-start font-normal"
-                                                text={l.home.conversation.spyei.message}
-                                            />
+                                            {changed ? (
+                                                <TypingAnimation
+                                                    duration={50}
+                                                    className="text-neutral-200 text-base text-start font-normal"
+                                                    text={l.home.conversation.spyei.message}
+                                                />
+                                            ) : (
+                                                <span className="text-neutral-200 text-base text-start font-normal">
+                                                    {l.home.conversation.spyei.message}
+                                                </span>
+                                            )}
                                         </div>
                                     </div>
                                     <ConnectionsEmbed

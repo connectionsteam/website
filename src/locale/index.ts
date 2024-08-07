@@ -11,7 +11,7 @@ export const languages = {
             },
             footer: {
                 links: {
-                    title: "Links Úteis",
+                    title: "Links úteis",
                     addConnections: "Adicionar Connections",
                     panel: "Painel",
                     connections: "Conexões",
