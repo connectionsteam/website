@@ -87,13 +87,13 @@ const ConnectionsPageCard = forwardRef<HTMLDivElement, Props>(({ connection, ind
                     </div>
                 </Link>
                 <div className="flex gap-2 mobile:w-full">
-                    <div className={canVote ? "" : "opacity-30"}>
+                    <Link href={`/connection/${connection.name}`} className={canVote ? "" : "opacity-30"}>
                         <DefaultButton disabled={!canVote} className="p-2 bg-neutral-700 rounded-lg 
                         transition w-full flex items-center disabled:hover:bg-neutral-700">
                             <MdOutlineKeyboardArrowUp size={20} />
                             <span className="pr-2">{l.connection.vote}</span>
                         </DefaultButton>
-                    </div>
+                    </Link>
                     <ConnectConnection connection={connection} small={true} />
                 </div>
             </div>
