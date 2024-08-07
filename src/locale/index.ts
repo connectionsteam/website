@@ -518,7 +518,7 @@ export const languages = {
                     notfoundlabel: "Didn't find the member you were looking for? Add it by ID",
                     notfoundplaceholder: "Type user ID",
                     placeholder: "Type user name or ID",
-                    title: "Guild moderators",
+                    title: "Trusted Admins",
                     addModerator: "Add Moderator",
                     moderator: "Moderator",
                     delete: "Delete moderator",
