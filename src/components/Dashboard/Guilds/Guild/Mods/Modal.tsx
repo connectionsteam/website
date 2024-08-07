@@ -18,7 +18,7 @@ export default function GuildModModal({ handleAddMod, guild, members }: Props) {
         <>
             <DefaultInput
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="spyei"
+                placeholder={l.dashboard.guilds.mods.placeholder}
                 type="text"
                 label={l.dashboard.guilds.mods.label}
             />
