@@ -1,9 +1,10 @@
+import { RiHashtag } from "react-icons/ri";
 import { useLanguage } from "../../../../../hooks/useLanguage";
-import { ConnectedConnectionFlags, ConnectedConnectionPayload, GuildChannelsPayload, GuildPayload } from "../../../../../types";
-import { api } from "../../../../../utils/api";
-import { useEffect, useState } from "react";
-import { HiHashtag } from "react-icons/hi";
+import { ConnectedConnectionFlags, GuildChannelsPayload, GuildPayload } from "../../../../../types";
 import { LuLock, LuUnlock } from "react-icons/lu";
+import Avatar from "../../../../Mixed/Avatar";
+import { api } from "../../../../../utils/api";
+import Link from "next/link";
 
 interface Props {
     channels: GuildChannelsPayload[];
@@ -14,32 +15,7 @@ interface Props {
 export default function Channels({ channels, guild, setGuild }: Props) {
     const l = useLanguage();
 
-    const [groupedChannels, setGroupedChannels] = useState<Record<string, GuildChannelsPayload[]>>({});
-
-    useEffect(() => {
-        const groupChannelsByCategory = () => {
-            const grouped: Record<string, GuildChannelsPayload[]> = {};
-
-            guild.connections.forEach(connection => {
-                const channel = channels.find(ch => ch.id === connection.channelId);
-                if (channel) {
-                    const parentId = channel.parent_id || "uncategorized";
-
-                    if (!grouped[parentId]) {
-                        grouped[parentId] = [];
-                    }
-
-                    grouped[parentId].push(channel);
-                }
-            });
-
-            return setGroupedChannels(grouped);
-        };
-
-        groupChannelsByCategory();
-    }, [channels, guild.connections]);
-
-    const handleToggleLocked = async (connectionName: string) => {
+    const handleToggleLocked = (connectionName: string) => async () => {
         const connection = guild.connections.find((connection) => connection.name === connectionName);
 
         if (!connection) return;
@@ -67,57 +43,64 @@ export default function Channels({ channels, guild, setGuild }: Props) {
                     {l.dashboard.guilds.channels.description}
                 </span>
             </div>
-            <div className="w-full">
-                {Object.entries(groupedChannels).map(([categoryId, categoryChannels]) => (
-                    <button className="w-full flex gap-1 flex-col" key={categoryId}>
-                        <div className="font-bold my-1 text-start">
-                            {channels.find((channel) => channel.id === categoryId)?.name || ""}
-                        </div>
-                        {categoryChannels.map((channel) => {
-                            const connection = guild.connections
-                                .find((connection) => connection.channelId === channel.id);
+            <div className="flex flex-col gap-3">
+                {guild.connections.map((connection) => {
+                    const channel = channels.find((channel) => channel.id === connection.channelId);
 
-                            return connection ? (
-                                <div
-                                    onClick={() => handleToggleLocked(connection.name)}
-                                    key={channel.id}
-                                    className="hover:bg-neutral-900/50 transition flex gap-2 
-                                    items-center w-full rounded-lg"
-                                >
-                                    <div className="p-3 flex gap-2 flex-grow w-full items-center 
-                                    justify-start">
-                                        <HiHashtag />
-                                        <span>
-                                            {channel.name} - <strong>{connection.name}</strong>
-                                        </span>
+                    if (!channel) return null;
+
+                    return connection ? (
+                        <div className="group" key={channel.id}>
+                            <Link
+                                href={`/guild/${guild.id}/connection/${connection.name}`}
+                                className="bg-neutral-900/50 rounded-lg w-fit p-3 rounded-b-none
+                                flex gap-3 items-center mobile:w-full group-hover:bg-neutral-900 transition"
+                            >
+                                <div className="min-w-8 min-h-8">
+                                    <Avatar className="w-8 h-8" src={connection.icon} />
+                                </div>
+                                <span className="font-bold text-lg">{connection.name}</span>
+                            </Link>
+                            <button
+                                onClick={handleToggleLocked(connection.name)}
+                                className="w-full flex gap-2 rounded-lg bg-neutral-900/50 p-3
+                                    items-center pr-0 rounded-t-none rounded-tr-lg mobile:rounded-tr-none
+                                    group-hover:bg-neutral-900 transition"
+                            >
+                                <div className="font-bold text-start flex gap-2 items-center
+                                    flex-grow">
+                                    <div className="w-4 h-4">
+                                        <RiHashtag fill="#d946ef" />
                                     </div>
-                                    <div className="flex gap-2 items-center pr-3 relative">
-                                        {connection.flags
-                                            .includes(ConnectedConnectionFlags.Frozen) && (
-                                                <div className="absolute top-0 left-0 w-[34px] h-full 
-                                                    bg-gradient-to-tr from-cyan-300 via-sky-200 to-sky-500 rounded-lg z-50">
-                                                </div>
-                                            )}
-                                        <div
-                                            className={`transition text-black rounded-lg flex 
-                                                gap-2 p-1 items-center w-full
-                                                ${connection.flags
-                                                    .includes(ConnectedConnectionFlags.Locked)
-                                                    ? "bg-red-500"
-                                                    : "bg-green-500"}
-                                                `}
-                                        >
-                                            {connection.flags.includes(ConnectedConnectionFlags.Locked)
-                                                ? <LuLock size={26} />
-                                                : <LuUnlock size={26} />
-                                            }
-                                        </div>
+                                    <span>{channel.name}</span>
+                                </div>
+                                <div className="flex gap-2 items-center pr-3 relative">
+                                    {connection.flags
+                                        .includes(ConnectedConnectionFlags.Frozen) && (
+                                            <div className="absolute top-0 left-0 w-[34px] h-full 
+                                                bg-gradient-to-tr from-cyan-300 via-sky-200
+                                                to-sky-500 rounded-lg z-50">
+                                            </div>
+                                        )}
+                                    <div
+                                        className={`transition text-black rounded-lg flex 
+                                                    gap-2 p-1 items-center w-full
+                                                    ${connection.flags
+                                                .includes(ConnectedConnectionFlags.Locked)
+                                                ? "bg-red-500"
+                                                : "bg-green-500"}
+                                                    `}
+                                    >
+                                        {connection.flags.includes(ConnectedConnectionFlags.Locked)
+                                            ? <LuLock size={26} />
+                                            : <LuUnlock size={26} />
+                                        }
                                     </div>
                                 </div>
-                            ) : null;
-                        })}
-                    </button>
-                ))}
+                            </button>
+                        </div>
+                    ) : null;
+                })}
             </div>
         </div>
     );
