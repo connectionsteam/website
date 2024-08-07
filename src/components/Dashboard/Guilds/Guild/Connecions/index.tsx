@@ -45,7 +45,7 @@ export default function Connections({ guild, setGuild, channels, premium }: Prop
                     <h1 className="font-semibold text-xl">{l.dashboard.connections.title}</h1>
                     <div className="text-neutral-300">
                         {guild.connections.length}/
-                        <span className={guild.premium ? "text-yellow-500 font-bold" : ""}>
+                        <span>
                             {premium.maxConnections}
                         </span>
                     </div>

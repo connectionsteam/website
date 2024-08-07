@@ -102,7 +102,7 @@ export default function GuildMods({ guild, setGuild, premium }: Props) {
                         <h1 className="font-semibold text-xl">{l.dashboard.guilds.mods.title}</h1>
                         <div className="text-neutral-300">
                             {Object.keys(guild.mods).length}/
-                            <span className={guild.premium ? "text-yellow-500 font-bold" : ""}>
+                            <span>
                                 {premium.maxMods}
                             </span>
                         </div>

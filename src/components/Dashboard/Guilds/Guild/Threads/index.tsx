@@ -25,7 +25,7 @@ export default function Threads({ threads, setThreads, guild, premium }: Props) 
                 <div className="flex gap-2 items-end">
                     <h1 className="font-semibold text-xl">Threads</h1>
                     <div className="text-neutral-300">{threads.length}/
-                        <span className={guild.premium ? "text-yellow-500 font-bold" : ""}>
+                        <span>
                             {premium.maxThreads}
                         </span>
                     </div>
