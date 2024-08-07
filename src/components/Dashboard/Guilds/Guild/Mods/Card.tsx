@@ -53,7 +53,7 @@ export default function GuildModCard({ index, mod, handleRemoveMod, menu, setMen
                         src={`https://cdn.discordapp.com/avatars/${mod.id}/${mod.avatar}.png`}
                     />
                 </div>
-                <span className="font-semibold text-lg">{mod.username}</span>
+                <span className="font-semibold text-lg">{mod.username === "" ? mod.id : mod.username}</span>
             </div>
         </motion.div>
     );

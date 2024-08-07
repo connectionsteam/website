@@ -14,27 +14,31 @@ export default function GuildModModal({ handleAddMod, guild, members }: Props) {
     const l = useLanguage();
     const [query, setQuery] = useState("");
 
+    const filteredMembers = members
+        ? members
+            .filter(({ user }) =>
+                user.username.toLowerCase().includes(query.toLowerCase())
+                || user.id.toLowerCase().includes(query.toLowerCase())
+                || user.global_name?.toLowerCase().includes(query.toLowerCase())
+            )
+            .filter(({ user }) =>
+                !Object.keys(guild.mods).includes(user.id)
+                && !user.bot
+            )
+        : [];
+
     return (
         <>
             <DefaultInput
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder={l.dashboard.guilds.mods.placeholder}
+                placeholder="spyei"
                 type="text"
                 label={l.dashboard.guilds.mods.label}
             />
-            <div className="flex flex-col gap-3 w-full max-h-96 overflow-y-auto justfy-start">
+            <div className="flex flex-col gap-3 w-full max-h-96 overflow-y-auto justify-start">
                 {members ? (
-                    members
-                        .filter(user =>
-                            user.user.username.toLowerCase().includes(query.toLowerCase())
-                            || user.user.id.toLowerCase().includes(query.toLowerCase())
-                            || user.user.global_name?.toLowerCase().includes(query.toLowerCase())
-                        )
-                        .filter((user) =>
-                            !Object.keys(guild.mods).includes(user.user.id)
-                            && !user.user.bot
-                        )
-                        .map((user, index) => (
+                    filteredMembers.length > 0 ? (
+                        filteredMembers.map((user, index) => (
                             <button
                                 className="flex gap-3 text-start w-full rounded-lg p-3 bg-neutral-900/50 hover:bg-neutral-900 transition"
                                 key={index}
@@ -50,6 +54,30 @@ export default function GuildModModal({ handleAddMod, guild, members }: Props) {
                                 </div>
                             </button>
                         ))
+                    ) : (
+                        <div className="py-1 w-full flex gap-2 flex-col">
+                            <DefaultInput
+                                onChange={(event) => setQuery(event.target.value)}
+                                placeholder={l.dashboard.guilds.mods.notfoundplaceholder}
+                                type="text"
+                                obrigatory
+                                label={l.dashboard.guilds.mods.notfoundlabel}
+                            />
+                            <button
+                                onClick={() => handleAddMod({
+                                    user: {
+                                        id: query,
+                                        username: "",
+                                        bot: false,
+                                        avatar: "",
+                                    }
+                                })}
+                                className="bg-neutral-900/50 transition hover:bg-neutral-900 
+                            rounded-lg px-2 p-3">
+                                {l.dashboard.guilds.mods.addModerator}
+                            </button>
+                        </div>
+                    )
                 ) : (
                     Array.from({ length: 6 }).map((_, index) => (
                         <div
@@ -66,5 +94,5 @@ export default function GuildModModal({ handleAddMod, guild, members }: Props) {
                 )}
             </div>
         </>
-    )
+    );
 }

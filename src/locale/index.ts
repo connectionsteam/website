@@ -144,6 +144,8 @@ export const languages = {
                     private: "Privada",
                 },
                 mods: {
+                    notfoundlabel: "Não encontrou o membro que queria? adicione-o pelo ID",
+                    notfoundplaceholder: "Digite o ID do usuário",
                     placeholder: "Digite o nome do usuário ou ID",
                     title: "Moderadores",
                     addModerator: "Adicionar Moderador",
@@ -513,6 +515,8 @@ export const languages = {
                     private: "Private",
                 },
                 mods: {
+                    notfoundlabel: "Didn't find the member you were looking for? Add it by ID",
+                    notfoundplaceholder: "Type user ID",
                     placeholder: "Type user name or ID",
                     title: "Guild moderators",
                     addModerator: "Add Moderator",
