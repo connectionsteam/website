@@ -30,7 +30,7 @@ export const BackgroundColoredGradient = ({
                 transition={
                     animate
                         ? {
-                            duration: 5,
+                            duration: 2,
                             repeat: Infinity,
                             repeatType: "reverse",
                         }
@@ -41,7 +41,7 @@ export const BackgroundColoredGradient = ({
                 }}
                 className={cn(
                     "absolute inset-0 rounded-lg z-[1] opacity-60 group-hover:opacity-100 blur-xl  transition duration-500 will-change-transform",
-                    " bg-[radial-gradient(circle_farthest-side_at_0_100%,#00ccb1,transparent),radial-gradient(circle_farthest-side_at_100%_0,#7b61ff,transparent),radial-gradient(circle_farthest-side_at_100%_100%,#ffc414,transparent),radial-gradient(circle_farthest-side_at_0_0,#1ca0fb,#141316)]"
+                    "bg-[radial-gradient(circle_farthest-side_at_0_100%,#FF63EA,transparent),radial-gradient(circle_farthest-side_at_100%_0,#FF07DE,transparent),radial-gradient(circle_farthest-side_at_100%_100%,#5315E6,transparent),radial-gradient(circle_farthest-side_at_0_0,#7F2FF0,#5F2FF0)]"
                 )}
             />
             <motion.div
@@ -51,7 +51,7 @@ export const BackgroundColoredGradient = ({
                 transition={
                     animate
                         ? {
-                            duration: 5,
+                            duration: 2,
                             repeat: Infinity,
                             repeatType: "reverse",
                         }
@@ -62,7 +62,7 @@ export const BackgroundColoredGradient = ({
                 }}
                 className={cn(
                     "absolute inset-0 rounded-lg z-[1] will-change-transform",
-                    "bg-[radial-gradient(circle_farthest-side_at_0_100%,#00ccb1,transparent),radial-gradient(circle_farthest-side_at_100%_0,#7b61ff,transparent),radial-gradient(circle_farthest-side_at_100%_100%,#ffc414,transparent),radial-gradient(circle_farthest-side_at_0_0,#1ca0fb,#141316)]"
+                    "bg-[radial-gradient(circle_farthest-side_at_0_100%,#FF63EA,transparent),radial-gradient(circle_farthest-side_at_100%_0,#FF07DE,transparent),radial-gradient(circle_farthest-side_at_100%_100%,#5315E6,transparent),radial-gradient(circle_farthest-side_at_0_0,#7F2FF0,#5F2FF0)]"
                 )}
             />
 
