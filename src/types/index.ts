@@ -49,6 +49,7 @@ export type AnyCase = TimeoutCase | BanCase;
 export enum CaseTypes {
     Timeout,
     Ban,
+    GuildBan
 }
 
 export interface TimeoutCase extends BaseCase<CaseTypes> {

@@ -183,6 +183,7 @@ export const languages = {
                     by: "por",
                     reason: "Motivo",
                     filters: {
+                        guildban: "Banimento de servidor",
                         type: "Tipo",
                         user: "Usuário",
                         moderator: "Moderador",
@@ -554,6 +555,7 @@ export const languages = {
                     by: "by",
                     reason: "Reason",
                     filters: {
+                        guildban: "Guild Ban",
                         type: "Type",
                         user: "User",
                         moderator: "Moderator",

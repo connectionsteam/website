@@ -6,7 +6,7 @@ import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-o
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { GoArrowBoth } from "react-icons/go";
-import { LuClock2 } from "react-icons/lu";
+import { LuClock2, LuServerOff } from "react-icons/lu";
 import { MdBlock } from "react-icons/md";
 
 interface Props {
@@ -42,11 +42,11 @@ export default function DeskModsFilters({ filters, setFilters, guild }: Props) {
             <div className="flex gap-2 w-full">
                 <div className="flex flex-col gap-2 text-start w-full rounded-lg py-2">
                     <div className="flex flex-col gap-4 w-full">
-                        <div className="flex flex-col gap-2">
+                        <div className="flex flex-col gap-2 w-full">
                             <div className="font-bold">
                                 {l.dashboard.guilds.cases.filters.type}
                             </div>
-                            <div className="flex flex-col w-48 text-start items-start justify-start">
+                            <div className="flex flex-col w-full text-start items-start justify-start relative">
                                 <button
                                     className="w-full rounded-lg transition p-2 text-start flex
                                 items-center gap-2 z-20"
@@ -66,6 +66,14 @@ export default function DeskModsFilters({ filters, setFilters, guild }: Props) {
                                 <button
                                     className="w-full rounded-lg transition p-2 text-start 
                                     items-center gap-2 flex z-20"
+                                    onClick={() => setFilters({ ...filters, type: CaseTypes.GuildBan })}
+                                >
+                                    <LuServerOff size={18} />
+                                    {l.dashboard.guilds.cases.filters.guildban}
+                                </button>
+                                <button
+                                    className="w-full rounded-lg transition p-2 text-start 
+                                    items-center gap-2 flex z-20"
                                     onClick={() => setFilters({ ...filters, type: null })}
                                 >
                                     <GoArrowBoth size={18} />
@@ -73,9 +81,12 @@ export default function DeskModsFilters({ filters, setFilters, guild }: Props) {
                                 </button>
                                 <motion.div
                                     animate={{
-                                        y: filters.type === 1 ? 0 : filters.type === null ? 80 : 40,
-                                        width: filters.type === 1 ? "70px" : filters.type === null
-                                            ? "95px" : "105px",
+                                        y: filters.type === CaseTypes.Ban
+                                            ? 0 : filters.type === CaseTypes.Timeout
+                                                ? 40 : filters.type === CaseTypes.GuildBan
+                                                    ? 80 : 120,
+                                        width: "100%",
+                                        height: filters.type === 3 ? "70px" : ""
                                     }}
                                     transition={{
                                         type: "spring",
