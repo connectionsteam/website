@@ -125,12 +125,9 @@ export default function Infos({ guild, setGuild, threads, setThreads, premium, s
                     </div>
                     {guild.premium && (
                         <div className="flex gap-2 flex-col">
-                            <div className="flex gap-1">
-                                <span className="font-bold mt-0.5">Premium</span>
-                                <div className="bg-gradient-to-r from-yellow-500 to-amber-400
+                            <div className="bg-gradient-to-r from-yellow-500 to-amber-400
                                 bg-clip-text text-transparent font-bold text-lg">
-                                    {premiums[guild.premium.type]}
-                                </div>
+                                {premiums[guild.premium.type]}
                             </div>
                             <span className="font-bold">
                                 {l.dashboard.guilds.info.premiumexpires
