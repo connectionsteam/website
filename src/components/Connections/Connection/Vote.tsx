@@ -28,14 +28,15 @@ export default function ConnectionsPageVoteComponent({ connection, voteProps, se
         const { data: { lastVoteTimestamp } }  = await api.post(`/connections/${connection.name}/votes`);
 
         setVoteProps({ 
-            ...voteProps, 
+            ...voteProps,
+            votes: voteProps.votes + 1,
             loading: false, 
             voted: true, 
-            lastVoteTimestamp: lastVoteTimestamp
+            lastVoteTimestamp
         });
 
         setTimeout(() => {
-            setVoteProps({ ...voteProps, restime: true });
+            setVoteProps({ ...voteProps, restime: true, votes: voteProps.votes + 1 });
         }, 1500);
     };
 
