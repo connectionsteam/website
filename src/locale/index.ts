@@ -169,6 +169,8 @@ export const languages = {
                     description: "Aqui ficará as threads que você pode gerenciar neste servidor",
                 },
                 cases: {
+                    noCases: "Parece que não há nenhum caso registrado.",
+                    nocasesbruh: "Tente castigar os bananões do seu servidor utilizando o Connections",
                     case: "Caso",
                     was: "foi",
                     title: "Casos do servidor",
@@ -535,6 +537,8 @@ export const languages = {
                     description: "Here will be the threads that you can manage in this guild",
                 },
                 cases: {
+                    noCases: "It seems that there are no cases registered.",
+                    nocasesbruh: "Try punishing some goofies from your server using Connections",
                     case: "Case",
                     was: "was",
                     title: "Guild cases",

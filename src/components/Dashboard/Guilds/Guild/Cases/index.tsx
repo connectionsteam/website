@@ -7,6 +7,7 @@ import { IoFilter } from "react-icons/io5";
 import { Modal, useDisclosure } from "@nextui-org/modal";
 import ModsFilters from "./Filters";
 import DeskModsFilters from "./DeskFilters";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 interface Props {
     guild: GuildPayload;
@@ -15,7 +16,7 @@ interface Props {
 export default function Cases({ guild }: Props) {
     const l = useLanguage();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const [guildCases, setGuildCases] = useState<AnyCase[]>([]);
+    const [guildCases, setGuildCases] = useState<AnyCase[] | null>(null);
     const [cases, setCases] = useState<AnyCase[]>([]);
     const [loading, setLoading] = useState<string | null>(null);
     const [filters, setFilters] = useState<ModsFiltersStructure>({
@@ -88,25 +89,40 @@ export default function Cases({ guild }: Props) {
                             <ModsFilters filters={filters} setFilters={setFilters} guild={guild} />
                         </Modal>
                     </div>
-                    <div className="w-full flex flex-col gap-4">
-                        <div className="flex flex-col gap-4">
-                            {guildCases.map((caseItem, index) => {
-                                const caseDetail = cases.find((c) => c.id === caseItem.id);
+                    <div className="w-full flex flex-col gap-4 h-full">
+                        <div className="flex flex-col gap-4 h-full">
+                            {!guildCases ? (
+                                <div className="flex flex-col items-center justify-center min-h-[300px]">
+                                    <AiOutlineLoading3Quarters className="animate-spin" size={30} />
+                                </div>
+                            ) : guildCases.length === 0 ? (
+                                <div className="flex flex-col items-center justify-center h-full min-h-[300px] px-4">
+                                    <span className="text-xl font-semibold text-center">
+                                        {l.dashboard.guilds.cases.noCases}
+                                    </span>
+                                    <span className="text-sm text-neutral-400 text-center">
+                                        {l.dashboard.guilds.cases.nocasesbruh}
+                                    </span>
+                                </div>
+                            ) : (
+                                guildCases.map((caseItem, index) => {
+                                    const caseDetail = cases?.find((c) => c.id === caseItem.id);
 
-                                return (
-                                    <div
-                                        className="cursor-pointer"
-                                        onClick={() => fetchCase(caseItem.id)}
-                                        key={caseItem.id}>
-                                        <CaseCard
-                                            loading={loading === caseItem.id}
-                                            hovering={caseItem.id === caseDetail?.id}
-                                            caseItem={caseDetail || caseItem}
-                                            index={index}
-                                        />
-                                    </div>
-                                );
-                            })}
+                                    return (
+                                        <div
+                                            className="cursor-pointer"
+                                            onClick={() => fetchCase(caseItem.id)}
+                                            key={caseItem.id}>
+                                            <CaseCard
+                                                loading={loading === caseItem.id}
+                                                hovering={caseItem.id === caseDetail?.id}
+                                                caseItem={caseDetail || caseItem}
+                                                index={index}
+                                            />
+                                        </div>
+                                    );
+                                })
+                            )}
                         </div>
                     </div>
                 </div>
