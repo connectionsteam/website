@@ -144,6 +144,7 @@ export const languages = {
                     private: "Privada",
                 },
                 mods: {
+                    placeholder: "Digite o nome do usuário ou ID",
                     title: "Moderadores",
                     addModerator: "Adicionar Moderador",
                     moderator: "Moderador",
@@ -512,6 +513,7 @@ export const languages = {
                     private: "Private",
                 },
                 mods: {
+                    placeholder: "Type user name or ID",
                     title: "Guild moderators",
                     addModerator: "Add Moderator",
                     moderator: "Moderator",

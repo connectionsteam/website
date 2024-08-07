@@ -57,7 +57,7 @@ export default function ConnectionsEmbed({ author, delay, server, message }: Pro
                         <Image
                             width={24}
                             height={24}
-                            src="/guilds/unreal.png"
+                            src={`/guilds/${author.username}.png`}
                             alt="Spyei's Guild"
                             className="rounded-full"
                         />
