@@ -72,12 +72,12 @@ export default function Page() {
                             <motion.div
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 0.9, y: 0 }}
-                                className="tablet:w-full w-37"
+                                className="tablet:w-full w-36"
                             >
                                 <DefaultButton
                                     href="/dashboard"
-                                    className="items-center justify-start p-3 px-8 tablet:w-full min-w-36"
-                                    divclass="tablet:w-full w-37"
+                                    className="items-center justify-start tablet:w-full min-w-35 py-3 px-4"
+                                    divclass="tablet:w-full w-36"
                                 >
                                     <TbLayoutDashboardFilled />
                                     <span>{l.home.header.menu.dashboard}</span>

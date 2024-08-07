@@ -6,14 +6,14 @@ export const languages = {
                 support: "Suporte",
                 menu: {
                     exit: "Sair",
-                    dashboard: "Painel",
+                    dashboard: "Dashboard",
                 }
             },
             footer: {
                 links: {
                     title: "Links úteis",
                     addConnections: "Adicionar Connections",
-                    panel: "Painel",
+                    panel: "Dashboard",
                     connections: "Conexões",
                 },
                 legal: {
