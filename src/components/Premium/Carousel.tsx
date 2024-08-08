@@ -24,7 +24,7 @@ export default function Carousel({ plans }: { plans: PlanStructure[] }) {
         prevArrow: <PrevArrow />
     };
 
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
     return (
         <div className="max-w-[350px] mobile:max-w-screen mobile:px-2 h-full rounded-lg">
@@ -71,8 +71,8 @@ export default function Carousel({ plans }: { plans: PlanStructure[] }) {
                 closeButton: "transition hover:bg-neutral-700",
                 wrapper: "overflow-y-hidden",
                 base: "max-h-screen overflow-y-auto",
-            }} isOpen={isOpen} onOpenChange={onOpenChange} size="5xl">
-                <PopUpBuy/>
+            }} isOpen={isOpen} onOpenChange={onOpenChange} size="4xl">
+                <PopUpBuy onClose={onClose} />
             </Modal>
         </div>
     )
