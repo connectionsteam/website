@@ -76,7 +76,7 @@ export default function Page() {
                             >
                                 <DefaultButton
                                     href="/dashboard"
-                                    className="items-center justify-start tablet:w-full min-w-35 py-3 px-4"
+                                    className="items-center justify-start tablet:w-full min-w-35 py-3.5 px-4"
                                     divclass="tablet:w-full w-36"
                                 >
                                     <TbLayoutDashboardFilled />
