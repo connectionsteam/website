@@ -252,6 +252,15 @@ export const languages = {
             }
         },
         plans: {
+            buypopUp: {
+                title: "Como comprar premium?",
+                warning: "NO MOMENTO só estamos aceitando pagamentos SOMENTE em BRL (R$).",
+                fristimageDescription: "Para adquirir premium, acesse nosso",
+                firstimageDescriptiontwo: " e vá até o canal # premium e nele vai estar duas mensagens do bot Zennify, escolha qual plano você deseja e faça a compra do Premium.",
+                discordServer: "servidor do Discord",
+                secondImageDescription: "Após efetuar o pagamento pelo Zennify, você receberá um código de ativação do premium, para ativar o código, basta ir na página do seu servidor, e clicar no botão 'Ativar premium', como na imagem abaixo.",
+                understand: "Entendido!",
+            },
             pageDescription: "Acesse o melhor nível do Connections. Use premium.",
             basicpremium: {
                 features: [
@@ -624,6 +633,15 @@ export const languages = {
             },
         },
         plans: {
+            buypopUp: {
+                title: "How to buy premium?",
+                warning: "NOW we only accept payments in BRL (R$).",
+                fristimageDescription: "To buy premium, go to our",
+                firstimageDescriptiontwo: " and go to the channel # premium and there will be two messages from the Zennify bot, choose the plan you want and make the purchase of premium.",
+                discordServer: "discord server",
+                secondImageDescription: "After paying the Zennify, you will receive an activation code for premium, to activate the code, just go to your server page, and click on the 'Activate premium' button, as shown below.",
+                understand: "Understood!",
+            },
             pageDescription: "Access the best level of Connections. Use premium.",
             basicpremium: {
                 features: [
