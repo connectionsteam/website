@@ -133,7 +133,7 @@ export default function DeskModsFilters({ filters, setFilters, guild }: Props) {
                                     </button>
                                 </DropdownTrigger>
                                 <DropdownMenu className="w-full flex flex-col gap-1" aria-label="guilds">
-                                    {Object.entries(guild.mods).map(([mod_id, mod]) => (
+                                    {guild.mods.map((mod) => (
                                         <DropdownItem
                                             aria-label={mod.username}
                                             classNames={{
@@ -141,16 +141,16 @@ export default function DeskModsFilters({ filters, setFilters, guild }: Props) {
                                             }}
                                             className="hover:bg-neutral-800 transition p-3 
                                                 w-full bg-neutral-900/50"
-                                            key={mod_id}
+                                            key={mod.id}
                                             onClick={() => {
-                                                setFilters({ ...filters, mod_id });
+                                                setFilters({ ...filters, mod_id: mod.id });
                                                 setMod(mod);
                                             }}
                                         >
                                             <div className="flex items-center gap-2">
                                                 <Avatar
                                                     className="w-8 h-8"
-                                                    src={`https://cdn.discordapp.com/avatars/${mod_id}/${mod.avatar}.png`}
+                                                    src={`https://cdn.discordapp.com/avatars/${mod.id}/${mod.avatar}.png`}
                                                 />
                                                 <span className="font-bold">{mod.username}</span>
                                             </div>

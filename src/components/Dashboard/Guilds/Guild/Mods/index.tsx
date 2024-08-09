@@ -44,7 +44,7 @@ export default function GuildMods({ guild, setGuild, premium }: Props) {
     const [members, setMembers] = useState<DiscordMember[] | null>(null);
 
     const handleAddMod = async (mod: DiscordMember) => {
-        if (Object.keys(guild.mods).length >= premium.maxMods) {
+        if (guild.mods.length >= premium.maxMods) {
             setSonner(false);
             setTimeout(() => setSonner(true), 0);
 
@@ -56,14 +56,15 @@ export default function GuildMods({ guild, setGuild, premium }: Props) {
         onClose();
         setGuild({
             ...guild,
-            mods: {
+            mods: [
                 ...guild.mods,
-                [mod.user.id]: {
+                {
+                    id: mod.user.id,
                     type: ModPermType.TrustedAdmin,
                     username: mod.user.username,
-                    avatar: mod.user.avatar,
-                },
-            },
+                    avatar: mod.user.avatar
+                }
+            ]
         });
     };
 
@@ -72,12 +73,12 @@ export default function GuildMods({ guild, setGuild, premium }: Props) {
 
         await api.delete(`/guilds/${guild.id}/mods/${mod}`);
 
-        const filtredMods = Object.entries(guild.mods).filter(([key]) => key !== mod);
+        const filtredMods = guild.mods.filter((moda) => moda.id !== mod);
 
         setTimeout(() => {
             setGuild({
                 ...guild,
-                mods: filtredMods.reduce((mods, [key, value]) => ({ ...mods, [key]: value }), {}),
+                mods: filtredMods,
             });
 
             setMenu({ ...menu, removing: null });
@@ -101,7 +102,7 @@ export default function GuildMods({ guild, setGuild, premium }: Props) {
                     <div className="flex gap-1 items-end">
                         <h1 className="font-semibold text-xl">{l.dashboard.guilds.mods.title}</h1>
                         <div className="text-neutral-300">
-                            {Object.keys(guild.mods).length}/
+                            {guild.mods.length}/
                             <span>
                                 {premium.maxMods}
                             </span>
@@ -111,26 +112,26 @@ export default function GuildMods({ guild, setGuild, premium }: Props) {
                 </div>
                 <div className="flex flex-col gap-2 min-w-72 tablet:min-w-full">
                     <div className="flex flex-col gap-2 w-full max-h-64 overflow-x-hidden">
-                        {Object.entries(guild.mods).map(([key, mod], index) => (
+                        {guild.mods.map((mod, index) => (
                             <AnimatePresence mode="wait" key={index}>
                                 <GuildModCard
                                     guild={guild}
                                     key={index}
                                     setMenu={setMenu}
                                     index={index}
-                                    mod={{ avatar: mod.avatar, id: key, username: mod.username }}
+                                    mod={{ avatar: mod.avatar, id: mod.id, username: mod.username }}
                                     handleRemoveMod={handleRemoveMod}
                                     menu={menu}
                                 />
                             </AnimatePresence>
                         ))}
                     </div>
-                    {Object.entries(guild.mods).find(([id]) => id === user?.id) && (
-                        <DefaultButton onClick={fetchMembers} className="h-full w-full p-4">
-                            <LuPlusCircle size={20} />
-                            <span>{l.dashboard.guilds.mods.addModerator}</span>
-                        </DefaultButton>
-                    )}
+                    {guild.mods.find((mod) => mod.id === user?.id ) && (
+                            <DefaultButton onClick={fetchMembers} className="h-full w-full p-4">
+                                <LuPlusCircle size={20} />
+                                <span>{l.dashboard.guilds.mods.addModerator}</span>
+                            </DefaultButton>
+                        )}
                 </div>
             </div>
             <Modal classNames={{

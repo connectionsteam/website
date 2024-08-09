@@ -41,7 +41,7 @@ export interface GuildPayload {
     id: string;
     connections: ConnectedConnectionPayload[];
     cases: AnyCase[];
-    mods: Record<string, ModType>;
+    mods: ModType[];
 }
 
 export type AnyCase = TimeoutCase | BanCase;
@@ -109,13 +109,14 @@ export enum ConnectedConnectionFlags {
 }
 
 export interface ModType {
+    id: string;
     username: string;
     avatar: string;
     type: ModPermType;
 }
 
 export enum ModPermType {
-    TrustedAdmin,
+    TrustedAdmin = 1,
     PhysicalOwner,
 }
 

@@ -1,16 +1,17 @@
 import Avatar from "../../../../components/Mixed/Avatar";
-import { DiscordMember, GuildPayload, GuildThreadsPayload, Premium } from "../../../../types";
+import { GuildPayload, GuildThreadsPayload, Premium } from "../../../../types";
 import GuildMods from "./Mods";
 import Threads from "./Threads";
 import { useLanguage } from "../../../../hooks/useLanguage";
 import DefaultPremiumButton from "../../../../components/Mixed/DefaultPremiumButton";
 import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/modal";
 import ActivePremium from "./ActivePremium";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import { api } from "../../../../utils/api";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface Props {
     guild: GuildPayload;
@@ -27,6 +28,13 @@ export default function Infos({ guild, setGuild, threads, setThreads, premium, s
     const [showConfetti, setShowConfetti] = useState(false);
     const [prefix, setPrefix] = useState(guild.prefix);
     const [loading, setLoading] = useState({ loading: false, check: false });
+    const [showModifications, setModifications] = useState(false);
+
+    useEffect(() => {
+        if (guild.prefix === prefix) return;
+
+        setModifications(true);
+    }, [prefix]);
 
     const patchPrefix = (prefix: string | undefined) => async () => {
         if (!prefix) return;
@@ -79,7 +87,7 @@ export default function Infos({ guild, setGuild, threads, setThreads, premium, s
                     <h1 className="font-semibold text-xl">{l.dashboard.guilds.info.title}</h1>
                     <span className="text-neutral-300">{l.dashboard.guilds.info.description}</span>
                 </div>
-                <div className="flex flex-col gap-6">
+                <div className="flex flex-col gap-4">
                     <div className="flex w-full tablet:flex-col tablet:gap-4">
                         <div className="flex gap-3 flex-grow">
                             <div className="w-16 h-16">
@@ -108,19 +116,10 @@ export default function Infos({ guild, setGuild, threads, setThreads, premium, s
                         </div>
                         <div className="flex gap-1">
                             <input
-                                className="rounded-lg p-2 max-w-32 outline-none bg-neutral-900/50"
+                                className="rounded-lg p-3 max-w-32 outline-none bg-neutral-900/50"
                                 value={prefix !== undefined ? prefix : "c"}
                                 onChange={(e) => setPrefix(e.target.value)}
                             />
-                            <button
-                                className="p-3 bg-neutral-900/50 transition hover:bg-neutral-900
-                                rounded-lg justify-center flex gap-2 items-center px-4"
-                                onClick={patchPrefix(prefix)}
-                            >
-                                <span>{l.dashboard.guilds.info.save}</span>
-                                {loading.loading && <AiOutlineLoading3Quarters className="animate-spin" size={18} />}
-                                {loading.check && <FaCheckCircle className="text-green-500" size={18} />}
-                            </button>
                         </div>
                     </div>
                     {guild.premium && (
@@ -173,6 +172,25 @@ export default function Infos({ guild, setGuild, threads, setThreads, premium, s
                     </ModalContent>
                 </Modal>
             </>
+            <AnimatePresence>
+                {!showModifications && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 200 }}
+                        animate={{ opacity: 1, y: -10 }}
+                        exit={{ opacity: 0, y: 200 }}
+                        className="fixed bottom-0 right-0 w-full flex flex-col gap-4 items-center"
+                    >
+                        <div
+                            className="p-3 bg-neutral-800 transition border-2 border-neutral-700 
+                            rounded-lg justify-center flex gap-2 items-center px-4 w-full max-w-[1100px]"
+                        >
+                            <span>{l.dashboard.guilds.info.save}</span>
+                            {loading.loading && <AiOutlineLoading3Quarters className="animate-spin" size={18} />}
+                            {loading.check && <FaCheckCircle className="text-green-500" size={18} />}
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </>
     )
 }

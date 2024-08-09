@@ -17,8 +17,7 @@ interface Props {
 export default function GuildModCard({ index, mod, handleRemoveMod, menu, setMenu, guild }: Props) {
     const { user } = useContext(UserContext);
 
-    const owner = Object.entries(guild.mods)
-        .find(([id, mod]) => id === user?.id && mod.type === ModPermType.PhysicalOwner);
+    const owner = guild.mods.find((mod) => mod.id === user?.id && mod.type === ModPermType.PhysicalOwner);
 
     return menu.removing !== mod.id && (
         <motion.div

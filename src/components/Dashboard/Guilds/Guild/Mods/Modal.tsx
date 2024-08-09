@@ -22,7 +22,7 @@ export default function GuildModModal({ handleAddMod, guild, members }: Props) {
                 || user.global_name?.toLowerCase().includes(query.toLowerCase())
             )
             .filter(({ user }) =>
-                !Object.keys(guild.mods).includes(user.id)
+                !guild.mods.find((mod) => mod.id === user.id)
                 && !user.bot
             )
         : [];
