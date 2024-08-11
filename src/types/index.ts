@@ -42,6 +42,7 @@ export interface GuildPayload {
     connections: ConnectedConnectionPayload[];
     cases: AnyCase[];
     mods: ModType[];
+    delete_threads_ids?: string[];
 }
 
 export type AnyCase = TimeoutCase | BanCase;
