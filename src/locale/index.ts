@@ -196,6 +196,10 @@ export const languages = {
                 channels: {
                     title: "Editar Canais bloqueados",
                     description: "Clique nos cadeados para bloquear e desbloquear o canal de cada conexão conectada em seu servidor",
+                },
+                modifications: {
+                    changes: "Você tem alterações para serem salvas",
+                    reset: "Redefinir alterações",
                 }
             },
             connections: {
@@ -577,6 +581,10 @@ export const languages = {
                 channels: {
                     title: "Edit locked channels",
                     description: "Click on the crosses to lock and unlock the channel of each connected connection in your server",
+                },
+                modifications: {
+                    changes: "You have changes to be saved",
+                    reset: "Reset changes",
                 }
             },
             connections: {
