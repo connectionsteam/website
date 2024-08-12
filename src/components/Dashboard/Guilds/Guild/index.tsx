@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import DefaultLayout from "../../../../components/Mixed/Layout";
 import ProtectedRoute from "../../../../components/Mixed/ProtectedRoute";
 import { api } from "../../../../utils/api";
@@ -13,14 +13,18 @@ import { GuildChannelsPayload, GuildPayload, GuildTab, GuildThreadsPayload, Lang
 import Connections from "./Connecions";
 import { useLanguage } from "../../../../hooks/useLanguage";
 import Head from "next/head";
+import GuildModifications from "./Modifications";
 
 export default function GuildComponent() {
     const router = useRouter();
     const { id } = router.query;
     const [guild, setGuild] = useState<GuildPayload>();
+    const [discordGuild, setDiscordGuild] = useState<GuildPayload>();
     const [channels, setChannels] = useState<GuildChannelsPayload[]>([]);
     const [threads, setThreads] = useState<GuildThreadsPayload[]>([]);
     const { premium, setPremium } = usePremium(guild);
+    const [modifications, setModifications] = useState(false);
+    const [changedTab, setChangedTab] = useState(false);
     const l = useLanguage();
 
     const [tab, setTab] = useState<TabState>({
@@ -30,6 +34,14 @@ export default function GuildComponent() {
     });
 
     const handleChangeTab = (selected: string) => {
+        if (modifications) {
+            setChangedTab(true);
+
+            return setTimeout(() => {
+                setChangedTab(false);
+            }, 1000);
+        }
+
         setTab({
             ...tab,
             connection: false,
@@ -38,12 +50,15 @@ export default function GuildComponent() {
     };
 
     const createTabs = () => {
-        if (guild && threads && premium) {
+        if (guild && threads && premium && discordGuild) {
             return [
                 {
                     value: "infos",
                     title: l.dashboard.guilds.tabs.infos,
                     content: <Infos
+                        actualGuild={discordGuild}
+                        modifications={modifications}
+                        setModifications={setModifications}
                         premium={premium}
                         setPremium={setPremium}
                         setGuild={setGuild}
@@ -84,6 +99,7 @@ export default function GuildComponent() {
         const fetchGuild = async () => {
             const { data } = await api.get(`/guilds/${id}`);
 
+            setDiscordGuild(data);
             setGuild(data);
             setThreads(data.threads);
         };
@@ -166,7 +182,7 @@ export default function GuildComponent() {
             </Head>
             <DefaultLayout>
                 <ProtectedRoute loading={<GuildSkeleton />}>
-                    {guild ? (
+                    {(guild && discordGuild) ? (
                         <div className="flex flex-col gap-4 w-full overflow-x-hidden">
                             <div className="flex mb-1 bg-neutral-800 rounded-lg 
                         p-1 overflow-x-auto relative">
@@ -214,6 +230,35 @@ export default function GuildComponent() {
                                     ) : null
                                 ))}
                             </div>
+                            <AnimatePresence>
+                                {(modifications) && (
+                                    <motion.div
+                                        initial={changedTab ? {} : { opacity: 0, y: 200 }}
+                                        animate={changedTab ? {
+                                            x: [0, -10, 10, -10, 10, -5, 5, 0],
+                                            transition: {
+                                                duration: 0.4,
+                                                ease: "easeInOut",
+                                            }
+                                        } : { opacity: 1, y: -10 }}
+                                        transition={changedTab ? {
+                                            repeat: Infinity, repeatType: "loop"
+                                        } : undefined}
+                                        exit={{ opacity: 0, y: 200 }}
+                                        className="fixed bottom-0 right-0 w-full flex flex-col 
+                                        gap-4 items-center z-50"
+                                    >
+                                        <GuildModifications
+                                            changedTab={changedTab}
+                                            setGuild={setGuild}
+                                            actualGuild={discordGuild}
+                                            guild={guild}
+                                            modifications={modifications}
+                                            setModifications={setModifications}
+                                        />
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </div>
                     ) : (
                         <GuildSkeleton />

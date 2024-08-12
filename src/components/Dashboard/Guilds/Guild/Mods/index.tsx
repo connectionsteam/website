@@ -16,6 +16,8 @@ interface Props {
     guild: GuildPayload;
     setGuild: (guild: GuildPayload) => void;
     premium: Premium;
+    setModifications: (modifications: boolean) => void;
+    actualGuild: GuildPayload;
 }
 
 export interface MenuProps {
@@ -23,7 +25,7 @@ export interface MenuProps {
     removing: string | null;
 }
 
-export default function GuildMods({ guild, setGuild, premium }: Props) {
+export default function GuildMods({ guild, setGuild, premium, setModifications, actualGuild }: Props) {
     const l = useLanguage();
 
     const { user } = useContext(UserContext);
@@ -51,8 +53,10 @@ export default function GuildMods({ guild, setGuild, premium }: Props) {
             return onPremiumOpen();
         };
 
-        await api.put(`/guilds/${guild.id}/mods/${mod.user.id}`);
+        if (mod.user.id === "") return;
 
+        setModifications(true);
+        
         onClose();
         setGuild({
             ...guild,
@@ -71,18 +75,16 @@ export default function GuildMods({ guild, setGuild, premium }: Props) {
     const handleRemoveMod = async (mod: string) => {
         setMenu({ ...menu, removing: mod });
 
-        await api.delete(`/guilds/${guild.id}/mods/${mod}`);
+        setModifications(true);
 
         const filtredMods = guild.mods.filter((moda) => moda.id !== mod);
 
-        setTimeout(() => {
-            setGuild({
-                ...guild,
-                mods: filtredMods,
-            });
+        setGuild({
+            ...guild,
+            mods: filtredMods,
+        });
 
-            setMenu({ ...menu, removing: null });
-        }, 500);
+        setMenu({ ...menu, removing: null });
     };
 
     const fetchMembers = async () => {
@@ -126,12 +128,12 @@ export default function GuildMods({ guild, setGuild, premium }: Props) {
                             </AnimatePresence>
                         ))}
                     </div>
-                    {guild.mods.find((mod) => mod.id === user?.id ) && (
-                            <DefaultButton onClick={fetchMembers} className="h-full w-full p-4">
-                                <LuPlusCircle size={20} />
-                                <span>{l.dashboard.guilds.mods.addModerator}</span>
-                            </DefaultButton>
-                        )}
+                    {guild.mods.find((mod) => mod.id === user?.id) && (
+                        <DefaultButton onClick={fetchMembers} className="h-full w-full p-4">
+                            <LuPlusCircle size={20} />
+                            <span>{l.dashboard.guilds.mods.addModerator}</span>
+                        </DefaultButton>
+                    )}
                 </div>
             </div>
             <Modal classNames={{

@@ -6,13 +6,8 @@ import { useLanguage } from "../../../../hooks/useLanguage";
 import DefaultPremiumButton from "../../../../components/Mixed/DefaultPremiumButton";
 import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/modal";
 import ActivePremium from "./ActivePremium";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Confetti from "react-confetti";
-import { api } from "../../../../utils/api";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { FaCheckCircle } from "react-icons/fa";
-import { AnimatePresence, motion } from "framer-motion";
-
 interface Props {
     guild: GuildPayload;
     setGuild: (guild: GuildPayload) => void;
@@ -20,40 +15,16 @@ interface Props {
     setThreads: (threads: GuildThreadsPayload[]) => void;
     premium: Premium;
     setPremium: (premium: Premium) => void;
+    modifications: boolean;
+    setModifications: (modifications: boolean) => void;
+    actualGuild: GuildPayload;
 };
 
-export default function Infos({ guild, setGuild, threads, setThreads, premium, setPremium }: Props) {
+export default function Infos({ guild, setGuild, threads, setThreads, premium, setPremium, actualGuild, setModifications }: Props) {
     const l = useLanguage();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [showConfetti, setShowConfetti] = useState(false);
-    const [prefix, setPrefix] = useState(guild.prefix);
-    const [loading, setLoading] = useState({ loading: false, check: false });
-    const [showModifications, setModifications] = useState(false);
-
-    useEffect(() => {
-        if (guild.prefix === prefix) return;
-
-        setModifications(true);
-    }, [prefix]);
-
-    const patchPrefix = (prefix: string | undefined) => async () => {
-        if (!prefix) return;
-        if (guild.prefix === prefix) return;
-        if (prefix === "") return;
-
-        setLoading({ loading: true, check: false });
-
-        await api.patch(`/guilds/${guild.id}`, { prefix });
-
-        setGuild({ ...guild, prefix });
-
-        setLoading({ loading: false, check: true });
-
-        setTimeout(() => {
-            setLoading({ ...loading, check: false });
-        }, 2000);
-    };
-
+    
     const premiums = {
         0: "None",
         1: "Premium",
@@ -117,8 +88,15 @@ export default function Infos({ guild, setGuild, threads, setThreads, premium, s
                         <div className="flex gap-1">
                             <input
                                 className="rounded-lg p-3 max-w-32 outline-none bg-neutral-900/50"
-                                value={prefix !== undefined ? prefix : "c"}
-                                onChange={(e) => setPrefix(e.target.value)}
+                                value={guild.prefix !== undefined ? guild.prefix : "c"}
+                                onChange={(e) => {
+                                    setModifications(true);
+                                    setGuild({
+                                        ...guild,
+                                        prefix: e.target.value,
+                                    });
+                                }}
+
                             />
                         </div>
                     </div>
@@ -137,11 +115,15 @@ export default function Infos({ guild, setGuild, threads, setThreads, premium, s
                     )}
                     <div className="w-full flex tablet:flex-col gap-4">
                         <GuildMods
+                            actualGuild={actualGuild}
+                            setModifications={setModifications}
                             premium={premium}
                             setGuild={setGuild}
                             guild={guild}
                         />
                         <Threads
+                            setModifications={setModifications}
+                            setGuild={setGuild}
                             premium={premium}
                             setThreads={setThreads}
                             guild={guild}
@@ -172,25 +154,6 @@ export default function Infos({ guild, setGuild, threads, setThreads, premium, s
                     </ModalContent>
                 </Modal>
             </>
-            <AnimatePresence>
-                {!showModifications && (
-                    <motion.div
-                        initial={{ opacity: 0, y: 200 }}
-                        animate={{ opacity: 1, y: -10 }}
-                        exit={{ opacity: 0, y: 200 }}
-                        className="fixed bottom-0 right-0 w-full flex flex-col gap-4 items-center"
-                    >
-                        <div
-                            className="p-3 bg-neutral-800 transition border-2 border-neutral-700 
-                            rounded-lg justify-center flex gap-2 items-center px-4 w-full max-w-[1100px]"
-                        >
-                            <span>{l.dashboard.guilds.info.save}</span>
-                            {loading.loading && <AiOutlineLoading3Quarters className="animate-spin" size={18} />}
-                            {loading.check && <FaCheckCircle className="text-green-500" size={18} />}
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
         </>
     )
 }
