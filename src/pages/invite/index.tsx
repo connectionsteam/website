@@ -1,5 +1,5 @@
-import { useIsClient } from "../contexts/Client";
 import { useEffect } from "react";
+import { useIsClient } from "../../contexts/Client";
 
 export default function Invite() {
     const isClient = useIsClient();

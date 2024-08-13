@@ -48,7 +48,7 @@ export default function ConnectionsPageChannels({ setBody, body, guild }: Props)
 
             setLoading(false);
 
-            router.push(`/guild/${guild!.id}`);
+            router.push(`/guild/${guild!.id}/connection/${body.name}`);
         } catch (error: any) {
             const errors = {
                 404: "Unknown connection",
@@ -57,15 +57,14 @@ export default function ConnectionsPageChannels({ setBody, body, guild }: Props)
 
             if (error.response.status in errors) {
                 setErrors({ ...errors, api: errors[error.response.status as keyof typeof errors] });
+                
                 return setLoading(false);
             }
-
-            const json = error.response.data.errors[0].map((err: any) => err.message) || error.message;
 
             setLoading(false);
             setErrors({
                 ...errors,
-                api: json.join(", "),
+                api: "Invalid Channel"
             });
         }
     };

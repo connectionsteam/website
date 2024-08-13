@@ -18,8 +18,8 @@ export default function AuthUser({ type, handleRecallDrawer }: { type: "mobile" 
 
     const handleLogin = () => {
         if (!isClient) return;
-        
-        window.location.href = "/login"; 
+
+        window.location.href = "/login";
     }
 
     const handleLogout = () => {
@@ -50,13 +50,13 @@ export default function AuthUser({ type, handleRecallDrawer }: { type: "mobile" 
                 </DropdownTrigger>
                 <DropdownMenu className="bg-neutral-800 rounded-lg">
                     <DropdownItem className="bg-neutral-800 rounded-lg cursor-pointer hover:bg-neutral-700 transition outline-none" key="dash">
-                        <Link onClick={handleRecallDrawer} href="/dashboard" className="flex items-center justify-start min-w-28 py-2 gap-3">
+                        <Link onClick={handleRecallDrawer} href="/dashboard" className="flex items-center justify-start min-w-[140px] py-2 gap-3">
                             <MdOutlineSpaceDashboard />
                             <span>{languages[language].home.header.menu.dashboard}</span>
                         </Link>
                     </DropdownItem>
                     <DropdownItem className="bg-neutral-800 rounded-lg cursor-pointer hover:bg-neutral-700 transition outline-none" key="exit">
-                        <button onClick={handleLogout} className="flex items-center min-w-[240px] py-2 gap-3">
+                        <button onClick={handleLogout} className="flex items-center min-w-[140px] py-2 gap-3">
                             <LuLogOut />
                             <span>{languages[language].home.header.menu.exit}</span>
                         </button>

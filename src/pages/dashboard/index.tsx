@@ -1,3 +1,4 @@
+import { useDisclosure } from "@nextui-org/modal";
 import ConnectionsComponent from "../../components/Dashboard/Connections";
 import ConnectionsProtectedSkeleton from "../../components/Dashboard/Connections/Skeleton";
 import GuildsComponent from "../../components/Dashboard/Guilds";
@@ -9,11 +10,13 @@ import { ConnectionPayload, GuildPayload } from "../../types";
 import { api } from "../../utils/api";
 import { Tab, Tabs } from "@nextui-org/tabs";
 import { useContext, useEffect, useState } from "react";
+import JoinPrivateConnectionModal from "../../components/Dashboard/Connection/JoinPrivateConnection";
 
-export default function DashboardPage() {
+export default function DashboardPage({ query }: { query?: { name: string, code: string } }) {
     const { language } = useContext(LanguageContext);
     const [connections, setConnections] = useState<ConnectionPayload[] | null>(null);
     const [guilds, setGuilds] = useState<GuildPayload[] | null>(null);
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     const fetchGuilds = async () => {
         const { data } = await api.get("/users/@me/guilds");
@@ -22,12 +25,18 @@ export default function DashboardPage() {
     };
 
     useEffect(() => {
+        if (!query && !guilds) return;
+
+        onOpen();
+    }, [query]);
+
+    useEffect(() => {
         const fetchConnections = async () => {
             const { data } = await api.get("/users/@me/connections");
 
             setConnections(data);
         };
-        
+
         Promise.all([fetchGuilds(), fetchConnections()]);
     }, []);
 
@@ -63,6 +72,14 @@ export default function DashboardPage() {
                     </Tabs>
                 </div>
             </DefaultLayout>
+            {(query && guilds) && (
+                <JoinPrivateConnectionModal
+                    guilds={guilds}
+                    onOpenChange={onOpenChange}
+                    isOpen={isOpen}
+                    code={query}
+                />
+            )}
         </ProtectedRoute>
     )
 }
