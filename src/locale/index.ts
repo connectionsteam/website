@@ -199,7 +199,7 @@ export const languages = {
                 },
                 modifications: {
                     changes: "Você tem alterações para serem salvas",
-                    reset: "Redefinir alterações",
+                    reset: "Redefinir",
                 }
             },
             connections: {
@@ -310,6 +310,7 @@ export const languages = {
             discord: "Entrar com discord",
         },
         connection: {
+            joinPrivateConnection: "Entrar em uma conexão privada",
             title: "Conexões",
             creator: "Criador(a):",
             recommended: "Conexões recomendadas",
@@ -584,7 +585,7 @@ export const languages = {
                 },
                 modifications: {
                     changes: "You have changes to be saved",
-                    reset: "Reset changes",
+                    reset: "Reset",
                 }
             },
             connections: {
@@ -695,6 +696,7 @@ export const languages = {
             discord: "Login with discord",
         },
         connection: {
+            joinPrivateConnection: "Join a private connection",
             title: "Connections",
             recommended: "Recommended connections",
             description: "Discover new connections!",
