@@ -434,3 +434,19 @@ export type NotificationPayload =
     | BaseNotificationPayload<
         NotificationType.Backup | NotificationType.Internal
     >;
+
+export interface TeamPayload {
+    id: string;
+    name: string;
+    iconURL?: string;
+    creatorId: string;
+    inviteCode: string;
+    children: string[];
+    createdTimestamp: number;
+    members: TeamMemberPayload[];
+}
+
+export interface TeamMemberPayload {
+    id: string;
+    joinedTimestamp: number;
+}
