@@ -251,8 +251,18 @@ export const languages = {
             },
             misc: {
                 cancel: "Cancelar",
-                filterConnections: "Filtrar conexão",
-                filterGuilds: "Filtrar servidor",
+                filterConnections: "Filtrar conexões",
+                filterGuilds: "Filtrar servidores",
+                filterTeams: "Filtrar times",
+            },
+            teams: {
+                title: "Times",
+                description: "Selecione o time que deseja gerenciar",
+                delete: {
+                    title: "Deletar time",
+                    description: "Você deseja mesmo deletar o time",
+                    descriptionpage: "Ao deletar seu time, você irá perder todos os dados associados a ele, incluindo mensagens e servidores que estão conectados ao seu time e outros dados.",
+                }
             }
         },
         plans: {
@@ -335,7 +345,7 @@ export const languages = {
                 sort: "Ordenar por",
                 tag: "Tag",
                 query: "Pesquisar por",
-                votes: "Top", 
+                votes: "Top",
                 creationDate: "Novo",
                 typehere: "Digite aqui",
                 reset: "Redefinir filtros",
@@ -650,9 +660,19 @@ export const languages = {
             },
             misc: {
                 cancel: "Cancel",
-                filterConnections: "Filter connection",
-                filterGuilds: "Filter guild",
+                filterConnections: "Filter connections",
+                filterGuilds: "Filter guilds",
+                filterTeams: "Filter teams",
             },
+            teams: {
+                title: "Teams",
+                description: "Select the team you want to manage",
+                delete: {
+                    title: "Delete team",
+                    description: "Are you sure you want to delete the team",
+                    descriptionpage: "When you delete your team, you will lose all the data associated with it, including messages and guilds that were connected to your team and other data.",
+                }
+            }
         },
         plans: {
             buypopUp: {
@@ -739,7 +759,8 @@ export const languages = {
                 typehere: "Type here",
                 reset: "Reset filters",
             }
-        }, tos: {
+        },
+        tos: {
             title: "Terms of Service",
             intro1: "By accessing and using the Connections website and the Connections Bot, you agree to the following terms and conditions.",
             intro2: "These terms are designed to ensure that both the website and the bot are used appropriately and in accordance with applicable laws.",
