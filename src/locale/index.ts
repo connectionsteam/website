@@ -383,6 +383,19 @@ export const languages = {
             changes: "Alterações podem ser feitas em nossos Termos e Políticas a qualquer momento. Deixaremos você ciente quando essas mudanças ocorrerem. Ao utilizar nossos serviços, você consente com a coleta e uso de suas informações conforme descrito nesta Política de Privacidade. Este Termo de Serviço será regido e interpretado de acordo com as leis vigentes do país em que operamos.",
             contact: "Se você tiver alguma dúvida sobre a nossa Política de Privacidade, entre em contato conosco via e-mail (connectionsteamoficial@gmail.com) e tentaremos responder o mais rápido possível."
         },
+        notifications: {
+            title: "Notificações",
+            description: "Aqui ficarão suas notificações recebidas de backups, convites de time, respostas etc",
+            filter: "Filtrar notificações",
+            noNotifications: "Você não tem nenhuma notificação",
+            skeleton: "Nenhuma notificação encontrada",
+            seeMessage: "Ver mensagem",
+            team: "Time do Connections",
+            readAll: "Marcar tudo como lido",
+            accept: "Aceitar",
+            decline: "Recusar",
+            inviteError: "Não foi possível aceitar o convite",
+        }
     },
     "en-US": {
         home: {
@@ -768,5 +781,18 @@ export const languages = {
             changes: "Changes can be made to our Terms and Policies at any time. We will notify you when these changes occur. By using our services, you consent to the collection and use of your information as described in this Privacy Policy. These Terms of Service will be governed and interpreted in accordance with the laws of the country in which we operate.",
             contact: "If you have any questions about our Privacy Policy, contact us via email (connectionsteamoficial@gmail.com), and we will try to respond as quickly as possible."
         },
+        notifications: {
+            title: "Notifications",
+            description: "Here will be the notifications you receive from backups, team invites, responses, etc",
+            filter: "Filter notifications",
+            noNotifications: "You don't have any notifications",
+            skeleton: "No notifications found",
+            seeMessage: "Go to message",
+            team: "Connections team",
+            readAll: "Mark all as read",
+            accept: "Aceitar",
+            decline: "Recusar",
+            inviteError: "Não foi possível aceitar o convite",
+        }
     }
 }
