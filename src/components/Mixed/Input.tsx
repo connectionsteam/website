@@ -11,6 +11,7 @@ interface Props {
     maxChars?: number;
     minChars?: number;
     onClick?: () => void;
+    error?: boolean;
 }
 
 export default function DefaultInput({
@@ -23,22 +24,22 @@ export default function DefaultInput({
     textArea,
     maxChars,
     minChars,
+    error,
     onClick
 }: Props) {
     return (
         <div onClick={onClick} className="flex flex-col gap-2 w-full">
-            {obrigatory || label && (
-                <label className="text-neutral-300 flex gap-1">
-                    {label && <div>{label}</div>}
-                    {obrigatory && <span className="text-red-500">*</span>}
-                </label>
-            )}
+            <label className="text-neutral-300 flex gap-1">
+                {label && <div>{label}</div>}
+                {obrigatory && <span className="text-red-500">*</span>}
+            </label>
             <div className="relative w-full">
                 {textArea ? (
                     <textarea
                         value={value}
                         maxLength={(minChars && maxChars) ? maxChars + minChars : maxChars || 9999}
-                        className={`transition w-full p-3 rounded-lg bg-neutral-900/50 focus:outline-none ${maxChars && "pb-4"}`}
+                        className={`transition w-full p-3 rounded-lg bg-neutral-900/50 border-2
+                        focus:outline-none ${maxChars && "pb-4"} ${error ? "border-red-500" : "border-transparent"}`}
                         onChange={onChange}
                         placeholder={placeholder}
                     />
@@ -46,7 +47,8 @@ export default function DefaultInput({
                     <input
                         value={value}
                         maxLength={(minChars && maxChars) ? maxChars + minChars : maxChars || 9999}
-                        className={`transition w-full p-3 rounded-lg bg-neutral-900/50 focus:outline-none ${maxChars && "pb-4"}`}
+                        className={`transition w-full p-3 rounded-lg bg-neutral-900/50 border-2
+                        focus:outline-none ${maxChars && "pb-4"} ${error ? "border-red-500" : "border-transparent"}`}
                         onChange={onChange}
                         type={type}
                         placeholder={placeholder}

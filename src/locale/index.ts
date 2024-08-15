@@ -258,10 +258,19 @@ export const languages = {
             teams: {
                 title: "Times",
                 description: "Selecione o time que deseja gerenciar",
+                createTeam: "Criar time",
+                createTeamLoading: "Criando time...",
                 delete: {
                     title: "Deletar time",
                     description: "Você deseja mesmo deletar o time",
                     descriptionpage: "Ao deletar seu time, você irá perder todos os dados associados a ele, incluindo mensagens e servidores que estão conectados ao seu time e outros dados.",
+                },
+                team: {
+                    form: {
+                        name: "Nome",
+                        icon: "Icone",
+                        placeholder: "Digite aqui o nome do time",
+                    }
                 }
             }
         },
@@ -667,6 +676,15 @@ export const languages = {
             teams: {
                 title: "Teams",
                 description: "Select the team you want to manage",
+                createTeam: "Create team",
+                createTeamLoading: "Creating team...",
+                team: {
+                    form: {
+                        name: "Name",
+                        icon: "Icon",
+                        placeholder: "Type here the team name",
+                    }
+                },
                 delete: {
                     title: "Delete team",
                     description: "Are you sure you want to delete the team",

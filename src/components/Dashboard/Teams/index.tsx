@@ -1,6 +1,6 @@
 import { Input } from "@nextui-org/input";
 import { useLanguage } from "../../../hooks/useLanguage";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "react";
 import { MdOutlineSync } from "react-icons/md";
 import Head from "next/head";
 import { TeamPayload } from "../../../types";
@@ -9,6 +9,8 @@ import { AnimatePresence } from "framer-motion";
 import TeamCard from "./Team";
 import DefaultButton from "../../Mixed/Button";
 import { LuPlusCircle } from "react-icons/lu";
+import CreateTeamForm from "./Team/CreateForm";
+import { useDisclosure } from "@nextui-org/modal";
 
 export interface TeamState {
     team: TeamPayload | null;
@@ -19,6 +21,7 @@ export interface TeamState {
 export default function TeamsComponent() {
     const [searchQuery, setSearchQuery] = useState("");
     const [teams, setTeams] = useState<TeamPayload[] | null>(null);
+    const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     const l = useLanguage();
     const [teamProps, setteamProps] = useState<TeamState>({
         team: null,
@@ -31,11 +34,9 @@ export default function TeamsComponent() {
 
         await api.delete(`/teams/${teamProps.hover}`);
 
-        setTimeout(() => {
-            setTeams(teams!.filter(team => team.name !== teamProps.hover));
+        setTeams(teams!.filter(team => team.id !== teamProps.hover));
 
-            setteamProps({ ...teamProps, removing: null });
-        }, 500);
+        setteamProps({ ...teamProps, removing: null });
     };
 
     const handleChangeQuery = (event: ChangeEvent<HTMLInputElement>) => {
@@ -70,7 +71,7 @@ export default function TeamsComponent() {
                     <Input classNames={{
                         inputWrapper: "rounded-lg bg-neutral-800 group-hover:bg-neutral-700",
                     }} onChange={handleChangeQuery} type="string" label={l.dashboard.misc.filterTeams} />
-                    <DefaultButton divclass="w-fit" className="w-[52px]">
+                    <DefaultButton onClick={onOpen} divclass="w-fit" className="w-[52px]">
                         <LuPlusCircle size={20} />
                     </DefaultButton>
                 </div>
@@ -95,6 +96,15 @@ export default function TeamsComponent() {
                                 ))
                         ) : <div>a</div>}
                     </AnimatePresence>
+                    {teams &&
+                        <CreateTeamForm
+                            setTeams={setTeams as Dispatch<SetStateAction<TeamPayload[]>>}
+                            isOpen={isOpen}
+                            onOpenChange={onOpenChange}
+                            onClose={onClose}
+                            teams={teams}
+                        />
+                    }
                 </div>
             </div>
         </>
