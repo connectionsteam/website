@@ -4,16 +4,16 @@ import ConnectionsProtectedSkeleton from "../../components/Dashboard/Connections
 import GuildsComponent from "../../components/Dashboard/Guilds";
 import DefaultLayout from "../../components/Mixed/Layout";
 import ProtectedRoute from "../../components/Mixed/ProtectedRoute";
-import { LanguageContext } from "../../contexts/Language";
-import { languages } from "../../locale";
 import { ConnectionPayload, GuildPayload } from "../../types";
 import { api } from "../../utils/api";
 import { Tab, Tabs } from "@nextui-org/tabs";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import JoinPrivateConnectionModal from "../../components/Dashboard/Connection/JoinPrivateConnection";
+import { useLanguage } from "../../hooks/useLanguage";
+import TeamsComponent from "../../components/Dashboard/Teams";
 
 export default function DashboardPage({ query }: { query?: { name: string, code: string } }) {
-    const { language } = useContext(LanguageContext);
+    const l = useLanguage();
     const [connections, setConnections] = useState<ConnectionPayload[] | null>(null);
     const [guilds, setGuilds] = useState<GuildPayload[] | null>(null);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -24,6 +24,12 @@ export default function DashboardPage({ query }: { query?: { name: string, code:
         setGuilds(data);
     };
 
+    const fetchConnections = async () => {
+        const { data } = await api.get("/users/@me/connections");
+
+        setConnections(data);
+    };
+
     useEffect(() => {
         if (!query && !guilds) return;
 
@@ -31,12 +37,6 @@ export default function DashboardPage({ query }: { query?: { name: string, code:
     }, [query]);
 
     useEffect(() => {
-        const fetchConnections = async () => {
-            const { data } = await api.get("/users/@me/connections");
-
-            setConnections(data);
-        };
-
         Promise.all([fetchGuilds(), fetchConnections()]);
     }, []);
 
@@ -52,9 +52,10 @@ export default function DashboardPage({ query }: { query?: { name: string, code:
                         <Tab
                             className="flex items-start w-full"
                             key="connections"
-                            title={languages[language].dashboard.connections.title}
+                            title={l.dashboard.connections.title}
                         >
                             <ConnectionsComponent
+                                fetchConnections={fetchConnections}
                                 connections={connections}
                                 setConnections={setConnections}
                             />
@@ -62,12 +63,19 @@ export default function DashboardPage({ query }: { query?: { name: string, code:
                         <Tab
                             className="flex items-start w-full"
                             key="guilds"
-                            title={languages[language].dashboard.guilds.title}
+                            title={l.dashboard.guilds.title}
                         >
                             <GuildsComponent
                                 fetchGuilds={fetchGuilds}
                                 guilds={guilds}
                             />
+                        </Tab>
+                        <Tab
+                            className="flex items-start w-full"
+                            key="teams"
+                            title={l.dashboard.teams.title}
+                        >
+                            <TeamsComponent/>
                         </Tab>
                     </Tabs>
                 </div>
