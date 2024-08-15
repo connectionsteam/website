@@ -55,8 +55,6 @@ export default function NotificationsComponent() {
         return b.sentTimestamp - a.sentTimestamp;
     };
 
-    console.log(notifications);
-
     return (
         <DefaultLayout>
             <ProtectedRoute loading={<NotificationsSkeleton />}>
@@ -111,6 +109,10 @@ export default function NotificationsComponent() {
                                 .filter(filter)
                                 .map((notification, index) => (
                                     <Notification
+                                        notifications={notifications}
+                                        setNotifications={setNotifications}
+                                        notificationsContext={notificationsContext}
+                                        setContextNotifications={setContextNotifications}
                                         key={index}
                                         index={index}
                                         notification={notification}

@@ -3,36 +3,71 @@ import { NotificationPayload, NotificationType } from "../../types";
 import { motion } from "framer-motion";
 import { useLanguage } from "../../hooks/useLanguage";
 import { api } from "../../utils/api";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useRouter } from "next/router";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 interface Props {
     notification: NotificationPayload;
     index: number;
+    notifications: NotificationPayload[] | null;
+    setNotifications: (notifications: NotificationPayload[] | null) => void;
+    notificationsContext: NotificationPayload[] | null;
+    setContextNotifications: (notifications: NotificationPayload[]) => void;
 }
 
-export default function Notification({ notification, index }: Props) {
+export default function Notification({ notification, index, notifications, setNotifications, notificationsContext, setContextNotifications }: Props) {
     const l = useLanguage();
     const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState({
+        load: false,
+        loader: ""
+    });
     const { push } = useRouter();
 
     const date = new Date(notification.sentTimestamp).toLocaleString(l.language);
 
     const handleJoinTeam = (teamId: string) => async () => {
         try {
-            setLoading(true);
+            setLoading({
+                load: true,
+                loader: "joinTeam"
+            });
 
             await api.put(`/teams/${teamId}/join`);
 
             push(`/dashboard/team/${teamId}`);
 
-            setLoading(false)
+            setLoading({
+                load: false,
+                loader: "joinTeam"
+            });
         } catch {
             setError(true);
-            setLoading(false);
+            setLoading({
+                load: false,
+                loader: "joinTeam"
+            });
         }
+    };
+
+    const handleDecline = (id: string) => async () => {
+        setLoading({
+            load: true,
+            loader: "decline"
+        });
+
+        await api.post("/users/@me/inbox/bulk-delete", {
+            ids: [id]
+        });
+
+        setNotifications(notifications!.filter((not) => not.id !== id));
+        setContextNotifications(notificationsContext!.filter((not) => not.id !== id));
+
+        setLoading({
+            load: false,
+            loader: "decline"
+        });
     };
 
     const renderNotificationContent = {
@@ -58,16 +93,24 @@ export default function Notification({ notification, index }: Props) {
                 <span>{notification.content}</span>
                 <div className="flex gap-1">
                     <button
-                        disabled={loading}
+                        disabled={loading.loader === "joinTeam" && loading.load}
                         onClick={handleJoinTeam(notification.teamId)}
                         className="bg-green-500 hover:bg-green-600 rounded-lg px-3 p-2 transition
                         disabled:hover:bg-green-500"
                     >
-                        {loading ? <AiOutlineLoading3Quarters className="animate-spin" />
+                        {(loading.loader === "joinTeam" && loading.load)
+                            ? <AiOutlineLoading3Quarters className="animate-spin" />
                             : <span>{l.notifications.accept}</span>}
                     </button>
-                    <button className="bg-red-500 hover:bg-red-600 rounded-lg px-3 p-2 transition">
-                        {l.notifications.decline}
+                    <button
+                        disabled={loading.loader === "decline" && loading.load}
+                        onClick={handleDecline(notification.id)}
+                        className="bg-red-500 hover:bg-red-600 rounded-lg px-3 p-2 transition
+                        disabled:hover:bg-red-500"
+                    >
+                        {(loading.loader === "decline" && loading.load)
+                            ? <AiOutlineLoading3Quarters className="animate-spin" />
+                            : <span>{l.notifications.decline}</span>}
                     </button>
                 </div>
                 {error && <span className="text-red-500">{l.notifications.inviteError}</span>}
