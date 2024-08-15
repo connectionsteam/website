@@ -37,10 +37,6 @@ export default function GuildsComponent({ guilds, fetchGuilds }: Props) {
         <>
             <Head>
                 <title>{l.dashboard.guilds.title}</title>
-                <meta name="description" content={l.dashboard.guilds.description} />
-                <meta name="og:title" content={l.dashboard.guilds.title} />
-                <meta name="og:description" content={l.dashboard.guilds.description} />
-                <meta name="theme-color" content="#D946EF" />
             </Head>
             <div className="flex w-full items-start flex-col gap-4 z-10 tablet:px-3">
                 <div className="flex flex-col gap-2">

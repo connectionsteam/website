@@ -8,6 +8,9 @@ import ConnectionCard from "./Connection/Card";
 import { AnimatePresence } from "framer-motion";
 import Head from "next/head";
 import { useLanguage } from "../../../hooks/useLanguage";
+import DefaultButton from "../../Mixed/Button";
+import { LuPlusCircle } from "react-icons/lu";
+import { useDisclosure } from "@nextui-org/modal";
 
 interface Props {
     connections: ConnectionPayload[] | null;
@@ -23,6 +26,7 @@ export interface ConnectionState {
 export default function ConnectionsComponent({ connections, setConnections }: Props) {
     const [searchQuery, setSearchQuery] = useState("");
     const l = useLanguage();
+    const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     const [connectionProps, setConnectionProps] = useState<ConnectionState>({
         connection: null!,
         hover: null,
@@ -49,19 +53,20 @@ export default function ConnectionsComponent({ connections, setConnections }: Pr
         <>
             <Head>
                 <title>{l.dashboard.connections.title}</title>
-                <meta name="description" content={l.dashboard.connections.description} />
-                <meta name="og:title" content={l.dashboard.connections.title} />
-                <meta name="og:description" content={l.dashboard.connections.description} />
-                <meta name="theme-color" content="#D946EF" />
             </Head>
             <div className="flex w-full items-start flex-col gap-4 tablet:px-3">
                 <div className="flex flex-col gap-2">
                     <h1 className="font-bold text-3xl">{l.dashboard.connections.title}</h1>
                     <span className="text-neutral-300">{l.dashboard.connections.description}</span>
                 </div>
-                <Input classNames={{
-                    inputWrapper: "rounded-lg bg-neutral-800 group-hover:bg-neutral-700",
-                }} onChange={handleChangeQuery} type="string" label={l.dashboard.misc.filterConnections} />
+                <div className="flex w-full h-full gap-1">
+                    <Input classNames={{
+                        inputWrapper: "rounded-lg bg-neutral-800 group-hover:bg-neutral-700",
+                    }} onChange={handleChangeQuery} type="string" label={l.dashboard.misc.filterConnections} />
+                    <DefaultButton onClick={onOpen} divclass="w-fit" className="w-[52px]">
+                        <LuPlusCircle size={20} />
+                    </DefaultButton>
+                </div>
                 <div className="grid grid-cols-3 gap-3 w-full tablet:grid-cols-2 mobile:grid-cols-1">
                     <AnimatePresence>
                         {connections ? (
@@ -86,8 +91,11 @@ export default function ConnectionsComponent({ connections, setConnections }: Pr
                     </AnimatePresence>
                     {connections &&
                         <CreateConnectionForm
-                            connections={connections}
                             setConnections={setConnections as Dispatch<SetStateAction<ConnectionPayload[]>>}
+                            isOpen={isOpen}
+                            onOpenChange={onOpenChange}
+                            onClose={onClose}
+                            connections={connections}
                         />
                     }
                 </div>

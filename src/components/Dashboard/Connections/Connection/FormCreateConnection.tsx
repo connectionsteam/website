@@ -1,6 +1,5 @@
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/modal";
 import { ChangeEvent, Dispatch, SetStateAction, useContext, useState } from "react";
-import { LuPlusCircle } from "react-icons/lu";
 import CreateConnection from "./CreateConnection";
 import { ConnectionPayload, RequestPost } from "../../../../types";
 import { LanguageContext } from "../../../../contexts/Language";
@@ -10,12 +9,13 @@ import DefaultInput from "../../../../components/Mixed/Input";
 interface Props {
     connections: ConnectionPayload[];
     setConnections: Dispatch<SetStateAction<ConnectionPayload[]>>;
+    isOpen: boolean;
+    onOpenChange: (open: boolean) => void;
+    onClose: () => void;
 }
 
-export default function CreateConnectionForm({ connections, setConnections }: Props) {
+export default function CreateConnectionForm({ connections, setConnections, isOpen, onOpenChange, onClose }: Props) {
     const { language } = useContext(LanguageContext);
-
-    const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     const [post, setPost] = useState<RequestPost>({
         name: "",
     });
@@ -34,15 +34,6 @@ export default function CreateConnectionForm({ connections, setConnections }: Pr
 
     return (
         <>
-            <div className="p-[2px] bg-gradient-to-r from-fuchsia-500 to-indigo-500 rounded-lg w-full">
-                <button
-                    onClick={onOpen}
-                    className="flex items-center justify-center gap-2 p-5 h-full w-full rounded-lg bg-neutral-800 hover:bg-transparent transition"
-                >
-                    <LuPlusCircle size={23} />
-                    <span>{languages[language].dashboard.connections.addConnection}</span>
-                </button>
-            </div>
             <Modal classNames={{
                 closeButton: "transition hover:bg-neutral-700",
                 wrapper: "overflow-y-hidden",
