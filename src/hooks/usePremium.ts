@@ -1,6 +1,24 @@
 import { useState, useEffect } from "react";
 import { GuildPayload, Premium as PremiumStructure, PremiumType } from "../types";
 
+const Limits = {
+    [PremiumType.Normal]: {
+        Connections: 25,
+        Threads: 5,
+        Mods: 10,
+    },
+    [PremiumType.Vip]: {
+        Connections: 50,
+        Threads: 15,
+        Mods: 10,
+    },
+    [PremiumType.None]: {
+        Connections: 5,
+        Threads: 0,
+        Mods: 5,
+    },
+};
+
 export default function usePremium(guild: GuildPayload | undefined) {
     const [premium, setPremium] = useState<PremiumStructure>();
 
@@ -8,17 +26,13 @@ export default function usePremium(guild: GuildPayload | undefined) {
         if (!guild) return;
 
         const premiumType = guild.premium?.type || PremiumType.None;
-        const maxMods = premiumType === PremiumType.None ? 5 : 10;
-        const maxConnections = premiumType === PremiumType.Normal ? 25
-            : premiumType === PremiumType.Vip ? 50 : 5;
-        const maxThreads = premiumType === PremiumType.Normal ? 5
-            : premiumType === PremiumType.Vip ? 15 : 0;
+        const limits = Limits[premiumType];
 
         setPremium({
             isPremium: premiumType !== PremiumType.None,
-            maxMods,
-            maxConnections,
-            maxThreads,
+            maxMods: limits.Mods,
+            maxConnections: limits.Connections,
+            maxThreads: limits.Threads,
             premiumType
         });
     }, [guild]);
