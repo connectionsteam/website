@@ -403,3 +403,34 @@ export interface ConnectionsPageFilters {
     query: string;
     search: boolean;
 }
+
+export enum NotificationType {
+    Reply = 1,
+    Backup,
+    Internal,
+    TeamInvite,
+}
+
+interface BaseNotificationPayload<Type extends NotificationType> {
+    id: string;
+    type: Type;
+    content: string;
+    sentTimestamp: number;
+}
+
+interface MessageReplyNotification
+    extends BaseNotificationPayload<NotificationType.Reply> {
+    messageURL: string;
+}
+
+interface TeamInviteNotification
+    extends BaseNotificationPayload<NotificationType.TeamInvite> {
+    teamId: string;
+}
+
+export type NotificationPayload =
+    | MessageReplyNotification
+    | TeamInviteNotification
+    | BaseNotificationPayload<
+        NotificationType.Backup | NotificationType.Internal
+    >;
