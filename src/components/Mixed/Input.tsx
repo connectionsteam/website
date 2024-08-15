@@ -27,7 +27,7 @@ export default function DefaultInput({
 }: Props) {
     return (
         <div onClick={onClick} className="flex flex-col gap-2 w-full">
-            {label && obrigatory && (
+            {obrigatory || label && (
                 <label className="text-neutral-300 flex gap-1">
                     {label && <div>{label}</div>}
                     {obrigatory && <span className="text-red-500">*</span>}
