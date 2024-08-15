@@ -440,7 +440,6 @@ export interface TeamPayload {
     name: string;
     iconURL?: string;
     creatorId: string;
-    inviteCode: string;
     children: string[];
     createdTimestamp: number;
     members: TeamMemberPayload[];
