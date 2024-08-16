@@ -4,4 +4,4 @@ MEMORY=512
 SUBDOMAIN=connections
 VERSION=recommended
 AUTORESTART=true
-START=npm run build && npm run start
+START=npm run start

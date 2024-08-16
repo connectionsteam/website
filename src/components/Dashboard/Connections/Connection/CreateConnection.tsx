@@ -7,8 +7,8 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 interface Props {
     post: RequestPost;
-    setErrors: Dispatch<SetStateAction<{ [key: string]: string }>>;
-    errors: { [key: string]: string };
+    setErrors: (value: string[]) => void;
+    errors: string[];
     onClose: () => void;
     setConnections: Dispatch<SetStateAction<ConnectionPayload[]>>;
     connections: ConnectionPayload[];
@@ -16,7 +16,7 @@ interface Props {
 
 export default function CreateConnection({ post, setErrors, errors, connections, setConnections, onClose }: Props) {
     const [loading, setLoading] = useState(false);
-    const { language } = useContext(LanguageContext);  
+    const { language } = useContext(LanguageContext);
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
@@ -31,42 +31,51 @@ export default function CreateConnection({ post, setErrors, errors, connections,
             window.removeEventListener("keydown", handleKeyDown);
         };
     }, [post]);
-    
+
     const createConnection = async () => {
         setLoading(true);
 
+        const { name, description, icon, maxConnections } = post;
+
+        const postBody: Partial<typeof post> = {
+            name: name,
+            description: description || "",
+            icon: icon,
+            maxConnections: maxConnections ? parseFloat(maxConnections.toString()) : undefined,
+        };
+
+        for (const key in postBody) {
+            if (postBody[key as keyof typeof postBody] === "") {
+                delete postBody[key as keyof typeof postBody];
+            }
+        }
+
+        if (!postBody.name) {
+            setErrors([...errors, "name"]);
+            setLoading(false);
+            return;
+        }
+
+        console.log(postBody);
+
         try {
-            const postBody = {
-                name: post.name,
-                description: post.description ? post.description : "",
-                icon: post.icon,
-                maxConnections: post.maxConnections ? parseFloat(post.maxConnections.toString()) : "",
-            }
-            
-            for (let i in postBody) {
-                if (postBody[i as keyof typeof postBody] === "") {
-                    delete postBody[i as keyof typeof postBody];
-                }
-            }
-
-            const req = await api.post("/users/@me/connections", postBody);
+            const { data } = await api.put("/users/@me/connections", postBody);
 
             setLoading(false);
+            setErrors([]);
             onClose();
-            setConnections([
-                ...connections,
-                req.data,
-            ]);
+            setConnections([...connections, data]);
         } catch (error: any) {
-            const json = error.response.data.errors[0].map((err: any) => err.message) || error.message;
-            
             setLoading(false);
-            setErrors({
-                ...errors,
-                api: json.join(", "),
-            });
+
+            if (postBody.description && postBody.description.length < 20) {
+                setErrors([...errors, "description"]);
+            }
+
+            setErrors([...errors, ...(error.response?.data?.extra?.path || [])]);
         }
     };
+
 
     return (
         <div className="p-[2px] bg-gradient-to-r from-fuchsia-500 to-indigo-500 rounded-lg w-full">

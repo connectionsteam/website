@@ -55,7 +55,6 @@ export default function DashboardPage({ query }: { query?: { name: string, code:
                             title={l.dashboard.connections.title}
                         >
                             <ConnectionsComponent
-                                fetchConnections={fetchConnections}
                                 connections={connections}
                                 setConnections={setConnections}
                             />

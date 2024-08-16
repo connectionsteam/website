@@ -17,18 +17,14 @@ interface Props {
 export default function CreateConnectionForm({ connections, setConnections, isOpen, onOpenChange, onClose }: Props) {
     const { language } = useContext(LanguageContext);
     const [post, setPost] = useState<RequestPost>({
-        name: "",
+        name: null!,
     });
-    const [errors, setErrors] = useState<{ [key: string]: string }>({});
+    const [errors, setErrors] = useState<string[]>([]);
 
     const setPostValues = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, key: string) => {
         setPost({
             ...post,
             [key]: event.target.value,
-        });
-        setErrors({
-            ...errors,
-            [key]: "",
         });
     };
 
@@ -48,6 +44,7 @@ export default function CreateConnectionForm({ connections, setConnections, isOp
                             obrigatory
                             maxChars={16}
                             minChars={1}
+                            error={errors.includes("name")}
                             value={post.name}
                             label={languages[language].dashboard.connections.connection.form.name}
                             type="text"
@@ -57,6 +54,7 @@ export default function CreateConnectionForm({ connections, setConnections, isOp
                         <DefaultInput
                             maxChars={50}
                             minChars={20}
+                            error={errors.includes("description")}
                             value={post.description}
                             label={languages[language].dashboard.connections.connection.form.description}
                             type="text"
@@ -66,16 +64,16 @@ export default function CreateConnectionForm({ connections, setConnections, isOp
                         <DefaultInput
                             label={languages[language].dashboard.connections.connection.form.icon}
                             type="text"
+                            error={errors.includes("icon")}
                             placeholder="https://i.imgur.com/EXQVxqQ.png"
                             onChange={(e) => setPostValues(e, "icon")}
                         />
                         <DefaultInput
                             label={languages[language].dashboard.connections.connection.form.maxConnections}
-                            type="text"
+                            type="number"
                             placeholder="5"
                             onChange={(e) => setPostValues(e, "maxConnections")}
                         />
-                        {errors.api && <div className="text-red-500">{errors.api}</div>}
                     </ModalBody>
                     <ModalFooter className="w-full">
                         <CreateConnection
