@@ -38,7 +38,7 @@ export default function CreateTeam({ post, setErrors, errors, teams, setTeams, o
 
         const postBody = {
             name,
-            icon
+            iconURL: icon
         }
 
         if (name.trim() === "") {
