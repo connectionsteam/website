@@ -46,8 +46,20 @@ export default function InviteMember({ team, onClose }: { team: TeamPayload, onC
             });
         }
 
+        if (team.members.length === 3) {
+            setErrors([
+                ...errors,
+                "maxmembers"
+            ]);
+
+            return setLoading({
+                ...loading,
+                state: false
+            });
+        }
+
         try {
-            await api.put(`/teams/${team._id}/members`, {
+            await api.put(`/teams/${team.id}/members`, {
                 member: id,
             });
 
@@ -79,17 +91,20 @@ export default function InviteMember({ team, onClose }: { team: TeamPayload, onC
     return (
         <ModalContent className="bg-neutral-800 text-white">
             <ModalHeader className="pb-1">
-                Adicionar Membro
+                {l.dashboard.teams.members.invite.title}
             </ModalHeader>
             <ModalBody>
                 <DefaultInput
                     onChange={(event) => setId(event.target.value)}
-                    placeholder="Digite aqui o ID do membro que será convidado"
+                    placeholder={l.dashboard.teams.members.invite.placeholder}
                     type="text"
-                    label="ID do membro"
+                    label={l.dashboard.teams.members.invite.memberId}
                     error={errors.includes("id")}
                 />
-                {errors.includes("alreadymember") && <p className="text-red-500">O membro já é membro desta equipe</p>}
+                {errors.includes("alreadymember")
+                    && <span className="text-red-500">{l.dashboard.teams.members.invite.alreadyMember}</span>}
+                {errors.includes("maxmembers")
+                    && <span className="text-red-500">{l.dashboard.teams.members.invite.maxMembers}</span>}
             </ModalBody>
             <ModalFooter className="flex w-full justify-end border-t rounded-t-xl
             border-neutral-700 mt-2">
@@ -106,7 +121,7 @@ export default function InviteMember({ team, onClose }: { team: TeamPayload, onC
                     className="flex gap-2 font-semibold items-center text-center bg-green-500 
                     transition hover:bg-green-600 p-2 px-3 rounded-lg disabled:hover:bg-green-500"
                 >
-                    <span>Enviar Convite</span>
+                    <span>{l.dashboard.teams.members.invite.sendInvite}</span>
                     {loading.state && <AiOutlineLoading3Quarters className="animate-spin" size={20} />}
                     {loading.check && <FaCheckCircle className="text-white-500" size={20} />}
                 </button>
