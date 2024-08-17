@@ -101,7 +101,7 @@ export default function NotificationsComponent() {
                             <></>
                         ) : notifications.sort(sort).filter(filter).length === 0 ? (
                             <div className="min-h-[40vh] text-lg items-center font-bold justify-center flex text-center">
-                                {query !== "" ? l.notifications.noNotifications : l.notifications.skeleton}
+                                {query === "" ? l.notifications.noNotifications : l.notifications.skeleton}
                             </div>
                         ) : (
                             notifications
