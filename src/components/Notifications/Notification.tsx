@@ -3,7 +3,7 @@ import { NotificationPayload, NotificationType } from "../../types";
 import { motion } from "framer-motion";
 import { useLanguage } from "../../hooks/useLanguage";
 import { api } from "../../utils/api";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
@@ -118,7 +118,24 @@ export default function Notification({ notification, index, notifications, setNo
             </>
         ),
         [NotificationType.Backup]: (notification: NotificationPayload) => (
-            <span>{notification.content}</span>
+            <>
+                <div className="bg-amber-500 rounded-lg absolute -top-2 right-2 px-2">
+                    <span>Premium</span>
+                </div>
+                <div className="bg-neutral-800 rounded-lg p-3 flex flex-col gap-2">
+                    <span>{notification.content}</span>
+                    <span className="text-sm text-neutral-400">{date}</span>
+                    <a
+                        href={"/dasjk"}
+                        target="_blank"
+                        className="p-2 px-3 rounded-lg transition bg-neutral-900/50 
+                        hover:bg-neutral-900 w-fit flex gap-2 items-center"
+                    >
+                        <span>{l.notifications.goToBackup}</span>
+                        <LuExternalLink />
+                    </a>
+                </div>
+            </>
         ),
         [NotificationType.Internal]: (notification: NotificationPayload) => (
             <>
@@ -139,9 +156,11 @@ export default function Notification({ notification, index, notifications, setNo
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 5 }}
             transition={{ duration: 0.2, delay: index * 0.1 }}
-            className={notification.type !== NotificationType.Internal
-                ? "w-full bg-neutral-800 rounded-lg p-3 flex flex-col gap-2"
-                : "bg-gradient-to-r from-fuchsia-500 to-indigo-500 rounded-lg p-0.5 flex flex-col gap-2 relative"
+            className={notification.type === NotificationType.Internal
+                ? "bg-gradient-to-r from-fuchsia-500 to-indigo-500 rounded-lg p-0.5 flex flex-col gap-2 relative"
+                : notification.type === NotificationType.Backup
+                    ? "bg-gradient-to-r from-amber-500 to-orange-500 rounded-lg p-0.5 flex flex-col gap-2 relative"
+                    : "w-full bg-neutral-800 rounded-lg p-3 flex flex-col gap-2"
             }
         >
             {renderNotificationContent[notification.type](notification)}

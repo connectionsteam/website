@@ -414,6 +414,7 @@ export const languages = {
             accept: "Aceitar",
             decline: "Recusar",
             inviteError: "Não foi possível aceitar o convite",
+            goToBackup: "Ir para o backup",
         }
     },
     "en-US": {
@@ -832,6 +833,7 @@ export const languages = {
             accept: "Aceitar",
             decline: "Recusar",
             inviteError: "Não foi possível aceitar o convite",
+            goToBackup: "Go to backup",
         }
     }
 }
