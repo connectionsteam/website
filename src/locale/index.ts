@@ -260,10 +260,38 @@ export const languages = {
                 description: "Selecione o time que deseja gerenciar",
                 createTeam: "Criar time",
                 createTeamLoading: "Criando time...",
+                noTeams: "Você não tem times",
+                noTeamsDescription: "Você pode criar times clicando no botão",
+                noTeamsFound: "Nenhum time encontrado",
                 delete: {
                     title: "Deletar time",
                     description: "Você deseja mesmo deletar o time",
                     descriptionpage: "Ao deletar seu time, você irá perder todos os dados associados a ele, incluindo mensagens e servidores que estão conectados ao seu time e outros dados.",
+                },
+                members: {
+                    title: "Membros",
+                    description: "Aqui ficarão os membros do seu time, todos os membros podem adicionar e remover conexões do time",
+                    filterMembers: "Filtrar membros",
+                    placeholder: "Digite aqui um nome de usuário ou ID",
+                    noMembers: "Esse time não possui membros",
+                    noMembersDescription: "Você pode adicionar membros clicando no botão",
+                    noMembersFound: "Nenhum membro encontrado",
+                    manageMember: "Gerenciar Membro",
+                    modal: {
+                        title: "Gerenciar Membro",
+                        description: "O que você deseja fazer com o membro",
+                        choose: "Escolha uma das opções abaixo",
+                        kick: "Expulsar",
+                        transfer: "Transferir Posse",
+                    },
+                    invite: {
+                        title: "Convidar Membro",
+                        alreadyMember: "O membro já é membro desta equipe",
+                        placeholder: "Digite aqui o ID do membro que será convidado",
+                        memberId: "ID do membro",
+                        sendInvite: "Enviar Convite",
+                        maxMembers: "Este time atingiu o máximo de 3 membros",
+                    }
                 },
                 team: {
                     form: {
@@ -679,11 +707,39 @@ export const languages = {
                 description: "Select the team you want to manage",
                 createTeam: "Create team",
                 createTeamLoading: "Creating team...",
+                noTeams: "You don't have teams",
+                noTeamsDescription: "You can create teams by clicking on the button",
+                noTeamsFound: "No teams found",
                 team: {
                     form: {
                         name: "Name",
                         icon: "Icon",
                         placeholder: "Type here the team name",
+                    }
+                },
+                members: {
+                    title: "Members",
+                    description: "Here will be the members of your team, all members can add and remove connections from the team",
+                    filterMembers: "Filter members",
+                    placeholder: "Type here a username or ID",
+                    noMembers: "This team doesn't have members",
+                    noMembersDescription: "You can add members by clicking on the button",
+                    noMembersFound: "No members found",
+                    manageMember: "Manage Member",
+                    modal: {
+                        title: "Manage Member",
+                        description: "What do you want to do with the member",
+                        choose: "Choose one of the options below",
+                        kick: "Kick",
+                        transfer: "Transfer Owner",
+                    },
+                    invite: {
+                        title: "Invite Member",
+                        alreadyMember: "The member is already a member of this team",
+                        placeholder: "Type here the ID of the member you want to invite",
+                        memberId: "Member ID",
+                        sendInvite: "Send Invite",
+                        maxMembers: "This team has reached the maximum of 3 members",
                     }
                 },
                 delete: {
