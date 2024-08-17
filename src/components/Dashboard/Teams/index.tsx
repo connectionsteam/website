@@ -53,6 +53,12 @@ export default function TeamsComponent() {
         fetchTeams();
     }, []);
 
+    const filter = (team: TeamPayload) => {
+        return team.name.toLowerCase().includes(searchQuery.toLowerCase())
+            || team.name.includes(searchQuery)
+            || team.creatorId?.includes(searchQuery)
+    };
+
     return (
         <>
             <Head>
@@ -75,16 +81,25 @@ export default function TeamsComponent() {
                         <LuPlusCircle size={20} />
                     </DefaultButton>
                 </div>
-                <div className="grid grid-cols-3 gap-3 w-full tablet:grid-cols-2 mobile:grid-cols-1">
-                    <AnimatePresence>
-                        {teams ? (
-                            teams
-                                .filter((team) =>
-                                    team.name.toLowerCase().includes(searchQuery.toLowerCase())
-                                    || team.name.includes(searchQuery)
-                                    || team.creatorId?.includes(searchQuery)
-                                )
-                                .map((team, index) => (
+                {(teams && teams.filter(filter).length === 0) ? (
+                    <div className="flex w-full items-center justify-center">
+                        <div className="min-h-[30vh] text-lg items-center font-bold justify-center flex text-center">
+                            {searchQuery === "" ? (
+                                <div className="flex flex-col">
+                                    <div>{l.dashboard.teams.noTeams}</div>
+                                    <div className="text-sm text-neutral-300 font-normal flex gap-1">
+                                        <p>{l.dashboard.teams.noTeamsDescription}</p>
+                                        <span className="font-semibold">+</span>
+                                    </div>
+                                </div>
+                            ) : l.dashboard.teams.noTeamsFound}
+                        </div>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-3 gap-3 w-full tablet:grid-cols-2 mobile:grid-cols-1">
+                        <AnimatePresence>
+                            {teams && (
+                                teams.filter(filter).map((team, index) => (
                                     <TeamCard
                                         handleDeleteTeam={handleDeleteTeam}
                                         setTeamProps={setteamProps}
@@ -94,18 +109,19 @@ export default function TeamsComponent() {
                                         index={index}
                                     />
                                 ))
-                        ) : <div>a</div>}
-                    </AnimatePresence>
-                    {teams &&
-                        <CreateTeamForm
-                            setTeams={setTeams as Dispatch<SetStateAction<TeamPayload[]>>}
-                            isOpen={isOpen}
-                            onOpenChange={onOpenChange}
-                            onClose={onClose}
-                            teams={teams}
-                        />
-                    }
-                </div>
+                            )}
+                        </AnimatePresence>
+                    </div>
+                )}
+                {teams &&
+                    <CreateTeamForm
+                        setTeams={setTeams as Dispatch<SetStateAction<TeamPayload[]>>}
+                        isOpen={isOpen}
+                        onOpenChange={onOpenChange}
+                        onClose={onClose}
+                        teams={teams}
+                    />
+                }
             </div>
         </>
     )
