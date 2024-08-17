@@ -5,6 +5,7 @@ import DefaultLayout from "../../Mixed/Layout";
 import Avatar from "../../Mixed/Avatar";
 import DefaultTabs from "../../Mixed/Tabs";
 import TeamMembers from "./Members";
+import Head from "next/head";
 
 export default function TeamPageComponent({ teamId }: { teamId: string }) {
     const [team, setTeam] = useState<TeamPayload>();
@@ -12,7 +13,7 @@ export default function TeamPageComponent({ teamId }: { teamId: string }) {
         {
             id: "Members",
             label: "Members",
-            component: <TeamMembers team={team as TeamPayload} />
+            component: <TeamMembers setTeam={setTeam} team={team as TeamPayload} />
         }
     ];
     const [activeTab, setActiveTab] = useState(tabs[0].id);
@@ -31,6 +32,9 @@ export default function TeamPageComponent({ teamId }: { teamId: string }) {
 
     return (
         <DefaultLayout>
+            <Head>
+                <title>{team?.name || "Team"}</title>
+            </Head>
             {team ? (
                 <div className="flex flex-col gap-2 w-full">
                     <div className="bg-neutral-800 p-3 rounded-lg w-full">
