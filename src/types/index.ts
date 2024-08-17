@@ -440,7 +440,7 @@ export type NotificationPayload =
     | BaseNotificationPayload<NotificationType.Internal>;
 
 export interface TeamPayload {
-    _id: string;
+    id: string;
     name: string;
     iconURL?: string;
     creatorId: string;
