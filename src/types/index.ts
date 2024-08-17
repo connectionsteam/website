@@ -428,15 +428,19 @@ interface TeamInviteNotification
     teamId: string;
 }
 
+interface GuildBackupNotification
+    extends BaseNotificationPayload<NotificationType.Backup> {
+    backupId: string;
+}
+
 export type NotificationPayload =
     | MessageReplyNotification
     | TeamInviteNotification
-    | BaseNotificationPayload<
-        NotificationType.Backup | NotificationType.Internal
-    >;
+    | GuildBackupNotification
+    | BaseNotificationPayload<NotificationType.Internal>;
 
 export interface TeamPayload {
-    id: string;
+    _id: string;
     name: string;
     iconURL?: string;
     creatorId: string;
