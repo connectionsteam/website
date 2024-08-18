@@ -16,9 +16,10 @@ interface Props {
     };
     onClose: () => void;
     team: TeamPayload;
+    setTeam: (team: TeamPayload) => void;
 }
 
-export default function ManageMember({ member, team, onClose }: Props) {
+export default function ManageMember({ member, team, onClose, setTeam }: Props) {
     const l = useLanguage();
     const [loading, setLoading] = useState(false);
 
@@ -26,13 +27,16 @@ export default function ManageMember({ member, team, onClose }: Props) {
         setLoading(true);
 
         try {
-            await api.put(`/api/teams/${team._id}/members`, {
-                member: member.id,
-            });
+            // await api.delete(`/teams/${team.id}/members/?member=${member.id}`);
 
             onClose();
+            setTeam({
+                ...team,
+                members: team.members.filter((m) => m.id !== member.id)
+            });
             setLoading(false);
         } catch (error) {
+            setLoading(false);
             console.log(error);
         }
     };
@@ -40,22 +44,23 @@ export default function ManageMember({ member, team, onClose }: Props) {
     return (
         <ModalContent className="bg-neutral-800 text-white">
             <ModalHeader className="pb-1">
-                Gerenciar Membro
+                {l.dashboard.teams.members.manageMember}
             </ModalHeader>
             <ModalBody className="flex gap-2">
                 <div className="flex gap-2 flex-col">
                     <div className="flex gap-1 items-center">
-                        <span>O que você deseja fazer com o membro</span>
+                        <span>{l.dashboard.teams.members.modal.description}</span>
                         <Avatar
                             className="w-6 h-6"
                             src={`https://cdn.discordapp.com/avatars/${member.id}/${member.avatar}.png`}
                         />
                         <span className="font-bold">{member.username}</span>?
                     </div>
-                    <span className="font-bold">Escolha uma das opções abaixo</span>
+                    <span className="font-bold">{l.dashboard.teams.members.modal.choose}</span>
                 </div>
                 <div className="flex gap-1 items-center justify-between">
                     <button
+                        onClick={kickMember}
                         className="bg-red-500 transition hover:bg-red-600 w-1/2 rounded-lg p-2 font-semibold
                         items-center flex gap-2"
                     >
@@ -63,14 +68,14 @@ export default function ManageMember({ member, team, onClose }: Props) {
                             ? <AiOutlineLoading3Quarters className="animate-spin" />
                             : <MdBlock />
                         }
-                        <span>Expulsar</span>
+                        <span>{l.dashboard.teams.members.modal.kick}</span>
                     </button>
                     <button
                         className="bg-amber-500 transition hover:bg-amber-600 w-1/2 rounded-lg p-2
-                        items-center flex gap-2"
+                        items-center flex gap-2 font-semibold"
                     >
                         <LuCrown />
-                        <span>Transferir Posse</span>
+                        <span>{l.dashboard.teams.members.modal.transfer}</span>
                     </button>
                 </div>
             </ModalBody>

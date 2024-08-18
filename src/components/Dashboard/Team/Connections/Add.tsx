@@ -7,7 +7,7 @@ import { useLanguage } from "../../../../hooks/useLanguage";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
 
-export default function InviteMember({ team, onClose }: { team: TeamPayload, onClose: () => void }) {
+export default function AddTeamConnection({ team, onClose }: { team: TeamPayload, onClose: () => void }) {
     const [id, setId] = useState("");
     const l = useLanguage();
     const [loading, setLoading] = useState({
@@ -59,7 +59,9 @@ export default function InviteMember({ team, onClose }: { team: TeamPayload, onC
         }
 
         try {
-            await api.put(`/teams/${team.id ?? (team as any)._id}/members?member=${id}`);
+            await api.put(`/teams/${team.id}/members`, {
+                member: id,
+            });
 
             setLoading({
                 state: false,
@@ -73,7 +75,7 @@ export default function InviteMember({ team, onClose }: { team: TeamPayload, onC
                 });
 
                 onClose();
-            }, 200);
+            }, 2000);
         } catch {
             setLoading({
                 ...loading,
@@ -89,14 +91,14 @@ export default function InviteMember({ team, onClose }: { team: TeamPayload, onC
     return (
         <ModalContent className="bg-neutral-800 text-white">
             <ModalHeader className="pb-1">
-                {l.dashboard.teams.members.invite.title}
+                {l.dashboard.teams.connections.modal.title}
             </ModalHeader>
             <ModalBody>
                 <DefaultInput
                     onChange={(event) => setId(event.target.value)}
-                    placeholder={l.dashboard.teams.members.invite.placeholder}
+                    placeholder={l.dashboard.teams.connections.modal.placeholder}
                     type="text"
-                    label={l.dashboard.teams.members.invite.memberId}
+                    label={l.dashboard.teams.connections.modal.label}
                     error={errors.includes("id")}
                 />
                 {errors.includes("alreadymember")
@@ -119,7 +121,7 @@ export default function InviteMember({ team, onClose }: { team: TeamPayload, onC
                     className="flex gap-2 font-semibold items-center text-center bg-green-500 
                     transition hover:bg-green-600 p-2 px-3 rounded-lg disabled:hover:bg-green-500"
                 >
-                    <span>{l.dashboard.teams.members.invite.sendInvite}</span>
+                    <span>{l.dashboard.teams.connections.modal.add}</span>
                     {loading.state && <AiOutlineLoading3Quarters className="animate-spin" size={20} />}
                     {loading.check && <FaCheckCircle className="text-white-500" size={20} />}
                 </button>
