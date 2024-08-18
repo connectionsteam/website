@@ -293,6 +293,21 @@ export const languages = {
                         maxMembers: "Este time atingiu o máximo de 3 membros",
                     }
                 },
+                connections: {
+                    title: "Conexões",
+                    description: "Aqui ficará as conexões que estão atreladas ao seu time, na aba da conexão, o seu time irá aparecer como dono da conexão",
+                    placeholder: "Digite aqui o nome ou descrição da conexão",
+                    filterConnections: "Filtrar conexões",
+                    noConnections: "Parece que não há conexões",
+                    noConnectionsDescription: "Você pode criar conexões clicando no botão",
+                    noConnectionsFound: "Nenhuma conexão encontrada",
+                    modal: {
+                        title: "Adicionar conexão",
+                        label: "Nome da conexão",
+                        placeholder: "Digite aqui o nome da conexão",
+                        add: "Adicionar",
+                    }
+                },
                 team: {
                     form: {
                         name: "Nome",
@@ -740,6 +755,21 @@ export const languages = {
                         memberId: "Member ID",
                         sendInvite: "Send Invite",
                         maxMembers: "This team has reached the maximum of 3 members",
+                    }
+                },
+                connections: {
+                    title: "Connections",
+                    description: "Here will be the connections that are related to your team, in the connection tab, your team will appear as the owner of the connection",
+                    placeholder: "Type here the name or description of the connection",
+                    filterConnections: "Filter connections",
+                    noConnections: "It seems that there are no connections",
+                    noConnectionsDescription: "You can create connections by clicking on the button",
+                    noConnectionsFound: "No connections found",
+                    modal: {
+                        title: "Add connection",
+                        label: "Connection name",
+                        placeholder: "Type here the name of the connection",
+                        add: "Add",
                     }
                 },
                 delete: {
