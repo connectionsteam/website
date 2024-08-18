@@ -444,12 +444,18 @@ export interface TeamPayload {
     name: string;
     iconURL?: string;
     creatorId: string;
-    children: string[];
+    children: {
+        name: string;
+        icon?: string;
+        description?: string;
+    }[];
     createdTimestamp: number;
     members: TeamMemberPayload[];
 }
 
 export interface TeamMemberPayload {
     id: string;
+    avatar: string;
+    username: string;
     joinedTimestamp: number;
 }
