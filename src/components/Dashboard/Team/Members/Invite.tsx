@@ -34,7 +34,7 @@ export default function InviteMember({ team, onClose }: { team: TeamPayload, onC
             ]);
         }
 
-        if (id.includes(team.members.map((member) => member.id).join(","))) {
+        if (team.members.some((member) => member.id === id)) {
             setErrors([
                 ...errors,
                 "alreadymember"
