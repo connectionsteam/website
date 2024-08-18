@@ -6,6 +6,7 @@ import Avatar from "../../Mixed/Avatar";
 import DefaultTabs from "../../Mixed/Tabs";
 import TeamMembers from "./Members";
 import Head from "next/head";
+import TeamConnections from "./Connections";
 
 export default function TeamPageComponent({ teamId }: { teamId: string }) {
     const [team, setTeam] = useState<TeamPayload>();
@@ -14,6 +15,11 @@ export default function TeamPageComponent({ teamId }: { teamId: string }) {
             id: "Members",
             label: "Members",
             component: <TeamMembers setTeam={setTeam} team={team as TeamPayload} />
+        },
+        {
+            id: "Connections",
+            label: "Connections",
+            component: <TeamConnections setTeam={setTeam} team={team as TeamPayload} />
         }
     ];
     const [activeTab, setActiveTab] = useState(tabs[0].id);
