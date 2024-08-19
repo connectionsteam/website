@@ -41,7 +41,7 @@ export default function Header() {
                 </Link>
                 <div className="flex gap-4 justify-center text-lg font-bold tablet:hidden">
                     <Link className="transition duration-300 group ease-in-out" href="/premium"><Underline>Premium</Underline></Link>
-                    <a className="transition duration-300 group ease-in-out" href="https://discord.gg/RXBRraTWeY" about="_blank">
+                    <a className="transition duration-300 group ease-in-out" href="https://discord.gg/RXBRraTWeY" target="_blank">
                         <Underline>{l.home.header.support}</Underline>
                     </a>
                     <a className="transition duration-300 group ease-in-out" href="https://connections-b7efc2e5.mintlify.app" target="_blank">
@@ -82,7 +82,7 @@ export default function Header() {
                             onClick={handleRecallDrawer}
                             className="transition duration-300 group ease-in-out"
                             href="https://discord.gg/RXBRraTWeY"
-                            about="_blank"
+                            target="_blank"
                         >
                             <Underline>{l.home.header.support}</Underline>
                         </a>
