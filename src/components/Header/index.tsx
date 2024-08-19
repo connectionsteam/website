@@ -44,9 +44,9 @@ export default function Header() {
                     <a className="transition duration-300 group ease-in-out" href="https://discord.gg/RXBRraTWeY" about="_blank">
                         <Underline>{l.home.header.support}</Underline>
                     </a>
-                    <Link className="transition duration-300 group ease-in-out" href="/docs">
+                    <a className="transition duration-300 group ease-in-out" href="https://connections-b7efc2e5.mintlify.app" target="_blank">
                         <Underline>{l.home.header.documentation}</Underline>
-                    </Link>
+                    </a>
                     <Link className="transition duration-300 group ease-in-out" href="/connections">
                         <Underline>{l.dashboard.connections.title}</Underline>
                     </Link>
@@ -86,12 +86,13 @@ export default function Header() {
                         >
                             <Underline>{l.home.header.support}</Underline>
                         </a>
-                        <Link
+                        <a
                             className="transition duration-300 group ease-in-out"
-                            href="/docs"
+                            target="_blank"
+                            href="https://connections-b7efc2e5.mintlify.app"
                         >
                             <Underline>{l.home.header.documentation}</Underline>
-                        </Link>
+                        </a>
                         <Link className="transition duration-300 group ease-in-out" href="/connections">
                             <Underline>{l.dashboard.connections.title}</Underline>
                         </Link>
