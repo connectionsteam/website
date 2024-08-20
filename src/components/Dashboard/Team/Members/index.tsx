@@ -132,7 +132,7 @@ export default function TeamMembers({ team, setTeam, teamID }: Props) {
                 wrapper: "overflow-y-hidden",
                 base: "max-h-screen overflow-y-auto",
             }} isOpen={isOpen} onOpenChange={onOpenChange}>
-                <InviteMember onClose={onClose} team={team} />
+                <InviteMember teamID={teamID} onClose={onClose} team={team} />
             </Modal>
         </motion.div>
     )

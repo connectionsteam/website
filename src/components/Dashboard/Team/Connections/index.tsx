@@ -34,7 +34,7 @@ export default function TeamConnections({ team: { children: connections }, team,
     const handleDeleteConnection = async () => {
         setConnectionProps({ ...connectionProps, removing: connectionProps.hover });
 
-        await api.delete(`/teams/${team.id}/connections/${connectionProps.hover}`);
+        await api.delete(`/teams/${teamID}/connections/${connectionProps.hover}`);
 
         setTeam
         setConnectionProps({ ...connectionProps, removing: null });
