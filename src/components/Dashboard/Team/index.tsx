@@ -9,6 +9,7 @@ import Head from "next/head";
 import TeamConnections from "./Connections";
 import TeamSettings from "./Settings";
 import { UserContext } from "../../../contexts/User";
+import TeamSkeleton from "./Skeleton";
 
 export default function TeamPageComponent({ teamId }: { teamId: string }) {
     const [team, setTeam] = useState<TeamPayload>();
@@ -81,9 +82,7 @@ export default function TeamPageComponent({ teamId }: { teamId: string }) {
                     </div>
                     {tabs.find((t) => t.id === activeTab)?.component}
                 </div>
-            ) : (
-                <div>Loading...</div>
-            )}
+            ) : <TeamSkeleton/>}
         </DefaultLayout>
     )
 }
