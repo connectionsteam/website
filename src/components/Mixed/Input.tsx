@@ -12,6 +12,7 @@ interface Props {
     minChars?: number;
     onClick?: () => void;
     error?: boolean;
+    autoFocus?: boolean;
 }
 
 export default function DefaultInput({
@@ -25,7 +26,8 @@ export default function DefaultInput({
     maxChars,
     minChars,
     error,
-    onClick
+    onClick,
+    autoFocus
 }: Props) {
     return (
         <div onClick={onClick} className="flex flex-col gap-2 w-full">
@@ -36,6 +38,7 @@ export default function DefaultInput({
             <div className="relative w-full">
                 {textArea ? (
                     <textarea
+                        autoFocus={autoFocus}
                         value={value}
                         maxLength={(minChars && maxChars) ? maxChars + minChars : maxChars || 9999}
                         className={`transition w-full p-3 rounded-lg bg-neutral-900/50 border-2
@@ -45,6 +48,7 @@ export default function DefaultInput({
                     />
                 ) : (
                     <input
+                        autoFocus={autoFocus}
                         value={value}
                         maxLength={(minChars && maxChars) ? maxChars + minChars : maxChars || 9999}
                         className={`transition w-full p-3 rounded-lg bg-neutral-900/50 border-2
