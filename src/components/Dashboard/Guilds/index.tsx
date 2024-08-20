@@ -10,6 +10,7 @@ import { HiSparkles } from "react-icons/hi";
 import { MdOutlineSync } from "react-icons/md";
 import { useLanguage } from "../../../hooks/useLanguage";
 import Head from "next/head";
+import DefaultButton from "../../Mixed/Button";
 
 const url = "https://discord.com/oauth2/authorize?client_id=1243234162077470802";
 
@@ -51,10 +52,13 @@ export default function GuildsComponent({ guilds, fetchGuilds }: Props) {
                     <Input classNames={{
                         inputWrapper: "rounded-lg bg-neutral-800 group-hover:bg-neutral-700",
                     }} onChange={handleChangeQuery} type="string" label={l.dashboard.misc.filterGuilds} />
+                    <DefaultButton href={url} divclass="w-fit" className="w-[52px]">
+                        <LuPlusCircle size={20} />
+                    </DefaultButton>
                     <button
                         disabled={clicked}
                         onClick={handleClick}
-                        className="w-14 bg-neutral-800 rounded-lg items-center flex justify-center
+                        className="min-w-14 bg-neutral-800 rounded-lg items-center flex justify-center
                     group hover:bg-neutral-700 transition disabled:hover:bg-neutral-800 disabled:opacity-50"
                     >
                         <MdOutlineSync
@@ -104,17 +108,6 @@ export default function GuildsComponent({ guilds, fetchGuilds }: Props) {
                                 </motion.div>
                             ))
                     ) : <ConnectionsSkeleton />}
-                    <div className="p-[2px] bg-gradient-to-r from-fuchsia-500 
-                to-indigo-500 rounded-lg w-full">
-                        <a
-                            target="_blank" href={url}
-                            className="flex items-center justify-center gap-2 p-5 
-                        h-full w-full rounded-lg bg-neutral-800 hover:bg-transparent transition"
-                        >
-                            <LuPlusCircle size={23} />
-                            <span>{l.dashboard.guilds.addServer}</span>
-                        </a>
-                    </div>
                 </div>
             </div>
         </>

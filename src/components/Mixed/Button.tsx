@@ -21,6 +21,7 @@ export default function DefaultButton({ children, className, onClick, disabled, 
         <div className={cn("p-[2px] bg-gradient-to-r from-fuchsia-500 to-indigo-500 rounded-lg w-full", divclass)}>
             {href ? (
                 <Link
+                    target="_blank"
                     href={href}
                     className={sharedClasses}
                 >
