@@ -129,11 +129,9 @@ export default function TransferTeamOwner({ team, setTeam, setActiveTab }: Props
                         <ModalHeader className="pb-1 font-bold">
                             {l.dashboard.teams.settings.transfer.title}
                         </ModalHeader>
-                        <ModalBody>
-                            <div>
-                                <span>{l.dashboard.teams.settings.transfer.transferOwner}</span>
+                        <ModalBody className="flex gap-1 flex-row">
+                                <span>{l.dashboard.teams.settings.transfer.transferOwner}</span>{""}
                                 <span className="font-bold">{member.username}</span>?
-                            </div>
                         </ModalBody>
                         <ModalFooter className="flex w-full justify-end border-t rounded-t-xl border-neutral-700 mt-2">
                             <button

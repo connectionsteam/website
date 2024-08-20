@@ -20,7 +20,7 @@ export default function DeleteTeam({ team }: { team: TeamPayload }) {
     return (
         <div className="w-full p-3 border-2 border-red-500 rounded-lg flex-col gap-3 flex">
             <div className="flex flex-col gap-1">
-                <span className="font-bold text-xl">Remover</span>
+                <span className="font-bold text-xl">{l.dashboard.teams.settings.delete.title}</span>
                 <p className="text-neutral-300">
                     {l.dashboard.teams.settings.delete.descriptionpage}
                 </p>

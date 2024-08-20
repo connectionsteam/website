@@ -7,9 +7,10 @@ import DefaultButton from "../../../Mixed/Button";
 import { LuPlusCircle } from "react-icons/lu";
 import { Modal, useDisclosure } from "@nextui-org/modal";
 import InviteMember from "./Invite";
-import ManageMember from "./Manage";
 import { useLanguage } from "../../../../hooks/useLanguage";
 import { UserContext } from "../../../../contexts/User";
+import { api } from "../../../../utils/api";
+import RemoveTeamMember from "./Delete";
 
 interface Props {
     team: TeamPayload;
@@ -21,26 +22,25 @@ export default function TeamMembers({ team, setTeam }: Props) {
     const l = useLanguage();
     const { user: loggedUser } = useContext(UserContext);
     const { onOpen, onClose, isOpen, onOpenChange } = useDisclosure();
-    const {
-        isOpen: isOpenManage,
-        onOpen: onOpenManage,
-        onClose: onCloseManage,
-        onOpenChange: onOpenChangeManage
-    } = useDisclosure();
-    const [member, setMember] = useState<{ username: string, id: string, avatar: string }>();
+    const [memberProps, setMemberProps] = useState("");
+    const [member, setMember] = useState("");
 
-    const members = team.members.map((member) => ({
-        ...member,
-        username: "unreal",
-        avatar: "57ebbe8d23355bf9fb8c826fe76f3c1e"
-    }));
-
-    const filteredMembers = members
-        ? members.filter((user) =>
+    const filteredMembers = team.members
+        ? team.members.filter((user) =>
             user.username.toLowerCase().includes(query.toLowerCase())
             || user.id.toLowerCase().includes(query.toLowerCase())
         )
         : [];
+
+    const handleRemoveMember = async () => {
+        await api.delete(`/teams/${(team as any)._id}/members/?member=${member}`);
+
+        onClose();
+        setTeam({
+            ...team,
+            members: team.members.filter((m) => m.id !== member)
+        });
+    };
 
     return (
         <motion.div
@@ -74,14 +74,28 @@ export default function TeamMembers({ team, setTeam }: Props) {
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
                                     transition={{ duration: 0.1 }}
-                                >
-                                    <button
-                                        onClick={() => {
-                                            if (loggedUser?.id !== team.creatorId) return;
+                                    onMouseEnter={() => {
+                                        if (loggedUser?.id !== team.creatorId) return;
 
-                                            setMember(user);
-                                            onOpenManage();
-                                        }}
+                                        setMember(user.id);
+                                        setMemberProps(user.username);
+                                    }}
+                                    onMouseLeave={() => setMemberProps("")}
+                                    className="w-full relative"
+                                >
+                                    <div className="tabletdesk:hidden">
+                                        <RemoveTeamMember
+                                            handleRemove={handleRemoveMember}
+                                            open={true}
+                                            id={user.username}
+                                        />
+                                    </div>
+                                    <RemoveTeamMember
+                                        handleRemove={handleRemoveMember}
+                                        open={memberProps === user.username}
+                                        id={user.username}
+                                    />
+                                    <div
                                         className="flex gap-3 text-start w-full rounded-lg p-3 
                                         bg-neutral-900/50 hover:bg-neutral-900 transition"
                                     >
@@ -93,7 +107,7 @@ export default function TeamMembers({ team, setTeam }: Props) {
                                             <span className="font-semibold text-lg">{user.username}</span>
                                             <span className="text-neutral-300 text-sm">{user.id}</span>
                                         </div>
-                                    </button>
+                                    </div>
                                 </motion.div>
                             ))
                         ) : (
@@ -112,13 +126,6 @@ export default function TeamMembers({ team, setTeam }: Props) {
                     </AnimatePresence>
                 </div>
             </div>
-            <Modal classNames={{
-                closeButton: "transition hover:bg-neutral-700",
-                wrapper: "overflow-y-hidden",
-                base: "max-h-screen overflow-y-auto",
-            }} isOpen={isOpenManage} onOpenChange={onOpenChangeManage}>
-                <ManageMember setTeam={setTeam} member={member!} team={team} onClose={onCloseManage} />
-            </Modal>
             <Modal classNames={{
                 closeButton: "transition hover:bg-neutral-700",
                 wrapper: "overflow-y-hidden",
