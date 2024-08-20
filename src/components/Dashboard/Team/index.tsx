@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { TeamPayload } from "../../../types";
 import { api } from "../../../utils/api";
 import DefaultLayout from "../../Mixed/Layout";
@@ -7,22 +7,31 @@ import DefaultTabs from "../../Mixed/Tabs";
 import TeamMembers from "./Members";
 import Head from "next/head";
 import TeamConnections from "./Connections";
+import TeamSettings from "./Settings";
+import { UserContext } from "../../../contexts/User";
 
 export default function TeamPageComponent({ teamId }: { teamId: string }) {
     const [team, setTeam] = useState<TeamPayload>();
+    const [activeTab, setActiveTab] = useState("members");
+    const { user } = useContext(UserContext);
     const tabs = [
         {
-            id: "Members",
+            id: "members",
             label: "Members",
             component: <TeamMembers setTeam={setTeam} team={team as TeamPayload} />
         },
         {
-            id: "Connections",
+            id: "connections",
             label: "Connections",
             component: <TeamConnections setTeam={setTeam} team={team as TeamPayload} />
         }
     ];
-    const [activeTab, setActiveTab] = useState(tabs[0].id);
+
+    if (team?.creatorId === user?.id) tabs.push({
+        id: "settings",
+        label: "Settings",
+        component: <TeamSettings setTeam={setTeam} team={team as TeamPayload} setActiveTab={setActiveTab} />
+    });
 
     useEffect(() => {
         if (!teamId) return;
