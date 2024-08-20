@@ -16,6 +16,7 @@ interface Props {
 export default function InviteMember({ team, onClose, teamID }: Props) {
     const [id, setId] = useState("");
     const l = useLanguage();
+    const [submited, setSubmited] = useState(false);
     const [loading, setLoading] = useState({
         state: false,
         check: false
@@ -72,14 +73,16 @@ export default function InviteMember({ team, onClose, teamID }: Props) {
                 check: true
             });
 
+            setErrors([]);
+
+            setSubmited(true);
+
             setTimeout(() => {
                 setLoading({
                     state: false,
                     check: false
                 });
-
-                onClose();
-            }, 200);
+            }, 2000);
         } catch {
             setLoading({
                 ...loading,
@@ -109,6 +112,7 @@ export default function InviteMember({ team, onClose, teamID }: Props) {
                     && <span className="text-red-500">{l.dashboard.teams.members.invite.alreadyMember}</span>}
                 {errors.includes("maxmembers")
                     && <span className="text-red-500">{l.dashboard.teams.members.invite.maxMembers}</span>}
+                {submited && <span className="text-green-500">{l.dashboard.teams.members.invite.success}</span>}
             </ModalBody>
             <ModalFooter className="flex w-full justify-end border-t rounded-t-xl
             border-neutral-700 mt-2">

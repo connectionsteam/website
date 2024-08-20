@@ -301,6 +301,7 @@ export const languages = {
                         transfer: "Transferir Posse",
                     },
                     invite: {
+                        success: "O usuário foi convidado com sucesso, para aceitar o convite, vá até as notificações, procure o time, e aceite o convite",
                         title: "Convidar Membro",
                         alreadyMember: "O membro já é membro desta equipe",
                         placeholder: "Digite aqui o ID do membro que será convidado",
@@ -791,6 +792,7 @@ export const languages = {
                         transfer: "Transfer Owner",
                     },
                     invite: {
+                        success: "The member was invited successfully, to accept the invite, go to the notifications, search for the team, and accept the invite",
                         title: "Invite Member",
                         alreadyMember: "The member is already a member of this team",
                         placeholder: "Type here the ID of the member you want to invite",
