@@ -30,7 +30,7 @@ export default function TeamPageComponent({ teamId }: { teamId: string }) {
     if (team?.creatorId === user?.id) tabs.push({
         id: "settings",
         label: "Settings",
-        component: <TeamSettings setTeam={setTeam} team={team as TeamPayload} setActiveTab={setActiveTab} />
+        component: <TeamSettings teamID={teamId} setTeam={setTeam} team={team as TeamPayload} setActiveTab={setActiveTab} />
     });
 
     useEffect(() => {

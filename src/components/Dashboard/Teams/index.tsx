@@ -81,7 +81,7 @@ export default function TeamsComponent() {
                         <LuPlusCircle size={20} />
                     </DefaultButton>
                 </div>
-                {(teams && teams.filter(filter).length === 0) ? (
+                {teams ? teams.filter(filter).length === 0 ? (
                     <div className="flex w-full items-center justify-center">
                         <div className="min-h-[30vh] text-lg items-center font-bold justify-center flex text-center">
                             {searchQuery === "" ? (
@@ -111,6 +111,20 @@ export default function TeamsComponent() {
                                 ))
                             )}
                         </AnimatePresence>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-3 gap-3 w-full tablet:grid-cols-2 mobile:grid-cols-1">
+                        {Array(3).fill(0).map((_, index) => (
+                            <div
+                                key={index}
+                                className="flex items-center gap-2 p-3 rounded-lg bg-neutral-800 w-full h-full"
+                            >
+                                <div className="min-w-12 min-h-12 rounded-full bg-neutral-700 animate-pulse" />
+                                <div className="flex flex-col gap-1 items-start w-full">
+                                    <div className="w-32 mobile:w-[80%] h-4 rounded-full bg-neutral-700 animate-pulse"></div>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 )}
                 {teams &&
