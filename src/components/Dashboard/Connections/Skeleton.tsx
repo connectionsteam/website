@@ -1,45 +1,59 @@
 import { Input } from "@nextui-org/input";
 import ConnectionsSkeleton from "../ConnectionsSkeleton";
-import { useContext } from "react";
-import { LanguageContext } from "../../../contexts/Language";
-import { languages } from "../../../locale";
 import DefaultLayout from "../../../components/Mixed/Layout";
-import { Tab, Tabs } from "@nextui-org/tabs";
+import { useLanguage } from "../../../hooks/useLanguage";
+import { useState } from "react";
+import DefaultTabs from "../../Mixed/Tabs";
+import DefaultButton from "../../Mixed/Button";
+import { LuPlusCircle } from "react-icons/lu";
 
 export default function ConnectionsProtectedSkeleton() {
-    const { language } = useContext(LanguageContext);
+    const l = useLanguage();
+    const [activeTab, setActiveTab] = useState("connections");
+
+    const tabs = [
+        {
+            id: "connections",
+            label: l.dashboard.connections.title,
+            component: <Skeleton />
+        },
+        {
+            id: "guilds",
+            label: l.dashboard.guilds.title,
+            component: <Skeleton />
+        },
+        {
+            id: "teams",
+            label: l.dashboard.teams.title,
+            component: <Skeleton />
+        }
+    ]
 
     return (
         <DefaultLayout className="mt-24">
-            <div className="flex w-full flex-col items-center">
-                <Tabs classNames={{
-                    cursor: "bg-neutral-700",
-                    tabList: "bg-neutral-800"
-                }} aria-label="Options">
-                    <Tab className="flex items-start w-full" key="connections" title={languages[language].dashboard.connections.title}>
-                        <Skeleton />
-                    </Tab>
-                    <Tab className="flex items-start w-full" key="guilds" title={languages[language].dashboard.guilds.title}>
-                        <Skeleton />
-                    </Tab>
-                </Tabs>
-            </div>
+            <DefaultTabs activeTab={activeTab} setActiveTab={setActiveTab} tabs={tabs} />
+            {tabs.find((t) => t.id === activeTab)?.component}
         </DefaultLayout>
     );
 }
 
 function Skeleton() {
-    const { language } = useContext(LanguageContext);
+    const l = useLanguage();
 
     return (
         <div className="flex w-full items-start flex-col gap-4 z-10 tablet:px-3">
             <div className="flex flex-col gap-2">
-                <div className="font-bold text-3xl">{languages[language].dashboard.connections.title}</div>
-                <div className="text-neutral-300">{languages[language].dashboard.connections.description}</div>
+                <div className="font-bold text-3xl">{l.dashboard.connections.title}</div>
+                <div className="text-neutral-300">{l.dashboard.connections.description}</div>
             </div>
-            <Input classNames={{
-                inputWrapper: "rounded-lg bg-neutral-800 group-hover:bg-neutral-700",
-            }} type="string" label={languages[language].dashboard.misc.filterConnections} />
+            <div className="flex w-full h-full gap-1">
+                <Input classNames={{
+                    inputWrapper: "rounded-lg bg-neutral-800 group-hover:bg-neutral-700",
+                }} type="string" label={l.dashboard.misc.filterConnections} />
+                <DefaultButton divclass="w-fit" className="w-[52px]">
+                    <LuPlusCircle size={20} />
+                </DefaultButton>
+            </div>
             <div className="grid grid-cols-3 gap-3 w-full">
                 <ConnectionsSkeleton />
             </div>
