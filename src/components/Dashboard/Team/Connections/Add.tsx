@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TeamPayload } from "../../../../types";
 import { api } from "../../../../utils/api";
 import { ModalBody, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/modal";
@@ -8,12 +8,13 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
 
 interface Props {
-    team: TeamPayload,
-    onClose: () => void,
-    teamID: string
+    team: TeamPayload;
+    onClose: () => void;
+    teamID: string;
+    setTeam: (team: TeamPayload) => void;
 }
 
-export default function AddTeamConnection({ team, onClose, teamID }: Props) {
+export default function AddTeamConnection({ team, onClose, teamID, setTeam }: Props) {
     const [id, setId] = useState("");
     const l = useLanguage();
     const [loading, setLoading] = useState({
@@ -65,11 +66,20 @@ export default function AddTeamConnection({ team, onClose, teamID }: Props) {
         }
 
         try {
-            await api.put(`/teams/${teamID}/connections/${id}`);
+            const { data: { name, icon, description } } = await api.put(`/teams/${teamID}/connections/${id}`);
 
             setLoading({
                 state: false,
                 check: true
+            });
+
+            setErrors([]);
+            setTeam({
+                ...team,
+                children: [
+                    ...team.children,
+                    { name, description, icon }
+                ]
             });
 
             setTimeout(() => {
@@ -79,7 +89,7 @@ export default function AddTeamConnection({ team, onClose, teamID }: Props) {
                 });
 
                 onClose();
-            }, 2000);
+            }, 1000);
         } catch {
             setLoading({
                 ...loading,
@@ -92,6 +102,20 @@ export default function AddTeamConnection({ team, onClose, teamID }: Props) {
         }
     };
 
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Enter") {
+                sendInvite();
+            }
+        };
+
+        document.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            document.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [team, id]);
+
     return (
         <ModalContent className="bg-neutral-800 text-white">
             <ModalHeader className="pb-1">
@@ -99,6 +123,7 @@ export default function AddTeamConnection({ team, onClose, teamID }: Props) {
             </ModalHeader>
             <ModalBody>
                 <DefaultInput
+                    autoFocus
                     onChange={(event) => setId(event.target.value)}
                     placeholder={l.dashboard.teams.connections.modal.placeholder}
                     type="text"

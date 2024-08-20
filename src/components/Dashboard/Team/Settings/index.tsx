@@ -37,7 +37,7 @@ export default function TeamSettings({ team, setTeam, setActiveTab, teamID }: Pr
                     {l.dashboard.teams.settings.transfer.button}
                 </button>
             </div>
-            <DeleteTeam team={team} />
+            <DeleteTeam teamID={teamID} team={team} />
             <Modal classNames={{
                 closeButton: "transition hover:bg-neutral-700",
                 wrapper: "overflow-y-hidden",

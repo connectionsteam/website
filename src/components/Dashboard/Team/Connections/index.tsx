@@ -36,7 +36,10 @@ export default function TeamConnections({ team: { children: connections }, team,
 
         await api.delete(`/teams/${teamID}/connections/${connectionProps.hover}`);
 
-        setTeam
+        setTeam({
+            ...team,
+            children: team.children.filter((c) => c.name !== connectionProps.hover)
+        });
         setConnectionProps({ ...connectionProps, removing: null });
     };
 
@@ -140,7 +143,7 @@ export default function TeamConnections({ team: { children: connections }, team,
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
             >
-                <AddTeamConnection team={team} onClose={onClose} teamID={teamID} />
+                <AddTeamConnection setTeam={setTeam} team={team} onClose={onClose} teamID={teamID} />
             </Modal>
         </motion.div>
     )
