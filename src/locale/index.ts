@@ -268,6 +268,22 @@ export const languages = {
                     description: "Você deseja mesmo deletar o time",
                     descriptionpage: "Ao deletar seu time, você irá perder todos os dados associados a ele, incluindo mensagens e servidores que estão conectados ao seu time e outros dados.",
                 },
+                settings: {
+                    delete: {
+                        title: "Deletar time",
+                        description: "Você deseja mesmo deletar o time",
+                        descriptionpage: "Ao deletar seu time, você irá perder todos os dados associados a ele, incluindo mensagens e servidores que estão conectados ao seu time e outros dados.",
+                    },
+                    transfer: {
+                        title: "Transferir posse do time",
+                        description: "Após transferir a posse do time para outro usuário, todas as conexões do time serão removidas, e o dono será um membro do time",
+                        noMembers: "Seu time não possui membros",
+                        noMembersFound: "Nenhum membro encontrado",
+                        transferOwner: "Você deseja mesmo transferir a posse do time para o membro",
+                        button: "Transferir Posse",
+                        placeholder: "Digite aqui o nome do membro ou ID",
+                    }
+                },
                 members: {
                     title: "Membros",
                     description: "Aqui ficarão os membros do seu time, todos os membros podem adicionar e remover conexões do time",
@@ -291,6 +307,11 @@ export const languages = {
                         memberId: "ID do membro",
                         sendInvite: "Enviar Convite",
                         maxMembers: "Este time atingiu o máximo de 3 membros",
+                    },
+                    delete: {
+                        title: "Remover Membro",
+                        description: "Você deseja mesmo remover o membro",
+                        remove: "Remover",
                     }
                 },
                 connections: {
@@ -725,6 +746,22 @@ export const languages = {
                 noTeams: "You don't have teams",
                 noTeamsDescription: "You can create teams by clicking on the button",
                 noTeamsFound: "No teams found",
+                settings: {
+                    delete: {
+                        title: "Delete team",
+                        description: "Are you sure you want to delete the team",
+                        descriptionpage: "When you delete your team, you will lose all the data associated with it, including messages and guilds that were connected to your team and other data.",
+                    },
+                    transfer: {
+                        title: "Transfer team owner",
+                        description: "After transferring the team owner to another user, all connections in the team will be removed, and the owner will be a member of the team",
+                        noMembers: "Your team doesn't have members",
+                        noMembersFound: "No members found",
+                        transferOwner: "Do you really want to transfer the team owner to the member",
+                        button: "Transfer Owner",
+                        placeholder: "Type here the member name or ID",
+                    }
+                },
                 team: {
                     form: {
                         name: "Name",
@@ -741,6 +778,11 @@ export const languages = {
                     noMembersDescription: "You can add members by clicking on the button",
                     noMembersFound: "No members found",
                     manageMember: "Manage Member",
+                    delete: {
+                        title: "Remove Member",
+                        description: "Are you sure you want to remove the member",
+                        remove: "Remove",
+                    },
                     modal: {
                         title: "Manage Member",
                         description: "What do you want to do with the member",
@@ -775,7 +817,7 @@ export const languages = {
                 delete: {
                     title: "Delete team",
                     description: "Are you sure you want to delete the team",
-                    descriptionpage: "When you delete your team, you will lose all the data associated with it, including messages and guilds that were connected to your team and other data.",
+                    descriptionpage: "When you delete your team, you will lose all the data associated with it, including messages and guilds that were connected to your team and other data",
                 }
             }
         },
