@@ -5,13 +5,13 @@ import { useLanguage } from "../../../../hooks/useLanguage";
 import { api } from "../../../../utils/api";
 import { TeamPayload } from "../../../../types";
 
-export default function DeleteTeam({ team }: { team: TeamPayload }) {
+export default function DeleteTeam({ team, teamID }: { team: TeamPayload, teamID: string }) {
     const l = useLanguage();
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     const { push } = useRouter();
 
     const handleDeleteConnection = async () => {
-        await api.delete(`/teams/${(team as any)._id}`);
+        await api.delete(`/teams/${teamID}`);
 
         onClose();
         push("/dashboard");

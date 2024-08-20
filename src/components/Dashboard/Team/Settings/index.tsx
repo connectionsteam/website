@@ -9,9 +9,10 @@ interface Props {
     team: TeamPayload;
     setTeam: (team: TeamPayload) => void;
     setActiveTab: (tab: string) => void;
+    teamID: string;
 }
 
-export default function TeamSettings({ team, setTeam, setActiveTab }: Props) {
+export default function TeamSettings({ team, setTeam, setActiveTab, teamID }: Props) {
     const l = useLanguage();
     const { onOpen, isOpen, onOpenChange } = useDisclosure();
 
@@ -42,7 +43,7 @@ export default function TeamSettings({ team, setTeam, setActiveTab }: Props) {
                 wrapper: "overflow-y-hidden",
                 base: "max-h-screen overflow-y-auto",
             }} isOpen={isOpen} onOpenChange={onOpenChange}>
-                <TransferTeamOwner team={team} setTeam={setTeam} setActiveTab={setActiveTab} />
+                <TransferTeamOwner teamID={teamID} team={team} setTeam={setTeam} setActiveTab={setActiveTab} />
             </Modal>
         </motion.div>
     )

@@ -17,9 +17,10 @@ import AddTeamConnection from "./Add";
 interface Props {
     team: TeamPayload;
     setTeam: (team: TeamPayload) => void;
+    teamID: string;
 }
 
-export default function TeamConnections({ team: { children: connections }, team, setTeam }: Props) {
+export default function TeamConnections({ team: { children: connections }, team, setTeam, teamID }: Props) {
     const l = useLanguage();
     const { user: loggedUser } = useContext(UserContext);
     const { onOpen, onClose, isOpen, onOpenChange } = useDisclosure();
@@ -139,7 +140,7 @@ export default function TeamConnections({ team: { children: connections }, team,
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
             >
-                <AddTeamConnection team={team} onClose={onClose} />
+                <AddTeamConnection team={team} onClose={onClose} teamID={teamID} />
             </Modal>
         </motion.div>
     )

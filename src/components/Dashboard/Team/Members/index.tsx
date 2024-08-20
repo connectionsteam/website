@@ -15,9 +15,10 @@ import RemoveTeamMember from "./Delete";
 interface Props {
     team: TeamPayload;
     setTeam: (team: TeamPayload) => void;
+    teamID: string;
 }
 
-export default function TeamMembers({ team, setTeam }: Props) {
+export default function TeamMembers({ team, setTeam, teamID }: Props) {
     const [query, setQuery] = useState("");
     const l = useLanguage();
     const { user: loggedUser } = useContext(UserContext);
@@ -33,7 +34,7 @@ export default function TeamMembers({ team, setTeam }: Props) {
         : [];
 
     const handleRemoveMember = async () => {
-        await api.delete(`/teams/${(team as any)._id}/members/?member=${member}`);
+        await api.delete(`/teams/${teamID}/members/?member=${member}`);
 
         onClose();
         setTeam({

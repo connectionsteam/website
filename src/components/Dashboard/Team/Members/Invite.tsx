@@ -7,7 +7,13 @@ import { useLanguage } from "../../../../hooks/useLanguage";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
 
-export default function InviteMember({ team, onClose }: { team: TeamPayload, onClose: () => void }) {
+interface Props {
+    team: TeamPayload,
+    onClose: () => void;
+    teamID: string;
+}
+
+export default function InviteMember({ team, onClose, teamID }: Props) {
     const [id, setId] = useState("");
     const l = useLanguage();
     const [loading, setLoading] = useState({
@@ -59,7 +65,7 @@ export default function InviteMember({ team, onClose }: { team: TeamPayload, onC
         }
 
         try {
-            await api.put(`/teams/${team.id ?? (team as any)._id}/members?member=${id}`);
+            await api.put(`/teams/${teamID}/members?member=${id}`);
 
             setLoading({
                 state: false,

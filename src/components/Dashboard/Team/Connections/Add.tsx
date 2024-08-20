@@ -7,7 +7,13 @@ import { useLanguage } from "../../../../hooks/useLanguage";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
 
-export default function AddTeamConnection({ team, onClose }: { team: TeamPayload, onClose: () => void }) {
+interface Props {
+    team: TeamPayload,
+    onClose: () => void,
+    teamID: string
+}
+
+export default function AddTeamConnection({ team, onClose, teamID }: Props) {
     const [id, setId] = useState("");
     const l = useLanguage();
     const [loading, setLoading] = useState({
@@ -34,7 +40,7 @@ export default function AddTeamConnection({ team, onClose }: { team: TeamPayload
             ]);
         }
 
-        if (team.members.some((member) => member.id === id)) {
+        if (team.children.some((c) => c.name === id)) {
             setErrors([
                 ...errors,
                 "alreadymember"
@@ -46,7 +52,7 @@ export default function AddTeamConnection({ team, onClose }: { team: TeamPayload
             });
         }
 
-        if (team.members.length === 3) {
+        if (team.children.length === 5) {
             setErrors([
                 ...errors,
                 "maxmembers"
@@ -59,9 +65,7 @@ export default function AddTeamConnection({ team, onClose }: { team: TeamPayload
         }
 
         try {
-            await api.put(`/teams/${team.id}/members`, {
-                member: id,
-            });
+            await api.put(`/teams/${teamID}/connections/${id}`);
 
             setLoading({
                 state: false,

@@ -11,9 +11,10 @@ interface Props {
     team: TeamPayload;
     setTeam: (team: TeamPayload) => void;
     setActiveTab: (tab: string) => void;
+    teamID: string;
 }
 
-export default function TransferTeamOwner({ team, setTeam, setActiveTab }: Props) {
+export default function TransferTeamOwner({ team, setTeam, setActiveTab, teamID }: Props) {
     const [query, setQuery] = useState("");
     const l = useLanguage();
     const [loading, setLoading] = useState({
@@ -40,7 +41,7 @@ export default function TransferTeamOwner({ team, setTeam, setActiveTab }: Props
         });
 
         try {
-            await api.put(`/teams/${(team as any)._id}/owner?new_owner=${member.id}`);
+            await api.put(`/teams/${teamID}/owner?new_owner=${member.id}`);
 
             setLoading({
                 state: false,

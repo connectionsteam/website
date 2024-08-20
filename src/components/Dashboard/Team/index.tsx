@@ -18,12 +18,12 @@ export default function TeamPageComponent({ teamId }: { teamId: string }) {
         {
             id: "members",
             label: "Members",
-            component: <TeamMembers setTeam={setTeam} team={team as TeamPayload} />
+            component: <TeamMembers teamID={teamId} setTeam={setTeam} team={team as TeamPayload} />
         },
         {
             id: "connections",
             label: "Connections",
-            component: <TeamConnections setTeam={setTeam} team={team as TeamPayload} />
+            component: <TeamConnections teamID={teamId} setTeam={setTeam} team={team as TeamPayload} />
         }
     ];
 
