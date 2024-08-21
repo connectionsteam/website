@@ -1,7 +1,7 @@
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
 import { api } from "../../../../utils/api";
-import { GuildPayload, ModPermType } from "../../../../types";
+import { DiscordMember, GuildPayload, GuildThreadsPayload, ModPermType } from "../../../../types";
 import { IoIosWarning } from "react-icons/io";
 import { useState } from "react";
 import { useLanguage } from "../../../../hooks/useLanguage";
@@ -13,9 +13,11 @@ interface Props {
     actualGuild: GuildPayload;
     setGuild: (guild: GuildPayload) => void;
     changedTab: boolean;
+    setActualGuild: (guild: GuildPayload) => void;
+    setThreads: (threads: GuildThreadsPayload[]) => void;
 }
 
-export default function GuildModifications({ setModifications, guild, actualGuild, setGuild, changedTab }: Props) {
+export default function GuildModifications({ setModifications, guild, actualGuild, setGuild, changedTab, setActualGuild, setThreads }: Props) {
     const [loading, setLoading] = useState({ loading: false, check: false });
     const l = useLanguage();
 
@@ -41,14 +43,36 @@ export default function GuildModifications({ setModifications, guild, actualGuil
             }
         }
 
-        await api.patch(`/guilds/${guild.id}`, body);
+        const { data: {
+            mods: guildMods,
+            threads: guildThreads
+        } } = await api.patch<GuildPayload>(`/guilds/${guild.id}`, body);
 
-        setLoading({ ...loading, check: true });
+        const updatedMods = guildMods.map((mod) => {
+            const originalMod = guild.mods.find((original) => original.id === mod.id);
+            return {
+                ...mod,
+                avatar: originalMod?.avatar ?? null,
+                username: originalMod?.username ?? null,
+            };
+        });
+
+        setActualGuild({
+            ...actualGuild,
+            threads: guildThreads,
+            //@ts-expect-error Missing keyowrd purposely
+            mods: updatedMods,
+            prefix: prefix === undefined || prefix === "" ? "c" : prefix,
+        });
 
         setGuild({
             ...guild,
-            prefix: (prefix === undefined || prefix === "") ? "c" : prefix,
+            //@ts-expect-error Missing keyowrd purposely
+            mods: updatedMods,
+            prefix: prefix === undefined || prefix === "" ? "c" : prefix,
         });
+
+        setLoading({ ...loading, check: true });
 
         setTimeout(() => {
             setLoading({ ...loading, check: false });
@@ -57,7 +81,12 @@ export default function GuildModifications({ setModifications, guild, actualGuil
     };
 
     const resetChanges = () => {
-        setGuild(actualGuild);
+        setGuild({
+            ...guild,
+            prefix: actualGuild.prefix,
+            mods: actualGuild.mods,
+        });
+        setThreads(guild.threads as GuildThreadsPayload[]);
         setModifications(false);
     };
 
