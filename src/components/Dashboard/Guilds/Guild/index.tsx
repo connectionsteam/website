@@ -249,6 +249,8 @@ export default function GuildComponent() {
                                         gap-4 items-center z-50"
                                     >
                                         <GuildModifications
+                                            setThreads={setThreads}
+                                            setActualGuild={setDiscordGuild}
                                             changedTab={changedTab}
                                             setGuild={setGuild}
                                             actualGuild={discordGuild}

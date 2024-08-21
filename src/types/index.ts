@@ -42,6 +42,7 @@ export interface GuildPayload {
     connections: ConnectedConnectionPayload[];
     cases: AnyCase[];
     mods: ModType[];
+    threads?: GuildThreadsPayload[];
     delete_threads_ids?: {
         id: string;
         parentId: string;
