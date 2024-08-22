@@ -147,6 +147,7 @@ export default function GuildMods({ guild, setGuild, premium, setModifications, 
                     </ModalHeader>
                     <ModalBody>
                         <GuildModModal
+                            setModifications={setModifications}
                             members={members}
                             handleAddMod={handleAddMod}
                             guild={guild}

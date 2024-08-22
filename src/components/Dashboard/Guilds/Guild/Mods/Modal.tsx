@@ -9,11 +9,9 @@ interface Props {
     guild: GuildPayload;
     members: DiscordMember[] | null;
     setModifications: (modifications: boolean) => void;
-    addedMods: string[];
-    setAddedMods: (addedMods: string[]) => void;
 }
 
-export default function GuildModModal({ handleAddMod, guild, members, setModifications, addedMods, setAddedMods }: Props) {
+export default function GuildModModal({ handleAddMod, guild, members, setModifications }: Props) {
     const l = useLanguage();
     const [query, setQuery] = useState("");
 
@@ -45,15 +43,7 @@ export default function GuildModModal({ handleAddMod, guild, members, setModific
                             <button
                                 className="flex gap-3 text-start w-full rounded-lg p-3 bg-neutral-900/50 hover:bg-neutral-900 transition"
                                 key={index}
-                                onClick={() => {
-                                    if (addedMods.includes(user.user.id)) {
-                                        setAddedMods(addedMods.filter((mod) => mod !== user.user.id));
-                                    } else {
-                                        setAddedMods([...addedMods, user.user.id]);
-                                    }
-
-                                    handleAddMod(user);
-                                }}
+                                onClick={() => handleAddMod(user)}
                             >
                                 <Avatar
                                     className="w-12 h-12"
