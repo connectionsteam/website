@@ -480,6 +480,51 @@ export const languages = {
             decline: "Recusar",
             inviteError: "Não foi possível aceitar o convite",
             goToBackup: "Ir para o backup",
+        },
+        promote: {
+            title: "Connections",
+            description: "Eleve sua conexão ao topo!",
+            benefits: "Benefícios",
+            buy: {
+                title: "Comprar",
+                description: "Promova sua conexão por apenas",
+                price: "R$ 8.99",
+                button: "Comprar",
+                gift: "Presentear",
+                successMessage: "Sua conexão foi promovida com sucesso!",
+            },
+            auditLog: {
+                title: "Registro De Auditoria",
+                description: "Acompanhe todas as alterações feitas na sua conexão.",
+                logEntry: {
+                    updatedIcon: " alterou o ícone para ",
+                },
+            },
+            metrics: {
+                title: "Métricas",
+                description: "Visualize métricas detalhadas da sua conexão.",
+                access: {
+                    title: "Acessos",
+                    recentAccesses: "+ {count} acessos nos últimos 7 dias",
+                },
+                connections: {
+                    title: "Servidores Conectados",
+                    recentConnections: "+ {count} conexões nos últimos 7 dias",
+                },
+            },
+            priorityConnection: {
+                title: "Conexão Prioritária",
+                description: "Sua conexão sempre ficará no topo da lista de conexões, independentemente da quantidade de votos.",
+                button: "Promovida",
+            },
+            cooldownReduction: {
+                title: "Redução De Cooldown",
+                description: "Reduza o tempo de cooldown para votar na sua conexão de 12 horas para 8 horas.",
+                before: "12 Horas",
+                after: "8 Horas",
+                button: "Votar",
+            },
+            expiration: "Após fazer a compra, o plano será removido após 14 dias. Cancele quando quiser.",
         }
     },
     "en-US": {
@@ -964,6 +1009,51 @@ export const languages = {
             decline: "Recusar",
             inviteError: "Não foi possível aceitar o convite",
             goToBackup: "Go to backup",
+        },
+        promote: {
+            title: "Connections",
+            description: "Take your connection to the top!",
+            benefits: "Benefits",
+            buy: {
+                title: "Buy",
+                description: "Promote your connection for only",
+                price: "R$ 8.99",
+                button: "Buy",
+                gift: "Gift",
+                successMessage: "Your connection was promoted successfully!",
+            },
+            auditLog: {
+                title: "Audit Log",
+                description: "Track all changes made to your connection.",
+                logEntry: {
+                    updatedIcon: " changed the icon to ",
+                },
+            },
+            metrics: {
+                title: "Metrics",
+                description: "View detailed metrics of your connection.",
+                access: {
+                    title: "Accesses",
+                    recentAccesses: " accesses in the last 7 days",
+                },
+                connections: {
+                    title: "Connected Servers",
+                    recentConnections: " connections in the last 7 days",
+                },
+            },
+            priorityConnection: {
+                title: "Priority Connection",
+                description: "Your connection will always be at the top of the connection list, regardless of the number of votes.",
+                button: "Promoted",
+            },
+            cooldownReduction: {
+                title: "Cooldown Reduction",
+                description: "Reduce the cooldown time to vote on your connection from 12 hours to 8 hours.",
+                before: "12 Hours",
+                after: "8 Hours",
+                button: "Vote",
+            },
+            expiration: "After making the purchase, the plan will be removed after 14 days. Cancel when you want.",
         }
     }
 }
