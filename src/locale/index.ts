@@ -383,6 +383,7 @@ export const languages = {
                 success: "Foi ativado em seu servidor com sucesso!",
                 advantages: "Vantagens obtidas"
             },
+            promoted: "Promova sua conexão favorita, e faça com que ela ganhe mais destaque entre as outras. Veja registro de auditoria da sua conexão, métricas avançadas e muito mais.",
             buy: "Comprar",
             month: "mês",
             seeplans: "Ver planos",
@@ -912,6 +913,7 @@ export const languages = {
                 success: "Was activated on your server successfully!",
                 advantages: "Advantages obtained"
             },
+            promoted: "Promote your connection favorite, and make it gain more prominence among the others. See connection audit log, advanced metrics and much more.",
             buy: "Buy",
             month: "month",
             seeplans: "See plans",

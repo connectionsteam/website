@@ -57,7 +57,7 @@ export default function PopUpBuy({ onClose }: { onClose: () => void }) {
                 <button
                     onClick={onClose}
                     className="rounded-lg bg-neutral-700 transition hover:bg-neutral-700/50 
-                            p-2 px-3"
+                    p-2 px-3"
                 >
                    {l.plans.buypopUp.understand}
                 </button>
