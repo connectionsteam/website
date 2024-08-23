@@ -36,17 +36,17 @@ export default function ConnectionModifications({ setModifications, editedConnec
             };
         };
 
-        // const { data } = await api.patch(`/connections/${connection.name}`, body);
+        const { data } = await api.patch(`/connections/${connection.name}`, body);
 
-        // setEditedConnection(data);
-        // setConnection(data);
+        setEditedConnection(data);
+        setConnection(data);
 
         setLoading({ loading: false, check: true });
 
         setTimeout(() => {
             setLoading({ ...loading, check: false });
             setModifications(false);
-        }, 2000);
+        }, 1000);
     };
 
     const resetChanges = () => {
