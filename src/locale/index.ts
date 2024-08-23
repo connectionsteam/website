@@ -227,6 +227,10 @@ export const languages = {
                         }
                     }
                 },
+                settings: {
+                    title: "Configurar Conexão",
+                    description: "Aqui você pode configurar sua conexão",
+                },
                 delete: {
                     title: "Deletar conexão",
                     description: "Você deseja mesmo deletar a conexão",
@@ -235,12 +239,11 @@ export const languages = {
                 },
                 edit: {
                     title: "Editar conexão",
-                    description: "Editar conexão",
-                    button: "Editar",
-                    success: "Salvo com sucesso!",
-                    saving: "Salvando...",
-                    save: "Salvar",
-                    redefine: "Redefinir",
+                    description: "Aqui você pode editar sua conexão",
+                    condescription: "Descrição",
+                    condescriptionPlaceholder: "Descrição da conexão",
+                    icon: "Icone",
+                    iconPlaceholder: "Icone da conexão",
                     placeholders: {
                         name: "Nome",
                         description: "Descrição",
@@ -763,14 +766,17 @@ export const languages = {
                     button: "Delete",
                     descriptionpage: "When you delete your connection, you will lose all the data associated with it, including messages and guilds that were connected to your connection and other data.",
                 },
+                settings: {
+                    title: "Configure Connection",
+                    description: "Here you can configure your connection",
+                },
                 edit: {
                     title: "Edit connection",
-                    description: "Edit connection",
-                    button: "Edit",
-                    success: "Saved successfully!",
-                    saving: "Saving...",
-                    save: "Save",
-                    redefine: "Redefine",
+                    description: "Here you can edit your connection",
+                    condescription: "Description",
+                    condescriptionPlaceholder: "Connection description",
+                    icon: "Icon",
+                    iconPlaceholder: "Connection's icon",
                     placeholders: {
                         name: "Name",
                         description: "Description",
