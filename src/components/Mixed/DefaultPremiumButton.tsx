@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { HiSparkles } from "react-icons/hi";
+import { VscTriangleUp } from "react-icons/vsc";
 
 interface Props {
     disabled?: boolean;
@@ -10,11 +11,12 @@ interface Props {
     loading?: boolean;
     link?: boolean;
     href?: string;
+    pink?: boolean;
 }
 
-export default function DefaultPremiumButton({ disabled, text, className, onClick, loading, link, href }: Props) {
+export default function  DefaultPremiumButton({ disabled, text, className, onClick, loading, link, href, pink }: Props) {
     return (
-        <div className="p-0.5 rounded-lg bg-gradient-to-r from-amber-400 to-orange-500 w-full">
+        <div className={`p-0.5 rounded-lg bg-gradient-to-r ${pink ? "from-pink-500 to-rose-700" : "from-amber-400 to-orange-500"} w-full`}>
             {link ? (
                 <Link href={href || ""} className="p-3 rounded-lg bg-neutral-800 hover:bg-transparent transition w-full h-full 
                     isabled:text-neutral-300 disabled:hover:bg-neutral-800 flex gap-2 items-center 
@@ -38,6 +40,8 @@ export default function DefaultPremiumButton({ disabled, text, className, onClic
                 >
                     {loading ? (
                         <AiOutlineLoading3Quarters className="animate-spin" size={23} />
+                    ) : pink ? (
+                        <VscTriangleUp size={18}/>
                     ) : (
                         <HiSparkles className="fill-yellow-500 group-hover:fill-white transition group-disabled:group-hover:fill-yellow-500" size={23} />
                     )}

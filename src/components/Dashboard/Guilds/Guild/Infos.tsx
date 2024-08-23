@@ -101,7 +101,6 @@ export default function Infos({ guild, setGuild, threads, setThreads, premium, s
                                         prefix: e.target.value,
                                     });
                                 }}
-
                             />
                         </div>
                     </div>
