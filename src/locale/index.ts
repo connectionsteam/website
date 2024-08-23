@@ -203,6 +203,7 @@ export const languages = {
                 }
             },
             connections: {
+                activatePromoted: "Ativar Promoted",
                 title: "Conexões",
                 description: "Selecione a conexão que deseja gerenciar",
                 addConnection: "Adicionar conexão",
@@ -228,6 +229,8 @@ export const languages = {
                     }
                 },
                 settings: {
+                    subscriptions: "Inscrições",
+                    promoted: "Você pode ver suas inscrições clicando no botão abaixo",
                     title: "Configurar Conexão",
                     description: "Aqui você pode configurar sua conexão",
                 },
@@ -486,6 +489,10 @@ export const languages = {
             goToBackup: "Ir para o backup",
         },
         promote: {
+            modal: {
+                promoted: "Conexão Promovida!",
+                success: "Sua conexão foi promovida com sucesso, veja os beneficios abaixo",
+            },
             title: "Connections",
             description: "Eleve sua conexão ao topo!",
             benefits: "Benefícios",
@@ -517,6 +524,7 @@ export const languages = {
                 },
             },
             priorityConnection: {
+                placeholder: "Sua Conexão",
                 title: "Conexão Prioritária",
                 description: "Sua conexão sempre ficará no topo da lista de conexões, independentemente da quantidade de votos.",
                 button: "Promovida",
@@ -736,6 +744,7 @@ export const languages = {
                 }
             },
             connections: {
+                activatePromoted: "Activate Promoted",
                 title: "Connections",
                 description: "Select the connection you want to manage",
                 addConnection: "Add connection",
@@ -767,6 +776,8 @@ export const languages = {
                     descriptionpage: "When you delete your connection, you will lose all the data associated with it, including messages and guilds that were connected to your connection and other data.",
                 },
                 settings: {
+                    subscriptions: "Subscriptions",
+                    promoted: "You can see your subscriptions by clicking the button below",
                     title: "Configure Connection",
                     description: "Here you can configure your connection",
                 },
@@ -1019,6 +1030,10 @@ export const languages = {
             goToBackup: "Go to backup",
         },
         promote: {
+            modal: {
+                promoted: "Connection Promoted!",
+                success: "Your connection was promoted successfully, see the benefits below",
+            },
             title: "Connections",
             description: "Take your connection to the top!",
             benefits: "Benefits",
@@ -1050,6 +1065,7 @@ export const languages = {
                 },
             },
             priorityConnection: {
+                placeholder: "Your Connnection",
                 title: "Priority Connection",
                 description: "Your connection will always be at the top of the connection list, regardless of the number of votes.",
                 button: "Promoted",
