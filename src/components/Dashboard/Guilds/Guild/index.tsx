@@ -231,7 +231,7 @@ export default function GuildComponent() {
                                 ))}
                             </div>
                             <AnimatePresence>
-                                {(modifications) && (
+                                {modifications && (
                                     <motion.div
                                         initial={changedTab ? {} : { opacity: 0, y: 200 }}
                                         animate={changedTab ? {
