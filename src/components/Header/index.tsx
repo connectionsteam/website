@@ -33,7 +33,7 @@ export default function Header() {
 
     return (
         <header className="w-screen flex justify-center text-white tablet:px-2 fixed top-1 inset-x-0 max-w-[1100px] mx-auto z-50">
-            <div className="mt-2 flex gap-4 items-center w-full p-1 px-2 tablet:p-2 bg-black bg-opacity-20 backdrop-blur-sm rounded-lg">
+            <div className="mt-2 flex gap-4 items-center w-full p-1 px-2 tablet:p-2 bg-neutral-800 backdrop-blur-sm bg-opacity-70 rounded-lg">
                 <Link className="transition duration-300" href="/">
                     <h1 className="text-2xl p-2 tablet:p-0 font-bold bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-500 to-indigo-500">
                         Connections
