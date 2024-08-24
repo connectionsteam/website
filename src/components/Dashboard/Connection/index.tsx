@@ -15,6 +15,7 @@ import { VscTriangleUp } from "react-icons/vsc";
 import Confetti from "react-confetti";
 import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/modal";
 import ActivePromoted from "./Promoted";
+import PromotedMetricsComponent from "./Metrics";
 
 export interface EditConnection {
     description: string;
@@ -62,7 +63,16 @@ export default function ConnectionPageComponent() {
                     setConnection={setConnection}
                 />
             )
-        }
+        },
+        ...(connection?.promotingSince ? [{
+            id: "metrics",
+            label: "Métricas",
+            component: connection && (
+                <PromotedMetricsComponent
+                    connection={connection}
+                />
+            )
+        }] : [])
     ];
 
     useEffect(() => {
