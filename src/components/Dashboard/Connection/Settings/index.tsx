@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ConnectionPayload } from "../../../../types";
 import DeleteConnectionPage from "./Delete";
+import JoinPrivateConnectionModal from "../JoinPrivateConnection";
 import ConnectionPrivateInvite from "./Invite";
 import { useLanguage } from "../../../../hooks/useLanguage";
 import Link from "next/link";
