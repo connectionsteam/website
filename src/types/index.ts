@@ -136,6 +136,7 @@ export interface ConnectionPayload {
         username: string;
         avatar: string;
     };
+    promotingSince?: number;
     creatorId?: string;
     votes: {
         _id: string;
@@ -459,4 +460,10 @@ export interface TeamMemberPayload {
     avatar: string;
     username: string;
     joinedTimestamp: number;
+}
+
+export interface ConnectionMetrics {
+    views: number[];
+    servers: number[];
+    feedbacks: number[];
 }
