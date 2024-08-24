@@ -228,6 +228,36 @@ export const languages = {
                         }
                     }
                 },
+                metrics: {
+                    graphic: "Gráfico Detalhado",
+                    days: {
+                        seven: "7 dias atrás",
+                        fourteen: "14 dias atrás",
+                        month: "30 dias atrás",
+                        older: "Mais de 30 dias atrás",
+                    },
+                    feedbacks: {
+                        commingSoon: "Em breve...",
+                    },
+                    title: "Métricas",
+                    description: "Aqui você pode ver as métricas da sua conexão, recurso exclusivo para conexões promovidas",
+                    servers: {
+                        title: "Servidores",
+                        noServers: "Sua conexão não está conectada em nenhum servidor",
+                        servers: "Sua conexão está conectada em ",
+                        serv: "Servidor",
+                        connections: "Servidores conectados nos últimos 7 dias",
+                    },
+                    visualizations: {
+                        noViews: "Sua conexão não tem nenhuma visualização", 
+                        title: "Visualizações",
+                        visu: "Visualização",
+                        has: "Sua conexão teve",
+                        lastseven: "nos últimos 7 dias",
+                        total: "no total",
+                    }
+                },
+                promotedRecurse: "Recurso Promoted",
                 settings: {
                     subscriptions: "Inscrições",
                     promoted: "Você pode ver suas inscrições clicando no botão abaixo",
@@ -253,7 +283,9 @@ export const languages = {
                         icon: "Icone",
                         maxConnections: "Conexões máximas",
                     }
-                }
+                },
+                edittab: "Editar",
+                settingstab: "Configurações"
             },
             misc: {
                 cancel: "Cancelar",
@@ -499,7 +531,7 @@ export const languages = {
             buy: {
                 title: "Comprar",
                 description: "Promova sua conexão por apenas",
-                price: "R$ 8.99",
+                price: "R$ 4.99",
                 button: "Comprar",
                 gift: "Presentear",
                 successMessage: "Sua conexão foi promovida com sucesso!",
@@ -767,6 +799,36 @@ export const languages = {
                             name: "coolconnection",
                             description: "This connection is super awesome!",
                         }
+                    }
+                },
+                promotedRecurse: "Promoted Feature",
+                metrics: {
+                    days: {
+                        seven: "7 Days Ago",
+                        fourteen: "14 Days Ago",
+                        month: "30 Days Ago",
+                        older: "More than 30 days ago",
+                    },
+                    graphic: "Detailed Graphic",
+                    feedbacks: {
+                        commingSoon: "Coming soon...",
+                    },
+                    title: "Metrics",
+                    description: "Here you can see the metrics of your connection, exclusive for promoted connections",
+                    servers: {
+                        title: "Servers",
+                        noServers: "Your connection is not connected to any server",
+                        servers: "Your connections is connected to ",
+                        serv: "Server",
+                        connections: "Servers connected in the last 7 days",
+                    },
+                    visualizations: {
+                        noViews: "Your connection has no views",
+                        title: "Views",
+                        visu: "View",
+                        has: "Your connection has",
+                        total: "in the total",
+                        lastseven: "in the last 7 days"
                     }
                 },
                 delete: {
@@ -1040,7 +1102,7 @@ export const languages = {
             buy: {
                 title: "Buy",
                 description: "Promote your connection for only",
-                price: "R$ 8.99",
+                price: "R$ 4.99",
                 button: "Buy",
                 gift: "Gift",
                 successMessage: "Your connection was promoted successfully!",
