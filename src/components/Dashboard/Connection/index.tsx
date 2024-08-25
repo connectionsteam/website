@@ -16,6 +16,7 @@ import Confetti from "react-confetti";
 import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/modal";
 import ActivePromoted from "./Promoted";
 import PromotedMetricsComponent from "./Metrics";
+import PromotedConnectionAuditLog from "./AuditLog";
 
 export interface EditConnection {
     description: string;
@@ -70,6 +71,15 @@ export default function ConnectionPageComponent() {
             component: connection && (
                 <PromotedMetricsComponent
                     connection={connection}
+                />
+            )
+        }] : []),
+        ...(connection?.promotingSince ? [{
+            id: "auditLog",
+            label: "Audit Log",
+            component: connection && (
+                <PromotedConnectionAuditLog
+                    id={connection.name}
                 />
             )
         }] : [])
