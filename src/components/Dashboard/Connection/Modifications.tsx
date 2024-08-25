@@ -21,33 +21,40 @@ export default function ConnectionModifications({ setModifications, editedConnec
 
     const patchChanges = async () => {
         setLoading({ loading: true, check: false });
-
+    
         const { description, icon, tags } = editedConnection;
-
-        const body = {
-            description,
-            icon,
-            tags
+    
+        const areTagsEgual = (tags1: string[], tags2: string[]) => {
+            if (tags1.length !== tags2.length) return false;
+            
+            return tags1.every(tag => tags2.includes(tag));
         };
-
+    
+        const body = {
+            description: description?.trim() === "" ? null : description === connection.description ? "" : description,
+            icon: connection.icon === icon ? "" : icon,
+            tags: areTagsEgual(connection.tags, tags || []) ? "" : tags 
+        };
+    
         for (const i in body) {
             if (body[i as keyof typeof body] === "") {
                 delete body[i as keyof typeof body];
-            };
-        };
-
+            }
+        }
+    
         const { data } = await api.patch(`/connections/${connection.name}`, body);
-
+    
         setEditedConnection(data);
         setConnection(data);
-
+    
         setLoading({ loading: false, check: true });
-
+    
         setTimeout(() => {
             setLoading({ ...loading, check: false });
             setModifications(false);
         }, 1000);
     };
+    
 
     const resetChanges = () => {
         setEditedConnection(connection);
