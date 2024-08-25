@@ -249,12 +249,26 @@ export const languages = {
                         connections: "Servidores conectados nos últimos 7 dias",
                     },
                     visualizations: {
-                        noViews: "Sua conexão não tem nenhuma visualização", 
+                        noViews: "Sua conexão não tem nenhuma visualização",
                         title: "Visualizações",
                         visu: "Visualização",
                         has: "Sua conexão teve",
                         lastseven: "nos últimos 7 dias",
                         total: "no total",
+                    }
+                },
+                auditLog: {
+                    title: "Registro de Auditoria",
+                    description: "Acompanhe todas as mudanças feitas na sua conexão",
+                    logEntry: {
+                        updateIcon: " alterou o ícone de ",
+                        updateDescription: " alterou a descrição de ",
+                        for: " para ",
+                        none: "nenhum",
+                        updatedTags: " alterou as tags de ",
+                        addedTeam: " adicionou a conexão à equipe ",
+                        removedTeam: " removeu a conexão da equipe ",
+                        privatedConnection: " tornou a conexão privada"
                     }
                 },
                 promotedRecurse: "Recurso Promoted",
@@ -829,6 +843,20 @@ export const languages = {
                         has: "Your connection has",
                         total: "in the total",
                         lastseven: "in the last 7 days"
+                    }
+                },
+                auditLog: {
+                    title: "Audit Log",
+                    description: "Track all changes made to your connection",
+                    logEntry: {
+                        updateIcon: " changed the icon from ",
+                        for: " to ",
+                        none: "none",
+                        updateDescription: " changed the description from ",
+                        updatedTags: " changed the tags from ",
+                        addedTeam: " added the connection to the team ",
+                        removedTeam: " removed the connection from the team ",
+                        privatedConnection: " made the connection private"
                     }
                 },
                 delete: {
