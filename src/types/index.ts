@@ -467,3 +467,82 @@ export interface ConnectionMetrics {
     servers: number[];
     feedbacks: number[];
 }
+
+export interface AuditLogPayload {
+    entries: AuditLogEntryPayload[];
+}
+
+export interface AuditLogEntryPayload {
+    executorId: string;
+    executor: {
+        username: string;
+        avatar: string;
+    };
+    createdTimestamp: number;
+    actionType: AuditLogActionType;
+    changes: AuditLogEntryChange[];
+}
+
+export enum AuditLogActionType {
+    TeamAdd,
+    TeamRemove,
+    Privated,
+    ConnectionUpdate,
+}
+
+interface BaseAuditLogEntryChange<Key extends string, Old, New = Old> {
+    key: Key;
+    old: Old;
+    new: New;
+}
+
+export type AuditLogEntryChange =
+    | TeamAddAuditLogEntryChange
+    | TeamRemoveAuditLogEntryChange
+    | ConnectionPrivateAuditLogEntryChange
+    | ConnectionUpdateAuditLogEntryChange;
+
+type TeamAddAuditLogEntryChange = BaseAuditLogEntryChange<
+    "team_id",
+    void,
+    string
+>;
+
+type TeamRemoveAuditLogEntryChange = BaseAuditLogEntryChange<
+    "team_id",
+    string,
+    void
+>;
+
+type ConnectionPrivateAuditLogEntryChange = BaseAuditLogEntryChange<
+    "private",
+    void | false,
+    true
+>;
+
+type ConnectionUpdateAuditLogEntryChange =
+    | ConnectionDescriptionOrIconUpdateAuditLogEntryChange
+    | ConnectionTagsUpdateAuditLogEntryChange
+    | ConnectionTagsUpdateAuditLogEntryChange
+    | ConnectionMaxConnectionsUpdateAuditLogEntryChange
+    | ConnectionNameUpdateAuditLogEntryChange;
+
+type ConnectionDescriptionOrIconUpdateAuditLogEntryChange =
+    BaseAuditLogEntryChange<
+        "description" | "icon",
+        string | void,
+        string | void
+    >;
+
+type ConnectionNameUpdateAuditLogEntryChange = BaseAuditLogEntryChange<
+    "name",
+    string
+>;
+
+type ConnectionTagsUpdateAuditLogEntryChange = BaseAuditLogEntryChange<
+    "tags",
+    string[]
+>;
+
+type ConnectionMaxConnectionsUpdateAuditLogEntryChange =
+    BaseAuditLogEntryChange<"maxConnections", number | void, number>;
