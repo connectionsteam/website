@@ -31,14 +31,10 @@ export default function Notification({
 		loader: "",
 	});
 	const { push } = useRouter();
-	const [spoiler, setSpoiler] = useState({
-		spoiler: false,
-		code: "",
-	});
 
 	const date = new Date(notification.sentTimestamp).toLocaleString(l.language);
 
-	const handleJoinTeam = (teamId: string) => async () => {
+	const handleJoinTeam = (teamId: string, notId: string) => async () => {
 		try {
 			setLoading({
 				load: true,
@@ -46,6 +42,10 @@ export default function Notification({
 			});
 
 			await api.put(`/teams/${teamId}/join`);
+
+			await api.post("/users/@me/inbox/bulk-delete", {
+				ids: [notId],
+			});
 
 			push(`/dashboard/team/${teamId}`);
 
@@ -92,7 +92,8 @@ export default function Notification({
 						href={notification.messageURL}
 						target="_blank"
 						className="p-2 px-3 rounded-lg transition bg-neutral-900/50 
-                        hover:bg-neutral-900 w-fit flex gap-2 items-center" rel="noreferrer"
+                        hover:bg-neutral-900 w-fit flex gap-2 items-center"
+						rel="noreferrer"
 					>
 						<span>{l.notifications.seeMessage}</span>
 						<LuExternalLink />
@@ -108,7 +109,7 @@ export default function Notification({
 					<div className="flex gap-1">
 						<button
 							disabled={loading.loader === "joinTeam" && loading.load}
-							onClick={handleJoinTeam(notification.teamId)}
+							onClick={handleJoinTeam(notification.teamId, notification.id)}
 							className="bg-green-500 hover:bg-green-600 rounded-lg px-3 p-2 transition
                         disabled:hover:bg-green-500"
 						>
@@ -149,7 +150,8 @@ export default function Notification({
 						href={"/dasjk"}
 						target="_blank"
 						className="p-2 px-3 rounded-lg transition bg-neutral-900/50 
-                        hover:bg-neutral-900 w-fit flex gap-2 items-center" rel="noreferrer"
+                        hover:bg-neutral-900 w-fit flex gap-2 items-center"
+						rel="noreferrer"
 					>
 						<span>{l.notifications.goToBackup}</span>
 						<LuExternalLink />
