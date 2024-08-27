@@ -546,3 +546,23 @@ type ConnectionTagsUpdateAuditLogEntryChange = BaseAuditLogEntryChange<
 
 type ConnectionMaxConnectionsUpdateAuditLogEntryChange =
     BaseAuditLogEntryChange<"maxConnections", number | void, number>;
+
+export interface GuildSubscriptionPayload {
+    id: string;
+    name: string;
+    icon: string;
+    addedMods: number;
+    addedConnections: number;
+}
+
+export interface ConnectionSubscriptionPayload {
+    name: string;
+    icon?: string;
+    description?: string;
+    promotingSince: number;
+}
+
+export interface SubscriptionsPayload {
+    guilds: GuildSubscriptionPayload[];
+    connections: ConnectionSubscriptionPayload[];
+}
