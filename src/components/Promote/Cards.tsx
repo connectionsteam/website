@@ -95,7 +95,7 @@ export default function PromotedFunctionsCards({ connection }: { connection: Con
                             {l.promote.cooldownReduction.after}
                         </div>
                     </div>
-                    <DefaultButton pink className="w-40 flex items-center justify-center py-3" divclass="w-fit">
+                    <DefaultButton notarget href={`/connection/${connection?.name}`} pink className="w-40 flex items-center justify-center py-3" divclass="w-fit">
                         {l.promote.cooldownReduction.button}
                     </DefaultButton>
                 </div>
