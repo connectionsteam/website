@@ -14,13 +14,13 @@ export default function PremiumComponent() {
 
     const plans = [
         {
-            name: "Premium",
+            name: "Vip",
             price: 29.99,
             features: l.plans.premium.features,
             popular: true
         },
         {
-            name: "Basic Premium",
+            name: "Premium",
             price: 9.99,
             features: l.plans.basicpremium.features,
             popular: false
@@ -57,7 +57,7 @@ export default function PremiumComponent() {
                             </div>
                             <div className="max-w-60 mt-4 tablet:w-full tablet:max-w-[350px] mobile:min-w-[328px] mobile:px-2">
                                 <DefaultButton notarget href="/promote" pink onClick={() => setMorePlans(true)} className="p-3 group flex">
-                                    <span>Veja como</span>
+                                    <span>{l.plans.seehow}</span>
                                     <IoIosArrowForward className="group-hover:translate-x-2 transition-all" />
                                 </DefaultButton>
                             </div>
