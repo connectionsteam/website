@@ -40,7 +40,8 @@ export default function Header() {
                     </h1>
                 </Link>
                 <div className="flex gap-4 justify-center text-lg font-bold tablet:hidden">
-                    <Link className="transition duration-300 group ease-in-out" href="/premium"><Underline>Premium</Underline></Link>
+                    <Link className="transition duration-300 group ease-in-out" href="/premium"><Underline premium>Premium</Underline></Link>
+                    <Link className="transition duration-300 group ease-in-out" href="/promote"><Underline promoted>Promoted</Underline></Link>
                     <a className="transition duration-300 group ease-in-out" href="https://discord.gg/RXBRraTWeY" target="_blank">
                         <Underline>{l.home.header.support}</Underline>
                     </a>
@@ -76,7 +77,14 @@ export default function Header() {
                             className="transition duration-300 group ease-in-out"
                             href="/dashboard"
                         >
-                            <Underline>Premium</Underline>
+                            <Underline premium>Premium</Underline>
+                        </Link>
+                        <Link
+                            onClick={handleRecallDrawer}
+                            className="transition duration-300 group ease-in-out"
+                            href="/promote"
+                        >
+                            <Underline promoted>Promoted</Underline>
                         </Link>
                         <a
                             onClick={handleRecallDrawer}

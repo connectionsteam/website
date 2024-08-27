@@ -32,7 +32,7 @@ export default function ChooseLanguage({ mobile }: { mobile?: boolean }) {
         <Dropdown className="bg-neutral-800 text-white rounded-lg outline-none">
             <DropdownTrigger className="focus:bg-neutral-900">
 
-                <button className={`outline-none flex gap-2 justify-center items-center ${mobile ? "tablet:hidden hover:bg-neutral-900" : "hover:bg-neutral-800"} p-2 transition rounded-lg`}>
+                <button className={`outline-none flex gap-2 justify-center items-center ${mobile ? "tablet:hidden hover:bg-neutral-700" : "hover:bg-neutral-800"} p-2 transition rounded-lg`}>
                     <div className="w-8">{selectedLanguage === "pt-BR" ? <FlagBr /> : <FlagEn />}</div>
                 </button>
             </DropdownTrigger>
