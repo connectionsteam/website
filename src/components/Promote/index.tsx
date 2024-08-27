@@ -1,17 +1,20 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ConnectionPayload } from "../../types";
 import DefaultLayout from "../Mixed/Layout";
 import { api } from "../../utils/api";
 import Head from "next/head";
-import { UserContext } from "../../contexts/User";
 import DefaultButton from "../Mixed/Button";
 import { LuGift, LuShoppingCart } from "react-icons/lu";
 import { useLanguage } from "../../hooks/useLanguage";
 import PromotedFunctionsCards from "./Cards";
+import { Modal, useDisclosure } from "@nextui-org/modal";
+import PromotedPopUpBuy from "./Modal";
+import PromotedGiftModal from "./Gift";
 
 export default function PromoteComponent() {
     const [connection, setConnection] = useState<ConnectionPayload>();
-    const { user } = useContext(UserContext);
+    const { isOpen, onClose, onOpen, onOpenChange } = useDisclosure();
+    const { isOpen: isGiftOpen, onClose: onGiftClose, onOpen: onGiftOpen, onOpenChange: onGiftOpenChange } = useDisclosure();
     const l = useLanguage();
 
     useEffect(() => {
@@ -51,17 +54,31 @@ export default function PromoteComponent() {
                         </p>
                     </div>
                     <div className="flex justify-between items-center gap-2">
-                        <DefaultButton pink className="w-40 flex items-center justify-center py-3 shadow-rose-700 shadow-[0_0px_20px_rgba(8,_112,_184,_0.7)]" divclass="w-fit">
+                        <DefaultButton onClick={onOpen} pink className="w-40 flex items-center justify-center py-3 shadow-rose-700 shadow-[0_0px_20px_rgba(8,_112,_184,_0.7)]" divclass="w-fit">
                             <LuShoppingCart />
                             <span>{l.promote.buy.button}</span>
                         </DefaultButton>
-                        <button className="w-40 flex items-center justify-center py-3 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition gap-2">
+                        <button onClick={onGiftOpen} className="w-40 flex items-center justify-center py-3 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition gap-2">
                             <LuGift />
                             <span>{l.promote.buy.gift}</span>
                         </button>
                     </div>
                     <span className="text-neutral-300 max-w-[600px] text-center">{l.promote.expiration}</span>
                 </div>
+                <Modal classNames={{
+                    closeButton: "transition hover:bg-neutral-700",
+                    wrapper: "overflow-y-hidden",
+                    base: "max-h-screen overflow-y-auto",
+                }} isOpen={isOpen} onOpenChange={onOpenChange} size="4xl">
+                    <PromotedPopUpBuy onClose={onClose} />
+                </Modal>
+                <Modal classNames={{
+                    closeButton: "transition hover:bg-neutral-700",
+                    wrapper: "overflow-y-hidden",
+                    base: "max-h-screen overflow-y-auto",
+                }} isOpen={isGiftOpen} onOpenChange={onGiftOpenChange}>
+                    <PromotedGiftModal onClose={onGiftClose} />
+                </Modal>
             </div>
         </DefaultLayout>
     )
