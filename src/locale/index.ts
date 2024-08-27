@@ -7,6 +7,7 @@ export const languages = {
                 menu: {
                     exit: "Sair",
                     dashboard: "Dashboard",
+                    subscriptions: "Inscrições"
                 }
             },
             footer: {
@@ -392,6 +393,13 @@ export const languages = {
             }
         },
         plans: {
+            poppromoted: {
+                title: "Como comprar Promoted?",
+                fristimageDescription: "Para adquirir Promoted, acesse nosso",
+                firstimageDescriptiontwo: " e vá até o canal # promoted, e nele terá uma mensagem do bot Zennify, basta clicar em comprar e efeturar a compra", 
+                secondImageDescription: "Após efetuar o pagamento pelo Zennify, você receberá um código de ativação do promoted, para ativar o código, basta ir na página da sua conexão desejada, e clicar no botão 'Ativar Promoted', como na imagem abaixo.",
+            },
+            seehow: "Veja como",
             buypopUp: {
                 title: "Como comprar premium?",
                 warning: "NO MOMENTO só estamos aceitando pagamentos SOMENTE em BRL (R$).",
@@ -439,7 +447,7 @@ export const languages = {
             buy: "Comprar",
             month: "mês",
             seeplans: "Ver planos",
-            description: "Obtenha recursos avançados, menor cooldown e controle aprimorado com o Basic Premium. O Premium oferece tudo isso mais um bot customizável e suporte para até 5 servidores."
+            description: "Obtenha recursos avançados, menor cooldown e controle aprimorado com o Premium. O Vip oferece tudo isso mais um bot customizável e suporte para até 5 servidores."
         },
         login: {
             title: "Login no Connections",
@@ -562,11 +570,11 @@ export const languages = {
                 description: "Visualize métricas detalhadas da sua conexão.",
                 access: {
                     title: "Acessos",
-                    recentAccesses: "+ {count} acessos nos últimos 7 dias",
+                    recentAccesses: "+ acessos nos últimos 7 dias",
                 },
                 connections: {
                     title: "Servidores Conectados",
-                    recentConnections: "+ {count} conexões nos últimos 7 dias",
+                    recentConnections: "+ conexões nos últimos 7 dias",
                 },
             },
             priorityConnection: {
@@ -583,6 +591,29 @@ export const languages = {
                 button: "Votar",
             },
             expiration: "Após fazer a compra, o plano será removido após 14 dias. Cancele quando quiser.",
+        },
+        subscriptions: {
+            title: "Inscrições",
+            description: "Aqui ficarão suas inscrições, como Promoted e Premium",
+            youhave: "Você possui",
+            promoted: {
+                connection: "conexão promovida",
+                connections: "conexões promovidas",
+                search: "Procurar por alguma conexão",
+                nopromoted: "Você não tem nenhuma conexão promovida",
+                nosearch: "Nenhuma conexão encontrada"
+            },
+            plans: {
+                title: "Planos",
+                description: "Nós temos planos que encaixam no seu bolso"
+            },
+            premium: {
+                connection: "servidor com Premium",
+                connections: "servidores com Premium",
+                search: "Procurar por um servidor",
+                nopremium: "Você não possui nenhum servidor com Premium",
+                nosearch: "Nenhum servidor encontrado"
+            }
         }
     },
     "en-US": {
@@ -593,6 +624,7 @@ export const languages = {
                 menu: {
                     exit: "Exit",
                     dashboard: "Dashboard",
+                    subscriptions: "Subscriptions",
                 }
             },
             footer: {
@@ -977,6 +1009,13 @@ export const languages = {
             }
         },
         plans: {
+            poppromoted: {
+                title: "How to buy Promoted?",
+                fristimageDescription: "To buy Promoted, go to our",
+                firstimageDescriptiontwo: " and go to the channel # promoted, and there will be a message from the Zennify bot, just click on buy and pay",
+                secondImageDescription: "After paying the Zennify, you will receive an activation code for promoted, to activate the code, just go to your connection page, and click on the 'Activate Promoted' button, as shown below.",
+            },
+            seehow: "Veja como",
             buypopUp: {
                 title: "How to buy premium?",
                 warning: "NOW we only accept payments in BRL (R$).",
@@ -1168,6 +1207,29 @@ export const languages = {
                 button: "Vote",
             },
             expiration: "After making the purchase, the plan will be removed after 14 days. Cancel when you want.",
+        },
+        subscriptions: {
+            title: "Subscriptions",
+            description: "Here will be your subscriptions, like Promoted and Premium",
+            youhave: "You have",
+            promoted: {
+                connection: "promoted connection",
+                connections: "promoted connections",
+                search: "Search for a connection",
+                nopromoted: "You don't have any promoted connection",
+                nosearch: "No connection found"
+            },
+            plans: {
+                title: "Plans",
+                description: "We have plans that fit your budget"
+            },
+            premium: {
+                connection: "server with Premium",
+                connections: "servers with Premium",
+                search: "Search for a server",
+                nopremium: "You don't have any server with Premium",
+                nosearch: "No server found"
+            }
         }
     }
 }
