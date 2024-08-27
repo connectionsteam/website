@@ -100,7 +100,7 @@ export default function GuildsComponent({ guilds, fetchGuilds }: Props) {
                                             src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`}
                                             key={guild.id}
                                         />
-                                        <div className="flex flex-col gap-1 text-start">
+                                        <div className="flex flex-col text-start">
                                             <span className="font-bold text-lg">{guild.name}</span>
                                             <span className="text-neutral-300 text-sm">{guild.id}</span>
                                         </div>

@@ -39,7 +39,7 @@ export default function ConnectionCard(
                         className="flex items-center gap-2 p-3 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition relative w-full h-full"
                     >
                         <Avatar className="w-12 h-12" src={connection.icon || ""} key={connection.name} />
-                        <div className="flex flex-col gap-1 text-start">
+                        <div className="flex flex-col text-start">
                             <span className="font-bold text-lg">{connection.name}</span>
                             {connection.description &&
                                 <span className="text-neutral-300 text-sm">
