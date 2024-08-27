@@ -6,7 +6,6 @@ import DefaultLayout from "../../components/Mixed/Layout";
 import ProtectedRoute from "../../components/Mixed/ProtectedRoute";
 import { ConnectionPayload, GuildPayload } from "../../types";
 import { api } from "../../utils/api";
-import { Tab, Tabs } from "@nextui-org/tabs";
 import { useEffect, useState } from "react";
 import JoinPrivateConnectionModal from "../../components/Dashboard/Connection/JoinPrivateConnection";
 import { useLanguage } from "../../hooks/useLanguage";
@@ -71,7 +70,7 @@ export default function DashboardPage({ query }: { query?: { name: string, code:
             <DefaultLayout className="mt-24">
                 <div className="flex flex-col gap-6 w-full">
                     <div className="tablet:ml-3">
-                        <DefaultTabs activeTab={activeTab} setActiveTab={setActiveTab} tabs={tabs} />
+                        <DefaultTabs cursor="bg-neutral-800" activeTab={activeTab} setActiveTab={setActiveTab} tabs={tabs} />
                     </div>
                     {tabs.find((t) => t.id === activeTab)?.component}
                 </div>
