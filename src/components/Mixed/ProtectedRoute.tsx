@@ -1,28 +1,31 @@
-import { ReactNode, useEffect } from "react";
+import { type ReactNode, useEffect } from "react";
 import { useRouter } from "next/router";
 import useAuth from "../../hooks/useAuth";
 
-const ProtectedRoute = ({ children, loading }: { children: ReactNode, loading: ReactNode }) => {
-    const { isAuthenticated } = useAuth();
-    const router = useRouter();
+const ProtectedRoute = ({
+	children,
+	loading,
+}: { children: ReactNode; loading: ReactNode }) => {
+	const { isAuthenticated } = useAuth();
+	const router = useRouter();
 
-    // return <>{loading}</>;
+	// return <>{loading}</>;
 
-    useEffect(() => {
-        if (isAuthenticated === false) {
-            window.location.href = "/login"; 
-        }
-    }, [isAuthenticated, router]);
+	useEffect(() => {
+		if (isAuthenticated === false) {
+			window.location.href = "/login";
+		}
+	}, [isAuthenticated, router]);
 
-    if (isAuthenticated === null) {
-        return <>{loading}</>; 
-    }
+	if (isAuthenticated === null) {
+		return <>{loading}</>;
+	}
 
-    if (!isAuthenticated) {
-        return null;
-    }
+	if (!isAuthenticated) {
+		return null;
+	}
 
-    return <>{children}</>;
+	return <>{children}</>;
 };
 
 export default ProtectedRoute;

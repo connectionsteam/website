@@ -4,33 +4,33 @@ import { api } from "../utils/api";
 import { useIsClient } from "../contexts/Client";
 
 const useAuth = () => {
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-    const isClient = useIsClient();
-    const router = useRouter();
+	const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+	const isClient = useIsClient();
+	const router = useRouter();
 
-    useEffect(() => {
-        if (!isClient) return;
-        
-        const fetchAuth = async () => {
-            try {
-                const token = await api.get("/auth/user");
+	useEffect(() => {
+		if (!isClient) return;
 
-                if (token.data) {
-                    setIsAuthenticated(true);
-                } else {
-                    setIsAuthenticated(false);
-                    window.location.href = "/login"; 
-                }
-            } catch {
-                setIsAuthenticated(false);
-                window.location.href = "/login"; 
-            }
-        };
+		const fetchAuth = async () => {
+			try {
+				const token = await api.get("/auth/user");
 
-        fetchAuth();
-    }, [router]);
+				if (token.data) {
+					setIsAuthenticated(true);
+				} else {
+					setIsAuthenticated(false);
+					window.location.href = "/login";
+				}
+			} catch {
+				setIsAuthenticated(false);
+				window.location.href = "/login";
+			}
+		};
 
-    return { isAuthenticated };
+		fetchAuth();
+	}, [router]);
+
+	return { isAuthenticated };
 };
 
 export default useAuth;
