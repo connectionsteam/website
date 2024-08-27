@@ -76,6 +76,7 @@ export default function Page() {
                             >
                                 <DefaultButton
                                     href="/dashboard"
+                                    notarget
                                     className="items-center justify-start tablet:w-full min-w-35 py-3.5 px-4"
                                     divclass="tablet:w-full w-36"
                                 >
