@@ -34,6 +34,7 @@ export default function Connections({
 }: Props) {
 	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 	const l = useLanguage();
+	const [loading, setLoading] = useState(false);
 	const [connectionProps, setConnectionProps] =
 		useState<ConnectedConnectionsState>({
 			hover: null,
@@ -43,7 +44,11 @@ export default function Connections({
 	const handleRemoveConnection = async (connectionName: string) => {
 		setConnectionProps({ ...connectionProps, removing: connectionName });
 
+		setLoading(true);
+
 		await api.delete(`/guilds/${guild.id}/connections/${connectionName}`);
+
+		setLoading(false);
 
 		setTimeout(() => {
 			setGuild({
@@ -76,6 +81,7 @@ export default function Connections({
 				{guild.connections ? (
 					guild.connections.map((connection) => (
 						<ConnectedConnnectionCard
+							loading={loading}
 							connection={connection}
 							guild={guild}
 							handleRemoveConnection={handleRemoveConnection}
@@ -107,10 +113,10 @@ export default function Connections({
 					onOpenChange={onOpenChange}
 				>
 					<ModalContent className="bg-neutral-800 text-white">
-						<ModalHeader className="flex flex-col gap-1 bg-neutral-800">
+						<ModalHeader className="flex flex-col gap-1 bg-neutral-800 pb-1">
 							{l.dashboard.connections.connectToConnection}
 						</ModalHeader>
-						<ModalBody>
+						<ModalBody className="mb-2">
 							<GuildConnectConnection
 								premium={premium}
 								setGuild={setGuild}

@@ -184,9 +184,9 @@ export default function GuildMods({
 					sonner={sonner}
 					onChange={onPremiumChange}
 					onClose={onPremiumClose}
-					limitText="Você chegou no limite de moderadores de 10/10"
+					limitText={l.limits.mods}
 					limit={premium.maxMods === 10}
-					text="Parece que você chegou no seu limite de moderadores..."
+					text={l.limits.modsText}
 				/>
 			</Modal>
 		</>

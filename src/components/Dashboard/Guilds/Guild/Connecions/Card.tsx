@@ -18,6 +18,7 @@ interface Props {
 	setConnectionProps: Dispatch<SetStateAction<ConnectedConnectionsState>>;
 	handleRemoveConnection: (connectionName: string) => void;
 	guild: GuildPayload;
+	loading: boolean;
 }
 
 export default function ConnectedConnnectionCard({
@@ -26,6 +27,7 @@ export default function ConnectedConnnectionCard({
 	setConnectionProps,
 	handleRemoveConnection,
 	guild,
+	loading
 }: Props) {
 	return (
 		<AnimatePresence key={connection.name}>
@@ -53,12 +55,14 @@ export default function ConnectedConnnectionCard({
 					)}
 					<div className="w-full relative tabletdesk:invisible">
 						<FloatingMenu
+							loading={loading}
 							open={true}
 							connection={connection}
 							onRemove={() => handleRemoveConnection(connection.name)}
 						/>
 					</div>
 					<FloatingMenu
+						loading={loading}
 						open={connectionProps.hover === connection.name}
 						connection={connection}
 						onRemove={() => handleRemoveConnection(connection.name)}

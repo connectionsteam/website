@@ -8,15 +8,16 @@ import {
 	ModalHeader,
 	useDisclosure,
 } from "@nextui-org/modal";
-import { AiOutlineDisconnect } from "react-icons/ai";
+import { AiOutlineDisconnect, AiOutlineLoading3Quarters } from "react-icons/ai";
 import { LuTrash } from "react-icons/lu";
 
 interface Props {
 	connection: ConnectedConnectionPayload;
 	onRemove: () => void;
+	loading: boolean;
 }
 
-export const DeleteConnectedConnection = ({ connection, onRemove }: Props) => {
+export const DeleteConnectedConnection = ({ connection, onRemove, loading }: Props) => {
 	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 	const l = useLanguage();
 
@@ -65,7 +66,11 @@ export const DeleteConnectedConnection = ({ connection, onRemove }: Props) => {
 							className="flex gap-2 font-semibold items-center text-center 
                             bg-red-500 transition hover:bg-red-600 p-2 px-3 rounded-lg"
 						>
-							<AiOutlineDisconnect className="mb-0.5" size={18} />
+							{loading ? (
+								<AiOutlineLoading3Quarters className="animate-spin" size={18} />
+							) : (
+								<AiOutlineDisconnect className="mb-0.5" size={18} />
+							)}
 							<span className="text-center">
 								{l.dashboard.guilds.connections.disconnect.disconnect}
 							</span>

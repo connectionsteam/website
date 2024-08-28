@@ -32,7 +32,7 @@ export default function ActivePremium({
 }: Props) {
 	const [code, setCode] = useState("");
 	const [loading, setLoading] = useState(false);
-	const [errors, setErrors] = useState<{ [key: string]: string }>({});
+	const [errors, setErrors] = useState<string[]>([]);
 	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 	const [premium, setPremium] = useState(1);
 	const l = useLanguage();
@@ -94,16 +94,25 @@ export default function ActivePremium({
 		} catch (error: any) {
 			setLoading(false);
 
-			setErrors({
-				...errors,
-				api: error.response.data.message,
-			});
+			const { code } = error.response.data;
+
+			if (code === 6002) {
+				return setErrors([
+					...errors.filter((error) => error !== l.errors.invalidCode),
+					l.errors.invalidCode,
+				]);
+			}
+
+			return setErrors([
+				...errors.filter((error) => error !== l.errors.generic),
+				l.errors.generic,
+			]);
 		}
 	};
 
 	return (
 		<>
-			<div className="flex flex-col gap-3">
+			<div className="flex flex-col gap-1">
 				<DefaultInput
 					maxChars={64}
 					minChars={0}
@@ -113,7 +122,7 @@ export default function ActivePremium({
 					type="text"
 					placeholder={l.plans.popUp.placeholder}
 				/>
-				{errors.api && <div className="text-red-500">{errors.api}</div>}
+				{errors && <div className="text-red-500">{errors.join(", ")}</div>}
 				<DefaultPremiumButton
 					onClick={handleSubmit}
 					text={l.plans.popUp.activate}

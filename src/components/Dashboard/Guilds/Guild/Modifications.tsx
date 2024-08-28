@@ -32,6 +32,7 @@ export default function GuildModifications({
 	setThreads,
 }: Props) {
 	const [loading, setLoading] = useState({ loading: false, check: false });
+	const [errors, setErrors] = useState<string[]>([]);
 	const l = useLanguage();
 
 	const patchChanges = async () => {
@@ -59,40 +60,48 @@ export default function GuildModifications({
 			}
 		}
 
-		const {
-			data: { mods: guildMods, threads: guildThreads },
-		} = await api.patch<GuildPayload>(`/guilds/${guild.id}`, body);
+		try {
+			const {
+				data: { mods: guildMods, threads: guildThreads },
+			} = await api.patch<GuildPayload>(`/guilds/${guild.id}`, body);
 
-		const updatedMods = guildMods.map((mod) => {
-			const originalMod = guild.mods.find((original) => original.id === mod.id);
-			return {
-				...mod,
-				avatar: originalMod?.avatar ?? null,
-				username: originalMod?.username ?? null,
-			};
-		});
+			const updatedMods = guildMods.map((mod) => {
+				const originalMod = guild.mods.find(
+					(original) => original.id === mod.id,
+				);
+				return {
+					...mod,
+					avatar: originalMod?.avatar ?? null,
+					username: originalMod?.username ?? null,
+				};
+			});
 
-		setActualGuild({
-			...actualGuild,
-			threads: guildThreads,
-			//@ts-expect-error Missing keyowrd purposely
-			mods: updatedMods,
-			prefix: prefix === undefined || prefix === "" ? "c" : prefix,
-		});
+			setActualGuild({
+				...actualGuild,
+				threads: guildThreads,
+				//@ts-expect-error Missing keyowrd purposely
+				mods: updatedMods,
+				prefix: prefix === undefined || prefix === "" ? "c" : prefix,
+			});
 
-		setGuild({
-			...guild,
-			//@ts-expect-error Missing keyowrd purposely
-			mods: updatedMods,
-			prefix: prefix === undefined || prefix === "" ? "c" : prefix,
-		});
+			setGuild({
+				...guild,
+				//@ts-expect-error Missing keyowrd purposely
+				mods: updatedMods,
+				prefix: prefix === undefined || prefix === "" ? "c" : prefix,
+			});
 
-		setLoading({ ...loading, check: true });
+			setLoading({ ...loading, check: true });
 
-		setTimeout(() => {
+			setTimeout(() => {
+				setLoading({ ...loading, check: false });
+				setModifications(false);
+			}, 1000);
+		} catch (error) {
 			setLoading({ ...loading, check: false });
-			setModifications(false);
-		}, 1000);
+
+			setErrors(["generic"]);
+		}
 	};
 
 	const resetChanges = () => {
@@ -109,34 +118,40 @@ export default function GuildModifications({
 		<div
 			className={`p-3 bg-neutral-800 transition border-2 border-neutral-700 
             rounded-lg justify-center flex gap-2 items-center px-4 w-full max-w-[1100px] 
-          shadow-neutral-700 shadow-md ${changedTab ? "border-red-500" : ""} tablet:w-[98vw]
-            mobile:flex-col`}
+          shadow-neutral-700 shadow-md ${changedTab ? "border-red-500" : ""} tablet:w-[98vw] flex-col`}
 		>
-			<div className="flex flex-grow gap-2 items-center mobile:text-center">
-				<IoIosWarning className="fill-yellow-300 size-8" />
-				<span>{l.dashboard.guilds.modifications.changes}</span>
-			</div>
-			<div className="flex gap-3 items-center mobile:flex-col-reverse">
-				<button
-					className="transition hover:underline mobile:text-sm"
-					onClick={resetChanges}
-				>
-					<span>{l.dashboard.guilds.modifications.reset}</span>
-				</button>
-				<button
-					disabled={loading.check || loading.loading}
-					className="flex gap-2 items-center bg-green-500 rounded-lg transition 
+			<div className="flex w-full mobile:flex-col gap-2 items-center">
+				<div className="flex flex-grow gap-2 items-center mobile:text-center">
+					<IoIosWarning className="fill-yellow-300 size-8" />
+					<span>{l.dashboard.guilds.modifications.changes}</span>
+				</div>
+				<div className="flex gap-3 items-center mobile:flex-col-reverse">
+					<button
+						className="transition hover:underline mobile:text-sm"
+						onClick={resetChanges}
+					>
+						<span>{l.dashboard.guilds.modifications.reset}</span>
+					</button>
+					<button
+						disabled={loading.check || loading.loading}
+						className="flex gap-2 items-center bg-green-500 rounded-lg transition 
                     hover:bg-green-600 px-4 p-2 disabled:hover:bg-green-500 mobile:text-sm 
                     mobile:w-full text-center mobile:justify-center"
-					onClick={patchChanges}
-				>
-					<span>{l.dashboard.guilds.info.save}</span>
-					{loading.loading && (
-						<AiOutlineLoading3Quarters className="animate-spin" size={18} />
-					)}
-					{loading.check && <FaCheckCircle className="text-white" size={18} />}
-				</button>
+						onClick={patchChanges}
+					>
+						<span>{l.dashboard.guilds.info.save}</span>
+						{loading.loading && (
+							<AiOutlineLoading3Quarters className="animate-spin" size={18} />
+						)}
+						{loading.check && (
+							<FaCheckCircle className="text-white" size={18} />
+						)}
+					</button>
+				</div>
 			</div>
+			{errors.length > 0 ? (
+				<div className="text-red-500">{l.errors.generic}</div>
+			) : null}
 		</div>
 	);
 }

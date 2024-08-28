@@ -6,9 +6,10 @@ interface Props {
 	connection: ConnectedConnectionPayload;
 	open: boolean;
 	onRemove: () => void;
+	loading: boolean;
 }
 
-export default function FloatingMenu({ connection, open, onRemove }: Props) {
+export default function FloatingMenu({ connection, open, onRemove, loading }: Props) {
 	return (
 		<AnimatePresence key={connection.name}>
 			{open ? (
@@ -21,6 +22,7 @@ export default function FloatingMenu({ connection, open, onRemove }: Props) {
 					<div className="bg-neutral-800 p-2 rounded-lg">
 						<div className="flex items-center gap-2">
 							<DeleteConnectedConnection
+								loading={loading}
 								onRemove={onRemove}
 								connection={connection}
 							/>

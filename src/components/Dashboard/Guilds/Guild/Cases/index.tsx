@@ -111,14 +111,14 @@ export default function Cases({ guild }: Props) {
 					<div className="w-full flex flex-col gap-4 h-full">
 						<div className="flex flex-col gap-4 h-full">
 							{!guildCases ? (
-								<div className="flex flex-col items-center justify-center min-h-[300px]">
+								<div className="flex flex-col items-center justify-center min-h-[400px]">
 									<AiOutlineLoading3Quarters
 										className="animate-spin"
 										size={30}
 									/>
 								</div>
 							) : guildCases.length === 0 ? (
-								<div className="flex flex-col items-center justify-center h-full min-h-[300px] px-4">
+								<div className="flex flex-col items-center justify-center h-full min-h-[400px] px-4">
 									<span className="text-xl font-semibold text-center">
 										{l.dashboard.guilds.cases.noCases}
 									</span>
