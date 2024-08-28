@@ -106,13 +106,10 @@ export default function Channels({ channels, guild, setGuild }: Props) {
 									<div
 										className={`transition text-black rounded-lg flex 
                                                     gap-2 p-1 items-center w-full
-                                                    ${
-																											connection.flags.includes(
-																												ConnectedConnectionFlags.Locked,
-																											)
-																												? "bg-red-500"
-																												: "bg-green-500"
-																										}
+                                                    ${connection.flags.includes(ConnectedConnectionFlags.Locked)
+														? "bg-red-500"
+														: "bg-green-500"
+													}
                                                     `}
 									>
 										{connection.flags.includes(
