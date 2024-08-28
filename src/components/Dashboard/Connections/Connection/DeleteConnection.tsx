@@ -10,14 +10,16 @@ import { AnimatePresence } from "framer-motion";
 import { LuTrash } from "react-icons/lu";
 import { motion } from "framer-motion";
 import { useLanguage } from "../../../../hooks/useLanguage";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 interface Props {
 	id: string;
 	open: boolean;
 	handleRemove: () => void;
+	loading: boolean;
 }
 
-export default function DeleteConnection({ id, open, handleRemove }: Props) {
+export default function DeleteConnection({ id, open, handleRemove, loading }: Props) {
 	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 	const l = useLanguage();
 
@@ -82,7 +84,11 @@ export default function DeleteConnection({ id, open, handleRemove }: Props) {
 							className="flex gap-2 font-semibold items-center text-center 
                             bg-red-500 transition hover:bg-red-600 p-2 px-3 rounded-lg"
 						>
-							<LuTrash className="mb-0.5" size={18} />
+							{loading ? (
+								<AiOutlineLoading3Quarters className="animate-spin" size={18} />
+							) : (
+								<LuTrash className="mb-0.5" size={18} />
+							)}
 							<span className="text-center">
 								{l.dashboard.connections.delete.button}
 							</span>

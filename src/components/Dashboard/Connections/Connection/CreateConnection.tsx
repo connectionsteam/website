@@ -47,12 +47,12 @@ export default function CreateConnection({
 
 	const createConnection = async () => {
 		setLoading(true);
-
+	
 		const { name, description, icon, maxConnections } = post;
-
+	
 		const postBody: Partial<typeof post> = {
-			name: name,
-			description: description || "",
+			name: name?.trim() || "",
+			description: description?.trim() || "",
 			icon: icon,
 			maxConnections: maxConnections
 				? Number.parseFloat(maxConnections.toString())
@@ -64,18 +64,22 @@ export default function CreateConnection({
 				delete postBody[key as keyof typeof postBody];
 			}
 		}
-
-		if (!postBody.name) {
+	
+		if (!postBody.name || postBody.name.length < 1 || postBody.name.length > 16) {
 			setErrors([...errors, "name"]);
 			setLoading(false);
 			return;
 		}
-
-		console.log(postBody);
-
+	
+		if (postBody.description && (postBody.description.length < 20 || postBody.description.length > 50)) {
+			setErrors([...errors, "description"]);
+			setLoading(false);
+			return;
+		}
+	
 		try {
 			const { data } = await api.put("/users/@me/connections", postBody);
-
+	
 			setLoading(false);
 			setErrors([]);
 			onClose();
@@ -83,11 +87,7 @@ export default function CreateConnection({
 		} catch (error: any) {
 			setLoading(false);
 
-			if (postBody.description && postBody.description.length < 20) {
-				setErrors([...errors, "description"]);
-			}
-
-			setErrors([...errors, ...(error.response?.data?.extra?.path || [])]);
+			setErrors([...errors, ...(error.response.data.extra.path || "")]);
 		}
 	};
 

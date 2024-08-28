@@ -61,6 +61,8 @@ export default function EditDashboardConnection({
 						editedConnection.description ||
 						l.dashboard.connections.edit.condescriptionPlaceholder
 					}
+					maxChars={50}
+					minChars={20}
 					value={editedConnection.description}
 					onChange={(e) => handleChangeKey("description", e.target.value)}
 				/>

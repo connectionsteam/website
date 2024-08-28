@@ -30,6 +30,7 @@ export default function ConnectionsComponent({
 	const [searchQuery, setSearchQuery] = useState("");
 	const l = useLanguage();
 	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+	const [loading, setLoading] = useState(false);
 	const [connectionProps, setConnectionProps] = useState<ConnectionState>({
 		connection: null!,
 		hover: null,
@@ -43,7 +44,11 @@ export default function ConnectionsComponent({
 	const handleDeleteConnection = async () => {
 		setConnectionProps({ ...connectionProps, removing: connectionProps.hover });
 
+		setLoading(true);
+
 		await api.delete(`/connections/${connectionProps.hover}`);
+
+		setLoading(false);
 
 		setTimeout(() => {
 			setConnections(
@@ -101,6 +106,7 @@ export default function ConnectionsComponent({
 								)
 								.map((connection, index) => (
 									<ConnectionCard
+										loading={loading}
 										handleDeleteConnection={handleDeleteConnection}
 										key={index}
 										connection={connection}

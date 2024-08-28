@@ -18,6 +18,7 @@ import type { ConnectionPayload, RequestPost } from "../../../../types";
 import { LanguageContext } from "../../../../contexts/Language";
 import { languages } from "../../../../locale";
 import DefaultInput from "../../../../components/Mixed/Input";
+import { useLanguage } from "../../../../hooks/useLanguage";
 
 interface Props {
 	connections: ConnectionPayload[];
@@ -35,6 +36,7 @@ export default function CreateConnectionForm({
 	onClose,
 }: Props) {
 	const { language } = useContext(LanguageContext);
+	const l = useLanguage();
 	const [post, setPost] = useState<RequestPost>({
 		name: null!,
 	});
@@ -48,6 +50,8 @@ export default function CreateConnectionForm({
 			...post,
 			[key]: event.target.value,
 		});
+
+		setErrors([]);
 	};
 
 	return (
@@ -68,7 +72,7 @@ export default function CreateConnectionForm({
 					<ModalBody>
 						<DefaultInput
 							obrigatory
-							maxChars={16}
+							maxChars={15}
 							minChars={1}
 							error={errors.includes("name")}
 							value={post.name}
@@ -116,6 +120,22 @@ export default function CreateConnectionForm({
 							placeholder="5"
 							onChange={(e) => setPostValues(e, "maxConnections")}
 						/>
+						{errors.length > 0 ? (
+							<div>
+								{errors.includes("name") ? (
+									<div className="text-red-500">{l.errors.wrongConName}</div>
+								) : null}
+								{errors.includes("description") ? (
+									<div className="text-red-500">{l.errors.wrongDesc}</div>
+								) : null}
+								{errors.includes("icon") ? (
+									<div className="text-red-500">{l.errors.wrongIcon}</div>
+								) : null}
+								{errors.includes("maxConnections") ? (
+									<div className="text-red-500">{l.errors.maxConnections}</div>
+								) : null}
+							</div>
+						) : null}
 					</ModalBody>
 					<ModalFooter className="w-full">
 						<CreateConnection

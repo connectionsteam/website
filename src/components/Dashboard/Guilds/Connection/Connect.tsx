@@ -46,7 +46,7 @@ export default function GuildConnectConnection({
 			key: "",
 		},
 	});
-	const [errors, setErrors] = useState<{ [key: string]: string }>({});
+	const [errors, setErrors] = useState<string[]>([]);
 	const [loading, setLoading] = useState(false);
 	const [sonner, setSonner] = useState(false);
 	const {
@@ -92,11 +92,32 @@ export default function GuildConnectConnection({
 				delete reqBody.language;
 			}
 
+			if (reqBody.name.length < 1 || reqBody.name.length > 16) {
+				setErrors([...errors, "name"]);
+
+				return setLoading(false);
+			}
+
+			if (reqBody.channelId === "") {
+				setErrors([...errors, "channel"]);
+
+				return setLoading(false);
+			}
+
+			const privateReqBody = {
+				language: reqBody.language,
+				channelId: reqBody.channelId,
+			};
+
+			if (privateReqBody.language === "") {
+				delete privateReqBody.language;
+			}
+
 			const { data } = await api.put(
 				body.hashInvite
-					? ` /guilds/${guild.id}/connections/${body.name}/invites/${body.hashInvite}`
+					? `/guilds/${guild.id}/connections/${body.name}/invites/${body.hashInvite}`
 					: `/guilds/${guild.id}/connections`,
-				reqBody,
+				body.hashInvite ? privateReqBody : reqBody,
 			);
 
 			setLoading(false);
@@ -111,28 +132,13 @@ export default function GuildConnectConnection({
 				],
 			});
 		} catch (error: any) {
-			const errors = {
-				404: "Unknown connection",
-				409: "Already joined this connection",
-			};
-
-			if (error.response.status in errors) {
-				setErrors({
-					...errors,
-					api: errors[error.response.status as keyof typeof errors],
-				});
-				return setLoading(false);
-			}
-
-			const json =
-				error.response.data.errors[0].map((err: any) => err.message) ||
-				error.message;
-
 			setLoading(false);
-			setErrors({
-				...errors,
-				api: json.join(", "),
-			});
+
+			const { code } = error.response.data;
+
+			if (code === 2001) return setErrors(["unknown"]);
+
+			return setErrors(["generic"]);
 		}
 	};
 
@@ -175,7 +181,11 @@ export default function GuildConnectConnection({
 			<DefaultInput
 				value={body.name}
 				obrigatory
-				onChange={(event) => setBody({ ...body, name: event.target.value })}
+				error={errors.includes("name")}
+				onChange={(event) => {
+					setBody({ ...body, name: event.target.value });
+					setErrors([]);
+				}}
 				label={l.dashboard.guilds.connections.connectionName}
 				type="text"
 				placeholder={l.dashboard.guilds.connections.connectionPlaceholder}
@@ -208,7 +218,22 @@ export default function GuildConnectConnection({
 				channels={channels}
 				connections={guild.connections}
 			/>
-			{errors.api && <div className="text-red-500">{errors.api}</div>}
+			{errors.length > 0 ? (
+				<div>
+					{errors.includes("name") ? (
+						<div className="text-red-500">{l.errors.wrongConName}</div>
+					) : null}
+					{errors.includes("unknown") ? (
+						<div className="text-red-500">{l.errors.unknownConnection}</div>
+					) : null}
+					{errors.includes("channel") ? (
+						<div className="text-red-500">{l.errors.needChannel}</div>
+					) : null}
+					{errors.includes("generic") ? (
+						<div className="text-red-500">{l.errors.generic}</div>
+					) : null}
+				</div>
+			) : null}
 			<div className="p-[2px] bg-gradient-to-r from-fuchsia-500 to-indigo-500 rounded-lg w-full">
 				<button
 					disabled={loading}

@@ -12,6 +12,7 @@ interface Props {
 	setConnectionProps: Dispatch<SetStateAction<ConnectionState>>;
 	index: number;
 	handleDeleteConnection: () => void;
+	loading: boolean;
 }
 
 export default function ConnectionCard({
@@ -20,6 +21,7 @@ export default function ConnectionCard({
 	setConnectionProps,
 	index,
 	handleDeleteConnection,
+	loading
 }: Props) {
 	return (
 		<AnimatePresence key={index}>
@@ -38,6 +40,7 @@ export default function ConnectionCard({
 					className="w-full relative"
 				>
 					<DeleteConnection
+						loading={loading}
 						handleRemove={handleDeleteConnection}
 						open={connectionProps.hover === connection.name}
 						id={connection.name}

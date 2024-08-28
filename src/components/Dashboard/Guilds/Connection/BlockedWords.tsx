@@ -61,7 +61,9 @@ export default function BlockedWords({
 			setTimeout(() => {
 				setLoading({ ...loading, check: false });
 			}, 2000);
-		} catch {}
+		} catch {
+			setLoading({ loading: false, check: false });
+		}
 	};
 
 	const addNewWord = (event: ChangeEvent<HTMLInputElement>) => {

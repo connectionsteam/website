@@ -10,17 +10,24 @@ import { LuTrash } from "react-icons/lu";
 import { useRouter } from "next/router";
 import { useLanguage } from "../../../../hooks/useLanguage";
 import { api } from "../../../../utils/api";
+import { useState } from "react";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export default function DeleteConnectionPage({ id }: { id: string }) {
 	const l = useLanguage();
 	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+	const [loading, setLoading] = useState(false);
 	const { push } = useRouter();
 
 	const handleDeleteConnection = async () => {
+		setLoading(true);
+
 		await api.delete(`/connections/${id}`);
 
+		setLoading(false);
+
 		onClose();
-		push("/dashboard");
+		push("/dashboard"); 
 	};
 
 	return (
@@ -76,7 +83,11 @@ export default function DeleteConnectionPage({ id }: { id: string }) {
 							className="flex gap-2 font-semibold items-center text-center 
                             bg-red-500 transition hover:bg-red-600 p-2 px-3 rounded-lg"
 						>
-							<LuTrash className="mb-0.5" size={18} />
+							{loading ? (
+								<AiOutlineLoading3Quarters className="animate-spin" size={18} />
+							) : (
+								<LuTrash className="mb-0.5" size={18} />
+							)}
 							<span className="text-center">
 								{l.dashboard.connections.delete.button}
 							</span>

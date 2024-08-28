@@ -14,6 +14,7 @@ import { BiLeftArrowAlt } from "react-icons/bi";
 import { useLanguage } from "../../../../hooks/useLanguage";
 import Link from "next/link";
 import Head from "next/head";
+import capitalize from "../../../../utils/capitalize";
 
 interface Props {
 	guildId: string;
@@ -91,7 +92,7 @@ export default function GuildEditConnection({
 									</div>
 									<span className="text-neutral-300">
 										{connection.flags.length > 0
-											? connection.flags.join(", ")
+											? connection.flags.map((flag) => capitalize(flag)).join(", ")
 											: l.dashboard.guilds.connections.infos.none}
 									</span>
 								</div>

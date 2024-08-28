@@ -26,7 +26,7 @@ export default function ActivePromoted({
 }: Props) {
 	const [code, setCode] = useState("");
 	const [loading, setLoading] = useState(false);
-	const [errors, setErrors] = useState<{ [key: string]: string }>({});
+	const [errors, setErrors] = useState<string[]>([]);
 	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 	const l = useLanguage();
 
@@ -63,10 +63,19 @@ export default function ActivePromoted({
 		} catch (error: any) {
 			setLoading(false);
 
-			setErrors({
-				...errors,
-				api: error.response.data.message,
-			});
+			const { code } = error.response.data;
+
+			if (code === 6002) {
+				return setErrors([
+					...errors.filter((error) => error !== l.errors.invalidCode),
+					l.errors.invalidCode,
+				]);
+			}
+
+			return setErrors([
+				...errors.filter((error) => error !== l.errors.generic),
+				l.errors.generic,
+			]);
 		}
 	};
 
@@ -82,7 +91,7 @@ export default function ActivePromoted({
 					type="text"
 					placeholder={l.plans.popUp.placeholder}
 				/>
-				{errors.api && <div className="text-red-500">{errors.api}</div>}
+				{errors.length > 0 && <div className="text-red-500">{errors.join(", ")}</div>}
 				<DefaultPremiumButton
 					pink
 					onClick={handleSubmit}
