@@ -5,7 +5,9 @@ import {
 	DiscordMember,
 	type GuildPayload,
 	type GuildThreadsPayload,
+	LogsFlag,
 	ModPermType,
+	ModType,
 } from "../../../../types";
 import { IoIosWarning } from "react-icons/io";
 import { useState } from "react";
@@ -20,6 +22,24 @@ interface Props {
 	changedTab: boolean;
 	setActualGuild: (guild: GuildPayload) => void;
 	setThreads: (threads: GuildThreadsPayload[]) => void;
+}
+
+interface PatchChangesBody {
+	mods: {
+		id: string;
+		type: ModPermType;
+	}[];
+	deleteThreadsId:
+		| {
+				id: string;
+				parentId: string;
+		  }[]
+		| undefined;
+	prefix: string | undefined;
+	logs?: {
+		channelId: string;
+		flags: LogsFlag[];
+	};
 }
 
 export default function GuildModifications({
@@ -48,10 +68,14 @@ export default function GuildModifications({
 
 		setLoading({ loading: true, check: false });
 
-		const body = {
+		let body: PatchChangesBody = {
 			mods: mappedMods,
 			deleteThreadsId,
 			prefix: prefix ?? undefined,
+			logs: {
+				flags: guild.logs.flags.map((flag) => Number(flag)),
+				channelId: guild.logs.channelId as string,
+			},
 		};
 
 		for (const i in body) {
@@ -79,6 +103,10 @@ export default function GuildModifications({
 			setActualGuild({
 				...actualGuild,
 				threads: guildThreads,
+				logs: {
+					flags: guild.logs.flags,
+					channelId: guild.logs.channelId,
+				},
 				//@ts-expect-error Missing keyowrd purposely
 				mods: updatedMods,
 				prefix: prefix === undefined || prefix === "" ? "c" : prefix,
@@ -86,6 +114,10 @@ export default function GuildModifications({
 
 			setGuild({
 				...guild,
+				logs: {
+					flags: guild.logs.flags,
+					channelId: guild.logs.channelId,
+				},
 				//@ts-expect-error Missing keyowrd purposely
 				mods: updatedMods,
 				prefix: prefix === undefined || prefix === "" ? "c" : prefix,
@@ -96,7 +128,7 @@ export default function GuildModifications({
 			setTimeout(() => {
 				setLoading({ ...loading, check: false });
 				setModifications(false);
-			}, 1000);
+			}, 500);
 		} catch (error) {
 			setLoading({ ...loading, check: false });
 
@@ -107,6 +139,10 @@ export default function GuildModifications({
 	const resetChanges = () => {
 		setGuild({
 			...guild,
+			logs: {
+				flags: actualGuild.logs.flags,
+				channelId: actualGuild.logs.channelId,
+			},
 			prefix: actualGuild.prefix,
 			mods: actualGuild.mods,
 		});
