@@ -47,6 +47,26 @@ export interface GuildPayload {
 		id: string;
 		parentId: string;
 	}[];
+	logs: GuildLogsPayload;
+}
+
+interface GuildLogsPayload {
+    channelId?: string;
+    flags: LogsFlag[];
+}
+
+export enum LogsFlag {
+    LogBans,
+    LogTimeouts,
+    LogNotes,
+    LogMessageDelete,
+    LogMessageUpdate,
+    LogMessages,
+    LogPurges,
+    LogLocks,
+    LogConnections,
+    LogAny,
+    LogReports,
 }
 
 export type AnyCase = TimeoutCase | BanCase;
