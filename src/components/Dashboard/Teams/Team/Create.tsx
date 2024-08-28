@@ -6,8 +6,8 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 interface Props {
 	post: RequestPost;
-	setErrors: Dispatch<SetStateAction<{ [key: string]: string }>>;
-	errors: { [key: string]: string };
+	setErrors: (error: string[]) => void;
+	errors: string[];
 	onClose: () => void;
 	setTeams: Dispatch<SetStateAction<TeamPayload[]>>;
 	teams: TeamPayload[];
@@ -51,10 +51,13 @@ export default function CreateTeam({
 		if (name.trim() === "") {
 			setLoading(false);
 
-			return setErrors({
-				...errors,
-				name: "name",
-			});
+			return setErrors([...errors, "name"]);
+		}
+
+		if (icon?.trim() === "") {
+			setLoading(false);
+
+			return setErrors([...errors, "avatar"]);
 		}
 
 		for (const i in postBody) {
@@ -76,12 +79,13 @@ export default function CreateTeam({
 				},
 			]);
 		} catch (error: any) {
-			setErrors({
-				...errors,
-				avatar: "avatar",
-			});
-
 			setLoading(false);
+
+			const { path } = error.response.data.extra;
+
+			if (path.includes("name")) return setErrors([...errors, "name"]);
+
+			if (path.includes("iconURL")) return setErrors([...errors, "avatar"]);
 		}
 	};
 

@@ -11,6 +11,7 @@ interface Props {
 	setTeamProps: (teamProps: TeamState) => void;
 	teamProps: TeamState;
 	handleDeleteTeam: () => void;
+	loading: boolean;
 }
 
 export default function TeamCard({
@@ -19,6 +20,7 @@ export default function TeamCard({
 	setTeamProps,
 	teamProps,
 	handleDeleteTeam,
+	loading
 }: Props) {
 	return (
 		<motion.div
@@ -32,6 +34,7 @@ export default function TeamCard({
 			className="w-full relative"
 		>
 			<DeleteTeam
+				loading={loading}
 				id={team.name}
 				open={teamProps.hover === team.id}
 				handleRemove={handleDeleteTeam}

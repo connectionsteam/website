@@ -30,6 +30,7 @@ export default function TeamConnections({
 	const { user: loggedUser } = useContext(UserContext);
 	const { onOpen, onClose, isOpen, onOpenChange } = useDisclosure();
 	const [query, setQuery] = useState("");
+	const [loading, setLoading] = useState(false);
 	const [connectionProps, setConnectionProps] = useState<ConnectionState>({
 		connection: null!,
 		hover: null,
@@ -39,7 +40,11 @@ export default function TeamConnections({
 	const handleDeleteConnection = async () => {
 		setConnectionProps({ ...connectionProps, removing: connectionProps.hover });
 
+		setLoading(true);
+
 		await api.delete(`/teams/${teamID}/connections/${connectionProps.hover}`);
+
+		setLoading(true);
 
 		setTeam({
 			...team,
@@ -110,6 +115,7 @@ export default function TeamConnections({
 									className="w-full relative"
 								>
 									<DeleteTeamConnection
+										loading={loading}
 										handleRemove={handleDeleteConnection}
 										open={connectionProps.hover === connection.name}
 										id={connection.name}

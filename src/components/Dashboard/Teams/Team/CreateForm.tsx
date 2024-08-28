@@ -30,7 +30,7 @@ export default function CreateTeamForm({
 	const [post, setPost] = useState<RequestPost>({
 		name: "",
 	});
-	const [errors, setErrors] = useState<{ [key: string]: string }>({});
+	const [errors, setErrors] = useState<string[]>([]);
 
 	const setPostValues = (
 		event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -40,10 +40,7 @@ export default function CreateTeamForm({
 			...post,
 			[key]: event.target.value,
 		});
-		setErrors({
-			...errors,
-			[key]: "",
-		});
+		setErrors([]);
 	};
 
 	return (
@@ -69,18 +66,23 @@ export default function CreateTeamForm({
 							value={post.name}
 							label={l.dashboard.teams.team.form.name}
 							type="text"
-							error={errors.name === "name"}
+							error={errors.includes("name")}
 							placeholder={l.dashboard.teams.team.form.placeholder}
 							onChange={(e) => setPostValues(e, "name")}
 						/>
 						<DefaultInput
 							label={l.dashboard.teams.team.form.icon}
 							type="text"
-							error={errors.avatar === "avatar"}
+							error={errors.includes("avatar")}
 							placeholder="https://i.imgur.com/EXQVxqQ.png"
 							onChange={(e) => setPostValues(e, "icon")}
 						/>
-						{errors.api && <div className="text-red-500">{errors.api}</div>}
+						{errors.includes("name") ? (
+							<div className="text-red-500">{l.errors.wrongTeamName}</div>
+						) : null}
+						{errors.includes("avatar") ? (
+							<div className="text-red-500">{l.errors.wrongIcon}</div>
+						) : null}
 					</ModalBody>
 					<ModalFooter className="w-full">
 						<CreateTeam

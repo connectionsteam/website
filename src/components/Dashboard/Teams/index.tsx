@@ -29,6 +29,7 @@ export default function TeamsComponent() {
 	const [teams, setTeams] = useState<TeamPayload[] | null>(null);
 	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 	const l = useLanguage();
+	const [loading, setLoading] = useState(false);
 	const [teamProps, setteamProps] = useState<TeamState>({
 		team: null,
 		hover: null,
@@ -38,7 +39,11 @@ export default function TeamsComponent() {
 	const handleDeleteTeam = async () => {
 		setteamProps({ ...teamProps, removing: teamProps.hover });
 
+		setLoading(true);
+
 		await api.delete(`/teams/${teamProps.hover}`);
+
+		setLoading(false);
 
 		setTeams(teams!.filter((team) => team.id !== teamProps.hover));
 
@@ -118,6 +123,7 @@ export default function TeamsComponent() {
 										.filter(filter)
 										.map((team, index) => (
 											<TeamCard
+												loading={loading}
 												handleDeleteTeam={handleDeleteTeam}
 												setTeamProps={setteamProps}
 												teamProps={teamProps}
