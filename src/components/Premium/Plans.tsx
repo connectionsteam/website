@@ -7,12 +7,15 @@ import DefaultButton from "../Mixed/Button";
 import { BackgroundGradient } from "../ui/Gradient";
 import { LuArrowLeft } from "react-icons/lu";
 import { useLanguage } from "../../hooks/useLanguage";
+import { Modal, useDisclosure } from "@nextui-org/modal";
+import PopUpBuy from "./Buy";
 
 export default function Plans({
 	plans,
 	setMorePlans,
 }: { plans: PlanStructure[]; setMorePlans: (value: boolean) => void }) {
 	const l = useLanguage();
+	const { isOpen, onOpenChange, onClose, onOpen } = useDisclosure();
 
 	return (
 		<>
@@ -74,10 +77,7 @@ export default function Plans({
 								))}
 							</div>
 							<DefaultButton
-								onClick={() =>
-									(window.location.href =
-										"https://www.youtube.com/watch?v=xvFZjo5PgG0")
-								}
+								onClick={onOpen}
 								className="p-3"
 							>
 								<div className="font-bold">{l.plans.buy}</div>
@@ -100,6 +100,18 @@ export default function Plans({
 					);
 				})}
 			</div>
+			<Modal
+				classNames={{
+					closeButton: "transition hover:bg-neutral-700",
+					wrapper: "overflow-y-hidden",
+					base: "max-h-screen overflow-y-auto",
+				}}
+				isOpen={isOpen}
+				onOpenChange={onOpenChange}
+				size="4xl"
+			>
+				<PopUpBuy onClose={onClose} />
+			</Modal>
 		</>
 	);
 }
