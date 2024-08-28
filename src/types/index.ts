@@ -56,6 +56,7 @@ interface GuildLogsPayload {
 }
 
 export enum LogsFlag {
+	LogAny,
     LogBans,
     LogTimeouts,
     LogNotes,
@@ -65,7 +66,6 @@ export enum LogsFlag {
     LogPurges,
     LogLocks,
     LogConnections,
-    LogAny,
     LogReports,
 }
 
