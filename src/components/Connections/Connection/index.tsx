@@ -1,5 +1,5 @@
 import { forwardRef, useContext } from "react";
-import type { ConnectionsPageStructure } from "../../../types";
+import type { ConnectionsPageStructure, GuildPayload } from "../../../types";
 import { motion } from "framer-motion";
 import { MdOutlineKeyboardArrowUp } from "react-icons/md";
 import Avatar from "../../../components/Mixed/Avatar";
@@ -14,10 +14,11 @@ interface Props {
 	index: number;
 	layout: string;
 	connections: ConnectionsPageStructure[];
+	guilds: GuildPayload[];
 }
 
 const ConnectionsPageCard = forwardRef<HTMLDivElement, Props>(
-	({ connection, index, layout, connections = [] }, ref) => {
+	({ connection, index, layout, connections = [], guilds }, ref) => {
 		const l = useLanguage();
 		const { user } = useContext(UserContext);
 
@@ -113,7 +114,7 @@ const ConnectionsPageCard = forwardRef<HTMLDivElement, Props>(
 								<span className="pr-2">{l.connection.vote}</span>
 							</DefaultButton>
 						</Link>
-						<ConnectConnection connection={connection} small={true} />
+						<ConnectConnection guilds={guilds} connection={connection} small={true} />
 					</div>
 				</div>
 			</motion.div>

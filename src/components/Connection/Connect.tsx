@@ -27,12 +27,17 @@ import Avatar from "../Mixed/Avatar";
 interface Props {
 	connection: ConnectionsPageStructure;
 	small: boolean;
+	guilds: GuildPayload[];
 }
 
-export default function ConnectConnection({ connection, small }: Props) {
+export default function ConnectConnection({
+	connection,
+	small,
+	guilds,
+}: Props) {
 	const l = useLanguage();
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
-	const [guilds, setGuilds] = useState<GuildPayload[]>();
+	const [guild, setGuild] = useState<GuildPayload>();
 	const [body, setBody] = useState<ConnectionBody>({
 		channel: {
 			id: "",
@@ -47,19 +52,6 @@ export default function ConnectConnection({ connection, small }: Props) {
 			key: "",
 		},
 	});
-	const [guild, setGuild] = useState<GuildPayload>();
-
-	useEffect(() => {
-		if (!isOpen) return;
-
-		const fetchGuilds = async () => {
-			const { data } = await api.get(`/users/@me/guilds`);
-
-			setGuilds(data);
-		};
-
-		fetchGuilds();
-	}, [isOpen]);
 
 	return (
 		<>
@@ -84,10 +76,10 @@ export default function ConnectConnection({ connection, small }: Props) {
 				onOpenChange={onOpenChange}
 			>
 				<ModalContent className="bg-neutral-800 text-white">
-					<ModalHeader className="flex flex-col gap-1 bg-neutral-800">
+					<ModalHeader className="flex flex-col gap-1 bg-neutral-800 pb-1">
 						{l.connection.connect} {connection.name}
 					</ModalHeader>
-					<ModalBody>
+					<ModalBody className="mb-2">
 						<div className="flex w-full flex-col gap-4">
 							<div className="flex flex-col gap-1 w-full">
 								<span className="text-neutral-300 flex gap-1">
@@ -117,8 +109,7 @@ export default function ConnectConnection({ connection, small }: Props) {
 											{guilds
 												.filter(
 													(guild) =>
-														guild.connections?.length < 5 &&
-														guild.connections.find(
+														!guild.connections.some(
 															(c) => c.name === connection.name,
 														),
 												)

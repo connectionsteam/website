@@ -1,4 +1,8 @@
-import type { ConnectionsPageStructure, VotesPropsStructure } from "../../types";
+import type {
+	ConnectionsPageStructure,
+	GuildPayload,
+	VotesPropsStructure,
+} from "../../types";
 import { api } from "../../utils/api";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
@@ -14,6 +18,7 @@ import Link from "next/link";
 import { UserContext } from "../../contexts/User";
 import ConnectionPageSkeleton from "./Skeleton";
 import Head from "next/head";
+import ConnectionSkeleton from "../Connections/Connection/Skeleton";
 
 export default function ConnectionPageComponent() {
 	const router = useRouter();
@@ -24,6 +29,7 @@ export default function ConnectionPageComponent() {
 	const [connection, setConnection] = useState<ConnectionsPageStructure>();
 	const [recommendedConnections, setRecommendedConnections] =
 		useState<ConnectionsPageStructure[]>();
+	const [guilds, setGuilds] = useState<GuildPayload[]>();
 	const [voteProps, setVoteProps] = useState<VotesPropsStructure>({
 		loading: false,
 		voted: false,
@@ -38,16 +44,27 @@ export default function ConnectionPageComponent() {
 		if (!connection && !id) return;
 
 		const fetchConnection = async () => {
-			const connectionRes = await api.get(`/connections/${id}?with_votes=true`);
-			const recomendedConnectionsRes = await api.get(
-				`/connections/${id}/recommended`,
-			);
+			const { data } = await api.get(`/connections/${id}?with_votes=true`);
 
-			setRecommendedConnections(recomendedConnectionsRes.data);
-			setConnection(connectionRes.data);
+			setConnection(data);
+		};
+
+		const fetchRecommendedConnections = async () => {
+			const { data } = await api.get(`/connections/${id}/recommended`);
+
+			setRecommendedConnections(data);
+		};
+
+		const fetchGuilds = async () => {
+			const { data } = await api.get(`/users/@me/guilds`);
+
+			setGuilds(data);
 		};
 
 		fetchConnection();
+		fetchRecommendedConnections();
+		// eu sei que isso não é nada bom
+		fetchGuilds();
 	}, [id]);
 
 	useEffect(() => {
@@ -70,7 +87,7 @@ export default function ConnectionPageComponent() {
 		});
 	}, [connection]);
 
-	return connection && recommendedConnections ? (
+	return connection ? (
 		<>
 			<Head>
 				<title>{connection.name || "Connection"}</title>
@@ -104,7 +121,7 @@ export default function ConnectionPageComponent() {
 								voteProps={voteProps}
 								setVoteProps={setVoteProps}
 							/>
-							<ConnectConnection small={false} connection={connection} />
+							<ConnectConnection guilds={guilds ? guilds : []} small={false} connection={connection} />
 						</div>
 					</div>
 					<div className="flex gap-2 items-center">
@@ -138,20 +155,25 @@ export default function ConnectionPageComponent() {
 				<div className="flex flex-col gap-4 w-full">
 					<span className="font-bold text-2xl">{l.connection.recommended}</span>
 					<div className="grid grid-cols-2 gap-4 w-full tablet:grid-cols-1">
-						{recommendedConnections.map((connection, index) => (
-							<Link
-								className="w-full h-full flex"
-								href={`/connection/${connection.name}`}
-								key={index}
-							>
-								<ConnectionsPageCard
-									layout=""
-									connections={[]}
-									connection={connection}
-									index={index}
-								/>
-							</Link>
-						))}
+						{recommendedConnections
+							? recommendedConnections.map((connection, index) => (
+									<Link
+										className="w-full h-full flex"
+										href={`/connection/${connection.name}`}
+										key={index}
+									>
+										<ConnectionsPageCard
+											guilds={guilds ? guilds : []}
+											layout=""
+											connections={[]}
+											connection={connection}
+											index={index}
+										/>
+									</Link>
+								))
+							: Array(2)
+									.fill(0)
+									.map((_, index) => <ConnectionSkeleton key={index} />)}
 					</div>
 				</div>
 			</DefaultLayout>

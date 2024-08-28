@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import DefaultLayout from "../Mixed/Layout";
-import type { ConnectionsPageStructure } from "../../types";
+import type { ConnectionsPageStructure, GuildPayload } from "../../types";
 import { api } from "../../utils/api";
 import { useLanguage } from "../../hooks/useLanguage";
 import { LuGrid, LuList } from "react-icons/lu";
@@ -26,6 +26,7 @@ export default function ConnectionsPageComponent() {
 		[],
 	);
 	const [page, setPage] = useState(0);
+	const [guilds, setGuilds] = useState<GuildPayload[]>();
 	const [loading, setLoading] = useState(false);
 	const [hasMore, setHasMore] = useState(true);
 	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
@@ -122,6 +123,16 @@ export default function ConnectionsPageComponent() {
 		};
 	}, [loading, connections, hasMore]);
 
+	useEffect(() => {
+		const fetchGuilds = async () => {
+			const { data } = await api.get(`/users/@me/guilds`);
+
+			setGuilds(data);
+		};
+
+		fetchGuilds();
+	}, []);
+
 	return (
 		<DefaultLayout>
 			<div className="flex flex-col w-full gap-3">
@@ -215,6 +226,7 @@ export default function ConnectionsPageComponent() {
 						>
 							{connections.map((connection, index) => (
 								<ConnectionsPageCard
+									guilds={guilds ? guilds : []}
 									connections={connections}
 									layout={options.layout}
 									key={index}

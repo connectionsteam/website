@@ -59,7 +59,7 @@ export default function JoinPrivateConnectionModal({
 				<ModalHeader className="flex flex-col gap-1 bg-neutral-800 pb-1">
 					{l.connection.joinPrivateConnection} {name}
 				</ModalHeader>
-				<ModalBody className="mb-2">
+				<ModalBody>
 					<div className="flex w-full flex-col gap-4">
 						<div className="flex flex-col gap-1 w-full">
 							<span className="text-neutral-300 flex gap-1">

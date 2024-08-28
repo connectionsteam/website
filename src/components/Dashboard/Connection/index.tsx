@@ -172,7 +172,7 @@ export default function ConnectionPageComponent() {
 							<div className="flex gap-3 items-center flex-grow">
 								{connection.icon && (
 									<div className="h-20 w-20">
-										<Avatar className="w-20 h-20" src={connection.icon} />
+										<Avatar className="w-20 h-20" src={editedConnection.icon || ""} />
 									</div>
 								)}
 								<div className="flex flex-col gap-1">

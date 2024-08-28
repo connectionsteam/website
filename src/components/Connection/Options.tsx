@@ -10,6 +10,9 @@ import { api } from "../../utils/api";
 import { useRouter } from "next/router";
 import { useLanguage } from "../../hooks/useLanguage";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import usePremium from "../../hooks/usePremium";
+import PremiumPopUp from "../Premium/PopUp";
+import { useDisclosure } from "@nextui-org/modal";
 
 interface Props {
 	setBody: Dispatch<SetStateAction<ConnectionBody>>;
@@ -23,61 +26,56 @@ export default function ConnectionsPageChannels({
 	guild,
 }: Props) {
 	const [channels, setChannels] = useState<GuildChannelsPayload[]>([]);
-	const [errors, setErrors] = useState<{ [key: string]: string }>({});
+	const { premium } = usePremium(guild);
+	const [errors, setErrors] = useState<string[]>([]);
+	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 	const [loading, setLoading] = useState(false);
 	const router = useRouter();
 	const l = useLanguage();
 
 	useEffect(() => {
 		const fetchChannels = async () => {
-			const channelsRes = await api.get(`/guilds/${guild.id}/channels`);
+			const { data } = await api.get(`/guilds/${guild.id}/channels`);
 
-			setChannels(channelsRes.data);
+			setChannels(data);
 		};
 
 		fetchChannels();
 	}, [guild.id]);
 
 	const joinConnection = async () => {
+		if (!premium) return;
+
 		setLoading(true);
 
-		try {
-			const reqBody = {
-				channelId: body.channel.id,
-				name: body.name,
-				language: body.language?.key,
-			};
+		const reqBody = {
+			channelId: body.channel.id,
+			name: body.name,
+			language: body.language?.key,
+		};
 
-			if (body.language?.key === "" && body.language?.language === "") {
-				delete reqBody.language;
-			}
-
-			await api.put(`/guilds/${guild!.id}/connections`, reqBody);
-
-			setLoading(false);
-
-			router.push(`/guild/${guild!.id}/connection/${body.name}`);
-		} catch (error: any) {
-			const errors = {
-				404: "Unknown connection",
-				409: "This server already joinned this connection",
-			};
-
-			if (error.response.status in errors) {
-				setErrors({
-					...errors,
-					api: errors[error.response.status as keyof typeof errors],
-				});
-
-				return setLoading(false);
-			}
-
-			setLoading(false);
-			setErrors({
-				...errors,
-				api: "Invalid Channel",
-			});
+		if (premium.maxConnections <= guild.connections.length) {
+			return onOpen();
 		}
+
+		if (body.language?.key === "" && body.language?.language === "") {
+			delete reqBody.language;
+		}
+
+		if (body.channel.id === "") {
+			setLoading(false);
+			
+			return setErrors([
+				...errors.filter((error) => error !== l.errors.chooseAnChannel),
+				l.errors.chooseAnChannel
+			])
+		}
+
+		await api.put(`/guilds/${guild!.id}/connections`, reqBody);
+
+		setLoading(false);
+
+		router.push(`/guild/${guild!.id}/connection/${body.name}`);
 	};
 
 	return (
@@ -89,7 +87,9 @@ export default function ConnectionsPageChannels({
 				body={body}
 				connections={guild.connections}
 			/>
-			{errors.api && <div className="text-red-500">{errors.api}</div>}
+			{errors.length > 0 ? (
+				<div className="text-red-500">{errors.join(", ")}</div>
+			) : null}
 			<div className="p-[2px] bg-gradient-to-r from-fuchsia-500 to-indigo-500 rounded-lg w-full">
 				<button
 					disabled={loading}
@@ -111,6 +111,16 @@ export default function ConnectionsPageChannels({
 						</span>
 					)}
 				</button>
+				{premium ? (
+					<PremiumPopUp
+						isOpen={isOpen}
+						onChange={onOpenChange}
+						onClose={onClose}
+						limitText={l.limits.connections}
+						limit={premium.maxConnections <= guild.connections.length}
+						text={l.limits.connectionsText}
+					/>
+				) : null}
 			</div>
 		</>
 	);

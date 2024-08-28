@@ -25,6 +25,7 @@ export default function ConnectionModifications({
 }: Props) {
 	const l = useLanguage();
 	const [loading, setLoading] = useState({ loading: false, check: false });
+	const [errors, setErrors] = useState<string[]>([]);
 
 	const patchChanges = async () => {
 		setLoading({ loading: true, check: false });
@@ -54,17 +55,40 @@ export default function ConnectionModifications({
 			}
 		}
 
-		const { data } = await api.patch(`/connections/${connection.name}`, body);
+		try {
+			const { data } = await api.patch(`/connections/${connection.name}`, body);
 
-		setEditedConnection(data);
-		setConnection(data);
+			setEditedConnection(data);
+			setConnection(data);
 
-		setLoading({ loading: false, check: true });
+			setLoading({ loading: false, check: true });
 
-		setTimeout(() => {
-			setLoading({ ...loading, check: false });
-			setModifications(false);
-		}, 1000);
+			setTimeout(() => {
+				setLoading({ ...loading, check: false });
+				setModifications(false);
+			}, 1000);
+		} catch (error: any) {
+			setLoading({ loading: false, check: false });
+
+			const { path } = error.response.data.extra;
+
+			if (path.includes("icon"))
+				return setErrors([
+					...errors.filter((error) => error !== l.errors.wrongIcon),
+					l.errors.wrongIcon,
+				]);
+
+			if (path.includes("description"))
+				return setErrors([
+					...errors.filter((error) => error !== l.errors.wrongDesc),
+					l.errors.wrongDesc,
+				]);
+
+			return setErrors([
+				...errors.filter((error) => error !== l.errors.generic),
+				l.errors.generic,
+			]);
+		}
 	};
 
 	const resetChanges = () => {
@@ -76,34 +100,40 @@ export default function ConnectionModifications({
 		<div
 			className={`p-3 bg-neutral-800 transition border-2 border-neutral-700 
             rounded-lg justify-center flex gap-2 items-center ${changedTab ? "border-red-500" : ""} px-4 w-full max-w-[1100px] 
-          shadow-neutral-700 shadow-md tablet:w-[98vw]
-            mobile:flex-col`}
+          shadow-neutral-700 shadow-md tablet:w-[98vw] flex-col`}
 		>
-			<div className="flex flex-grow gap-2 items-center mobile:text-center">
-				<IoIosWarning className="fill-yellow-300 size-8" />
-				<span>{l.dashboard.guilds.modifications.changes}</span>
-			</div>
-			<div className="flex gap-3 items-center mobile:flex-col-reverse">
-				<button
-					className="transition hover:underline mobile:text-sm"
-					onClick={resetChanges}
-				>
-					<span>{l.dashboard.guilds.modifications.reset}</span>
-				</button>
-				<button
-					disabled={loading.check || loading.loading}
-					className="flex gap-2 items-center bg-green-500 rounded-lg transition 
+			<div className="flex gap-2 items-center w-full">
+				<div className="flex flex-grow gap-2 items-center mobile:text-center">
+					<IoIosWarning className="fill-yellow-300 size-8" />
+					<span>{l.dashboard.guilds.modifications.changes}</span>
+				</div>
+				<div className="flex gap-3 items-center mobile:flex-col-reverse">
+					<button
+						className="transition hover:underline mobile:text-sm"
+						onClick={resetChanges}
+					>
+						<span>{l.dashboard.guilds.modifications.reset}</span>
+					</button>
+					<button
+						disabled={loading.check || loading.loading}
+						className="flex gap-2 items-center bg-green-500 rounded-lg transition 
                     hover:bg-green-600 px-4 p-2 disabled:hover:bg-green-500 mobile:text-sm 
                     mobile:w-full text-center mobile:justify-center"
-					onClick={patchChanges}
-				>
-					<span>{l.dashboard.guilds.info.save}</span>
-					{loading.loading && (
-						<AiOutlineLoading3Quarters className="animate-spin" size={18} />
-					)}
-					{loading.check && <FaCheckCircle className="text-white" size={18} />}
-				</button>
+						onClick={patchChanges}
+					>
+						<span>{l.dashboard.guilds.info.save}</span>
+						{loading.loading && (
+							<AiOutlineLoading3Quarters className="animate-spin" size={18} />
+						)}
+						{loading.check && (
+							<FaCheckCircle className="text-white" size={18} />
+						)}
+					</button>
+				</div>
 			</div>
+			{errors.length > 0 ? (
+				<div className="text-red-500">{errors.join(", ")}</div>
+			) : null}
 		</div>
 	);
 }
