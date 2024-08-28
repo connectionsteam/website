@@ -208,7 +208,7 @@ export const languages = {
 						type: "Tipo",
 						user: "Usuário",
 						moderator: "Moderador",
-						ambos: "Ambos",
+						ambos: "Qualquer",
 						selectModerator: "Clique aqui e selecione um moderador",
 						selectConnection: "Clique aqui e selecione uma conexão",
 						userID: "ID do usuário que deseja filtrar",
@@ -617,6 +617,17 @@ export const languages = {
 			goToBackup: "Ir para o backup",
 		},
 		promote: {
+			gift: {
+				title: "Presentear Promoted",
+				inputs: {
+					id: "ID do usuário",
+					code: "Código do Promoted",
+					button: "Enviar Presente",
+					idplaceholder: "Digite o ID do usuário que deseja presentear",
+					codeplaceholder: "Digite aqui o código que será enviado",
+				},
+				codeInvited: "Código enviado com sucesso!",
+			},
 			modal: {
 				promoted: "Conexão Promovida!",
 				success:
@@ -693,6 +704,26 @@ export const languages = {
 				nosearch: "Nenhum servidor encontrado",
 			},
 		},
+		limits: {
+			mods: "Você chegou no limite de moderadores de 10/10",
+			modsText: "Parece que você chegou no seu limite de moderadores...",
+			connections: "Você chegou no limite de conexões",
+			connectionsText: "Parece que você chegou no seu limite de conexões...",
+		},
+		errors: {
+			needChannel: "Você precisa escolher um canal para conectar",
+			wrongTeamName: "Certifique-se que o nome da equipe é maior que 3 caracteres e menor que 20",
+			chooseAnChannel: "Escolha um canal para conectar",
+			wrongIcon: "O ícone não é válido, verifique se ele termina com .png ou .jpg, e se pertence ao Pinterest ou Imgur",
+			wrongDesc: "Certifique-se que sua descrição seja maior que 20 caracteres e menor que 50",
+			generic: "Algo deu errado, tente novamente mais tarde ou entre em contato conosco",
+			invalidCode: "Código inválido",
+			wrongGift: "ID de usuário ou código inválido",
+			wrongConName: "Certifique-se do nome da conexão precisa de mais que 1 caractere",
+			alreadyConnection: "Já existe uma conexão com este nome",
+			maxConnections: "Você precisa colocar um número maior que 1, e menor que 100 no máximo de conexões",
+			unknownConnection: "Conexão desconhecida"
+		}
 	},
 	"en-US": {
 		home: {
@@ -879,13 +910,13 @@ export const languages = {
 						deletetext: "Delete",
 						noThreads: "No threads",
 						noThreadsDescription:
-							"There are no threads in this guild, try to create one!",
+							"There aren't any threads in this guild, try creating a new one!",
 					},
 					description:
-						"Here will be the threads that you can manage in this guild",
+						"Here will be displayed threads that you can manage",
 				},
 				cases: {
-					noCases: "It seems that there are no cases registered.",
+					noCases: "It seems there are no cases registered.",
 					nocasesbruh:
 						"Try punishing some goofies from your server using Connections",
 					case: "Case",
@@ -902,7 +933,7 @@ export const languages = {
 						type: "Type",
 						user: "User",
 						moderator: "Moderator",
-						ambos: "Both",
+						ambos: "Any",
 						selectModerator: "Click here and select a moderator",
 						selectConnection: "Click here and select a connection",
 						userID: "User ID to filter",
@@ -1295,7 +1326,7 @@ export const languages = {
 			promotedCode: "Promoted Code",
 			title: "Notifications",
 			description:
-				"Here will be the notifications you receive from backups, team invites, responses, etc",
+				"Here will be the notifications you received from backups, team invites, responses, etc",
 			filter: "Filter notifications",
 			noNotifications: "You don't have any notifications",
 			skeleton: "No notifications found",
@@ -1308,6 +1339,17 @@ export const languages = {
 			goToBackup: "Go to backup",
 		},
 		promote: {
+			gift: {
+				title: "Gift Promoted",
+				inputs: {
+					id: "User ID",
+					code: "Promoted Code",
+					button: "Send Gift",
+					idplaceholder: "Type here the user ID you want to gift",
+					codeplaceholder: "Type here the code that will be sent",
+				},
+				codeInvited: "Code sent successfully!",
+			},
 			modal: {
 				promoted: "Connection Promoted!",
 				success:
@@ -1384,5 +1426,26 @@ export const languages = {
 				nosearch: "No server found",
 			},
 		},
-	},
+		limits: {
+			mods: "You reached the limit of moderators of 10/10",
+			modsText: "It seems that you reached your limit of moderators...",
+			connections: "You reached the limit of connections",
+			connectionsText: "It seems that you reached your limit of connections...",
+		},
+		errors: {
+			needChannel: "You need to choose a channel to connect",
+			wrongTeamName: "Check if the team name is longer than 3 characters and shorter than 20",
+			chooseAnChannel: "Choose a channel to connect",
+			generic: "Something went wrong, try again later, or contact us",
+			wrongIcon: "The icon is not valid, check if it ends with .png or .jpg, and if it belongs to Pinterest or Imgur",
+			wrongDesc: "Make sure your description is longer than 20 characters and shorter than 50",
+			invalidCode: "Invalid code",
+			wrongGift: "Invalid user ID or code",
+			wrongConDesc: "Make sure the connection name is at least 16 characters",
+			wrongConName: "Make sure the team name is at least 1 character",
+			alreadyConnection: "There is already a connection with this name",
+			maxConnections: "You need to put a number greater than 1, and less than 100 in the maximum of connections",
+			unknownConnection: "Unknown connection"
+		}
+	}
 };
