@@ -75,14 +75,14 @@ export default function Footer() {
 						</div>
 					</div>
 				</div>
-				<div className="flex gap-1 items-center">
+				<div className="flex gap-2 items-center">
 					<span>{l.home.footer.poweredBy}</span>
 					<a
 						href="https://squarecloud.app"
 						target="_blank"
-						className="p-3 bg-[#161A23] rounded-lg flex gap-2 transition hover:bg-[#1b1f2b]" rel="noreferrer"
+						className="flex gap-1 transition text-sm items-center" rel="noreferrer"
 					>
-						<Image width={25} height={25} src="/square.png" alt="SquarCloud" />
+						<Image width={15} height={15} src="/square.png" alt="SquarCloud" />
 						<span>SquareCloud</span>
 					</a>
 				</div>
