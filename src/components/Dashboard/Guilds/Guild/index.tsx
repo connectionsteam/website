@@ -84,6 +84,7 @@ export default function GuildComponent() {
 					title: l.dashboard.guilds.tabs.infos,
 					content: (
 						<Infos
+							channels={channels}
 							actualGuild={discordGuild}
 							modifications={modifications}
 							setModifications={setModifications}
