@@ -70,6 +70,61 @@ export const languages = {
 				description: "Selecione o servidor que deseja gerenciar",
 				addServer: "Adicionar servidor",
 				info: {
+					logs: {
+						logsbuttons: {
+							anyLog: {
+								title: "Qualquer Log",
+								description: "Todos os tipos de logs serão enviados"
+							},
+							bansLog: {
+								title: "Logs de Banimentos",
+								description: "Todos os banimentos feitos em conexões"
+							},
+							connectionsLog: {
+								title: "Logs de Conexões",
+								description: "Todos os logs de cada conexão conectada no servidor"
+							},
+							locksLog: {
+								title: "Logs de Bloqueio",
+								description: "Logs de quando alguém bloqueia um canal de uma conexão conectada"
+							},
+							messagesLog: {
+								title: "Logs de Mensagens",
+								description: "Todas as mensagens editadas ou deletadas"
+							},
+							notesLog: {
+								title: "Logs de Notas",
+								description: "Notas na conexão"
+							},
+							purgesLog: {
+								title: "Logs de Punições",
+								description: "Banimentos e timeouts em conexões"
+							},
+							reportsLog: {
+								title: "Logs de Reportes",
+								description: "Reportes de mensagens feitos pelos usuários"
+							},
+							timeoutsLog: {
+								title: "Logs de Timeouts",
+								description: "Todos os timeouts feitos em conexões"
+							},
+							messageDeleteLog: {
+								title: "Logs de Mensagens Deletadas",
+								description: "Todas as mensagens deletadas"
+							},
+							messageUpdateLog: {
+								title: "Logs de Mensagens Editadas",
+								description: "Todas as mensagens editadas"
+							}
+						},
+						title: "Canal de Logs",
+						description: "Selecione o canal que receberá todos os logs selecionados",
+						button: "Clique aqui e selecione um canal",
+					},
+					connections: {
+						title: "Logs das Conexões Conectadas",
+						description: "Selecione abaixo quais logs você deseja ter no canal de logs",
+					},
 					prefix: "Prefixo",
 					prefixdescription:
 						"Digite abaixo o prefixo que deseja usar para executar os comandos do Connections",
@@ -796,6 +851,61 @@ export const languages = {
 				description: "Select the server you want to manage",
 				addServer: "Add server",
 				info: {
+					logs: {
+						logsbuttons: {
+							anyLog: {
+								title: "Any Log",
+								description: "All types of logs will be sent"
+							},
+							bansLog: {
+								title: "Ban Logs",
+								description: "All bans made in connections"
+							},
+							connectionsLog: {
+								title: "Connection Logs",
+								description: "All logs of each connection connected to the server"
+							},
+							locksLog: {
+								title: "Lock Logs",
+								description: "Logs when someone locks a channel of a connected connection"
+							},
+							messagesLog: {
+								title: "Message Logs",
+								description: "All edited or deleted messages"
+							},
+							notesLog: {
+								title: "Note Logs",
+								description: "Notes on the connection"
+							},
+							purgesLog: {
+								title: "Purge Logs",
+								description: "Bans and timeouts in connections"
+							},
+							reportsLog: {
+								title: "Report Logs",
+								description: "Message reports made by users"
+							},
+							timeoutsLog: {
+								title: "Timeout Logs",
+								description: "All timeouts made in connections"
+							},
+							messageDeleteLog: {
+								title: "Deleted Message Logs",
+								description: "All deleted messages"
+							},
+							messageUpdateLog: {
+								title: "Edited Message Logs",
+								description: "All edited messages"
+							}
+						},
+						title: "Logs Channel",
+						description: "Select the channel that will receive all the logs selected",
+						button: "Click here and select a channel",
+					},
+					connections: {
+						title: "Connected Connections Logs",
+						description: "Select below which logs you want to have in the log channel",
+					},
 					prefix: "Prefix",
 					prefixdescription:
 						"Type below the prefix you want to use to run the Connections commands",
