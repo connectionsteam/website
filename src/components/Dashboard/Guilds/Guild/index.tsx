@@ -88,7 +88,6 @@ export default function GuildComponent() {
 							modifications={modifications}
 							setModifications={setModifications}
 							premium={premium}
-							premiums={premiums}
 							setGuild={setGuild}
 							setThreads={setThreads}
 							threads={threads}
@@ -239,19 +238,41 @@ export default function GuildComponent() {
 									]}
 								/>
 							)}
-							<div className="flex w-full mobile:flex-col tablet:gap-4 bg-neutral-800 
-							p-3 rounded-lg items-center">
-								<div className="flex gap-3 flex-grow items-center mobile:flex-col mobile:text-center">
-									<div className="min-w-16 h-16">
-										<Avatar
-											className="w-16 h-16"
-											src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`}
-										/>
+							<div
+								className="flex w-full mobile:flex-col tablet:gap-4 bg-neutral-800 
+							p-3 rounded-lg items-center"
+							>
+								<div className="flex flex-col gap-3 flex-grow">
+									<div className="flex gap-3 items-center mobile:flex-col mobile:text-center">
+										<div className="min-w-16 h-16">
+											<Avatar
+												className="w-16 h-16"
+												src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`}
+											/>
+										</div>
+										<div className="flex flex-col">
+											<span className="font-bold text-xl">{guild.name}</span>
+											<div className="text-sm text-neutral-300">{guild.id}</div>
+										</div>
 									</div>
-									<div className="flex flex-col">
-										<span className="font-bold text-xl">{guild.name}</span>
-										<div className="text-sm text-neutral-300">{guild.id}</div>
-									</div>
+									{guild.premium && (
+										<div className="flex flex-col">
+											<div
+												className="bg-gradient-to-r from-yellow-500 to-amber-400 
+												bg-clip-text text-transparent font-bold text-lg"
+											>
+												{premiums[guild.premium.type]}
+											</div>
+											<span className="font-bold">
+												{l.dashboard.guilds.info.premiumexpires.replace(
+													"{date}",
+													new Date(guild.premium.expiresAt).toLocaleDateString(
+														l.language,
+													),
+												)}
+											</span>
+										</div>
+									)}
 								</div>
 								<div>
 									<DefaultPremiumButton
@@ -262,9 +283,7 @@ export default function GuildComponent() {
 								</div>
 							</div>
 							<div className="flex flex-col gap-2 w-full overflow-x-hidden">
-								<div
-									className="flex rounded-lg py-1 overflow-x-auto relative"
-								>
+								<div className="flex rounded-lg py-1 overflow-x-auto relative">
 									{tab.tabs.map((t) => (
 										<>
 											<button

@@ -16,7 +16,6 @@ interface Props {
 	modifications: boolean;
 	setModifications: (modifications: boolean) => void;
 	actualGuild: GuildPayload;
-	premiums: Record<string, string>;
 }
 
 export default function Infos({
@@ -27,7 +26,6 @@ export default function Infos({
 	premium,
 	actualGuild,
 	setModifications,
-	premiums,
 }: Props) {
 	const l = useLanguage();
 
@@ -58,24 +56,6 @@ export default function Infos({
 						}}
 					/>
 				</div>
-				{guild.premium && (
-					<div className="flex gap-2 flex-col">
-						<div
-							className="bg-gradient-to-r from-yellow-500 to-amber-400
-                                bg-clip-text text-transparent font-bold text-lg"
-						>
-							{premiums[guild.premium.type]}
-						</div>
-						<span className="font-bold">
-							{l.dashboard.guilds.info.premiumexpires.replace(
-								"{date}",
-								new Date(guild.premium.expiresAt).toLocaleDateString(
-									l.language,
-								),
-							)}
-						</span>
-					</div>
-				)}
 				<div className="w-full flex tablet:flex-col gap-4">
 					<GuildMods
 						actualGuild={actualGuild}
