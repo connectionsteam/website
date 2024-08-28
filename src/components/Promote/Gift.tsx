@@ -69,39 +69,47 @@ export default function PromotedGiftModal({
 				});
 			}, 2000);
 		} catch (error: any) {
-			const { code } = error.response.data;
-
 			setLoading({
 				...loading,
 				state: false,
 			});
-			setErrors([...errors, "id"]);
+
+			setErrors(["id", "code"]);
 		}
 	};
 
 	return (
 		<ModalContent className="bg-neutral-800 text-white">
-			<ModalHeader className="pb-1">Presentear Promoted</ModalHeader>
+			<ModalHeader className="pb-1">{l.promote.gift.title}</ModalHeader>
 			<ModalBody>
 				<DefaultInput
-					onChange={(event) => setId(event.target.value)}
-					placeholder="Digite o ID do usuário que deseja presentear"
+					onChange={(event) => {
+						setId(event.target.value);
+						setErrors([]);
+					}}
+					placeholder={l.promote.gift.inputs.idplaceholder}
 					type="text"
 					value={id}
-					label="ID do usuário"
+					label={l.promote.gift.inputs.id}
 					error={errors.includes("id")}
 				/>
 				<DefaultInput
-					onChange={(event) => setCode(event.target.value)}
-					placeholder="Digite aqui o código que será enviado"
+					onChange={(event) => {
+						setCode(event.target.value);
+						setErrors([]);
+					}}
+					placeholder={l.promote.gift.inputs.codeplaceholder}
 					type="text"
 					value={code}
-					label="Código do Promoted"
+					label={l.promote.gift.inputs.code}
 					error={errors.includes("code")}
 				/>
 				{submited && (
-					<span className="text-green-500">Código enviado com sucesso!</span>
+					<span className="text-green-500">{l.promote.gift.codeInvited}</span>
 				)}
+				{errors.length > 0 ? (
+					<div className="text-red-500">{l.errors.wrongGift}</div>
+				) : null}
 			</ModalBody>
 			<ModalFooter
 				className="flex w-full justify-end border-t rounded-t-xl
@@ -128,7 +136,7 @@ export default function PromotedGiftModal({
 						<FaCheckCircle className="text-white-500" size={20} />
 					)}
 					{!loading.check && !loading.state && <LuGift />}
-					<span>Enviar Presente</span>
+					<span>{l.promote.gift.inputs.button}</span>
 				</DefaultButton>
 			</ModalFooter>
 		</ModalContent>

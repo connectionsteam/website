@@ -48,13 +48,13 @@ export default function PremiumPopUp({
 			onOpenChange={onChange}
 		>
 			<ModalContent className="bg-neutral-800 text-white">
-				<ModalHeader className="flex flex-col gap-1 bg-neutral-800">
+				<ModalHeader className="flex flex-col gap-1 bg-neutral-800 pb-1">
 					{l.plans.popUp.title}
 				</ModalHeader>
 				<ModalBody className="flex gap-2">
 					<div>{text}</div>
 				</ModalBody>
-				<ModalFooter className="flex w-full justify-center">
+				<ModalFooter className="flex w-full justify-center mb-2">
 					<DefaultPremiumButton text="Adquirir Premium" link href="/premium" />
 				</ModalFooter>
 			</ModalContent>
