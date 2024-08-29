@@ -32,6 +32,7 @@ export default function ConnectionsProtectedSkeleton() {
 	return (
 		<DefaultLayout className="mt-24">
 			<DefaultTabs
+				cursor="bg-neutral-800"
 				activeTab={activeTab}
 				setActiveTab={setActiveTab}
 				tabs={tabs}
@@ -67,7 +68,7 @@ function Skeleton() {
 					<LuPlusCircle size={20} />
 				</DefaultButton>
 			</div>
-			<div className="grid grid-cols-3 gap-3 w-full">
+			<div className="grid grid-cols-3 gap-3 w-full tablet:grid-cols-2 mobile:grid-cols-1">
 				<ConnectionsSkeleton />
 			</div>
 		</div>
