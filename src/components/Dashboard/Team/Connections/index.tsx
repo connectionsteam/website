@@ -44,12 +44,13 @@ export default function TeamConnections({
 
 		await api.delete(`/teams/${teamID}/connections/${connectionProps.hover}`);
 
-		setLoading(true);
+		setLoading(false);
 
 		setTeam({
 			...team,
 			children: team.children.filter((c) => c.name !== connectionProps.hover),
 		});
+
 		setConnectionProps({ ...connectionProps, removing: null });
 	};
 
@@ -92,7 +93,7 @@ export default function TeamConnections({
 					</DefaultButton>
 				</div>
 				<div className="flex flex-col gap-2">
-					<AnimatePresence mode="wait">
+					<AnimatePresence>
 						{filteredConnections.length > 0 ? (
 							filteredConnections.map((connection, index) => (
 								<motion.div
@@ -100,7 +101,7 @@ export default function TeamConnections({
 									initial={{ opacity: 0 }}
 									animate={{ opacity: 1 }}
 									exit={{ opacity: 0 }}
-									transition={{ duration: 0.1 }}
+									transition={{ duration: 0.2 }}
 									onMouseEnter={() => {
 										if (loggedUser?.id !== team.creatorId) return;
 
