@@ -113,6 +113,10 @@ export default function GuildMods({
 		setLoaded(true);
 	};
 
+	const owner = guild.mods.find(
+		(mod) => mod.id === user?.id && mod.type === ModPermType.PhysicalOwner,
+	);
+
 	return (
 		<>
 			<div className="flex flex-col gap-2">
@@ -149,7 +153,7 @@ export default function GuildMods({
 							</AnimatePresence>
 						))}
 					</div>
-					{guild.mods.find((mod) => mod.id === user?.id) && (
+					{owner && (
 						<DefaultButton onClick={fetchMembers} className="h-full w-full p-4">
 							<LuPlusCircle size={20} />
 							<span>{l.dashboard.guilds.mods.addModerator}</span>

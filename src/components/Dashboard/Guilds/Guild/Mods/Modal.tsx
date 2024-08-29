@@ -19,6 +19,9 @@ export default function GuildModModal({
 }: Props) {
 	const l = useLanguage();
 	const [query, setQuery] = useState("");
+	const [error, setError] = useState(false);
+
+	const DISCOR_ID_PATTERN = /^\d{17,21}$/;
 
 	const filteredMembers = members
 		? members
@@ -33,6 +36,19 @@ export default function GuildModModal({
 						!guild.mods.find((mod) => mod.id === user.id) && !user.bot,
 				)
 		: [];
+
+	const handleAddModByID = () => {
+		if (!new RegExp(DISCOR_ID_PATTERN).test(query)) return setError(true);
+
+		handleAddMod({
+			user: {
+				id: query,
+				username: "",
+				bot: false,
+				avatar: "",
+			},
+		});
+	};
 
 	return (
 		<>
@@ -68,25 +84,20 @@ export default function GuildModModal({
 					) : (
 						<div className="py-1 w-full flex gap-2 flex-col">
 							<DefaultInput
-								onChange={(event) => setQuery(event.target.value)}
+								onChange={(event) => {
+									setQuery(event.target.value);
+									setError(false);
+								}}
+								error={error}
 								placeholder={l.dashboard.guilds.mods.notfoundplaceholder}
 								type="text"
 								obrigatory
 								label={l.dashboard.guilds.mods.notfoundlabel}
 							/>
 							<button
-								onClick={() =>
-									handleAddMod({
-										user: {
-											id: query,
-											username: "",
-											bot: false,
-											avatar: "",
-										},
-									})
-								}
+								onClick={handleAddModByID}
 								className="bg-neutral-900/50 transition hover:bg-neutral-900 
-                            rounded-lg px-2 p-3"
+								rounded-lg px-2 p-3"
 							>
 								{l.dashboard.guilds.mods.addModerator}
 							</button>
