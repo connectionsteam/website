@@ -1,5 +1,10 @@
 import { Input } from "@nextui-org/input";
-import { type ChangeEvent, type Dispatch, type SetStateAction, useState } from "react";
+import {
+	type ChangeEvent,
+	type Dispatch,
+	type SetStateAction,
+	useState,
+} from "react";
 import type { ConnectionPayload } from "../../../types";
 import ConnectionsSkeleton from "../ConnectionsSkeleton";
 import CreateConnectionForm from "./Connection/FormCreateConnection";
@@ -42,23 +47,17 @@ export default function ConnectionsComponent({
 	};
 
 	const handleDeleteConnection = async () => {
-		setConnectionProps({ ...connectionProps, removing: connectionProps.hover });
-
 		setLoading(true);
 
 		await api.delete(`/connections/${connectionProps.hover}`);
 
 		setLoading(false);
 
-		setTimeout(() => {
-			setConnections(
-				connections!.filter(
-					(connection) => connection.name !== connectionProps.hover,
-				),
-			);
-
-			setConnectionProps({ ...connectionProps, removing: null });
-		}, 500);
+		setConnections(
+			connections!.filter(
+				(connection) => connection.name !== connectionProps.hover,
+			),
+		);
 	};
 
 	const filter = (connection: ConnectionPayload) => {
@@ -119,19 +118,17 @@ export default function ConnectionsComponent({
 					) : (
 						<div className="grid grid-cols-3 gap-3 w-full tablet:grid-cols-2 mobile:grid-cols-1">
 							<AnimatePresence>
-								{connections
-									.filter(filter)
-									.map((connection, index) => (
-										<ConnectionCard
-											loading={loading}
-											handleDeleteConnection={handleDeleteConnection}
-											key={index}
-											connection={connection}
-											connectionProps={connectionProps}
-											setConnectionProps={setConnectionProps}
-											index={index}
-										/>
-									))}
+								{connections.filter(filter).map((connection, index) => (
+									<ConnectionCard
+										loading={loading}
+										handleDeleteConnection={handleDeleteConnection}
+										key={index}
+										connection={connection}
+										connectionProps={connectionProps}
+										setConnectionProps={setConnectionProps}
+										index={index}
+									/>
+								))}
 							</AnimatePresence>
 						</div>
 					)
