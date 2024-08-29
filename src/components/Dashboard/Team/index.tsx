@@ -10,15 +10,18 @@ import TeamConnections from "./Connections";
 import TeamSettings from "./Settings";
 import { UserContext } from "../../../contexts/User";
 import TeamSkeleton from "./Skeleton";
+import { useLanguage } from "../../../hooks/useLanguage";
+import TeamAuditLog from "./AuditLog";
 
 export default function TeamPageComponent({ teamId }: { teamId: string }) {
 	const [team, setTeam] = useState<TeamPayload>();
+	const l = useLanguage();
 	const [activeTab, setActiveTab] = useState("members");
 	const { user } = useContext(UserContext);
 	const tabs = [
 		{
 			id: "members",
-			label: "Members",
+			label: l.dashboard.teams.tabs.members,
 			component: (
 				<TeamMembers
 					teamID={teamId}
@@ -29,7 +32,7 @@ export default function TeamPageComponent({ teamId }: { teamId: string }) {
 		},
 		{
 			id: "connections",
-			label: "Connections",
+			label: l.dashboard.teams.tabs.connections,
 			component: (
 				<TeamConnections
 					teamID={teamId}
@@ -38,12 +41,22 @@ export default function TeamPageComponent({ teamId }: { teamId: string }) {
 				/>
 			),
 		},
+		{
+			id: "AudiLog",
+			label: l.dashboard.teams.tabs.auditLog,
+			component: (
+				<TeamAuditLog
+					connections={team?.children}
+					id={teamId}
+				/>
+			),
+		}
 	];
 
 	if (team?.creatorId === user?.id)
 		tabs.push({
 			id: "settings",
-			label: "Settings",
+			label: l.dashboard.teams.tabs.settings,
 			component: (
 				<TeamSettings
 					teamID={teamId}
