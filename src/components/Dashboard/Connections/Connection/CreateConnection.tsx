@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { LanguageContext } from "../../../../contexts/Language";
 import { languages } from "../../../../locale";
 import type { ConnectionPayload, RequestPost } from "../../../../types";
@@ -30,6 +31,7 @@ export default function CreateConnection({
 }: Props) {
 	const [loading, setLoading] = useState(false);
 	const { language } = useContext(LanguageContext);
+	const router = useRouter();
 
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
@@ -67,16 +69,22 @@ export default function CreateConnection({
 	
 		if (!postBody.name || postBody.name.length < 1 || postBody.name.length > 16) {
 			setErrors([...errors, "name"]);
-			setLoading(false);
-			return;
+			
+			return setLoading(false);
 		}
 	
 		if (postBody.description && (postBody.description.length < 20 || postBody.description.length > 50)) {
 			setErrors([...errors, "description"]);
-			setLoading(false);
-			return;
+			
+			return setLoading(false);
 		}
-	
+
+		if (postBody.maxConnections && (postBody.maxConnections < 2 || postBody.maxConnections > 100)) {
+			setErrors([...errors, "maxConnections"]);
+			
+			return setLoading(false);
+		}
+
 		try {
 			const { data } = await api.put("/users/@me/connections", postBody);
 	
@@ -84,10 +92,15 @@ export default function CreateConnection({
 			setErrors([]);
 			onClose();
 			setConnections([...connections, data]);
+			router.push(`/dashboard/connection/${data.name}`);
 		} catch (error: any) {
 			setLoading(false);
 
-			setErrors([...errors, ...(error.response.data.extra.path || "")]);
+			const { code } = error.response.data;
+
+			if (code === 2005) {
+				return setErrors([...errors, "alreadyExists"]);
+			}
 		}
 	};
 
