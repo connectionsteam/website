@@ -134,6 +134,9 @@ export default function CreateConnectionForm({
 								{errors.includes("maxConnections") ? (
 									<div className="text-red-500">{l.errors.maxConnections}</div>
 								) : null}
+								{errors.includes("alreadyExists") ? (
+									<div className="text-red-500">{l.errors.alreadyExists}</div>
+								) : null}
 							</div>
 						) : null}
 					</ModalBody>
