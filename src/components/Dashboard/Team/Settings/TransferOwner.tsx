@@ -152,10 +152,8 @@ export default function TransferTeamOwner({
 						<ModalHeader className="pb-1 font-bold">
 							{l.dashboard.teams.settings.transfer.title}
 						</ModalHeader>
-						<ModalBody className="flex gap-1 flex-row">
-							<span>{l.dashboard.teams.settings.transfer.transferOwner}</span>
-							{""}
-							<span className="font-bold">{member.username}</span>?
+						<ModalBody className="flex gap-1">
+							<span>{l.dashboard.teams.settings.transfer.transferOwner.replace("{member}", member.username)}</span>
 						</ModalBody>
 						<ModalFooter className="flex w-full justify-end border-t rounded-t-xl border-neutral-700 mt-2">
 							<button

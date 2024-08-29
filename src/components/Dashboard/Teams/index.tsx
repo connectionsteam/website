@@ -7,7 +7,6 @@ import {
 	useEffect,
 	useState,
 } from "react";
-import { MdOutlineSync } from "react-icons/md";
 import Head from "next/head";
 import type { TeamPayload } from "../../../types";
 import { api } from "../../../utils/api";

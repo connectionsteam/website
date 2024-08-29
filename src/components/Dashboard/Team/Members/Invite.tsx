@@ -79,11 +79,18 @@ export default function InviteMember({ team, onClose, teamID }: Props) {
 					check: false,
 				});
 			}, 2000);
-		} catch {
+		} catch (error: any) {
 			setLoading({
 				...loading,
 				state: false,
 			});
+
+			const { code } = error.response.data;
+
+			if (code === 9013) {
+				return setErrors([...errors, "alreadyInvited"]);
+			}
+
 			setErrors([...errors, "id"]);
 		}
 	};
@@ -95,11 +102,14 @@ export default function InviteMember({ team, onClose, teamID }: Props) {
 			</ModalHeader>
 			<ModalBody>
 				<DefaultInput
-					onChange={(event) => setId(event.target.value)}
+					onChange={(event) => {
+						setId(event.target.value);
+						setErrors([]);
+					}}
 					placeholder={l.dashboard.teams.members.invite.placeholder}
 					type="text"
 					label={l.dashboard.teams.members.invite.memberId}
-					error={errors.includes("id")}
+					error={errors.includes("id") || errors.includes("alreadyInvited")}
 				/>
 				{errors.includes("alreadymember") && (
 					<span className="text-red-500">
@@ -110,6 +120,12 @@ export default function InviteMember({ team, onClose, teamID }: Props) {
 					<span className="text-red-500">
 						{l.dashboard.teams.members.invite.maxMembers}
 					</span>
+				)}
+				{errors.includes("id") && (
+					<span className="text-red-500">{l.errors.invalidUserID}</span>
+				)}
+				{errors.includes("alreadyInvited") && (
+					<span className="text-red-500">{l.errors.alreadyInvited}</span>
 				)}
 				{submited && (
 					<span className="text-green-500">
