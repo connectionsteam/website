@@ -1,14 +1,10 @@
 import { useEffect, useState } from "react";
-import type { TeamPayload } from "../../../../types";
+import type { ConnectionPayload, TeamPayload } from "../../../../types";
 import { api } from "../../../../utils/api";
-import {
-	ModalBody,
-	ModalContent,
-	ModalFooter,
-	ModalHeader,
-} from "@nextui-org/modal";
+import { ModalBody, ModalContent, ModalHeader } from "@nextui-org/modal";
 import DefaultInput from "../../../Mixed/Input";
 import { useLanguage } from "../../../../hooks/useLanguage";
+import Avatar from "../../../Mixed/Avatar";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
 
@@ -25,40 +21,36 @@ export default function AddTeamConnection({
 	teamID,
 	setTeam,
 }: Props) {
-	const [id, setId] = useState("");
 	const l = useLanguage();
 	const [loading, setLoading] = useState({
 		state: false,
 		check: false,
+		loader: "",
 	});
 	const [errors, setErrors] = useState<string[]>([]);
 
-	const sendInvite = async () => {
+	const [connections, setConnections] = useState<ConnectionPayload[]>();
+	const [query, setQuery] = useState("");
+
+	useEffect(() => {
+		const fetchConnections = async () => {
+			const { data } = await api.get("/users/@me/connections");
+
+			setConnections(data);
+		};
+
+		fetchConnections();
+	}, []);
+
+	const handlAddConnection = (connection: ConnectionPayload) => async () => {
 		setLoading({
+			loader: connection.name,
 			state: true,
 			check: false,
 		});
 
-		if (id.trim() === "") {
-			setLoading({
-				...loading,
-				state: false,
-			});
-
-			return setErrors([...errors, "id"]);
-		}
-
-		if (team.children.some((c) => c.name === id)) {
-			setErrors([...errors, "alreadymember"]);
-
-			return setLoading({
-				...loading,
-				state: false,
-			});
-		}
-
 		if (team.children.length === 5) {
-			setErrors([...errors, "maxmembers"]);
+			setErrors([...errors, "maxconnections"]);
 
 			return setLoading({
 				...loading,
@@ -69,9 +61,10 @@ export default function AddTeamConnection({
 		try {
 			const {
 				data: { name, icon, description },
-			} = await api.put(`/teams/${teamID}/connections/${id}`);
+			} = await api.put(`/teams/${teamID}/connections/${connection.name}`);
 
 			setLoading({
+				loader: connection.name,
 				state: false,
 				check: true,
 			});
@@ -84,86 +77,120 @@ export default function AddTeamConnection({
 
 			setTimeout(() => {
 				setLoading({
+					loader: "",
 					state: false,
 					check: false,
 				});
 
-				onClose();
-			}, 1000);
-		} catch {
+				setConnections(connections?.filter((c) => c.name !== connection.name));
+			}, 500);
+		} catch (error: any) {
+			const { code } = error.response.data;
+
 			setLoading({
 				...loading,
 				state: false,
 			});
-			setErrors([...errors, "id"]);
+
+			if (code === 9007) {
+				return setErrors([...errors, "alreadymember"]);
+			}
 		}
 	};
 
-	useEffect(() => {
-		const handleKeyDown = (event: KeyboardEvent) => {
-			if (event.key === "Enter") {
-				sendInvite();
-			}
-		};
-
-		document.addEventListener("keydown", handleKeyDown);
-
-		return () => {
-			document.removeEventListener("keydown", handleKeyDown);
-		};
-	}, [team, id]);
+	const filteredConnections = connections?.filter(
+		(connection) =>
+			!connection.teamId &&
+			(connection.name.toLowerCase().includes(query.toLowerCase()) ||
+				connection.name.includes(query) ||
+				connection.description?.toLowerCase().includes(query.toLowerCase()) ||
+				connection.creatorId?.includes(query)),
+	);
 
 	return (
 		<ModalContent className="bg-neutral-800 text-white">
-			<ModalHeader className="pb-1">
-				{l.dashboard.teams.connections.modal.title}
+			<ModalHeader className="pb-1 flex flex-col gap-1">
+				<h2>{l.dashboard.teams.connections.modal.title}</h2>
+				<span className="text-neutral-300 font-normal">
+					{l.dashboard.teams.connections.modal.description}
+				</span>
 			</ModalHeader>
-			<ModalBody>
+			<ModalBody className="mb-2">
 				<DefaultInput
-					autoFocus
-					onChange={(event) => setId(event.target.value)}
-					placeholder={l.dashboard.teams.connections.modal.placeholder}
+					value={query}
+					onChange={(e) => setQuery(e.target.value)}
+					placeholder={l.dashboard.misc.filterConnections}
 					type="text"
-					label={l.dashboard.teams.connections.modal.label}
-					error={errors.includes("id")}
 				/>
-				{errors.includes("alreadymember") && (
-					<span className="text-red-500">
-						{l.dashboard.teams.members.invite.alreadyMember}
-					</span>
-				)}
-				{errors.includes("maxmembers") && (
-					<span className="text-red-500">
-						{l.dashboard.teams.members.invite.maxMembers}
-					</span>
-				)}
+				<div className="flex flex-col gap-2">
+					{filteredConnections ? (
+						filteredConnections.length === 0 ? (
+							<div className="h-32 flex items-center justify-center">
+								<span className="font-semibold">
+									{l.dashboard.teams.connections.noConnectionsFound}
+								</span>
+							</div>
+						) : (
+							filteredConnections.map((connection) => (
+								<button
+									disabled={(loading.state || loading.check)}
+									onClick={handlAddConnection(connection)}
+									key={connection.name}
+									className="flex gap-2 items-center p-2 rounded-lg hover:bg-neutral-900 
+									bg-neutral-900/50 transition disabled:hover:bg-neutral-900/50"
+								>
+									<div className="min-w-12 h-12">
+										<Avatar
+											className="w-12 h-12"
+											src={connection.icon || ""}
+											key={connection.name}
+										/>
+									</div>
+									<div className="flex flex-col text-start flex-grow">
+										<span className="font-bold text-lg">{connection.name}</span>
+										{connection.description && (
+											<span className="text-neutral-300 text-sm">
+												{connection.description.length > 30
+													? connection.description.slice(0, 30) + "..."
+													: connection.description}
+											</span>
+										)}
+									</div>
+									{loading.state && loading.loader === connection.name && (
+										<AiOutlineLoading3Quarters
+											className="animate-spin"
+											size={16}
+										/>
+									)}
+									{loading.check && loading.loader === connection.name && (
+										<FaCheckCircle className="text-green-500" size={16} />
+									)}
+								</button>
+							))
+						)
+					) : (
+						Array.from({ length: 6 }).map((_, index) => (
+							<div
+								key={index}
+								className="bg-neutral-900/50 p-3 rounded-lg flex flex-col gap-2 w-full"
+							>
+								{Array.from({ length: 2 }).map((_, index) => (
+									<div
+										key={index}
+										className="w-full h-6 bg-neutral-700 animate-pulse rounded-full"
+									></div>
+								))}
+								<div className="text-neutral-300">
+									{new Date(Date.now()).toLocaleString(l.language)}
+								</div>
+							</div>
+						))
+					)}
+				</div>
+				{errors.includes("maxconnections") ? (
+					<div className="text-red-500">{l.errors.teamMaxConnections}</div>
+				) : null}
 			</ModalBody>
-			<ModalFooter
-				className="flex w-full justify-end border-t rounded-t-xl
-            border-neutral-700 mt-2"
-			>
-				<button
-					onClick={onClose}
-					className="rounded-lg bg-neutral-700 transition hover:bg-neutral-700/50 
-                    p-2 px-3"
-				>
-					{l.dashboard.misc.cancel}
-				</button>
-				<button
-					onClick={sendInvite}
-					disabled={loading.state}
-					className="flex gap-2 font-semibold items-center text-center bg-green-500 
-                    transition hover:bg-green-600 p-2 px-3 rounded-lg disabled:hover:bg-green-500"
-				>
-					<span>{l.dashboard.teams.connections.modal.add}</span>
-					{loading.state && (
-						<AiOutlineLoading3Quarters className="animate-spin" size={20} />
-					)}
-					{loading.check && (
-						<FaCheckCircle className="text-white-500" size={20} />
-					)}
-				</button>
-			</ModalFooter>
 		</ModalContent>
 	);
 }
