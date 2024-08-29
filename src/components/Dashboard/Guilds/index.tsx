@@ -1,16 +1,16 @@
 import { Input } from "@nextui-org/input";
-import Link from "next/link";
-import { type ChangeEvent, useState } from "react";
+import { useLanguage } from "../../../hooks/useLanguage";
+import { type ChangeEvent, useState, useEffect } from "react";
 import type { GuildPayload } from "../../../types";
 import ConnectionsSkeleton from "../ConnectionsSkeleton";
 import { LuPlusCircle } from "react-icons/lu";
 import Avatar from "../../../components/Mixed/Avatar";
-import { motion } from "framer-motion";
-import { HiSparkles } from "react-icons/hi";
+import { motion, AnimatePresence } from "framer-motion";
 import { MdOutlineSync } from "react-icons/md";
-import { useLanguage } from "../../../hooks/useLanguage";
 import Head from "next/head";
 import DefaultButton from "../../Mixed/Button";
+import Link from "next/link";
+import { HiSparkles } from "react-icons/hi";
 
 const url =
 	"https://discord.com/oauth2/authorize?client_id=1243234162077470802";
@@ -32,7 +32,16 @@ export default function GuildsComponent({ guilds, fetchGuilds }: Props) {
 	const handleClick = () => {
 		fetchGuilds();
 		setClicked(true);
-		setTimeout(() => setClicked(false), 5000);
+		setTimeout(() => {
+			setClicked(false);
+		}, 5000);
+	};
+
+	const filter = (guild: GuildPayload) => {
+		return (
+			guild.id.includes(searchQuery) ||
+			guild.name.toLowerCase().includes(searchQuery.toLowerCase())
+		);
 	};
 
 	return (
@@ -72,59 +81,76 @@ export default function GuildsComponent({ guilds, fetchGuilds }: Props) {
 						/>
 					</button>
 				</div>
-				<div className="grid grid-cols-3 gap-3 w-full tablet:grid-cols-2 mobile:grid-cols-1">
-					{guilds ? (
-						guilds
-							.filter(
-								(guild) =>
-									guild.id.includes(searchQuery) ||
-									guild.name
-										.toLowerCase()
-										.includes(searchQuery.toLocaleLowerCase()),
-							)
-							.map((guild, index) => (
-								<motion.div
-									key={index}
-									initial={{ opacity: 0 }}
-									animate={{ opacity: 1 }}
-									transition={{ delay: index * 0.1 }}
-									className={`relative w-full 
-                                    ${
-																			"premium" in guild
-																				? "p-0.5 rounded-lg bg-gradient-to-r from-amber-400 to-orange-500"
-																				: ""
-																		} 
-                                    `}
-								>
-									{"premium" in guild && (
-										<div className="absolute z-10 -top-2 -left-2">
-											<HiSparkles className="fill-yellow-500" size={28} />
-											<StarDust />
+				{guilds ? (
+					guilds.filter(filter).length === 0 ? (
+						<div className="flex w-full items-center justify-center">
+							<div className="min-h-[30vh] text-lg items-center font-bold justify-center flex text-center">
+								{searchQuery === "" ? (
+									<div className="flex flex-col">
+										<div>{l.dashboard.guilds.noGuilds}</div>
+										<div className="text-sm text-neutral-300 font-normal flex gap-1">
+											<p>{l.dashboard.guilds.noGuildsDescription}</p>
+											<span className="font-semibold">+</span>
 										</div>
-									)}
-									<Link
-										href={`/guild/${guild.id}`}
-										className="flex items-center gap-2 p-3 rounded-lg 
-                                        bg-neutral-800 hover:bg-neutral-700 transition relative w-full h-full"
-									>
-										<Avatar
-											className="w-12 h-12"
-											src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`}
-											key={guild.id}
-										/>
-										<div className="flex flex-col text-start">
-											<span className="font-bold text-lg">{guild.name}</span>
-											<span className="text-neutral-300 text-sm">
-												{guild.id}
-											</span>
-										</div>
-									</Link>
-								</motion.div>
-							))
+									</div>
+								) : (
+									l.dashboard.guilds.noGuildsFound
+								)}
+							</div>
+						</div>
 					) : (
-						<ConnectionsSkeleton />
-					)}
-				</div>
+						<div className="grid grid-cols-3 gap-3 w-full tablet:grid-cols-2 mobile:grid-cols-1">
+							<AnimatePresence>
+								{guilds
+									.filter(filter)
+									.map((guild, index) => (
+										<motion.div
+											key={index}
+											initial={{ opacity: 0 }}
+											animate={{ opacity: 1 }}
+											transition={{ delay: index * 0.1 }}
+											className={`relative w-full ${
+												"premium" in guild
+													? "p-0.5 rounded-lg bg-gradient-to-r from-amber-400 to-orange-500"
+													: ""
+											}`}
+										>
+											{"premium" in guild && (
+												<div className="absolute z-10 -top-2 -left-2">
+													<HiSparkles className="fill-yellow-500" size={28} />
+													<StarDust />
+												</div>
+											)}
+											<Link
+												href={`/guild/${guild.id}`}
+												className="flex items-center gap-2 p-3 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition relative w-full h-full"
+											>
+												<Avatar
+													className="w-12 h-12"
+													src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`}
+													key={guild.id}
+												/>
+												<div className="flex flex-col text-start">
+													<span className="font-bold text-lg">{guild.name}</span>
+													<span className="text-neutral-300 text-sm">
+														{guild.id}
+													</span>
+												</div>
+											</Link>
+										</motion.div>
+									))}
+							</AnimatePresence>
+						</div>
+					)
+				) : (
+					<div className="grid grid-cols-3 gap-3 w-full tablet:grid-cols-2 mobile:grid-cols-1">
+						{Array(3)
+							.fill(0)
+							.map((_, index) => (
+								<ConnectionsSkeleton key={index} />
+							))}
+					</div>
+				)}
 			</div>
 		</>
 	);
