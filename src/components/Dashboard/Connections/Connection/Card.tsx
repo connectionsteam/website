@@ -5,6 +5,7 @@ import type { ConnectionPayload } from "../../../../types";
 import DeleteConnection from "./DeleteConnection";
 import Avatar from "../../../../components/Mixed/Avatar";
 import Link from "next/link";
+import { useLanguage } from "../../../../hooks/useLanguage";
 
 interface Props {
 	connection: ConnectionPayload;
@@ -21,8 +22,10 @@ export default function ConnectionCard({
 	setConnectionProps,
 	index,
 	handleDeleteConnection,
-	loading
+	loading,
 }: Props) {
+	const l = useLanguage();
+
 	return (
 		<AnimatePresence key={index}>
 			{connectionProps.removing !== connection.name ? (
@@ -47,8 +50,14 @@ export default function ConnectionCard({
 					/>
 					<Link
 						href={`/dashboard/connection/${connection.name}`}
-						className="flex items-center gap-2 p-3 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition relative w-full h-full"
+						className={`flex items-center gap-2 p-3 rounded-lg bg-neutral-800 hover:bg-neutral-700 
+							transition relative w-full h-full ${"promotingSince" in connection ? "border-2 border-rose-600" : ""}`}
 					>
+						{"promotingSince" in connection && (
+							<div className="absolute px-2 font-semibold -top-2 text-sm flex rounded-full bg-rose-600 right-3">
+								{l.connection.promoted}
+							</div>
+						)}
 						<Avatar
 							className="w-12 h-12"
 							src={connection.icon || ""}
