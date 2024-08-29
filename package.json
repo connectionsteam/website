@@ -9,6 +9,7 @@
 		"lint": "next lint"
 	},
 	"dependencies": {
+		"@nextui-org/accordion": "^2.0.38",
 		"@nextui-org/avatar": "^2.0.29",
 		"@nextui-org/input": "^2.2.1",
 		"@nextui-org/modal": "^2.0.35",
