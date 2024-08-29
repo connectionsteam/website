@@ -257,10 +257,10 @@ export default function GuildComponent() {
 										</div>
 									</div>
 									{guild.premium && (
-										<div className="flex flex-col">
+										<div className="flex flex-col mobile:items-center">
 											<div
 												className="bg-gradient-to-r from-yellow-500 to-amber-400 
-												bg-clip-text text-transparent font-bold text-lg"
+												bg-clip-text text-transparent font-bold text-xl"
 											>
 												{premiums[guild.premium.type]}
 											</div>
