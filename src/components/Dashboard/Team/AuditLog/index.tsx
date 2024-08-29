@@ -28,16 +28,19 @@ export default function TeamAuditLog({
 		  }[]
 		| undefined;
 }) {
-	const [logs, setLogs] = useState<TeamConnectionsPayload[]>([]);
+	const [logs, setLogs] = useState<TeamConnectionsPayload[] | null>([]);
 	const l = useLanguage();
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		const fetchLogs = async () => {
+			setLoading(true);
+
 			const { data } = await api.get(`/teams/${id}/connections/audit-logs`);
 
-			console.log(data);
+			setLogs(data.length === 0 ? null : data);
 
-			setLogs(data);
+			setLoading(false);
 		};
 
 		fetchLogs();
@@ -208,7 +211,26 @@ export default function TeamAuditLog({
 				</div>
 			</div>
 			<div className="flex flex-col gap-2 w-full items-center justify-center">
-				{logs ? (
+				{loading ? (
+					Array(10)
+						.fill(0)
+						.map((_, index) => (
+							<div
+								key={index}
+								className="bg-neutral-900/50 p-3 rounded-lg flex flex-col gap-2 w-full"
+							>
+								{Array.from({ length: 2 }).map((_, index) => (
+									<div
+										key={index}
+										className="w-full h-6 bg-neutral-700 animate-pulse rounded-full"
+									></div>
+								))}
+								<div className="text-neutral-300">
+									{new Date(Date.now()).toLocaleString(l.language)}
+								</div>
+							</div>
+						))
+				) : logs ? (
 					logs.map((log, index) => (
 						<Accordion
 							variant="splitted"
@@ -219,10 +241,17 @@ export default function TeamAuditLog({
 								key={index}
 								className="bg-neutral-900/50 shadow-none flex gap-2 flex-col"
 								aria-label={log._id}
-								title={<div className="flex items-center gap-2">
-									<Avatar className="w-8 h-8" src={connections?.find((c) => c.name === log._id)?.icon ?? ""} />
-									<span className="font-semibold text-lg">{log._id}</span>
-								</div>}
+								title={
+									<div className="flex items-center gap-2">
+										<Avatar
+											className="w-8 h-8"
+											src={
+												connections?.find((c) => c.name === log._id)?.icon ?? ""
+											}
+										/>
+										<span className="font-semibold text-lg">{log._id}</span>
+									</div>
+								}
 							>
 								{log.entries.map((log, index) => (
 									<div
