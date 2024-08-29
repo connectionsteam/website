@@ -167,6 +167,7 @@ export interface ConnectionPayload {
 	tags: string[];
 	createdTimestamp: number;
 	maxConnections?: number;
+	teamId?: string;
 }
 
 export interface RequestPost {
