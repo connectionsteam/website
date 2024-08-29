@@ -34,6 +34,7 @@ export default function Page() {
 	const [changed, setChanged] = useState(false);
 	const [user, setUser] = useState<CoolUser>();
 	const [user2, setUser2] = useState<CoolUser>();
+	const [compactMode, setCompactMode] = useState(false);
 	const [hour, setHour] = useState("");
 	const { user: loggeduser } = useContext(UserContext);
 
@@ -138,7 +139,7 @@ export default function Page() {
 		<div className="flex justify-center items-center tablet:mt-20 overflow-x-hidden bg-dot-neutral-800/[0.6]">
 			<div className="flex flex-col max-w-[1100px] text-white">
 				<div className="tablet:flex-col flex h-screen tablet:h-auto items-center w-full gap-6">
-					<div className="flex flex-col gap-4 w-[62%] items-start justify-start tablet:items-center tablet:justify-center mobile:w-full">
+					<div className="flex flex-col gap-4 w-[62%] items-start justify-start tablet:items-center tablet:justify-center mobile:w-full pl-2 tablet:pl-0">
 						<h1
 							className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r
                         from-fuchsia-500 to-indigo-500 mobile:text-4xl"
@@ -183,8 +184,8 @@ export default function Page() {
 							</motion.div>
 						</div>
 					</div>
-					<div className="flex flex-row gap-4 items-start mobile w-full tablet:justify-center tablet:items-center mobile:flex-col">
-						<div className="bg-neutral-800 flex flex-col rounded-lg p-3">
+					<div className={`flex flex-row gap-2 items-center mobile w-full justify-center tablet:items-center mobile:flex-col`}>
+						<div className={`bg-neutral-800 flex flex-col rounded-lg p-3 ${compactMode ? "min-w-72" : ""}`}>
 							<div className="flex flex-col gap-4">
 								<div className="flex gap-2 items-center w-full rounded-lg p-2 bg-neutral-900/50">
 									<Image
@@ -198,7 +199,7 @@ export default function Page() {
 										{l.home.conversation.spyei.server}
 									</span>
 								</div>
-								<div className="flex flex-col gap-2 border-l-neutral-700 border-l-2">
+								<div className={`flex ${compactMode ? "gap-5" : "gap-2"} flex-col border-l-neutral-700 border-l-2`}>
 									<div className="text-neutral-400 flex items-center gap-2 px-1">
 										<HiHashtag />
 										<span>{l.home.conversation.connectedChannel}</span>
@@ -235,6 +236,7 @@ export default function Page() {
 										</div>
 									</div>
 									<ConnectionsEmbed
+										compact={compactMode}
 										hour={hour}
 										author={{
 											avatar: user2?.avatar ?? "",
@@ -247,7 +249,7 @@ export default function Page() {
 								</div>
 							</div>
 						</div>
-						<div className="bg-neutral-800 flex flex-col rounded-lg p-3">
+						<div className={`bg-neutral-800 flex flex-col rounded-lg p-3 ${compactMode ? "min-w-72" : ""}`}>
 							<div className="flex flex-col gap-4">
 								<div className="flex gap-2 items-center w-full rounded-lg p-2 bg-neutral-900/50">
 									<Image
@@ -261,12 +263,13 @@ export default function Page() {
 										{l.home.conversation.unreal.server}
 									</span>
 								</div>
-								<div className="flex flex-col gap-2 border-l-neutral-700 border-l-2 relative">
+								<div className={`flex flex-col ${compactMode ? "gap-5" : "gap-2"} border-l-neutral-700 border-l-2 relative`}>
 									<div className="text-neutral-400 flex items-center gap-2 px-1">
 										<HiHashtag />
 										<span>{l.home.conversation.connectedChannel}</span>
 									</div>
 									<ConnectionsEmbed
+										compact={compactMode}
 										response
 										hour={hour}
 										author={{
@@ -274,7 +277,8 @@ export default function Page() {
 												(loggeduser
 													? `https://cdn.discordapp.com/avatars/${loggeduser.id}/${loggeduser.avatar}.png`
 													: user?.avatar) ?? "",
-											username: (loggeduser ? loggeduser.username : user?.name) ?? "",
+											username:
+												(loggeduser ? loggeduser.username : user?.name) ?? "",
 										}}
 										delay={1.5}
 										server={l.home.conversation.spyei.server}
@@ -323,7 +327,9 @@ export default function Page() {
 													/>
 												))}
 											</div>
-											<span>{user2?.name} {l.home.conversation.unreal.typing}</span>
+											<span>
+												{user2?.name} {l.home.conversation.unreal.typing}
+											</span>
 										</div>
 									</motion.div>
 								</div>
@@ -354,7 +360,13 @@ export default function Page() {
 									>
 										<div className="flex items-center gap-1">
 											<div className="relative">
-												<Switch color="secondary" />
+												<Switch
+													onChange={() => {
+														flag === "COMPACT_MODE" &&
+															setCompactMode(!compactMode);
+													}}
+													color="secondary"
+												/>
 											</div>
 											<span className="font-bold">
 												{flagsDescriptions[flag].title}

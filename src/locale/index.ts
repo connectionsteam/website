@@ -23,7 +23,7 @@ export const languages = {
 					terms: "Termos de Uso",
 					policy: "Política de Privacidade",
 				},
-				title: "Inove a maneira de como você conversa",
+				title: "Personalize a maneira como você fala, seja melhor.",
 			},
 			description:
 				"Connections é um bot criado para facilitar conexões entre servidores, promovendo engajamento e dinamismo.",
@@ -829,7 +829,7 @@ export const languages = {
 					terms: "Terms of Use",
 					policy: "Privacy Policy",
 				},
-				title: "Innovate the way you talk",
+				title: "Customize the way you talk, be better.",
 			},
 			description:
 				"Connections is a bot designed to facilitate connections between servers, enhancing engagement and dynamism in your server.",
