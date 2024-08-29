@@ -30,14 +30,16 @@ export default function ConnectionsProtectedSkeleton() {
 	];
 
 	return (
-		<DefaultLayout className="mt-24">
-			<DefaultTabs
-				cursor="bg-neutral-800"
-				activeTab={activeTab}
-				setActiveTab={setActiveTab}
-				tabs={tabs}
-			/>
-			{tabs.find((t) => t.id === activeTab)?.component}
+		<DefaultLayout>
+			<div className="flex flex-col gap-6 w-full">
+				<DefaultTabs
+					cursor="bg-neutral-800"
+					activeTab={activeTab}
+					setActiveTab={setActiveTab}
+					tabs={tabs}
+				/>
+				{tabs.find((t) => t.id === activeTab)?.component}
+			</div>
 		</DefaultLayout>
 	);
 }
