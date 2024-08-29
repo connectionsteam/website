@@ -338,6 +338,9 @@ export const languages = {
 					},
 				},
 				auditLog: {
+					titles: "Registro de Auditoria das Conexões",
+					descriptions: "Acompanhe todas as mudanças feitas nas suas conexões do time (somente conexões promovidas)",
+					noPromoted: "Esse time não possui conexões promovidas",
 					title: "Registro de Auditoria",
 					description: "Acompanhe todas as mudanças feitas na sua conexão",
 					logEntry: {
@@ -389,6 +392,12 @@ export const languages = {
 				filterTeams: "Filtrar times",
 			},
 			teams: {
+				tabs: {
+					members: "Membros",
+					connections: "Conexões",
+					settings: "Configurações",
+					auditLog: "Registro de Auditoria",
+				},
 				title: "Times",
 				description: "Selecione o time que deseja gerenciar",
 				createTeam: "Criar time",
@@ -1118,6 +1127,9 @@ export const languages = {
 					},
 				},
 				auditLog: {
+					titles: "Team Connections Audit Logs",
+					descriptions: "Track all changes made to your team connections (only promoted connections)",
+					noPromoted: "This team doesn't have any promoted connections",
 					title: "Audit Log",
 					description: "Track all changes made to your connection",
 					logEntry: {
@@ -1167,6 +1179,12 @@ export const languages = {
 				filterTeams: "Filter teams",
 			},
 			teams: {
+				tabs: {
+					members: "Members",
+					connections: "Connections",
+					settings: "Settings",
+					auditLog: "Audit Log",
+				},
 				title: "Teams",
 				description: "Select the team you want to manage",
 				createTeam: "Create team",
