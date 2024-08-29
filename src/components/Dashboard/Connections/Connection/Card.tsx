@@ -58,11 +58,13 @@ export default function ConnectionCard({
 								{l.connection.promoted}
 							</div>
 						)}
-						<Avatar
-							className="w-12 h-12"
-							src={connection.icon || ""}
-							key={connection.name}
-						/>
+						<div className="min-w-12 h-12">
+							<Avatar
+								className="w-12 h-12"
+								src={connection.icon || ""}
+								key={connection.name}
+							/>
+						</div>
 						<div className="flex flex-col text-start">
 							<span className="font-bold text-lg">{connection.name}</span>
 							{connection.description && (
