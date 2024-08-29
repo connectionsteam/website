@@ -25,7 +25,7 @@ interface Props {
 }
 
 interface PatchChangesBody {
-	mods: {
+	mods?: {
 		id: string;
 		type: ModPermType;
 	}[];
@@ -69,7 +69,6 @@ export default function GuildModifications({
 		setLoading({ loading: true, check: false });
 
 		let body: PatchChangesBody = {
-			mods: mappedMods,
 			deleteThreadsId,
 			prefix: prefix ?? undefined,
 			logs: {
@@ -77,6 +76,16 @@ export default function GuildModifications({
 				channelId: guild.logs.channelId as string,
 			},
 		};
+
+		const modsAreDifferent =
+			JSON.stringify(mappedMods) !==
+			JSON.stringify(
+				actualGuild.mods.map((mod) => ({ id: mod.id, type: mod.type })),
+			);
+
+		if (modsAreDifferent) {
+			body.mods = mappedMods;
+		}
 
 		for (const i in body) {
 			if (!body[i as keyof typeof body]) {
