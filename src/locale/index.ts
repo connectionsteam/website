@@ -66,6 +66,9 @@ export const languages = {
 				},
 			},
 			guilds: {
+				noGuilds: "Você não tem servidores",
+				noGuildsDescription: "Você pode adicionar o connections nos seus servidores clicando no botão",
+				noGuildsFound: "Nenhum servidor encontrado",
 				title: "Servidores",
 				description: "Selecione o servidor que deseja gerenciar",
 				addServer: "Adicionar servidor",
@@ -280,6 +283,9 @@ export const languages = {
 				},
 			},
 			connections: {
+				noConnections: "Você não tem conexões",
+				noConnectionsDescription: "Você pode criar conexões clicando no botão",
+				noConnectionsFound: "Nenhuma conexão encontrada",
 				activatePromoted: "Ativar Promoted",
 				title: "Conexões",
 				description: "Selecione a conexão que deseja gerenciar",
@@ -425,7 +431,7 @@ export const languages = {
 						noMembers: "Seu time não possui membros",
 						noMembersFound: "Nenhum membro encontrado",
 						transferOwner:
-							"Você deseja mesmo transferir a posse do time para o membro",
+							"Você deseja mesmo transferir a posse do time para o membro {member}?",
 						button: "Transferir Posse",
 						placeholder: "Digite aqui o nome do membro ou ID",
 					},
@@ -474,6 +480,7 @@ export const languages = {
 						"Você pode criar conexões clicando no botão",
 					noConnectionsFound: "Nenhuma conexão encontrada",
 					modal: {
+						description: "Selecione abaixo a conexão que você deseja adicionar",
 						title: "Adicionar conexão",
 						label: "Nome da conexão",
 						placeholder: "Digite aqui o nome da conexão",
@@ -775,6 +782,10 @@ export const languages = {
 			connectionsText: "Parece que você chegou no seu limite de conexões...",
 		},
 		errors: {
+			teamMaxConnections: "Limite de conexões por time atingido (5/5)",
+			alreadyExists: "Já existe uma conexão com este nome",
+			alreadyInvited: "Este usuário já foi convidado para este time",
+			invalidUserID: "ID de usuário inválido",
 			needChannel: "Você precisa escolher um canal para conectar",
 			wrongTeamName: "Certifique-se que o nome da equipe é maior que 3 caracteres e menor que 20",
 			chooseAnChannel: "Escolha um canal para conectar",
@@ -785,7 +796,7 @@ export const languages = {
 			wrongGift: "ID de usuário ou código inválido",
 			wrongConName: "Certifique-se do nome da conexão precisa de mais que 1 caractere",
 			alreadyConnection: "Já existe uma conexão com este nome",
-			maxConnections: "Você precisa colocar um número maior que 1, e menor que 100 no máximo de conexões",
+			maxConnections: "Você precisa colocar um número maior que 2, e menor que 100 no máximo de conexões",
 			unknownConnection: "Conexão desconhecida"
 		}
 	},
@@ -856,6 +867,9 @@ export const languages = {
 				},
 			},
 			guilds: {
+				noGuilds: "You don't have servers",
+				noGuildsDescription: "You can add the connections to your servers by clicking on the button",
+				noGuildsFound: "No servers found",
 				title: "Servers",
 				description: "Select the server you want to manage",
 				addServer: "Add server",
@@ -1069,6 +1083,9 @@ export const languages = {
 				},
 			},
 			connections: {
+				noConnections: "You don't have connections",
+				noConnectionsDescription: "You can create connections by clicking on the button",
+				noConnectionsFound: "No connections found",
 				activatePromoted: "Activate Promoted",
 				title: "Connections",
 				description: "Select the connection you want to manage",
@@ -1206,7 +1223,7 @@ export const languages = {
 						noMembers: "Your team doesn't have members",
 						noMembersFound: "No members found",
 						transferOwner:
-							"Do you really want to transfer the team owner to the member",
+							"Do you really want to transfer the team owner to the member {member}?",
 						button: "Transfer Owner",
 						placeholder: "Type here the member name or ID",
 					},
@@ -1262,6 +1279,7 @@ export const languages = {
 						"You can create connections by clicking on the button",
 					noConnectionsFound: "No connections found",
 					modal: {
+						description: "Select below the connection you want to add",
 						title: "Add connection",
 						label: "Connection name",
 						placeholder: "Type here the name of the connection",
@@ -1561,6 +1579,8 @@ export const languages = {
 			connectionsText: "It seems that you reached your limit of connections...",
 		},
 		errors: {
+			teamMaxConnections: "Team maximum connections reached (5/5)",
+			alreadyExists: "There is already a connection with this name",
 			needChannel: "You need to choose a channel to connect",
 			wrongTeamName: "Check if the team name is longer than 3 characters and shorter than 20",
 			chooseAnChannel: "Choose a channel to connect",
@@ -1572,8 +1592,10 @@ export const languages = {
 			wrongConDesc: "Make sure the connection name is at least 16 characters",
 			wrongConName: "Make sure the team name is at least 1 character",
 			alreadyConnection: "There is already a connection with this name",
-			maxConnections: "You need to put a number greater than 1, and less than 100 in the maximum of connections",
-			unknownConnection: "Unknown connection"
+			maxConnections: "You need to put a number greater than 2, and less than 100 in the maximum of connections",
+			unknownConnection: "Unknown connection",
+			invalidUserID: "Invalid user ID",
+			alreadyInvited: "This user is already invited to this team",
 		}
 	}
 };
