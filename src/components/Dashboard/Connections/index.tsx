@@ -61,6 +61,16 @@ export default function ConnectionsComponent({
 		}, 500);
 	};
 
+	const filter = (connection: ConnectionPayload) => {
+		const advancedQuery = searchQuery.toLowerCase();
+
+		return (
+			connection.name.toLowerCase().includes(advancedQuery) ||
+			connection.description?.toLowerCase().includes(advancedQuery) ||
+			connection.creatorId?.includes(searchQuery)
+		);
+	};
+
 	return (
 		<>
 			<Head>
@@ -89,48 +99,56 @@ export default function ConnectionsComponent({
 						<LuPlusCircle size={20} />
 					</DefaultButton>
 				</div>
-				<div className="grid grid-cols-3 gap-3 w-full tablet:grid-cols-2 mobile:grid-cols-1">
-					<AnimatePresence>
-						{connections ? (
-							connections
-								.filter(
-									(connection) =>
-										connection.name
-											.toLowerCase()
-											.includes(searchQuery.toLowerCase()) ||
-										connection.name.includes(searchQuery) ||
-										connection.description
-											?.toLowerCase()
-											.includes(searchQuery.toLowerCase()) ||
-										connection.creatorId?.includes(searchQuery),
-								)
-								.map((connection, index) => (
-									<ConnectionCard
-										loading={loading}
-										handleDeleteConnection={handleDeleteConnection}
-										key={index}
-										connection={connection}
-										connectionProps={connectionProps}
-										setConnectionProps={setConnectionProps}
-										index={index}
-									/>
-								))
-						) : (
-							<ConnectionsSkeleton />
-						)}
-					</AnimatePresence>
-					{connections && (
-						<CreateConnectionForm
-							setConnections={
-								setConnections as Dispatch<SetStateAction<ConnectionPayload[]>>
-							}
-							isOpen={isOpen}
-							onOpenChange={onOpenChange}
-							onClose={onClose}
-							connections={connections}
-						/>
-					)}
-				</div>
+				{connections ? (
+					connections.filter(filter).length === 0 ? (
+						<div className="flex w-full items-center justify-center">
+							<div className="min-h-[30vh] text-lg items-center font-bold justify-center flex text-center">
+								{searchQuery === "" ? (
+									<div className="flex flex-col">
+										<div>{l.dashboard.connections.noConnections}</div>
+										<div className="text-sm text-neutral-300 font-normal flex gap-1">
+											<p>{l.dashboard.connections.noConnectionsDescription}</p>
+											<span className="font-semibold">+</span>
+										</div>
+									</div>
+								) : (
+									l.dashboard.connections.noConnectionsFound
+								)}
+							</div>
+						</div>
+					) : (
+						<div className="grid grid-cols-3 gap-3 w-full tablet:grid-cols-2 mobile:grid-cols-1">
+							<AnimatePresence>
+								{connections
+									.filter(filter)
+									.map((connection, index) => (
+										<ConnectionCard
+											loading={loading}
+											handleDeleteConnection={handleDeleteConnection}
+											key={index}
+											connection={connection}
+											connectionProps={connectionProps}
+											setConnectionProps={setConnectionProps}
+											index={index}
+										/>
+									))}
+							</AnimatePresence>
+						</div>
+					)
+				) : (
+					<ConnectionsSkeleton />
+				)}
+				{connections && (
+					<CreateConnectionForm
+						setConnections={
+							setConnections as Dispatch<SetStateAction<ConnectionPayload[]>>
+						}
+						isOpen={isOpen}
+						onOpenChange={onOpenChange}
+						onClose={onClose}
+						connections={connections}
+					/>
+				)}
 			</div>
 		</>
 	);
