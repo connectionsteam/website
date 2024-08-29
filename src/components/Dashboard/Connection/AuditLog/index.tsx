@@ -189,7 +189,7 @@ export default function PromotedConnectionAuditLog({ id }: { id: string }) {
 				</div>
 			</div>
 			<div className="flex flex-col gap-2 w-full">
-				{logs.map((log, index) => (
+				{false ? logs.map((log, index) => (
 					<div
 						key={index}
 						className="bg-neutral-900/50 p-3 rounded-lg flex flex-col gap-2"
@@ -199,6 +199,18 @@ export default function PromotedConnectionAuditLog({ id }: { id: string }) {
 						))}
 						<div className="text-neutral-300">
 							{new Date(log.createdTimestamp).toLocaleString(l.language)}
+						</div>
+					</div>
+				)) : Array(10).fill(0).map((_, index) => (
+					<div
+						key={index}
+						className="bg-neutral-900/50 p-3 rounded-lg flex flex-col gap- w-full"
+					>
+						{Array.from({ length: 2 }).map((_, index) => (
+							<div key={index} className="w-full h-6 bg-neutral-700 animate-pulse rounded-full"></div>
+						))}
+						<div className="text-neutral-300">
+							{new Date(Date.now()).toLocaleString(l.language)}
 						</div>
 					</div>
 				))}
