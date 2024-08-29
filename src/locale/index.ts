@@ -28,7 +28,7 @@ export const languages = {
 			description:
 				"Connections é um bot criado para facilitar conexões entre servidores, promovendo engajamento e dinamismo.",
 			embeds: {
-				hour: "Hoje às 16:28",
+				hour: "Hoje às ",
 			},
 			addConnections: "Adicionar Connections",
 			conversation: {
@@ -39,7 +39,7 @@ export const languages = {
 				unreal: {
 					message: "Estou bem!",
 					server: "Servidor de unreal",
-					typing: "Unreal está digitando",
+					typing: " está digitando",
 				},
 				connectedChannel: "canal-conectado",
 			},
@@ -829,7 +829,7 @@ export const languages = {
 			description:
 				"Connections is a bot designed to facilitate connections between servers, enhancing engagement and dynamism in your server.",
 			embeds: {
-				hour: "Today at 4:28",
+				hour: "Today at ",
 			},
 			addConnections: "Invite Connections",
 			conversation: {
@@ -840,7 +840,7 @@ export const languages = {
 				unreal: {
 					message: "I'm fine!",
 					server: "Unreal's Guild",
-					typing: "Unreal is typing",
+					typing: " is typing",
 				},
 				connectedChannel: "connected-channel",
 			},

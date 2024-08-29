@@ -1,6 +1,6 @@
 import { useLanguage } from "../../hooks/useLanguage";
 import { motion } from "framer-motion";
-import Image from "next/image";
+import Avatar from "../Mixed/Avatar";
 
 interface Props {
 	author: {
@@ -10,6 +10,8 @@ interface Props {
 	delay: number;
 	server: string;
 	message: string;
+	hour: string;
+	response?: boolean;
 }
 
 export default function ConnectionsEmbed({
@@ -17,6 +19,8 @@ export default function ConnectionsEmbed({
 	delay,
 	server,
 	message,
+	hour,
+	response
 }: Props) {
 	const l = useLanguage();
 
@@ -27,13 +31,9 @@ export default function ConnectionsEmbed({
 			transition={{ delay }}
 			className="flex items-start gap-3 px-2"
 		>
-			<Image
-				width={40}
-				height={40}
-				src="/avatars/connections.png"
-				alt="Connections's Avatar"
-				className="rounded-full"
-			/>
+			<div className="min-w-10 min-h-10">
+				<Avatar src="/avatars/connections.png" className="w-10 h-10" />
+			</div>
 			<div className="flex gap-1 flex-col w-full">
 				<div className="flex gap-1">
 					<div className="flex gap-1 items-center justify-center">
@@ -43,29 +43,21 @@ export default function ConnectionsEmbed({
 						</div>
 					</div>
 					<span className="text-neutral-400 text-xs mt-1">
-						{l.home.embeds.hour}
+						{l.home.embeds.hour} {hour}
 					</span>
 				</div>
 				<div className="bg-neutral-900/50 rounded-lg p-3 flex flex-col gap-2 w-full">
 					<div className="flex gap-2 items-center w-full">
-						<Image
-							width={28}
-							height={28}
-							src={author.avatar}
-							alt="Unreal's Avatar"
-							className="rounded-full"
-						/>
+						<div className="min-w-7 min-h-7">
+							<Avatar src={author.avatar} className="w-7 h-7" />
+						</div>
 						<span className="font-bold">{author.username}</span>
 					</div>
 					<span className="text-neutral-200">{message}</span>
 					<div className="flex gap-2 items-center rounded-lg">
-						<Image
-							width={24}
-							height={24}
-							src={`/guilds/${author.username}.png`}
-							alt="Spyei's Guild"
-							className="rounded-full"
-						/>
+						<div className="min-w-6 min-h-6">
+							<Avatar src={`/guilds/${response ? "spyei" : "unreal"}.png`} className="w-6 h-6" />
+						</div>
 						<span className="text-sm">{server}</span>
 					</div>
 				</div>

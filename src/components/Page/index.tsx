@@ -17,13 +17,25 @@ import { TbLayoutDashboardFilled } from "react-icons/tb";
 import { LuPlusCircle } from "react-icons/lu";
 import { BackgroundColoredGradient } from "../ui/BgGradient";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../contexts/User";
+import Avatar from "../Mixed/Avatar";
+
+interface CoolUser {
+	id: string;
+	name: string;
+	avatar: string;
+}
 
 export default function Page() {
 	const l = useLanguage();
 	const url =
 		"https://discord.com/oauth2/authorize?client_id=1243234162077470802";
 	const [changed, setChanged] = useState(false);
+	const [user, setUser] = useState<CoolUser>();
+	const [user2, setUser2] = useState<CoolUser>();
+	const [hour, setHour] = useState("");
+	const { user: loggeduser } = useContext(UserContext);
 
 	const flagsDescriptions = {
 		[ConnectedConnectionFlags.CompactModeEnabled]: {
@@ -62,6 +74,65 @@ export default function Page() {
 			setChanged(false);
 		}, 1000);
 	}, []);
+
+	useEffect(() => {
+		const users: CoolUser[] = [
+			{
+				id: "903186158937325569",
+				avatar: "/avatars/drezo.png",
+				name: "Drezzy",
+			},
+			{
+				id: "1117749265066893393",
+				avatar: "/avatars/toddy.png",
+				name: "Toddy",
+			},
+			{
+				id: "955095844275781693",
+				avatar: "/avatars/spyei.png",
+				name: "Spyei",
+			},
+			{
+				id: "963124227911860264",
+				avatar: "/avatars/unreal.png",
+				name: "Unreal",
+			},
+			{
+				id: "573812452165156864",
+				avatar: "/avatars/kau.jpg",
+				name: "Kau",
+			},
+			{
+				id: "943852777568874546",
+				avatar: "/avatars/patu.jpg",
+				name: "Patu",
+			},
+		].filter((user) => user.id !== loggeduser?.id);
+
+		if (users.length < 2) {
+			setUser(undefined);
+
+			return setUser2(undefined);
+		}
+
+		const selectedUser = users[Math.floor(Math.random() * users.length)];
+		const remainingUsers = users.filter((user) => user.id !== selectedUser.id);
+		const selectedUser2 =
+			remainingUsers[Math.floor(Math.random() * remainingUsers.length)];
+
+		setUser(selectedUser);
+		setUser2(selectedUser2);
+	}, [loggeduser]);
+
+	useEffect(() => {
+		const now = new Date(Date.now());
+		const spplitedDate = now
+			.toLocaleString(l.language)
+			.split(", ")[1]
+			.split(":");
+
+		setHour(`${spplitedDate[0]}:${spplitedDate[1]}`);
+	}, [l.language]);
 
 	return (
 		<div className="flex justify-center items-center tablet:mt-20 overflow-x-hidden bg-dot-neutral-800/[0.6]">
@@ -103,7 +174,8 @@ export default function Page() {
 									target="_blank"
 									href={url}
 									className="bg-neutral-800 flex items-center justify-start
-                            p-4 px-5 rounded-lg transition w-full gap-3 hover:bg-neutral-700" rel="noreferrer"
+                            p-4 px-5 rounded-lg transition w-full gap-3 hover:bg-neutral-700"
+									rel="noreferrer"
 								>
 									<LuPlusCircle size={20} />
 									<span>{l.home.addConnections}</span>
@@ -131,19 +203,22 @@ export default function Page() {
 										<HiHashtag />
 										<span>{l.home.conversation.connectedChannel}</span>
 									</div>
-									<div className="flex items-start gap-3 px-2">
-										<Image
-											width={40}
-											height={40}
-											src="/avatars/spyei.png"
-											alt="Spyei's Avatar"
-											className="rounded-full"
+									<div className="flex items-start gap-3 px-2 min-w-10 min-h-10">
+										<Avatar
+											src={
+												(loggeduser
+													? `https://cdn.discordapp.com/avatars/${loggeduser.id}/${loggeduser.avatar}.png`
+													: user?.avatar) ?? ""
+											}
+											className="w-10 h-10"
 										/>
 										<div className="flex flex-col">
 											<div className="flex gap-1">
-												<span className="font-bold">Spyei</span>
+												<span className="font-bold">
+													{loggeduser ? loggeduser.username : user?.name}
+												</span>
 												<span className="text-neutral-400 text-xs mt-1">
-													{l.home.embeds.hour}
+													{l.home.embeds.hour} {hour}
 												</span>
 											</div>
 											{changed ? (
@@ -160,9 +235,10 @@ export default function Page() {
 										</div>
 									</div>
 									<ConnectionsEmbed
+										hour={hour}
 										author={{
-											avatar: "/avatars/unreal.png",
-											username: "unreal",
+											avatar: user2?.avatar ?? "",
+											username: user2?.name ?? "",
 										}}
 										delay={5}
 										server={l.home.conversation.unreal.server}
@@ -191,9 +267,14 @@ export default function Page() {
 										<span>{l.home.conversation.connectedChannel}</span>
 									</div>
 									<ConnectionsEmbed
+										response
+										hour={hour}
 										author={{
-											avatar: "/avatars/spyei.png",
-											username: "spyei",
+											avatar:
+												(loggeduser
+													? `https://cdn.discordapp.com/avatars/${loggeduser.id}/${loggeduser.avatar}.png`
+													: user?.avatar) ?? "",
+											username: (loggeduser ? loggeduser.username : user?.name) ?? "",
 										}}
 										delay={1.5}
 										server={l.home.conversation.spyei.server}
@@ -201,8 +282,8 @@ export default function Page() {
 									/>
 									<UserEmbed
 										author={{
-											avatar: "/avatars/unreal.png",
-											username: "Unreal",
+											avatar: user2?.avatar ?? "",
+											username: user2?.name ?? "",
 										}}
 										delay={4.5}
 										message={l.home.conversation.unreal.message}
@@ -242,7 +323,7 @@ export default function Page() {
 													/>
 												))}
 											</div>
-											<span>{l.home.conversation.unreal.typing}</span>
+											<span>{user2?.name} {l.home.conversation.unreal.typing}</span>
 										</div>
 									</motion.div>
 								</div>
@@ -333,7 +414,8 @@ export default function Page() {
 									className="hover:bg-neutral-800 transition
                                         rounded-lg rounded-l-none p-4 border-2 border-neutral-800 
                                         w-72 flex gap-2 items-center justify-start font-bold
-                                        tablet:rounded-lg tablet:border-2 tablet:w-full mobile:text-sm" rel="noreferrer"
+                                        tablet:rounded-lg tablet:border-2 tablet:w-full mobile:text-sm"
+									rel="noreferrer"
 								>
 									<LuPlusCircle size={20} />
 									<span>{l.home.addConnections}</span>

@@ -1,6 +1,7 @@
 import { useLanguage } from "../../hooks/useLanguage";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Avatar from "../Mixed/Avatar";
 
 interface Props {
 	author: {
@@ -21,13 +22,9 @@ export default function UserEmbed({ author, delay, message }: Props) {
 			transition={{ delay }}
 			className="flex items-start gap-3 px-2"
 		>
-			<Image
-				width={40}
-				height={40}
-				src={author.avatar}
-				alt="Unreal's Avatar"
-				className="rounded-full"
-			/>
+			<div className="min-w-10 min-h-10">
+				<Avatar src={author.avatar} className="w-10 h-10" />
+			</div>
 			<div className="flex flex-col">
 				<div className="flex gap-1">
 					<span className="font-bold">{author.username}</span>
