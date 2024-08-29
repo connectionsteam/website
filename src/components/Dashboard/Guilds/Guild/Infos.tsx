@@ -62,7 +62,8 @@ export default function Infos({
 		},
 		[LogsFlag.LogConnections]: {
 			title: l.dashboard.guilds.info.logs.logsbuttons.connectionsLog.title,
-			description: l.dashboard.guilds.info.logs.logsbuttons.connectionsLog.description,
+			description:
+				l.dashboard.guilds.info.logs.logsbuttons.connectionsLog.description,
 		},
 		[LogsFlag.LogLocks]: {
 			title: l.dashboard.guilds.info.logs.logsbuttons.locksLog.title,
@@ -71,31 +72,38 @@ export default function Infos({
 		},
 		[LogsFlag.LogMessages]: {
 			title: l.dashboard.guilds.info.logs.logsbuttons.messagesLog.title,
-			description: l.dashboard.guilds.info.logs.logsbuttons.messagesLog.description,
+			description:
+				l.dashboard.guilds.info.logs.logsbuttons.messagesLog.description,
 		},
 		[LogsFlag.LogNotes]: {
 			title: l.dashboard.guilds.info.logs.logsbuttons.notesLog.title,
-			description: l.dashboard.guilds.info.logs.logsbuttons.notesLog.description,
+			description:
+				l.dashboard.guilds.info.logs.logsbuttons.notesLog.description,
 		},
 		[LogsFlag.LogPurges]: {
 			title: l.dashboard.guilds.info.logs.logsbuttons.purgesLog.title,
-			description: l.dashboard.guilds.info.logs.logsbuttons.purgesLog.description,
+			description:
+				l.dashboard.guilds.info.logs.logsbuttons.purgesLog.description,
 		},
 		[LogsFlag.LogReports]: {
 			title: l.dashboard.guilds.info.logs.logsbuttons.reportsLog.title,
-			description: l.dashboard.guilds.info.logs.logsbuttons.reportsLog.description,
+			description:
+				l.dashboard.guilds.info.logs.logsbuttons.reportsLog.description,
 		},
 		[LogsFlag.LogTimeouts]: {
 			title: l.dashboard.guilds.info.logs.logsbuttons.timeoutsLog.title,
-			description: l.dashboard.guilds.info.logs.logsbuttons.timeoutsLog.description,
+			description:
+				l.dashboard.guilds.info.logs.logsbuttons.timeoutsLog.description,
 		},
 		[LogsFlag.LogMessageDelete]: {
 			title: l.dashboard.guilds.info.logs.logsbuttons.messageDeleteLog.title,
-			description: l.dashboard.guilds.info.logs.logsbuttons.messageDeleteLog.description,
+			description:
+				l.dashboard.guilds.info.logs.logsbuttons.messageDeleteLog.description,
 		},
 		[LogsFlag.LogMessageUpdate]: {
 			title: l.dashboard.guilds.info.logs.logsbuttons.messageUpdateLog.title,
-			description: l.dashboard.guilds.info.logs.logsbuttons.messageUpdateLog.description,
+			description:
+				l.dashboard.guilds.info.logs.logsbuttons.messageUpdateLog.description,
 		},
 	};
 
@@ -158,30 +166,69 @@ export default function Infos({
 	return (
 		<div className="w-full rounded-lg bg-neutral-800 p-6 transition flex flex-col gap-4">
 			<div className="flex flex-col gap-3">
-				<div className="flex flex-col">
-					<span className="font-bold text-lg">
-						{l.dashboard.guilds.info.prefix}
-					</span>
-					<span>{l.dashboard.guilds.info.prefixdescription}</span>
-				</div>
-				<div className="flex gap-1">
-					<input
-						maxLength={6}
-						className="rounded-lg p-3 max-w-32 outline-none bg-neutral-900/50"
-						value={guild.prefix !== undefined ? guild.prefix : "c"}
-						onChange={(e) => {
-							if (e.target.value === actualGuild.prefix) {
-								setModifications(false);
-							} else {
-								setModifications(true);
-							}
+				<div className="flex gap-2 mobile:flex-col">
+					<div className="flex flex-col gap-2">
+						<div className="flex flex-col">
+							<span className="font-bold text-lg">
+								{l.dashboard.guilds.info.prefix}
+							</span>
+							<span>{l.dashboard.guilds.info.prefixdescription}</span>
+						</div>
+						<div className="flex gap-1">
+							<input
+								placeholder={l.connection.filters.typehere}
+								maxLength={6}
+								className="rounded-lg p-3 max-w-32 outline-none bg-neutral-900/50"
+								value={guild.prefix !== undefined ? guild.prefix : "c"}
+								onChange={(e) => {
+									if (e.target.value === actualGuild.prefix) {
+										setModifications(false);
+									} else {
+										setModifications(true);
+									}
 
-							setGuild({
-								...guild,
-								prefix: e.target.value,
-							});
-						}}
-					/>
+									setGuild({
+										...guild,
+										prefix: e.target.value,
+									});
+								}}
+							/>
+						</div>
+					</div>
+					<div className="flex flex-col gap-2">
+						<div className="flex flex-col">
+							<span className="font-bold text-lg">
+								{l.dashboard.guilds.info.metadata.title}
+							</span>
+							<span>{l.dashboard.guilds.info.metadata.description}</span>
+						</div>
+						<div className="flex gap-1">
+							<input
+								type="number"
+								min={3}
+								max={900}
+								className="rounded-lg p-3 max-w-32 outline-none bg-neutral-900/50"
+								value={guild.metadata.maxCharsPerMessage ?? 700}
+								onChange={(e) => {
+									if (
+										parseInt(e.target.value) ===
+										(actualGuild.metadata.maxCharsPerMessage ?? 700)
+									) {
+										setModifications(false);
+									} else {
+										setModifications(true);
+									}
+
+									setGuild({
+										...guild,
+										metadata: {
+											maxCharsPerMessage: parseInt(e.target.value),
+										},
+									});
+								}}
+							/>
+						</div>
+					</div>
 				</div>
 				<div className="flex flex-col">
 					<span className="font-bold text-lg">

@@ -73,6 +73,10 @@ export const languages = {
 				description: "Selecione o servidor que deseja gerenciar",
 				addServer: "Adicionar servidor",
 				info: {
+					metadata: {
+						title: "Caracteres por Mensagem",
+						description: "Defina abaixo o número máximo de caracteres que irá aparecer nas mensagens recebidas do seu servidor"
+					},
 					logs: {
 						logsbuttons: {
 							anyLog: {
@@ -782,6 +786,7 @@ export const languages = {
 			connectionsText: "Parece que você chegou no seu limite de conexões...",
 		},
 		errors: {
+			maxCharsPerMessage: "O número máximo de caracteres por mensagens permitidos é de 3 a 900",
 			teamMaxConnections: "Limite de conexões por time atingido (5/5)",
 			alreadyExists: "Já existe uma conexão com este nome",
 			alreadyInvited: "Este usuário já foi convidado para este time",
@@ -874,6 +879,10 @@ export const languages = {
 				description: "Select the server you want to manage",
 				addServer: "Add server",
 				info: {
+					metadata: {
+						title: "Max Chars Per Message",
+						description: "Define below the maximum number of characters that will appear in the messages received from your server"
+					},
 					logs: {
 						logsbuttons: {
 							anyLog: {
@@ -1579,6 +1588,7 @@ export const languages = {
 			connectionsText: "It seems that you reached your limit of connections...",
 		},
 		errors: {
+			maxCharsPerMessage: "The maximum number of characters per message allowed is 3 to 900",
 			teamMaxConnections: "Team maximum connections reached (5/5)",
 			alreadyExists: "There is already a connection with this name",
 			needChannel: "You need to choose a channel to connect",

@@ -48,6 +48,9 @@ export interface GuildPayload {
 		parentId: string;
 	}[];
 	logs: GuildLogsPayload;
+	metadata: {
+		maxCharsPerMessage?: number;
+	}
 }
 
 interface GuildLogsPayload {

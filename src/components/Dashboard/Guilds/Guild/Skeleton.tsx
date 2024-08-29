@@ -24,12 +24,23 @@ export default function GuildSkeleton() {
 			</div>
 			<div className="bg-neutral-800 p-4 rounded-lg w-full flex gap-4 flex-col">
 				<div className="flex flex-col gap-2 w-full">
-					<div className="flex flex-col gap-2">
-						<div className="flex flex-col gap-2">
-							<div className="rounded-full animate-pulse bg-neutral-700 h-5 w-24"></div>
-							<div className="rounded-full animate-pulse bg-neutral-700 h-4 w-44"></div>
+					<div className="flex gap-2 mobile:flex-col w-full">
+						<div className="flex flex-col gap-2 w-full">
+							<div className="flex flex-col gap-2">
+								<div className="rounded-full animate-pulse bg-neutral-700 h-5 w-24"></div>
+								<div className="rounded-full animate-pulse bg-neutral-700 h-4 w-full"></div>
+								<div className="rounded-full animate-pulse bg-neutral-700 h-4 w-44"></div>
+							</div>
+							<div className="h-12 w-28 rounded-lg animate-pulse bg-neutral-900/50"></div>
 						</div>
-						<div className="h-12 w-28 rounded-lg animate-pulse bg-neutral-900/50"></div>
+						<div className="flex flex-col gap-2 w-full">
+							<div className="flex flex-col gap-2">
+								<div className="rounded-full animate-pulse bg-neutral-700 h-5 w-32"></div>
+								<div className="rounded-full animate-pulse bg-neutral-700 h-4 w-full"></div>
+								<div className="rounded-full animate-pulse bg-neutral-700 h-4 w-32"></div>
+							</div>
+							<div className="h-12 w-28 rounded-lg animate-pulse bg-neutral-900/50"></div>
+						</div>
 					</div>
 					<div className="flex flex-col gap-2">
 						<div className="flex flex-col gap-2">

@@ -40,6 +40,9 @@ interface PatchChangesBody {
 		channelId: string;
 		flags: LogsFlag[];
 	};
+	metadata: {
+		maxCharsPerMessage?: number;
+	};
 }
 
 export default function GuildModifications({
@@ -69,6 +72,9 @@ export default function GuildModifications({
 		setLoading({ loading: true, check: false });
 
 		let body: PatchChangesBody = {
+			metadata: {
+				maxCharsPerMessage: guild.metadata.maxCharsPerMessage ?? 700,
+			},
 			deleteThreadsId,
 			prefix: prefix ?? undefined,
 			logs: {
@@ -85,6 +91,16 @@ export default function GuildModifications({
 
 		if (modsAreDifferent) {
 			body.mods = mappedMods;
+		}
+
+		if (
+			body.metadata.maxCharsPerMessage &&
+			(body.metadata.maxCharsPerMessage < 3 ||
+				body.metadata.maxCharsPerMessage > 900)
+		) {
+			setLoading({ ...loading, check: false });
+
+			return setErrors(["maxCharsPerMessage"]);
 		}
 
 		for (const i in body) {
@@ -116,6 +132,9 @@ export default function GuildModifications({
 					flags: guild.logs.flags,
 					channelId: guild.logs.channelId,
 				},
+				metadata: {
+					maxCharsPerMessage: guild.metadata?.maxCharsPerMessage ?? 700,
+				},
 				//@ts-expect-error Missing keyowrd purposely
 				mods: updatedMods,
 				prefix: prefix === undefined || prefix === "" ? "c" : prefix,
@@ -126,6 +145,9 @@ export default function GuildModifications({
 				logs: {
 					flags: guild.logs.flags,
 					channelId: guild.logs.channelId,
+				},
+				metadata: {
+					maxCharsPerMessage: guild.metadata?.maxCharsPerMessage ?? 700,
 				},
 				//@ts-expect-error Missing keyowrd purposely
 				mods: updatedMods,
@@ -139,7 +161,15 @@ export default function GuildModifications({
 				setModifications(false);
 			}, 500);
 		} catch (error) {
-			setLoading({ ...loading, check: false });
+			setLoading({ loading: false, check: false });
+			
+			if (
+				body.metadata.maxCharsPerMessage &&
+				(body.metadata.maxCharsPerMessage < 3 ||
+					body.metadata.maxCharsPerMessage > 900)
+			) {	
+				return setErrors(["maxCharsPerMessage"]);
+			}
 
 			setErrors(["generic"]);
 		}
@@ -151,6 +181,9 @@ export default function GuildModifications({
 			logs: {
 				flags: actualGuild.logs.flags,
 				channelId: actualGuild.logs.channelId,
+			},
+			metadata: {
+				maxCharsPerMessage: actualGuild.metadata?.maxCharsPerMessage ?? 700,
 			},
 			prefix: actualGuild.prefix,
 			mods: actualGuild.mods,
@@ -194,8 +227,11 @@ export default function GuildModifications({
 					</button>
 				</div>
 			</div>
-			{errors.length > 0 ? (
+			{errors.includes("generics") ? (
 				<div className="text-red-500">{l.errors.generic}</div>
+			) : null}
+			{errors.includes("maxCharsPerMessage") ? (
+				<div className="text-red-500">{l.errors.maxCharsPerMessage}</div>
 			) : null}
 		</div>
 	);
