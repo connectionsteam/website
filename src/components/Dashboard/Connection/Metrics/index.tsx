@@ -4,6 +4,7 @@ import { api } from "../../../../utils/api";
 import type { ConnectionMetrics, ConnectionPayload } from "../../../../types";
 import { useLanguage } from "../../../../hooks/useLanguage";
 import ChartComponent from "./Chart";
+import ConnectionMetricsSkeleton from "./Skeleton";
 
 interface Props {
 	connection: ConnectionPayload;
@@ -147,7 +148,7 @@ export default function PromotedMetricsComponent({ connection }: Props) {
 					</div>
 				</div>
 			) : (
-				<div>oi</div>
+				<ConnectionMetricsSkeleton/>
 			)}
 		</motion.div>
 	);
