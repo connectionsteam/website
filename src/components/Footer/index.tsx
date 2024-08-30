@@ -14,8 +14,8 @@ export default function Footer() {
 					<div className="flex flex-col flex-grow mobile:flex-grow-0 gap-1">
 						<div className="flex flex-col">
 							<div className="font-bold text-2xl">Connections</div>
-							<span className="max-w-52 text-neutral-300">
-								{l.home.footer.title}.
+							<span className="max-w-72 text-neutral-300">
+								{l.home.footer.title}
 							</span>
 						</div>
 						<a href="https://discord.gg/RXBRraTWeY" target="_blank" rel="noreferrer">
