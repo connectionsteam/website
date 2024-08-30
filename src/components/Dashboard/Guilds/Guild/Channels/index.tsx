@@ -2,6 +2,7 @@ import { RiHashtag } from "react-icons/ri";
 import { useLanguage } from "../../../../../hooks/useLanguage";
 import {
 	ConnectedConnectionFlags,
+	ConnectedConnectionPayload,
 	type GuildChannelsPayload,
 	type GuildPayload,
 } from "../../../../../types";
@@ -19,36 +20,24 @@ interface Props {
 export default function Channels({ channels, guild, setGuild }: Props) {
 	const l = useLanguage();
 
-	const handleToggleLocked = (connectionName: string) => async () => {
-		const connection = guild.connections.find(
-			(connection) => connection.name === connectionName,
-		);
-
-		if (!connection) return;
-
-		const { flags } = connection;
-
-		if (flags.includes(ConnectedConnectionFlags.Frozen)) return;
-
-		const filteredFlags = flags.includes(ConnectedConnectionFlags.Locked)
-			? flags.filter(
-					(flag) => flag !== ConnectedConnectionFlags.Locked,
-				)
-			: [...flags, ConnectedConnectionFlags.Locked];
-
-		await api.patch(`/guilds/${guild.id}/connections/${connection.name}`, {
-			flags: filteredFlags,
+	const handleToggleLocked = (connection: ConnectedConnectionPayload) => async () => {
+		if (connection.flags.includes(ConnectedConnectionFlags.Frozen)) return;
+	
+		const lockedAt = connection.lockedAt ? null : Date.now();
+	
+		const { data } = await api.patch(`/guilds/${guild.id}/connections/${connection.name}`, {
+			lockedAt
 		});
-
+	
 		setGuild({
 			...guild,
-			connections: guild.connections.map((connection) =>
-				connection.name === connectionName
-					? { ...connection, flags: filteredFlags }
-					: connection,
-			),
+			connections: guild.connections.map((conn) => 
+				conn.name === connection.name 
+					? { ...conn, lockedAt: data.lockedAt } 
+					: conn
+			)
 		});
-	};
+	};	
 
 	return (
 		<div className="flex flex-col gap-4 rounded-lg bg-neutral-800 p-6">
@@ -81,7 +70,7 @@ export default function Channels({ channels, guild, setGuild }: Props) {
 								<span className="font-bold text-lg">{connection.name}</span>
 							</Link>
 							<button
-								onClick={handleToggleLocked(connection.name)}
+								onClick={handleToggleLocked(connection)}
 								className="w-full flex gap-2 rounded-lg bg-neutral-900/50 p-3
                                     items-center pr-0 rounded-t-none rounded-tr-lg mobile:rounded-tr-none
                                     group-hover:bg-neutral-900 transition"
@@ -108,15 +97,13 @@ export default function Channels({ channels, guild, setGuild }: Props) {
 									<div
 										className={`transition text-black rounded-lg flex 
                                                     gap-2 p-1 items-center w-full
-                                                    ${connection.flags.includes(ConnectedConnectionFlags.Locked)
+                                                    ${connection.lockedAt
 														? "bg-red-500"
 														: "bg-green-500"
 													}
                                                     `}
 									>
-										{connection.flags.includes(
-											ConnectedConnectionFlags.Locked,
-										) ? (
+										{connection.lockedAt ? (
 											<LuLock size={26} />
 										) : (
 											<LuUnlock size={26} />

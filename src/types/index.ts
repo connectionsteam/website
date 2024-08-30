@@ -111,6 +111,7 @@ export interface ConnectedConnectionPayload {
 	icon: string;
 	description?: string;
 	channelId: string;
+	lockedAt?: number | null;
 	flags: ConnectedConnectionFlags[];
 }
 
@@ -124,7 +125,6 @@ export enum InitialPageConnectedConnectionFlags {
 }
 
 export enum ConnectedConnectionFlags {
-	Locked = "LOCKED",
 	Frozen = "FROZEN",
 	AllowFiles = "ALLOW_FILES",
 	AllowInvites = "ALLOW_INVITES",
