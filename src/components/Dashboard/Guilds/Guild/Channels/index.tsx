@@ -26,23 +26,25 @@ export default function Channels({ channels, guild, setGuild }: Props) {
 
 		if (!connection) return;
 
-		if (connection.flags.includes(ConnectedConnectionFlags.Frozen)) return;
+		const { flags } = connection;
 
-		const flags = connection.flags.includes(ConnectedConnectionFlags.Locked)
-			? connection.flags.filter(
+		if (flags.includes(ConnectedConnectionFlags.Frozen)) return;
+
+		const filteredFlags = flags.includes(ConnectedConnectionFlags.Locked)
+			? flags.filter(
 					(flag) => flag !== ConnectedConnectionFlags.Locked,
 				)
-			: [...connection.flags, ConnectedConnectionFlags.Locked];
+			: [...flags, ConnectedConnectionFlags.Locked];
 
 		await api.patch(`/guilds/${guild.id}/connections/${connection.name}`, {
-			flags,
+			flags: filteredFlags,
 		});
 
 		setGuild({
 			...guild,
 			connections: guild.connections.map((connection) =>
 				connection.name === connectionName
-					? { ...connection, flags }
+					? { ...connection, flags: filteredFlags }
 					: connection,
 			),
 		});

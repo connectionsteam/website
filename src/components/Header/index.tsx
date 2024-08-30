@@ -108,7 +108,7 @@ export default function Header() {
 						<Link
 							onClick={handleRecallDrawer}
 							className="transition duration-300 group ease-in-out"
-							href="/dashboard"
+							href="/premium"
 						>
 							<Underline premium>Premium</Underline>
 						</Link>

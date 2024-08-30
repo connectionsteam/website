@@ -110,9 +110,11 @@ export default function Infos({
 	const handleFlagChange = (flag: LogsFlag) => () => {
 		setModifications(true);
 
-		const updatedFlags = guild.logs.flags.includes(flag)
-			? guild.logs.flags.filter((f) => f !== flag)
-			: [...guild.logs.flags, flag];
+		const { flags } = guild.logs;
+
+		const updatedFlags = flags.includes(flag)
+			? flags.filter((f) => f !== flag)
+			: [...flags, flag];
 
 		setGuild({
 			...guild,
@@ -122,6 +124,7 @@ export default function Infos({
 
 	const changeChannel = (channel: GuildChannelsPayload) => () => {
 		if (channel.id === guild.logs.channelId) return;
+
 		if (channel.id === actualGuild.logs.channelId) {
 			setModifications(false);
 		} else {
@@ -161,7 +164,7 @@ export default function Infos({
 		groupChannelsByCategory();
 	}, [channels]);
 
-	const logsChannel = channels.find(({ id }) => id === guild.logs.channelId);
+	const logsChannel = channels.find(({ id }) => id === guild.logs?.channelId);
 
 	return (
 		<div className="w-full rounded-lg bg-neutral-800 p-6 transition flex flex-col gap-4">
@@ -181,7 +184,7 @@ export default function Infos({
 								className="rounded-lg p-3 max-w-32 outline-none bg-neutral-900/50"
 								value={guild.prefix !== undefined ? guild.prefix : "c"}
 								onChange={(e) => {
-									if (e.target.value === actualGuild.prefix) {
+									if (e.target.value === (actualGuild.prefix ?? "c")) {
 										setModifications(false);
 									} else {
 										setModifications(true);
