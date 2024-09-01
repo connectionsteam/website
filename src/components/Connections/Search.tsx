@@ -109,7 +109,7 @@ export default function SearchConnection({
 						});
 					}}
 					type="string"
-					className="bg-neutral-800 rounded-lg outline-none p-4"
+					className="bg-neutral-800 rounded-lg outline-none p-4 w-full"
 				/>
 			</div>
 			<AnimatePresence>
