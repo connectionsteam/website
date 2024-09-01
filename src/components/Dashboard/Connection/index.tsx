@@ -172,22 +172,46 @@ export default function ConnectionPageComponent() {
 							<div className="flex gap-3 items-center flex-grow">
 								{connection.icon && (
 									<div className="h-20 w-20">
-										<Avatar className="w-20 h-20" src={editedConnection.icon || ""} />
+										<Avatar
+											className="w-20 h-20"
+											src={editedConnection.icon || ""}
+										/>
 									</div>
 								)}
 								<div className="flex flex-col gap-1">
-									<h1 className="font-bold text-2xl">{editedConnection.name}</h1>
+									<h1 className="font-bold text-2xl">
+										{editedConnection.name}
+									</h1>
 								</div>
 							</div>
-							<DefaultButton
-								onClick={onOpen}
-								pink
-								divclass="w-fit h-fit"
-								className="px-6 p-3"
-							>
-								<VscTriangleUp size={18} />
-								<span>{l.dashboard.connections.activatePromoted}</span>
-							</DefaultButton>
+							{connection.promotingSince ? (
+								<div className="flex flex-col mobile:items-center">
+									<div
+										className="bg-gradient-to-r from-pink-500 to-rose-700 
+								bg-clip-text text-transparent font-bold text-xl text-center"
+									>
+										Promoted
+									</div>
+									<span className="font-bold">
+										{l.dashboard.guilds.info.premiumexpires.replace(
+											"{date}",
+											new Date(connection.promotingSince).toLocaleDateString(
+												l.language,
+											),
+										)}
+									</span>
+								</div>
+							) : (
+								<DefaultButton
+									onClick={onOpen}
+									pink
+									divclass="w-fit h-fit"
+									className="px-6 p-3"
+								>
+									<VscTriangleUp size={18} />
+									<span>{l.dashboard.connections.activatePromoted}</span>
+								</DefaultButton>
+							)}
 						</div>
 						<div className="w-full relative flex items-center gap-2">
 							<DefaultTabs
