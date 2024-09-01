@@ -40,9 +40,8 @@ export default function DefaultInput({
 					<textarea
 						autoFocus={autoFocus}
 						value={value}
-						maxLength={
-							minChars && maxChars ? maxChars + minChars : maxChars || 9999
-						}
+						minLength={minChars}
+						maxLength={maxChars}
 						className={`transition w-full p-3 rounded-lg bg-neutral-900/50 border-2
                         focus:outline-none ${maxChars && "pb-4"} ${error ? "border-red-500" : "border-transparent"}`}
 						onChange={onChange}
@@ -52,9 +51,8 @@ export default function DefaultInput({
 					<input
 						autoFocus={autoFocus}
 						value={value}
-						maxLength={
-							minChars && maxChars ? maxChars + minChars : maxChars || 9999
-						}
+						minLength={minChars}
+						maxLength={maxChars}
 						className={`transition w-full p-3 rounded-lg bg-neutral-900/50 border-2
                         focus:outline-none ${maxChars && "pb-4"} ${error ? "border-red-500" : "border-transparent"}`}
 						onChange={onChange}
@@ -64,7 +62,7 @@ export default function DefaultInput({
 				)}
 				{value && maxChars && (
 					<span className="absolute right-1 bottom-1 text-xs text-neutral-500">
-						{minChars ? value.length - minChars : value.length}/{maxChars}
+						{value.length}/{maxChars}
 					</span>
 				)}
 			</div>
