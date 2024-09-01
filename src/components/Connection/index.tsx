@@ -105,7 +105,10 @@ export default function ConnectionPageComponent() {
 							<div className="flex flex-col gap-2 items-start mobile:items-center">
 								<span className="font-bold text-2xl">{connection.name}</span>
 								{connection.description && (
-									<div className="flex items-start text-start w-full break-words rounded-lg mobile:text-center">
+									<div
+										className={`flex items-start text-start w-full ${connection.description.split(" ", 2).length > 2 ? "break-words" : "break-all"}
+ 										rounded-lg mobile:text-center`}
+									>
 										<span>{connection.description}</span>
 									</div>
 								)}
@@ -121,10 +124,14 @@ export default function ConnectionPageComponent() {
 								voteProps={voteProps}
 								setVoteProps={setVoteProps}
 							/>
-							<ConnectConnection guilds={guilds ? guilds : []} small={false} connection={connection} />
+							<ConnectConnection
+								guilds={guilds ? guilds : []}
+								small={false}
+								connection={connection}
+							/>
 						</div>
 					</div>
-					<div className="flex gap-2 items-center">
+					<div className="flex gap-2 items-center flex-wrap">
 						<span className="font-bold">{l.connection.creator}</span>
 						<div className="w-8 h-8">
 							<Avatar
@@ -136,7 +143,7 @@ export default function ConnectionPageComponent() {
 							{connection.creator.username}
 						</span>
 					</div>
-					<div className="flex items-center w-full gap-2">
+					<div className="flex items-center w-full gap-2 flex-wrap">
 						{connection.tags.map((tag, index) => (
 							<button
 								key={index}
@@ -147,7 +154,7 @@ export default function ConnectionPageComponent() {
 							</button>
 						))}
 					</div>
-					<span className="text-sm text-neutral-300 flex gap-1">
+					<span className="text-sm text-neutral-300 flex gap-1 flex-wrap">
 						<span>{l.dashboard.guilds.threads.thread.created}</span>
 						{new Date(connection.createdTimestamp).toLocaleString(l.language)}
 					</span>
