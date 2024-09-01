@@ -18,6 +18,9 @@ interface Params {
 	secondUser: string;
 	thirdUser: string;
 	yourPlace: string;
+	firstUserMessages: string;
+	secondUserMessages: string;
+	thirdUserMessages: string;
 }
 
 export default async function handler(req: NextApiRequest) {
@@ -33,6 +36,9 @@ export default async function handler(req: NextApiRequest) {
 		secondUser,
 		thirdUser,
 		yourPlace,
+		firstUserMessages,
+		secondUserMessages,
+		thirdUserMessages,
 	} = params;
 
 	const Image = (
@@ -53,7 +59,13 @@ export default async function handler(req: NextApiRequest) {
 			>
 				<span tw="text-[#EAEAEA] mt-1">{secondUser}</span>
 			</div>
-            <div
+			<div
+				tw="left-[60px] top-[310px] w-[180px] absolute flex items-center justify-center
+				-translate-x-1/2 -translate-y-1/2 no-break text-sm"
+			>
+				<span>{secondUserMessages}</span>
+			</div>
+			<div
 				style={{
 					boxShadow: "0px 0px 50px 1px #FFC16B",
 				}}
@@ -69,7 +81,13 @@ export default async function handler(req: NextApiRequest) {
 			>
 				<span tw="text-[#FFC387] mt-1">{thirdUser}</span>
 			</div>
-            <div
+			<div
+				tw="left-[263px] top-[260px] w-[180px] absolute flex items-center justify-center
+				-translate-x-1/2 -translate-y-1/2 no-break text-sm"
+			>
+				<span>{firstUserMessages}</span>
+			</div>
+			<div
 				style={{
 					boxShadow: "0px 0px 40px 1px #FFF154",
 				}}
@@ -85,7 +103,15 @@ export default async function handler(req: NextApiRequest) {
 			>
 				<span tw="text-[#FFF1A5] mt-1 text-lg">{firstUser}</span>
 			</div>
-            <span tw="absolute left-[180px] top-[371px] text-[10px]">{yourPlace}</span>
+			<span tw="absolute left-[180px] top-[371px] text-[10px]">
+				{yourPlace}
+			</span>
+			<div
+				tw="left-[468px] top-[310px] w-[180px] absolute flex items-center justify-center
+				-translate-x-1/2 -translate-y-1/2 no-break text-sm"
+			>
+				<span>{thirdUserMessages}</span>
+			</div>
 		</div>
 	);
 
