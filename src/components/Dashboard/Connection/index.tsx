@@ -176,7 +176,7 @@ export default function ConnectionPageComponent() {
 									</div>
 								)}
 								<div className="flex flex-col gap-1">
-									<h1 className="font-bold text-2xl">{connection.name}</h1>
+									<h1 className="font-bold text-2xl">{editedConnection.name}</h1>
 								</div>
 							</div>
 							<DefaultButton

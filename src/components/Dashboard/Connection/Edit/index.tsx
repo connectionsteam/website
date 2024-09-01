@@ -55,6 +55,17 @@ export default function EditDashboardConnection({
 			</div>
 			<div className="flex flex-col gap-2">
 				<DefaultInput
+					maxChars={15}
+					minChars={1}
+					value={editedConnection.name}
+					label={l.dashboard.connections.connection.form.name}
+					type="text"
+					placeholder={
+						l.dashboard.connections.connection.form.placeholders.name
+					}
+					onChange={(e) => handleChangeKey("name", e.target.value)}
+				/>
+				<DefaultInput
 					type="text"
 					label={l.dashboard.connections.edit.condescription}
 					placeholder={

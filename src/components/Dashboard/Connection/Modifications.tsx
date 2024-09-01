@@ -5,6 +5,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
 import type { ConnectionPayload } from "../../../types";
 import { api } from "../../../utils/api";
+import { useRouter } from "next/router";
 
 interface Props {
 	setModifications: (modifications: boolean) => void;
@@ -26,11 +27,12 @@ export default function ConnectionModifications({
 	const l = useLanguage();
 	const [loading, setLoading] = useState({ loading: false, check: false });
 	const [errors, setErrors] = useState<string[]>([]);
+	const router = useRouter();
 
 	const patchChanges = async () => {
 		setLoading({ loading: true, check: false });
 
-		const { description, icon, tags } = editedConnection;
+		const { description, icon, tags, name } = editedConnection;
 
 		const areTagsEgual = (tags1: string[], tags2: string[]) => {
 			if (tags1.length !== tags2.length) return false;
@@ -46,6 +48,7 @@ export default function ConnectionModifications({
 						? ""
 						: description,
 			icon: connection.icon === icon ? "" : icon,
+			name: connection.name === name ? "" : name,
 			tags: areTagsEgual(connection.tags, tags || []) ? "" : tags,
 		};
 
@@ -63,6 +66,10 @@ export default function ConnectionModifications({
 
 			setLoading({ loading: false, check: true });
 
+			if (body.name) {
+				router.push(`/dashboard/connection/${data.name}`);
+			}
+
 			setTimeout(() => {
 				setLoading({ ...loading, check: false });
 				setModifications(false);
@@ -70,7 +77,13 @@ export default function ConnectionModifications({
 		} catch (error: any) {
 			setLoading({ loading: false, check: false });
 
-			const { path } = error.response.data.extra;
+			if (error.response.data.code === 2005)
+				return setErrors([
+					...errors.filter((error) => error !== l.errors.alreadyConnection),
+					l.errors.alreadyConnection,
+				]);
+
+			const path = error.response.data.extra?.path;
 
 			if (path.includes("icon"))
 				return setErrors([

@@ -4,19 +4,15 @@ import {
 	ModalContent,
 	ModalFooter,
 	ModalHeader,
-	useDisclosure,
 } from "@nextui-org/modal";
 import {
 	type ChangeEvent,
 	type Dispatch,
 	type SetStateAction,
-	useContext,
 	useState,
 } from "react";
 import CreateConnection from "./CreateConnection";
 import type { ConnectionPayload, RequestPost } from "../../../../types";
-import { LanguageContext } from "../../../../contexts/Language";
-import { languages } from "../../../../locale";
 import DefaultInput from "../../../../components/Mixed/Input";
 import { useLanguage } from "../../../../hooks/useLanguage";
 
@@ -35,7 +31,6 @@ export default function CreateConnectionForm({
 	onOpenChange,
 	onClose,
 }: Props) {
-	const { language } = useContext(LanguageContext);
 	const l = useLanguage();
 	const [post, setPost] = useState<RequestPost>({
 		name: null!,
@@ -67,7 +62,7 @@ export default function CreateConnectionForm({
 			>
 				<ModalContent className="bg-neutral-800 text-white">
 					<ModalHeader className="flex flex-col gap-1 bg-neutral-800">
-						{languages[language].dashboard.connections.addConnection}
+						{l.dashboard.connections.addConnection}
 					</ModalHeader>
 					<ModalBody>
 						<DefaultInput
@@ -76,13 +71,10 @@ export default function CreateConnectionForm({
 							minChars={1}
 							error={errors.includes("name")}
 							value={post.name}
-							label={
-								languages[language].dashboard.connections.connection.form.name
-							}
+							label={l.dashboard.connections.connection.form.name}
 							type="text"
 							placeholder={
-								languages[language].dashboard.connections.connection.form
-									.placeholders.name
+								l.dashboard.connections.connection.form.placeholders.name
 							}
 							onChange={(e) => setPostValues(e, "name")}
 						/>
@@ -91,31 +83,22 @@ export default function CreateConnectionForm({
 							minChars={20}
 							error={errors.includes("description")}
 							value={post.description}
-							label={
-								languages[language].dashboard.connections.connection.form
-									.description
-							}
+							label={l.dashboard.connections.connection.form.description}
 							type="text"
 							placeholder={
-								languages[language].dashboard.connections.connection.form
-									.placeholders.description
+								l.dashboard.connections.connection.form.placeholders.description
 							}
 							onChange={(e) => setPostValues(e, "description")}
 						/>
 						<DefaultInput
-							label={
-								languages[language].dashboard.connections.connection.form.icon
-							}
+							label={l.dashboard.connections.connection.form.icon}
 							type="text"
 							error={errors.includes("icon")}
 							placeholder="https://i.imgur.com/EXQVxqQ.png"
 							onChange={(e) => setPostValues(e, "icon")}
 						/>
 						<DefaultInput
-							label={
-								languages[language].dashboard.connections.connection.form
-									.maxConnections
-							}
+							label={l.dashboard.connections.connection.form.maxConnections}
 							type="number"
 							placeholder="5"
 							onChange={(e) => setPostValues(e, "maxConnections")}
