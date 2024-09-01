@@ -28,10 +28,6 @@ export default function GuildConnectionFlags({
 			description: string;
 		}
 	> = {
-		[ConnectedConnectionFlags.Locked]: {
-			title: l.dashboard.guilds.connections.flags.locked,
-			description: l.dashboard.guilds.connections.flags.lockedDescription,
-		},
 		[ConnectedConnectionFlags.Frozen]: {
 			title: l.dashboard.guilds.connections.flags.frozen,
 			description: l.dashboard.guilds.connections.flags.frozenDescription,
@@ -112,7 +108,6 @@ export default function GuildConnectionFlags({
 			<div className="gap-4 grid grid-cols-3 tablet:grid-cols-1 items-start">
 				{Object.values(ConnectedConnectionFlags).map(
 					(flag, index) =>
-						flag !== ConnectedConnectionFlags.Locked &&
 						flag !== ConnectedConnectionFlags.Frozen && (
 							<div
 								key={index}
