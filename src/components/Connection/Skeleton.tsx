@@ -32,7 +32,7 @@ export default function ConnectionPageSkeleton() {
 					<div className="h-6 w-24 bg-neutral-700 rounded-full" />
 				</div>
 				<div className="flex items-center w-full gap-2">
-					{Array(Math.floor(Math.random() * 3) + 2)
+					{Array(4)
 						.fill(0)
 						.map((_, index) => (
 							<div
