@@ -78,9 +78,9 @@ const ConnectionsPageCard = forwardRef<HTMLDivElement, Props>(
 							</span>
 							{connection.description && (
 								<div
-									className="flex items-start text-start w-full break-words 
-                            rounded-lg text-lg mobile:items-center mobile:text-center"
-								>
+									className={`flex items-start text-start w-full 
+									${connection.description.split(" ", 2).length > 1 ? "break-words" : "break-all"}
+									rounded-lg text-lg mobile:items-center mobile:text-center`}>
 									<span>{connection.description}</span>
 								</div>
 							)}
