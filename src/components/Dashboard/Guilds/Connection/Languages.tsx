@@ -1,3 +1,4 @@
+import { FaX } from "react-icons/fa6";
 import DefaultInput from "../../../../components/Mixed/Input";
 import { useLanguage } from "../../../../hooks/useLanguage";
 import { type ConnectionBody, Languages } from "../../../../types";
@@ -32,22 +33,38 @@ export default function JoinConnectionLanguage({ setBody, body }: Props) {
 	const languages = Object.entries(Languages);
 
 	return (
-		<div className="flex flex-col gap-2 w-full">
+		<div className="flex flex-col gap-2 w-full h-full">
 			<div className="text-neutral-300 flex gap-1">
 				<div>{l.dashboard.guilds.connections.languageTitle}</div>
 			</div>
-			<button
-				onClick={onOpen}
-				className="p-3 bg-neutral-900/50 transition rounded-lg text-start w-full"
-			>
-				{body.language?.key === "" && body.language?.language === "" ? (
-					l.dashboard.guilds.connections.languageclick
-				) : (
-					<div className="w-full flex gap-2 items-center">
-						<span>{body.language?.language}</span>
-					</div>
+			<div className="flex gap-1 items-center h-full">
+				<button
+					onClick={onOpen}
+					className="p-3 bg-neutral-900/50 transition rounded-lg text-start w-full"
+				>
+					{body.language?.key === "" && body.language?.language === "" ? (
+						l.dashboard.guilds.connections.languageclick
+					) : (
+						<div className="w-full flex gap-2 items-center">
+							<span>{body.language?.language}</span>
+						</div>
+					)}
+				</button>
+				{body.language?.key !== "" && (
+					<button
+						className="px-3 bg-neutral-900/50 transition rounded-lg hover:bg-neutral-900
+				min-h-12"
+						onClick={() =>
+							setBody({
+								...body,
+								language: { language: "", key: "" },
+							})
+						}
+					>
+						<FaX />
+					</button>
 				)}
-			</button>
+			</div>
 			<Modal
 				classNames={{
 					closeButton: "transition hover:bg-neutral-700",
