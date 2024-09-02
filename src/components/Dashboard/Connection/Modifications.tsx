@@ -1,6 +1,6 @@
 import { IoIosWarning } from "react-icons/io";
 import { useLanguage } from "../../../hooks/useLanguage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
 import type { ConnectionPayload } from "../../../types";
@@ -77,30 +77,36 @@ export default function ConnectionModifications({
 		} catch (error: any) {
 			setLoading({ loading: false, check: false });
 
-			if (error.response.data.code === 2005)
+			const filterError = (errorS: string) =>
+				errors.filter((error) => error !== errorS);
+
+			if (error.response?.data?.code === 2005)
 				return setErrors([
-					...errors.filter((error) => error !== l.errors.alreadyConnection),
+					...filterError(l.errors.alreadyConnection),
 					l.errors.alreadyConnection,
 				]);
 
-			const path = error.response.data.extra?.path;
+			const path = error.response.data?.extra?.path;
 
 			if (path.includes("icon"))
 				return setErrors([
-					...errors.filter((error) => error !== l.errors.wrongIcon),
+					...filterError(l.errors.wrongIcon),
 					l.errors.wrongIcon,
+				]);
+
+			if (path.includes("name"))
+				return setErrors([
+					...filterError(l.errors.invalidConnectionName),
+					l.errors.invalidConnectionName,
 				]);
 
 			if (path.includes("description"))
 				return setErrors([
-					...errors.filter((error) => error !== l.errors.wrongDesc),
+					...filterError(l.errors.wrongDesc),
 					l.errors.wrongDesc,
 				]);
 
-			return setErrors([
-				...errors.filter((error) => error !== l.errors.generic),
-				l.errors.generic,
-			]);
+			return setErrors([...filterError(l.errors.generic), l.errors.generic]);
 		}
 	};
 
@@ -108,6 +114,21 @@ export default function ConnectionModifications({
 		setEditedConnection(connection);
 		setModifications(false);
 	};
+
+	useEffect(() => {
+		const handleKeyDown = (event: KeyboardEvent) => {
+			const { key, ctrlKey } = event;
+
+			if (ctrlKey && key === "s") {
+				event.preventDefault();
+				patchChanges();
+			}
+		};
+	
+		document.addEventListener("keydown", handleKeyDown);
+	
+		return () => document.removeEventListener("keydown", handleKeyDown);
+	}, []);
 
 	return (
 		<div
