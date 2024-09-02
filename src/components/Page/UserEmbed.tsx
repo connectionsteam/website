@@ -10,9 +10,10 @@ interface Props {
 	};
 	delay: number;
 	message: string;
+	hour: string;
 }
 
-export default function UserEmbed({ author, delay, message }: Props) {
+export default function UserEmbed({ author, delay, message, hour }: Props) {
 	const l = useLanguage();
 
 	return (
@@ -29,7 +30,7 @@ export default function UserEmbed({ author, delay, message }: Props) {
 				<div className="flex gap-1">
 					<span className="font-bold">{author.username}</span>
 					<span className="text-neutral-400 text-xs mt-1">
-						{l.home.embeds.hour}
+						{l.home.embeds.hour} {hour}
 					</span>
 				</div>
 				<span>{message}</span>

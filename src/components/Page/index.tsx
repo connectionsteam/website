@@ -285,6 +285,7 @@ export default function Page() {
 										message={l.home.conversation.spyei.message}
 									/>
 									<UserEmbed
+										hour={hour}
 										author={{
 											avatar: user2?.avatar ?? "",
 											username: user2?.name ?? "",
