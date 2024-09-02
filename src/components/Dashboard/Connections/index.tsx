@@ -133,7 +133,9 @@ export default function ConnectionsComponent({
 						</div>
 					)
 				) : (
-					<ConnectionsSkeleton />
+					<div className="grid grid-cols-3 gap-3 w-full tablet:grid-cols-2 mobile:grid-cols-1">
+						<ConnectionsSkeleton />
+					</div>
 				)}
 				{connections && (
 					<CreateConnectionForm
