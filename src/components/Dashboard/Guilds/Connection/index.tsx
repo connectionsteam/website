@@ -54,7 +54,7 @@ export default function GuildEditConnection({
 						<Link
 							href={`/guild/${guildId}`}
 							className="flex gap-2 items-center bg-neutral-900/50 p-2 text-sm 
-                        rounded-lg transition hover:bg-neutral-900/100"
+                        rounded-lg transition hover:bg-neutral-900"
 						>
 							<BiLeftArrowAlt />
 							<span>{l.dashboard.guilds.connections.infos.back}</span>

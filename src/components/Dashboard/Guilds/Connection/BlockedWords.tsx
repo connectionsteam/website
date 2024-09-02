@@ -156,7 +156,7 @@ export default function BlockedWords({
 					</>
 				)}
 				<div className="flex gap-2 flex-col">
-					<div className="flex flex-wrap gap-2 p-3 rounded-lg bg-neutral-900 min-h-14">
+					<div className="flex flex-wrap gap-2 p-3 rounded-lg bg-neutral-900/50 min-h-14">
 						<AnimatePresence>
 							{words.map((word, index) => (
 								<motion.div
@@ -197,7 +197,7 @@ export default function BlockedWords({
 									onClick={focusedInput(true)}
 								/>
 								<button
-									className="p-2 text-sm bg-neutral-900 transition hover:bg-neutral-900/50 rounded-lg
+									className="p-2 text-sm bg-neutral-900/50 transition hover:bg-neutral-900 rounded-lg
                                     max-w-28 justify-center flex gap-2 items-center"
 									onClick={() =>
 										saveRegex(regex.regex.replace(regex_identifier, ""))
@@ -211,7 +211,7 @@ export default function BlockedWords({
 						)}
 					</div>
 					<button
-						className="p-3 bg-neutral-900 transition hover:bg-neutral-900/50 rounded-lg
+						className="p-3 bg-neutral-900/50 transition hover:bg-neutral-900 rounded-lg
                         max-w-28 justify-center flex gap-2 items-center"
 						onClick={handleSaveWords}
 					>

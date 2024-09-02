@@ -111,8 +111,8 @@ export default function GuildConnectionFlags({
 						flag !== ConnectedConnectionFlags.Frozen && (
 							<div
 								key={index}
-								className="flex flex-col gap-1 p-3 rounded-lg bg-neutral-900 
-                        h-full place-content-center"
+								className="flex flex-col gap-1 p-3 rounded-lg bg-neutral-900/50 
+								h-full place-content-center"
 							>
 								<div className="flex items-center gap-1">
 									<div className="relative">
