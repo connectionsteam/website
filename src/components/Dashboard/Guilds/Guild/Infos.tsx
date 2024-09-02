@@ -182,9 +182,9 @@ export default function Infos({
 								placeholder={l.connection.filters.typehere}
 								maxLength={6}
 								className="rounded-lg p-3 max-w-32 outline-none bg-neutral-900/50"
-								value={guild.prefix !== undefined ? guild.prefix : "c"}
+								value={guild.prefix !== undefined ? guild.prefix : "c."}
 								onChange={(e) => {
-									if (e.target.value === (actualGuild.prefix ?? "c")) {
+									if (e.target.value === (actualGuild.prefix ?? "c.")) {
 										setModifications(false);
 									} else {
 										setModifications(true);

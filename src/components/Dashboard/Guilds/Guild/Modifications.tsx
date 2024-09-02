@@ -137,7 +137,7 @@ export default function GuildModifications({
 				},
 				//@ts-expect-error Missing keyowrd purposely
 				mods: updatedMods,
-				prefix: prefix === undefined || prefix === "" ? "c" : prefix,
+				prefix: prefix === undefined || prefix === "" ? "c." : prefix,
 			});
 
 			setGuild({
@@ -151,7 +151,7 @@ export default function GuildModifications({
 				},
 				//@ts-expect-error Missing keyowrd purposely
 				mods: updatedMods,
-				prefix: prefix === undefined || prefix === "" ? "c" : prefix,
+				prefix: prefix === undefined || prefix === "" ? "c." : prefix,
 			});
 
 			setLoading({ ...loading, check: true });
