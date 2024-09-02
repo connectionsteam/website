@@ -104,22 +104,14 @@ export default function CreateConnectionForm({
 							onChange={(e) => setPostValues(e, "maxConnections")}
 						/>
 						{errors.length > 0 ? (
-							<div>
-								{errors.includes("name") ? (
-									<div className="text-red-500">{l.errors.wrongConName}</div>
-								) : null}
-								{errors.includes("description") ? (
-									<div className="text-red-500">{l.errors.wrongDesc}</div>
-								) : null}
-								{errors.includes("icon") ? (
-									<div className="text-red-500">{l.errors.wrongIcon}</div>
-								) : null}
-								{errors.includes("maxConnections") ? (
-									<div className="text-red-500">{l.errors.maxConnections}</div>
-								) : null}
-								{errors.includes("alreadyExists") ? (
-									<div className="text-red-500">{l.errors.alreadyExists}</div>
-								) : null}
+							<div className="text-red-500">
+								{errors.includes("name") && l.errors.wrongConName}
+								{errors.includes("description") && l.errors.wrongDesc}
+								{errors.includes("icon") && l.errors.wrongIcon}
+								{errors.includes("maxConnections") && l.errors.maxConnections}
+								{errors.includes("alreadyExists") && l.errors.alreadyExists}
+								{errors.includes("invalidConnectionName") &&
+									l.errors.invalidConnectionName}
 							</div>
 						) : null}
 					</ModalBody>

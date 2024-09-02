@@ -96,6 +96,10 @@ export default function CreateConnection({
 		} catch (error: any) {
 			setLoading(false);
 
+			if (error.response.data?.extra?.path?.includes("name")) {
+				return setErrors([...errors, "invalidConnectionName"]);
+			}
+
 			const { code } = error.response.data;
 
 			if (code === 2005) {

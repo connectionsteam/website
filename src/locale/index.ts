@@ -802,7 +802,8 @@ export const languages = {
 			wrongConName: "Certifique-se do nome da conexão precisa de mais que 1 caractere",
 			alreadyConnection: "Já existe uma conexão com este nome",
 			maxConnections: "Você precisa colocar um número maior que 2, e menor que 100 no máximo de conexões",
-			unknownConnection: "Conexão desconhecida"
+			unknownConnection: "Conexão desconhecida",
+			invalidConnectionName: "Nome da conexão inválido, não use caracteres especiais ou espaços",
 		}
 	},
 	"en-US": {
@@ -1606,6 +1607,7 @@ export const languages = {
 			unknownConnection: "Unknown connection",
 			invalidUserID: "Invalid user ID",
 			alreadyInvited: "This user is already invited to this team",
+			invalidConnectionName: "Invalid connection name, do not use special characters or spaces",
 		}
 	}
 };
