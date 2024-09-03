@@ -108,13 +108,27 @@ export default function Infos({
 	};
 
 	const handleFlagChange = (flag: LogsFlag) => () => {
-		setModifications(true);
-
 		const { flags } = guild.logs;
 
 		const updatedFlags = flags.includes(flag)
 			? flags.filter((f) => f !== flag)
 			: [...flags, flag];
+
+		const areFlagsEqual =
+			actualGuild.logs.flags.length === updatedFlags.length &&
+			actualGuild.logs.flags.every((tag) => updatedFlags.includes(tag));
+
+		setModifications(!areFlagsEqual);
+
+		if (updatedFlags.includes(LogsFlag.LogAny)) {
+			return setGuild({
+				...guild,
+				logs: {
+					...guild.logs,
+					flags: [LogsFlag.LogAny],
+				},
+			});
+		}
 
 		setGuild({
 			...guild,
@@ -330,6 +344,10 @@ export default function Infos({
 										<div className="relative">
 											<Switch
 												color="secondary"
+												isDisabled={
+													guild.logs.flags.includes(LogsFlag.LogAny) &&
+													flag !== LogsFlag.LogAny
+												}
 												isSelected={guild.logs.flags.includes(flagAsNumber)}
 												onChange={handleFlagChange(flagAsNumber)}
 											/>
