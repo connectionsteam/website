@@ -134,23 +134,7 @@ export default function ConnectionPageComponent() {
 	return (
 		<>
 			<Head>
-				<title>{connection ? connection.name : "loading"}</title>
-				<meta
-					name="description"
-					content={connection ? connection.description : "loading"}
-				/>
-				<meta
-					property="og:title"
-					content={connection ? connection.name : "loading"}
-				/>
-				<meta
-					property="og:description"
-					content={connection ? connection.description : "loading"}
-				/>
-				<meta
-					property="og:image"
-					content={connection ? connection.icon : "/default-icon.png"}
-				/>
+				<title>{connection ? connection.name : "Connection"}</title>
 			</Head>
 			<DefaultLayout>
 				{showConfetti && (
