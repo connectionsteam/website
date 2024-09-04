@@ -2,12 +2,10 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
 import { api } from "../../../../utils/api";
 import {
-	DiscordMember,
 	type GuildPayload,
 	type GuildThreadsPayload,
 	LogsFlag,
 	ModPermType,
-	ModType,
 } from "../../../../types";
 import { IoIosWarning } from "react-icons/io";
 import { useState } from "react";

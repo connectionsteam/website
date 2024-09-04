@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import RemoveGuildMod from "./Menu";
 import Avatar from "../../../../../components/Mixed/Avatar";
-import { type GuildPayload, ModPermType } from "../../../../../types";
+import { type GuildPayload, ModPermType, ModType } from "../../../../../types";
 import { UserContext } from "../../../../../contexts/User";
 import { useContext } from "react";
 
@@ -11,22 +11,18 @@ interface Props {
 	handleRemoveMod: (mod: string) => void;
 	menu: { hover: string | null; removing: string | null };
 	setMenu: (menu: { hover: string | null; removing: string | null }) => void;
-	guild: GuildPayload;
+	owner: ModType;
 }
 
 export default function GuildModCard({
+	owner,
 	index,
 	mod,
 	handleRemoveMod,
 	menu,
 	setMenu,
-	guild,
 }: Props) {
 	const { user } = useContext(UserContext);
-
-	const owner = guild.mods.find(
-		(mod) => mod.id === user?.id && mod.type === ModPermType.PhysicalOwner,
-	);
 
 	return (
 		menu.removing !== mod.id && (

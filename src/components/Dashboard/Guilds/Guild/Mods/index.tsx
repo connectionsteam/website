@@ -4,6 +4,7 @@ import {
 	type DiscordMember,
 	type GuildPayload,
 	ModPermType,
+	ModType,
 	type Premium,
 } from "../../../../../types";
 import {
@@ -61,8 +62,12 @@ export default function GuildMods({
 	const [loaded, setLoaded] = useState(false);
 	const [members, setMembers] = useState<DiscordMember[] | null>(null);
 
+	const mods = guild.mods.filter(
+		(mod) => mod.type === ModPermType.TrustedAdmin,
+	);
+
 	const handleAddMod = async (mod: DiscordMember) => {
-		if (guild.mods.length >= premium.maxMods) {
+		if (mods.length >= premium.maxMods) {
 			setSonner(false);
 			setTimeout(() => setSonner(true), 0);
 
@@ -77,7 +82,7 @@ export default function GuildMods({
 		setGuild({
 			...guild,
 			mods: [
-				...guild.mods,
+				...mods,
 				{
 					id: mod.user.id,
 					type: ModPermType.TrustedAdmin,
@@ -93,7 +98,7 @@ export default function GuildMods({
 
 		setModifications(true);
 
-		const filtredMods = guild.mods.filter((moda) => moda.id !== mod);
+		const filtredMods = mods.filter((moda) => moda.id !== mod);
 
 		setGuild({
 			...guild,
@@ -113,7 +118,7 @@ export default function GuildMods({
 		setLoaded(true);
 	};
 
-	const owner = guild.mods.find(
+	const owner = actualGuild.mods.find(
 		(mod) => mod.id === user?.id && mod.type === ModPermType.PhysicalOwner,
 	);
 
@@ -126,7 +131,7 @@ export default function GuildMods({
 							{l.dashboard.guilds.mods.title}
 						</h1>
 						<div className="text-neutral-300">
-							{guild.mods.length}/<span>{premium.maxMods}</span>
+							{mods.length}/<span>{premium.maxMods}</span>
 						</div>
 					</div>
 					<span className="text-neutral-300">
@@ -135,10 +140,10 @@ export default function GuildMods({
 				</div>
 				<div className="flex flex-col gap-2 min-w-72 tablet:min-w-full">
 					<div className="flex flex-col gap-2 w-full max-h-64 overflow-x-hidden">
-						{guild.mods.map((mod, index) => (
+						{mods.map((mod, index) => (
 							<AnimatePresence mode="wait" key={index}>
 								<GuildModCard
-									guild={guild}
+									owner={owner as ModType}
 									key={index}
 									setMenu={setMenu}
 									index={index}
