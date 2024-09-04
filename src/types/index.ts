@@ -171,6 +171,7 @@ export interface ConnectionPayload {
 	createdTimestamp: number;
 	maxConnections?: number;
 	teamId?: string;
+	rules?: string;
 }
 
 export interface RequestPost {
