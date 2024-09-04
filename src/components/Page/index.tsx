@@ -185,7 +185,7 @@ export default function Page() {
 						</div>
 					</div>
 					<div className={`flex flex-row gap-2 items-center mobile w-full justify-center tablet:items-center mobile:flex-col`}>
-						<div className={`bg-neutral-800 flex flex-col rounded-lg p-3 ${compactMode ? "min-w-72" : ""}`}>
+						<div className={`bg-neutral-800 flex flex-col rounded-lg p-3 ${compactMode ? "min-w-72" : "min-w-[340px]"}`}>
 							<div className="flex flex-col gap-4">
 								<div className="flex gap-2 items-center w-full rounded-lg p-2 bg-neutral-900/50">
 									<Image
@@ -249,7 +249,7 @@ export default function Page() {
 								</div>
 							</div>
 						</div>
-						<div className={`bg-neutral-800 flex flex-col rounded-lg p-3 ${compactMode ? "min-w-72" : ""}`}>
+						<div className={`bg-neutral-800 flex flex-col rounded-lg p-3 ${compactMode ? "min-w-72" : "min-w-[340px]"}`}>
 							<div className="flex flex-col gap-4">
 								<div className="flex gap-2 items-center w-full rounded-lg p-2 bg-neutral-900/50">
 									<Image
