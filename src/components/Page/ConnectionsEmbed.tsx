@@ -2,6 +2,7 @@ import { useLanguage } from "../../hooks/useLanguage";
 import { motion } from "framer-motion";
 import Avatar from "../Mixed/Avatar";
 import { LuExternalLink } from "react-icons/lu";
+import { FaCheck } from "react-icons/fa6";
 
 interface Props {
 	author: {
@@ -43,8 +44,9 @@ export default function ConnectionsEmbed({
 						<div className="flex gap-1">
 							<div className="flex gap-1 items-center justify-center">
 								<span className="font-bold">{author.username}</span>
-								<div className="rounded-md text-white bg-blue-500 px-2 py-[1px] text-xs">
-									APP
+								<div className="rounded-md text-white bg-blue-500 px-2 py-[1px] text-xs flex gap-0.5 items-center">
+									<FaCheck />
+									<span>APP</span>
 								</div>
 							</div>
 							<span className="text-neutral-400 text-xs mt-1">
@@ -53,12 +55,12 @@ export default function ConnectionsEmbed({
 						</div>
 						<span className="text-neutral-200">{message}</span>
 						<button
-						className="bg-neutral-900/50 hover:bg-neutral-900 transition p-2
+							className="bg-neutral-900/50 hover:bg-neutral-900 transition p-2
 					rounded-lg flex items-center gap-2 w-fit text-sm mt-1"
-					>
-						<span>{l.notifications.seeMessage}</span>
-						<LuExternalLink />
-					</button>
+						>
+							<span>{l.notifications.seeMessage}</span>
+							<LuExternalLink />
+						</button>
 					</div>
 				</>
 			) : (
@@ -70,8 +72,9 @@ export default function ConnectionsEmbed({
 						<div className="flex gap-1">
 							<div className="flex gap-1 items-center justify-center">
 								<span className="font-bold">Connections</span>
-								<div className="rounded-md text-white bg-blue-500 px-2 py-[1px] text-xs">
-									APP
+								<div className="rounded-md text-white bg-blue-500 px-2 py-[1px] text-xs flex gap-0.5 items-center">
+									<FaCheck />
+									<span>APP</span>
 								</div>
 							</div>
 							<span className="text-neutral-400 text-xs mt-1">
