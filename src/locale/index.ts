@@ -379,6 +379,11 @@ export const languages = {
 						"Ao deletar sua conexão, você irá perder todos os dados associados a ela como mensagens e guildas que se conectaram na sua conexão e outros dados.",
 				},
 				edit: {
+					rules: {
+						preview: "Pré-visualização",
+						title: "Regras",
+						description: "Digite abaixo as regras que irão aparecer após um usuário conectar na sua conexão (Discord Markdown permitido!!)",
+					},
 					title: "Editar conexão",
 					description: "Aqui você pode editar sua conexão",
 					condescription: "Descrição",
@@ -786,6 +791,7 @@ export const languages = {
 			connectionsText: "Parece que você chegou no seu limite de conexões...",
 		},
 		errors: {
+			rules: "Verifique se as regras são menos de 700 caracteres e mais de 25",
 			maxCharsPerMessage: "O número máximo de caracteres por mensagens permitidos é de 3 a 900",
 			teamMaxConnections: "Limite de conexões por time atingido (5/5)",
 			alreadyExists: "Já existe uma conexão com este nome",
@@ -1185,6 +1191,11 @@ export const languages = {
 					description: "Here you can configure your connection",
 				},
 				edit: {
+					rules: {
+						preview: "Live Preview",
+						title: "Rules",
+						description: "Type below the rules that will appear after a user connects to your connection (Discord Markdown allowed!!)",
+					},
 					title: "Edit connection",
 					description: "Here you can edit your connection",
 					condescription: "Description",
@@ -1589,6 +1600,7 @@ export const languages = {
 			connectionsText: "It seems that you reached your limit of connections...",
 		},
 		errors: {
+			rules: "Check if the rules are less than 700 characters and more than 25",
 			maxCharsPerMessage: "The maximum number of characters per message allowed is 3 to 900",
 			teamMaxConnections: "Team maximum connections reached (5/5)",
 			alreadyExists: "There is already a connection with this name",
