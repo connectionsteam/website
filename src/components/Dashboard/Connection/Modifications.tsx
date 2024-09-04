@@ -32,7 +32,7 @@ export default function ConnectionModifications({
 	const patchChanges = async () => {
 		setLoading({ loading: true, check: false });
 
-		const { description, icon, tags, name } = editedConnection;
+		const { description, icon, tags, name, rules } = editedConnection;
 
 		const areTagsEgual = (tags1: string[], tags2: string[]) => {
 			if (tags1.length !== tags2.length) return false;
@@ -50,6 +50,7 @@ export default function ConnectionModifications({
 			icon: connection.icon === icon ? "" : icon,
 			name: connection.name === name ? "" : name,
 			tags: areTagsEgual(connection.tags, tags || []) ? "" : tags,
+			rules: rules?.trim() === "" ? null : rules,
 		};
 
 		for (const i in body) {
@@ -58,11 +59,38 @@ export default function ConnectionModifications({
 			}
 		}
 
+		if (body.rules && (body.rules.length > 700 || body.rules.length < 25)) {
+			setLoading({ loading: false, check: false });
+
+			return setErrors([
+				...errors.filter((error) => error !== l.errors.rules),
+				l.errors.rules,
+			]);
+		}
+
+		if (
+			body.description &&
+			(body.description.length > 50 || body.description.length < 20)
+		) {
+			setLoading({ loading: false, check: false });
+
+			return setErrors([
+				...errors.filter((error) => error !== l.errors.wrongDesc),
+				l.errors.wrongDesc,
+			]);
+		}
+
 		try {
 			const { data } = await api.patch(`/connections/${connection.name}`, body);
 
-			setEditedConnection(data);
-			setConnection(data);
+			const updatedData = {
+				...data,
+				rules: body.rules,
+				description: body.description,
+			};
+
+			setEditedConnection(updatedData);
+			setConnection(updatedData);
 
 			setLoading({ loading: false, check: true });
 
@@ -100,12 +128,6 @@ export default function ConnectionModifications({
 					l.errors.invalidConnectionName,
 				]);
 
-			if (path.includes("description"))
-				return setErrors([
-					...filterError(l.errors.wrongDesc),
-					l.errors.wrongDesc,
-				]);
-
 			return setErrors([...filterError(l.errors.generic), l.errors.generic]);
 		}
 	};
@@ -124,9 +146,9 @@ export default function ConnectionModifications({
 				patchChanges();
 			}
 		};
-	
+
 		document.addEventListener("keydown", handleKeyDown);
-	
+
 		return () => document.removeEventListener("keydown", handleKeyDown);
 	}, []);
 
