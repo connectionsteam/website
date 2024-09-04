@@ -19,12 +19,12 @@ function addVariablesForColors({ addBase, theme }: any) {
 }
 
 const config: Config = {
-  content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./node_modules/@nextui-org/theme/dist/components/(accordion|avatar|input|modal|toggle|tabs|divider).js"
-  ],
+	content: [
+		"./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+		"./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+		"./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+		"./node_modules/@nextui-org/theme/dist/components/(accordion|avatar|input|modal|toggle|tabs|divider).js"
+	],
 	theme: {
 		extend: {
 			screens: {
@@ -67,6 +67,7 @@ const config: Config = {
 		},
 		addVariablesForColors,
 		nextui(),
+		require("@tailwindcss/typography")
 	],
 };
 
