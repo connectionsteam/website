@@ -11,6 +11,8 @@ interface Props {
 	setModifications: (modifications: boolean) => void;
 }
 
+export const DISCOR_ID_PATTERN = /^\d{17,21}$/;
+
 export default function GuildModModal({
 	handleAddMod,
 	guild,
@@ -20,8 +22,6 @@ export default function GuildModModal({
 	const l = useLanguage();
 	const [query, setQuery] = useState("");
 	const [error, setError] = useState(false);
-
-	const DISCOR_ID_PATTERN = /^\d{17,21}$/;
 
 	const filteredMembers = members
 		? members
