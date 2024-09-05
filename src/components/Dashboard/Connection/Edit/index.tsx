@@ -153,7 +153,7 @@ export default function EditDashboardConnection({
 												</div>
 											</div>
 											<span className="text-neutral-400 text-xs mt-1">
-												{l.home.embeds.hour} {hour}asd
+												{l.home.embeds.hour} {hour}
 											</span>
 										</div>
 										<div
