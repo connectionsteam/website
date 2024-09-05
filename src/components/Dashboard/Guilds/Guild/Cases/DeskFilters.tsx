@@ -15,6 +15,7 @@ import {
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { GoArrowBoth } from "react-icons/go";
+import { IoIosSearch } from "react-icons/io";
 import { LuClock2, LuServerOff } from "react-icons/lu";
 import { MdBlock } from "react-icons/md";
 
@@ -22,23 +23,39 @@ interface Props {
 	filters: ModsFiltersStructure;
 	setFilters: (filters: ModsFiltersStructure) => void;
 	guild: GuildPayload;
+	user: string | null;
+	setUser: (user: string | null) => void;
+	submitUser: (user: string) => void;
+	setError: (error: boolean) => void;
+	error: boolean;
 }
 
-export default function DeskModsFilters({ filters, setFilters, guild }: Props) {
+export default function DeskModsFilters({
+	filters,
+	setFilters,
+	guild,
+	user,
+	setUser,
+	submitUser,
+	setError,
+	error
+}: Props) {
 	const l = useLanguage();
 
 	const handleResetFilters = () => {
 		setFilters({
 			mod_id: null,
-			target_id: null,
 			type: null,
+			target_id: null,
 			connection: null,
 		});
+
+		setUser(null);
 	};
 
 	const [mod, setMod] = useState(
 		Object.values(
-			Object.entries(guild.mods).find(([id]) => id === filters.target_id) ?? {},
+			Object.entries(guild.mods).find(([id]) => id === user) ?? {},
 		)[0],
 	);
 	const [connection, setConnection] = useState(
@@ -125,16 +142,30 @@ export default function DeskModsFilters({ filters, setFilters, guild }: Props) {
 							<div className="font-bold">
 								{l.dashboard.guilds.cases.filters.user}
 							</div>
-							<div className="bg-neutral-800 rounded-lg">
-								<DefaultInput
-									value={filters.target_id || ""}
-									type="text"
-									onChange={(e) =>
-										setFilters({ ...filters, target_id: e.target.value })
-									}
-									placeholder={l.dashboard.guilds.cases.filters.userID}
-								/>
+							<div className="w-full flex items-end gap-1 h-full">
+								<div className="bg-neutral-800 rounded-lg w-full">
+									<DefaultInput
+										value={user || ""}
+										type="text"
+										onChange={(e) => {
+											setUser(e.target.value);
+											setError(false);
+										}}
+										error={error}
+										placeholder={l.dashboard.guilds.cases.filters.userID}
+									/>
+								</div>
+								<button onClick={() => submitUser(user ?? "")} className="p-2 rounded-lg
+								bg-neutral-900/50 h-[52px] w-12 flex items-center justify-center 
+								hover:bg-neutral-900 transition">
+									<IoIosSearch size={18} />
+								</button>
 							</div>
+							{error && (
+									<span className="text-red-500 text-sm">
+										{l.errors.invalidUserID}
+									</span>
+								)}
 						</div>
 						<div className="flex flex-col gap-2">
 							<div className="font-bold">
@@ -145,7 +176,7 @@ export default function DeskModsFilters({ filters, setFilters, guild }: Props) {
                                 max-h-56 overflow-x-auto"
 							>
 								<DropdownTrigger>
-									<button className="w-full rounded-lg bg-neutral-900/50 text-start p-2">
+									<button className="w-full rounded-lg bg-neutral-900/50 text-start p-3">
 										{filters.mod_id && typeof mod !== "string" && mod ? (
 											<div className="flex items-center gap-2">
 												<Avatar
@@ -198,7 +229,7 @@ export default function DeskModsFilters({ filters, setFilters, guild }: Props) {
                                 overflow-x-auto"
 							>
 								<DropdownTrigger>
-									<button className="w-full rounded-lg bg-neutral-900/50 text-start p-2">
+									<button className="w-full rounded-lg bg-neutral-900/50 text-start p-3">
 										{connection && filters.connection ? (
 											<div className="flex items-center gap-2">
 												{connection.icon && (

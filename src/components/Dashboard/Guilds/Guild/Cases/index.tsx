@@ -12,6 +12,7 @@ import { Modal, useDisclosure } from "@nextui-org/modal";
 import ModsFilters from "./Filters";
 import DeskModsFilters from "./DeskFilters";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { DISCOR_ID_PATTERN } from "../Mods/Modal";
 
 interface Props {
 	guild: GuildPayload;
@@ -23,10 +24,12 @@ export default function Cases({ guild }: Props) {
 	const [guildCases, setGuildCases] = useState<AnyCase[] | null>(null);
 	const [cases, setCases] = useState<AnyCase[]>([]);
 	const [loading, setLoading] = useState<string | null>(null);
+	const [user, setUser] = useState<string | null>(null);
+	const [error, setError] = useState(false);
 	const [filters, setFilters] = useState<ModsFiltersStructure>({
 		mod_id: null,
-		target_id: null,
 		type: null,
+		target_id: null,
 		connection: null,
 	});
 
@@ -45,13 +48,19 @@ export default function Cases({ guild }: Props) {
 		setLoading(null);
 	};
 
+	const submitUser = (user: string) => {
+		if (!new RegExp(DISCOR_ID_PATTERN).test(user)) return setError(true);
+
+		setFilters({ ...filters, target_id: user });
+	};
+
 	useEffect(() => {
 		const fetchCases = async () => {
 			const query = new URLSearchParams();
 
 			if (filters.mod_id !== null) query.append("moderator_id", filters.mod_id);
-			if (filters.target_id !== null)
-				query.append("target_id", filters.target_id);
+			if (user !== null)
+				query.append("target_id", user);
 			if (filters.type !== null) query.append("type", filters.type.toString());
 			if (filters.connection !== null)
 				query.append("connection", filters.connection);
@@ -84,7 +93,7 @@ export default function Cases({ guild }: Props) {
 							className="p-2 transition hover:bg-neutral-900 bg-neutral-900/50 rounded-lg relative h-9 mb-2 tabletdesk:hidden"
 						>
 							{(filters.mod_id ||
-								filters.target_id ||
+								user ||
 								filters.type === 0 ||
 								filters.type === 1 ||
 								filters.connection) && (
@@ -132,15 +141,13 @@ export default function Cases({ guild }: Props) {
 
 									return (
 										<div
-											className="cursor-pointer"
 											onClick={() => fetchCase(caseItem.id)}
 											key={caseItem.id}
 										>
 											<CaseCard
+												key={index}
 												loading={loading === caseItem.id}
-												hovering={caseItem.id === caseDetail?.id}
 												caseItem={caseDetail || caseItem}
-												index={index}
 											/>
 										</div>
 									);
@@ -151,6 +158,11 @@ export default function Cases({ guild }: Props) {
 				</div>
 				<div className="flex px-2 items-center justify-center tablet:hidden w-80">
 					<DeskModsFilters
+						error={error}
+						submitUser={submitUser}
+						setError={setError}
+						user={user}
+						setUser={setUser}
 						filters={filters}
 						setFilters={setFilters}
 						guild={guild}
