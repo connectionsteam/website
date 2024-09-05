@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { AnimatePresence, motion } from "framer-motion";
 import DefaultLayout from "../../../../components/Mixed/Layout";
@@ -12,10 +12,8 @@ import usePremium from "../../../../hooks/usePremium";
 import type {
 	GuildChannelsPayload,
 	GuildPayload,
-	GuildTab,
 	GuildThreadsPayload,
-	Language,
-	TabState,
+	Premium,
 } from "../../../../types";
 import Connections from "./Connecions";
 import { useLanguage } from "../../../../hooks/useLanguage";
@@ -32,6 +30,8 @@ import {
 } from "@nextui-org/modal";
 import ActivePremium from "./ActivePremium";
 import Confetti from "react-confetti";
+import GuildLogs from "./Logs";
+import DefaultTabs from "../../../Mixed/Tabs";
 
 export default function GuildComponent() {
 	const router = useRouter();
@@ -42,7 +42,6 @@ export default function GuildComponent() {
 	const [threads, setThreads] = useState<GuildThreadsPayload[]>([]);
 	const { premium, setPremium } = usePremium(guild);
 	const [modifications, setModifications] = useState(false);
-	const [changedTab, setChangedTab] = useState(false);
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 	const [showConfetti, setShowConfetti] = useState(false);
 
@@ -54,77 +53,67 @@ export default function GuildComponent() {
 
 	const l = useLanguage();
 
-	const [tab, setTab] = useState<TabState>({
-		tabs: [],
-		selected: "infos",
-		connection: false,
-	});
+	const [activeTab, setActiveTab] = useState("infos");
 
-	const handleChangeTab = (selected: string) => {
-		if (modifications) {
-			setChangedTab(true);
-
-			return setTimeout(() => {
-				setChangedTab(false);
-			}, 1000);
-		}
-
-		setTab({
-			...tab,
-			connection: false,
-			selected,
-		});
-	};
-
-	const createTabs = () => {
-		if (guild && threads && premium && discordGuild) {
-			return [
-				{
-					value: "infos",
-					title: l.dashboard.guilds.tabs.infos,
-					content: (
-						<Infos
-							channels={channels}
-							actualGuild={discordGuild}
-							modifications={modifications}
-							setModifications={setModifications}
-							premium={premium}
-							setGuild={setGuild}
-							setThreads={setThreads}
-							threads={threads}
-							guild={guild}
-						/>
-					),
-				},
-				{
-					value: "channels",
-					title: l.dashboard.guilds.tabs.channels,
-					content: (
-						<Channels setGuild={setGuild} guild={guild} channels={channels} />
-					),
-				},
-				{
-					value: "cases",
-					title: l.dashboard.guilds.tabs.cases,
-					content: <Cases guild={guild} />,
-				},
-				{
-					value: "connections",
-					title: l.dashboard.guilds.tabs.connections,
-					content: (
-						<Connections
-							premium={premium}
-							channels={channels}
-							setGuild={setGuild}
-							guild={guild}
-						/>
-					),
-				},
-			];
-		}
-
-		return [];
-	};
+	const tabs = [
+		{
+			id: "infos",
+			label: l.dashboard.guilds.tabs.infos,
+			component: (
+				<Infos
+					actualGuild={discordGuild as GuildPayload}
+					modifications={modifications}
+					setModifications={setModifications}
+					premium={premium as Premium}
+					setGuild={setGuild}
+					setThreads={setThreads}
+					threads={threads}
+					guild={guild as GuildPayload}
+				/>
+			),
+		},
+		{
+			id: "channels",
+			label: l.dashboard.guilds.tabs.channels,
+			component: (
+				<Channels
+					setGuild={setGuild}
+					guild={guild as GuildPayload}
+					channels={channels}
+				/>
+			),
+		},
+		{
+			id: "cases",
+			label: l.dashboard.guilds.tabs.cases,
+			component: <Cases guild={guild as GuildPayload} />,
+		},
+		{
+			id: "connections",
+			label: l.dashboard.guilds.tabs.connections,
+			component: (
+				<Connections
+					premium={premium as Premium}
+					channels={channels}
+					setGuild={setGuild}
+					guild={guild as GuildPayload}
+				/>
+			),
+		},
+		{
+			id: "logs",
+			label: "Logs",
+			component: (
+				<GuildLogs
+					guild={guild as GuildPayload}
+					setModifications={setModifications}
+					actualGuild={discordGuild as GuildPayload}
+					channels={channels}
+					setGuild={setGuild}
+				/>
+			),
+		},
+	];
 
 	useEffect(() => {
 		if (!id) return;
@@ -145,65 +134,6 @@ export default function GuildComponent() {
 
 		Promise.all([fetchGuild(), fetchChannels()]);
 	}, [id]);
-
-	useEffect(() => {
-		setTab((prevTab) => ({
-			...prevTab,
-			tabs: createTabs(),
-		}));
-	}, [guild, threads, channels, premium, l.language]);
-
-	const animations = (
-		t: { value: string },
-		language: Language,
-		selectedTab: GuildTab,
-		connection: boolean,
-	) => {
-		const pxs: Record<Language, Record<GuildTab, string>> = {
-			"pt-BR": {
-				channels: "75px",
-				cases: "75px",
-				connections: "110px",
-				infos: "120px",
-				width: "75px",
-			},
-			"en-US": {
-				channels: "96px",
-				cases: "75px",
-				connections: "120px",
-				infos: "125px",
-				width: "95px",
-			},
-		};
-
-		const position: Record<Language, Record<GuildTab, number>> = {
-			"pt-BR": {
-				channels: 130,
-				cases: 212,
-				connections: 290,
-				infos: 0,
-				width: 290,
-			},
-			"en-US": {
-				channels: 130,
-				cases: 232,
-				connections: 313,
-				infos: 0,
-				width: 290,
-			},
-		};
-
-		if (connection)
-			return {
-				width: pxs[language]["connections"],
-				x: position[language]["connections"],
-			};
-
-		const width = pxs[language][selectedTab];
-		const x = position[language][selectedTab];
-
-		return { width, x };
-	};
 
 	return (
 		<>
@@ -283,81 +213,33 @@ export default function GuildComponent() {
 									/>
 								</div>
 							</div>
-							<div className="flex flex-col gap-2 w-full overflow-x-hidden">
-								<div className="flex rounded-lg py-1 overflow-x-auto relative">
-									{tab.tabs.map((t) => (
-										<>
-											<button
-												onClick={() => handleChangeTab(t.value)}
-												className={`text-white px-4 rounded-lg py-2 
-                                        cursor-pointer transition-colors duration-300 
-                                        gap-2 flex z-20`}
-											>
-												<span>{t.title}</span>
-											</button>
-											<motion.div
-												key={t.value}
-												animate={animations(
-													t,
-													l.language,
-													tab.selected as GuildTab,
-													tab.connection,
-												)}
-												transition={{
-													type: "spring",
-													bounce: 0.3,
-													duration: 0.5,
-												}}
-												className="absolute bg-neutral-800 z-10 h-[84%] 
-                                        w-12 rounded-lg -translate-y-1/2 -translate-x-1"
-											></motion.div>
-										</>
-									))}
-								</div>
-								<div className="overflow-x-hidden">
-									{tab.tabs.map((t) =>
-										tab.selected === t.value ? (
-											<motion.div
-												key={t.value}
-												initial={{ opacity: 0 }}
-												animate={{ opacity: 1 }}
-											>
-												{t.content}
-											</motion.div>
-										) : null,
-									)}
-								</div>
+							<div className="flex flex-col gap-2 w-full overflow-x-auto">
+								{discordGuild && guild && threads && channels && premium && (
+									<div className="flex rounded-lg overflow-x-auto relative flex-col gap-2">
+										<div className="w-full relative flex items-center gap-2 overflow-x-auto">
+											<DefaultTabs
+												activeTab={activeTab}
+												setActiveTab={setActiveTab}
+												cursor="bg-neutral-800"
+												tabs={tabs}
+											/>
+										</div>
+										{tabs.find((t) => t.id === activeTab)?.component}
+									</div>
+								)}
 								<AnimatePresence>
 									{modifications && (
 										<motion.div
-											initial={changedTab ? {} : { opacity: 0, y: 200 }}
-											animate={
-												changedTab
-													? {
-															x: [0, -10, 10, -10, 10, -5, 5, 0],
-															transition: {
-																duration: 0.4,
-																ease: "easeInOut",
-															},
-														}
-													: { opacity: 1, y: -10 }
-											}
-											transition={
-												changedTab
-													? {
-															repeat: Number.POSITIVE_INFINITY,
-															repeatType: "loop",
-														}
-													: undefined
-											}
+											initial={{ opacity: 0, y: 200 }}
+											animate={{ opacity: 1, y: -10 }}
 											exit={{ opacity: 0, y: 200 }}
 											className="fixed bottom-0 right-0 w-full flex flex-col 
                                         gap-4 items-center z-50"
 										>
 											<GuildModifications
+												changedTab={false}
 												setThreads={setThreads}
 												setActualGuild={setDiscordGuild}
-												changedTab={changedTab}
 												setGuild={setGuild}
 												actualGuild={discordGuild}
 												guild={guild}
