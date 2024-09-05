@@ -71,7 +71,7 @@ export default function EditDashboardConnection({
 			</div>
 			<div className="flex flex-col gap-2">
 				<DefaultInput
-					maxChars={15}
+					maxChars={16}
 					minChars={1}
 					value={editedConnection.name}
 					label={l.dashboard.connections.connection.form.name}

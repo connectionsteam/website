@@ -67,7 +67,7 @@ export default function CreateConnectionForm({
 					<ModalBody>
 						<DefaultInput
 							obrigatory
-							maxChars={15}
+							maxChars={16}
 							minChars={1}
 							error={errors.includes("name")}
 							value={post.name}
