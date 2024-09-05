@@ -21,6 +21,7 @@ export default function GuildSkeleton() {
 				<div className="bg-neutral-700 w-28 h-5 rounded-full animate-pulse"></div>
 				<div className="bg-neutral-700 w-20 h-5 rounded-full animate-pulse"></div>
 				<div className="bg-neutral-700 w-28 h-5 rounded-full animate-pulse"></div>
+				<div className="bg-neutral-700 w-20 h-5 rounded-full animate-pulse"></div>
 			</div>
 			<div className="bg-neutral-800 p-4 rounded-lg w-full flex gap-4 flex-col">
 				<div className="flex flex-col gap-2 w-full">

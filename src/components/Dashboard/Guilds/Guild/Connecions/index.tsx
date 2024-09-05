@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type {
+	ConnectedConnectionPayload,
 	ConnectedConnectionsState,
 	GuildChannelsPayload,
 	GuildPayload,
@@ -18,6 +19,9 @@ import GuildConnectConnection from "../../Connection/Connect";
 import ConnectedConnnectionCard from "./Card";
 import { api } from "../../../../../utils/api";
 import { useLanguage } from "../../../../../hooks/useLanguage";
+import DefaultButton from "../../../../Mixed/Button";
+import { Input } from "@nextui-org/input";
+import { AnimatePresence } from "framer-motion";
 
 interface Props {
 	guild: GuildPayload;
@@ -35,6 +39,7 @@ export default function Connections({
 	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 	const l = useLanguage();
 	const [loading, setLoading] = useState(false);
+	const [searchQuery, setSearchQuery] = useState("");
 	const [connectionProps, setConnectionProps] =
 		useState<ConnectedConnectionsState>({
 			hover: null,
@@ -62,6 +67,15 @@ export default function Connections({
 		}, 500);
 	};
 
+	const filter = (connection: ConnectedConnectionPayload) => {
+		const advancedQuery = searchQuery.toLowerCase();
+
+		return (
+			connection.name.toLowerCase().includes(advancedQuery) ||
+			connection.description?.toLowerCase().includes(advancedQuery)
+		);
+	};
+
 	return (
 		<div className="w-full rounded-lg bg-neutral-800 p-6 transition flex flex-col gap-4">
 			<div className="flex flex-col">
@@ -77,57 +91,80 @@ export default function Connections({
 					{l.dashboard.connections.description}
 				</span>
 			</div>
-			<div className="grid grid-cols-3 gap-3 w-full tablet:grid-cols-2 mobile:grid-cols-1">
-				{guild.connections ? (
-					guild.connections.map((connection) => (
-						<ConnectedConnnectionCard
-							loading={loading}
-							connection={connection}
-							guild={guild}
-							handleRemoveConnection={handleRemoveConnection}
-							setConnectionProps={setConnectionProps}
-							connectionProps={connectionProps}
-							key={connection.name}
-						/>
-					))
-				) : (
-					<ConnectionsSkeleton />
-				)}
-				<div className="p-[2px] bg-gradient-to-r from-fuchsia-500 to-indigo-500 rounded-lg w-full">
-					<button
-						onClick={onOpen}
-						className="flex items-center justify-center gap-2 p-5 h-full w-full 
-                        rounded-lg bg-neutral-800 hover:bg-transparent transition"
-					>
-						<LuPlusCircle size={26} />
-						<span>{l.dashboard.connections.addConnection}</span>
-					</button>
-				</div>
-				<Modal
-					classNames={{
-						closeButton: "transition hover:bg-neutral-700",
-						wrapper: "overflow-y-hidden",
-						base: "max-h-screen overflow-y-auto",
-					}}
-					isOpen={isOpen}
-					onOpenChange={onOpenChange}
-				>
-					<ModalContent className="bg-neutral-800 text-white">
-						<ModalHeader className="flex flex-col gap-1 bg-neutral-800 pb-1">
-							{l.dashboard.connections.connectToConnection}
-						</ModalHeader>
-						<ModalBody className="mb-2">
-							<GuildConnectConnection
-								premium={premium}
-								setGuild={setGuild}
-								onClose={onClose}
-								channels={channels}
-								guild={guild}
-							/>
-						</ModalBody>
-					</ModalContent>
-				</Modal>
+			<div className="flex w-full h-full gap-1">
+				<input
+					className="bg-neutral-900/50 w-full rounded-lg p-3 outline-none"
+					onChange={(e) => setSearchQuery(e.target.value)}
+					type="string"
+					placeholder={l.dashboard.misc.filterConnections}
+				/>
+				<DefaultButton onClick={onOpen} divclass="w-fit" className="w-[52px]">
+					<LuPlusCircle size={20} />
+				</DefaultButton>
 			</div>
+			{guild.connections ? (
+				guild.connections.filter(filter).length === 0 ? (
+					<div className="flex w-full items-center justify-center">
+						<div className="min-h-[20vh] text-lg items-center font-bold justify-center flex text-center">
+							{searchQuery === "" ? (
+								<div className="flex flex-col">
+									<div>{l.dashboard.connections.noConnections}</div>
+									<div className="text-sm text-neutral-300 font-normal flex gap-1">
+										<p>{l.dashboard.connections.noConnectionsDescription}</p>
+										<span className="font-semibold">+</span>
+									</div>
+								</div>
+							) : (
+								l.dashboard.connections.noConnectionsFound
+							)}
+						</div>
+					</div>
+				) : (
+					<div className="grid grid-cols-3 gap-3 w-full tablet:grid-cols-2 mobile:grid-cols-1">
+						<AnimatePresence>
+							{guild.connections.filter(filter).map((connection) => (
+								<ConnectedConnnectionCard
+									loading={loading}
+									connection={connection}
+									guild={guild}
+									handleRemoveConnection={handleRemoveConnection}
+									setConnectionProps={setConnectionProps}
+									connectionProps={connectionProps}
+									key={connection.name}
+								/>
+							))}
+						</AnimatePresence>
+					</div>
+				)
+			) : (
+				<div className="grid grid-cols-3 gap-3 w-full tablet:grid-cols-2 mobile:grid-cols-1">
+					<ConnectionsSkeleton />
+				</div>
+			)}
+			<Modal
+				classNames={{
+					closeButton: "transition hover:bg-neutral-700",
+					wrapper: "overflow-y-hidden",
+					base: "max-h-screen overflow-y-auto",
+				}}
+				isOpen={isOpen}
+				onOpenChange={onOpenChange}
+			>
+				<ModalContent className="bg-neutral-800 text-white">
+					<ModalHeader className="flex flex-col gap-1 bg-neutral-800 pb-1">
+						{l.dashboard.connections.connectToConnection}
+					</ModalHeader>
+					<ModalBody className="mb-2">
+						<GuildConnectConnection
+							premium={premium}
+							setGuild={setGuild}
+							onClose={onClose}
+							channels={channels}
+							guild={guild}
+						/>
+					</ModalBody>
+				</ModalContent>
+			</Modal>
 		</div>
 	);
 }
