@@ -33,7 +33,7 @@ export default function ActivePremium({
 	const [code, setCode] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [errors, setErrors] = useState<string[]>([]);
-	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 	const [premium, setPremium] = useState(1);
 	const l = useLanguage();
 
