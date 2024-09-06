@@ -9,35 +9,42 @@ import {
 import { LuLock, LuUnlock } from "react-icons/lu";
 import Avatar from "../../../../Mixed/Avatar";
 import { api } from "../../../../../utils/api";
-import Link from "next/link";
+import { motion } from "framer-motion";
 
 interface Props {
 	channels: GuildChannelsPayload[];
 	guild: GuildPayload;
 	setGuild: (guild: GuildPayload) => void;
+	setModifications: (modifications: boolean) => void;
 }
 
 export default function Channels({ channels, guild, setGuild }: Props) {
 	const l = useLanguage();
 
-	const handleToggleLocked = (connection: ConnectedConnectionPayload) => async () => {
-		if (connection.flags.includes(ConnectedConnectionFlags.Frozen)) return;
-	
-		const lockedAt = connection.lockedAt ? null : Date.now();
-	
-		const { data } = await api.patch(`/guilds/${guild.id}/connections/${connection.name}`, {
-			lockedAt
-		});
-	
-		setGuild({
-			...guild,
-			connections: guild.connections.map((conn) => 
-				conn.name === connection.name 
-					? { ...conn, lockedAt: data.lockedAt } 
-					: conn
-			)
-		});
-	};	
+	const handleToggleLocked =
+		(connection: ConnectedConnectionPayload) => async () => {
+			if (connection.flags.includes(ConnectedConnectionFlags.Frozen)) return;
+
+			const lockedAt = connection.lockedAt ? null : Date.now();
+
+			const { data } = await api.patch(
+				`/guilds/${guild.id}/connections/${connection.name}`,
+				{
+					lockedAt,
+				},
+			);
+
+			const mappedConnections = guild.connections.map((conn) =>
+				conn.name === connection.name
+					? { ...conn, lockedAt: data.lockedAt }
+					: conn,
+			);
+
+			setGuild({
+				...guild,
+				connections: mappedConnections,
+			});
+		};
 
 	return (
 		<div className="flex flex-col gap-4 rounded-lg bg-neutral-800 p-6">
@@ -49,7 +56,7 @@ export default function Channels({ channels, guild, setGuild }: Props) {
 					{l.dashboard.guilds.channels.description}
 				</span>
 			</div>
-			<div className="flex flex-col gap-3">
+			<div className="flex flex-col gap-5">
 				{guild.connections.map((connection) => {
 					const channel = channels.find(
 						(channel) => channel.id === connection.channelId,
@@ -58,33 +65,30 @@ export default function Channels({ channels, guild, setGuild }: Props) {
 					if (!channel) return null;
 
 					return connection ? (
-						<div className="group" key={channel.id}>
-							<Link
-								href={`/guild/${guild.id}/connection/${connection.name}`}
-								className="bg-neutral-900/50 rounded-lg w-fit p-3 rounded-b-none
-                                flex gap-3 items-center mobile:w-full group-hover:bg-neutral-900 transition"
-							>
-								<div className="min-w-8 min-h-8">
-									<Avatar className="w-8 h-8" src={connection.icon} />
+						<div
+							className="group flex flex-col gap-3 rounded-lg bg-neutral-900/50 p-3"
+							key={channel.id}
+						>
+							<div className="flex gap-2 items-center">
+								<div className="min-w-10 min-h-10">
+									<Avatar className="w-10 h-10" src={connection.icon} />
 								</div>
 								<span className="font-bold text-lg">{connection.name}</span>
-							</Link>
+							</div>
 							<button
 								onClick={handleToggleLocked(connection)}
-								className="w-full flex gap-2 rounded-lg bg-neutral-900/50 p-3
-                                    items-center pr-0 rounded-t-none rounded-tr-lg mobile:rounded-tr-none
-                                    group-hover:bg-neutral-900 transition"
+								className="w-full flex gap-2 ml-2 bg-neutral-800 p-2 rounded-lg"
 							>
 								<div
-									className="font-bold text-start flex gap-2 items-center
+									className="font-semibold text-start flex gap-2 items-center
                                     flex-grow"
 								>
-									<div className="w-4 h-4">
+									<div className="p-2 bg-neutral-900/50 rounded-lg">
 										<RiHashtag fill="#d946ef" />
 									</div>
-									<span>{channel.name}</span>
+									<span>{channel.name.length > 20 ? channel.name.slice(0, 20) + "..." : channel.name}</span>
 								</div>
-								<div className="flex gap-2 items-center pr-3 relative">
+								<div className="flex gap-2 items-center relative">
 									{connection.flags.includes(
 										ConnectedConnectionFlags.Frozen,
 									) && (
@@ -94,20 +98,22 @@ export default function Channels({ channels, guild, setGuild }: Props) {
                                                 to-sky-500 rounded-lg z-50"
 										></div>
 									)}
-									<div
-										className={`transition text-black rounded-lg flex 
-                                                    gap-2 p-1 items-center w-full
-                                                    ${connection.lockedAt
-														? "bg-red-500"
-														: "bg-green-500"
-													}
-                                                    `}
-									>
-										{connection.lockedAt ? (
-											<LuLock size={26} />
-										) : (
-											<LuUnlock size={26} />
-										)}
+									<motion.div
+										animate={{ x: !connection.lockedAt ? "134%" : 1 }}
+										transition={{
+											type: "spring",
+											bounce: 0.2,
+											duration: 0.5,
+										}}
+										className={`absolute w-8 h-full
+										${connection.lockedAt ? "bg-red-500" : "bg-green-500"}
+										rounded-lg transition-colors z-10`}
+									/>
+									<div className="w-full z-20 p-1">
+										<LuLock size={26} />
+									</div>
+									<div className="w-full z-20 p-1">
+										<LuUnlock size={26} />
 									</div>
 								</div>
 							</button>

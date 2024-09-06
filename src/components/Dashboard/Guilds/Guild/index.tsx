@@ -77,6 +77,7 @@ export default function GuildComponent() {
 			label: l.dashboard.guilds.tabs.channels,
 			component: (
 				<Channels
+					setModifications={setModifications}
 					setGuild={setGuild}
 					guild={guild as GuildPayload}
 					channels={channels}
