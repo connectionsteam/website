@@ -14,6 +14,7 @@ import {
 	LogsFlag,
 } from "../../../../types";
 import { useEffect, useState } from "react";
+import { IoIosWarning } from "react-icons/io";
 
 interface Props {
 	guild: GuildPayload;
@@ -21,6 +22,8 @@ interface Props {
 	channels: GuildChannelsPayload[];
 	actualGuild: GuildPayload;
 	setModifications: (modifications: boolean) => void;
+	reportMessage: boolean;
+	setReportMessage: (reportMessage: boolean) => void;
 }
 
 export default function GuildLogs({
@@ -28,7 +31,9 @@ export default function GuildLogs({
 	setGuild,
 	channels,
 	actualGuild,
-	setModifications
+	setModifications,
+	reportMessage,
+	setReportMessage,
 }: Props) {
 	const l = useLanguage();
 
@@ -60,11 +65,6 @@ export default function GuildLogs({
 			description:
 				l.dashboard.guilds.info.logs.logsbuttons.locksLog.description,
 		},
-		[LogsFlag.LogMessages]: {
-			title: l.dashboard.guilds.info.logs.logsbuttons.messagesLog.title,
-			description:
-				l.dashboard.guilds.info.logs.logsbuttons.messagesLog.description,
-		},
 		[LogsFlag.LogNotes]: {
 			title: l.dashboard.guilds.info.logs.logsbuttons.notesLog.title,
 			description:
@@ -86,13 +86,27 @@ export default function GuildLogs({
 				l.dashboard.guilds.info.logs.logsbuttons.timeoutsLog.description,
 		},
 	};
-
 	const handleFlagChange = (flag: LogsFlag) => () => {
 		const { flags } = guild.logs;
 
 		const updatedFlags = flags.includes(flag)
 			? flags.filter((f) => f !== flag)
 			: [...flags, flag];
+
+		if (
+			flag === LogsFlag.LogReports &&
+			!updatedFlags.includes(LogsFlag.LogReports)
+		) {
+			if (!actualGuild.logs.flags.includes(LogsFlag.LogReports)) {
+				setReportMessage(true);
+			} else {
+				setReportMessage(true);
+			}
+		} else {
+			if (updatedFlags.includes(LogsFlag.LogReports)) {
+				setReportMessage(false);
+			}
+		}
 
 		const areFlagsEqual =
 			actualGuild.logs.flags.length === updatedFlags.length &&
@@ -277,6 +291,12 @@ transition hover:bg-neutral-900 cursor-pointer"
 						);
 					})}
 			</div>
+			{reportMessage && (
+				<div className="bg-yellow-600/20 rounded-lg p-3 flex gap-2 items-center mobile:flex-col">
+					<IoIosWarning className="fill-yellow-300" size={30} />
+					<span>{l.dashboard.guilds.info.logs.reportMessage}</span>
+				</div>
+			)}
 		</div>
 	);
 }

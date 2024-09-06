@@ -20,6 +20,7 @@ interface Props {
 	changedTab: boolean;
 	setActualGuild: (guild: GuildPayload) => void;
 	setThreads: (threads: GuildThreadsPayload[]) => void;
+	setReportMessage: (reportMessage: boolean) => void;
 }
 
 interface PatchChangesBody {
@@ -51,6 +52,7 @@ export default function GuildModifications({
 	changedTab,
 	setActualGuild,
 	setThreads,
+	setReportMessage
 }: Props) {
 	const [loading, setLoading] = useState({ loading: false, check: false });
 	const [errors, setErrors] = useState<string[]>([]);
@@ -155,6 +157,7 @@ export default function GuildModifications({
 			setLoading({ ...loading, check: true });
 
 			setTimeout(() => {
+				setReportMessage(false);
 				setLoading({ ...loading, check: false });
 				setModifications(false);
 			}, 500);

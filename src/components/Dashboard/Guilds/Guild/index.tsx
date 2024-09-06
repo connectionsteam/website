@@ -44,6 +44,7 @@ export default function GuildComponent() {
 	const [modifications, setModifications] = useState(false);
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 	const [showConfetti, setShowConfetti] = useState(false);
+	const [reportMessage, setReportMessage] = useState(false);
 
 	const premiums = {
 		0: "None",
@@ -106,6 +107,8 @@ export default function GuildComponent() {
 			label: "Logs",
 			component: (
 				<GuildLogs
+					reportMessage={reportMessage}
+					setReportMessage={setReportMessage}
 					guild={guild as GuildPayload}
 					setModifications={setModifications}
 					actualGuild={discordGuild as GuildPayload}
@@ -238,6 +241,7 @@ export default function GuildComponent() {
                                         gap-4 items-center z-50"
 										>
 											<GuildModifications
+												setReportMessage={setReportMessage}
 												changedTab={false}
 												setThreads={setThreads}
 												setActualGuild={setDiscordGuild}
