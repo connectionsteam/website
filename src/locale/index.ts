@@ -78,6 +78,7 @@ export const languages = {
 						description: "Defina abaixo o número máximo de caracteres que irá aparecer nas mensagens recebidas do seu servidor"
 					},
 					logs: {
+						reportMessage: "Logs de reportes são essenciais para os reportes, você tem certeza que deseja desativá-lo?",
 						logsbuttons: {
 							anyLog: {
 								title: "Qualquer Log",
@@ -94,10 +95,6 @@ export const languages = {
 							locksLog: {
 								title: "Logs de Bloqueio",
 								description: "Logs de quando alguém bloqueia um canal de uma conexão conectada"
-							},
-							messagesLog: {
-								title: "Logs de Mensagens",
-								description: "Todas as mensagens editadas ou deletadas"
 							},
 							notesLog: {
 								title: "Logs de Notas",
@@ -119,10 +116,6 @@ export const languages = {
 								title: "Logs de Mensagens Deletadas",
 								description: "Todas as mensagens deletadas"
 							},
-							messageUpdateLog: {
-								title: "Logs de Mensagens Editadas",
-								description: "Todas as mensagens editadas"
-							}
 						},
 						title: "Canal de Logs",
 						description: "Selecione o canal que receberá todos os logs selecionados",
@@ -891,6 +884,7 @@ export const languages = {
 						description: "Define below the maximum number of characters that will appear in the messages received from your server"
 					},
 					logs: {
+						reportMessage: "Report Logs are essential for reports, are you sure you want to disable it?",
 						logsbuttons: {
 							anyLog: {
 								title: "Any Log",
@@ -907,10 +901,6 @@ export const languages = {
 							locksLog: {
 								title: "Lock Logs",
 								description: "Logs when someone locks a channel of a connected connection"
-							},
-							messagesLog: {
-								title: "Message Logs",
-								description: "All edited or deleted messages"
 							},
 							notesLog: {
 								title: "Note Logs",
@@ -932,10 +922,6 @@ export const languages = {
 								title: "Deleted Message Logs",
 								description: "All deleted messages"
 							},
-							messageUpdateLog: {
-								title: "Edited Message Logs",
-								description: "All edited messages"
-							}
 						},
 						title: "Logs Channel",
 						description: "Select the channel that will receive all the logs selected",

@@ -63,7 +63,6 @@ export enum LogsFlag {
     LogBans,
     LogTimeouts,
     LogNotes,
-    LogMessages,
     LogPurges,
     LogLocks,
     LogConnections,

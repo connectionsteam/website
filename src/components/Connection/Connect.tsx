@@ -4,8 +4,7 @@ import type {
 	ConnectionsPageStructure,
 	GuildPayload,
 } from "../../types";
-import { api } from "../../utils/api";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLanguage } from "../../hooks/useLanguage";
 import {
 	Modal,
