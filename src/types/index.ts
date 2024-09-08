@@ -112,13 +112,13 @@ export interface ConnectedConnectionPayload {
 	flags: ConnectedConnectionFlags[];
 }
 
-export enum InitialPageConnectedConnectionFlags {
-	CompactModeEnabled = "COMPACT_MODE",
-	AutoTranslate = "AUTO_TRANSLATE",
-	NoIndentification = "NO_INDENTIFICATION",
-	AllowLinks = "ALLOW_LINKS",
-	AllowOrigin = "ALLOW_ORIGIN",
+export enum InitialPageConnectionFlags {
 	AllowFiles = "ALLOW_FILES",
+	AllowLinks = "ALLOW_LINKS",
+	NoIndentification = "NO_INDENTIFICATION",
+	AllowOrigin = "ALLOW_ORIGIN",
+	AllowEmojis = "ALLOW_EMOJIS",
+	CompactModeEnabled = "COMPACT_MODE",
 }
 
 export enum ConnectedConnectionFlags {
