@@ -7,11 +7,6 @@ import { motion } from "framer-motion";
 import { useLanguage } from "../../hooks/useLanguage";
 import UserEmbed from "./UserEmbed";
 import ConnectionsEmbed from "./ConnectionsEmbed";
-import {
-	ConnectedConnectionFlags,
-	InitialPageConnectedConnectionFlags,
-} from "../../types";
-import { Switch } from "@nextui-org/switch";
 import DefaultButton from "../Mixed/Button";
 import { TbLayoutDashboardFilled } from "react-icons/tb";
 import { LuPlusCircle } from "react-icons/lu";
@@ -20,6 +15,7 @@ import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts/User";
 import Avatar from "../Mixed/Avatar";
+import CustomizeMessage from "./CustomizeMessage";
 
 interface CoolUser {
 	id: string;
@@ -37,36 +33,6 @@ export default function Page() {
 	const [compactMode, setCompactMode] = useState(false);
 	const [hour, setHour] = useState("");
 	const { user: loggeduser } = useContext(UserContext);
-
-	const flagsDescriptions = {
-		[ConnectedConnectionFlags.CompactModeEnabled]: {
-			title: l.dashboard.guilds.connections.flags.compactModeEnabled,
-			description:
-				l.dashboard.guilds.connections.flags.compactModeEnabledDescription,
-		},
-		[ConnectedConnectionFlags.AutoTranslate]: {
-			title: l.dashboard.guilds.connections.flags.autoTranslate,
-			description:
-				l.dashboard.guilds.connections.flags.autoTranslateDescription,
-		},
-		[ConnectedConnectionFlags.NoIndentification]: {
-			title: l.dashboard.guilds.connections.flags.noIndentification,
-			description:
-				l.dashboard.guilds.connections.flags.noIndentificationDescription,
-		},
-		[ConnectedConnectionFlags.AllowLinks]: {
-			title: l.dashboard.guilds.connections.flags.allowLinks,
-			description: l.dashboard.guilds.connections.flags.allowLinksDescription,
-		},
-		[ConnectedConnectionFlags.AllowOrigin]: {
-			title: l.dashboard.guilds.connections.flags.allowOrigin,
-			description: l.dashboard.guilds.connections.flags.allowOriginDescription,
-		},
-		[ConnectedConnectionFlags.AllowFiles]: {
-			title: l.dashboard.guilds.connections.flags.allowFiles,
-			description: l.dashboard.guilds.connections.flags.allowFilesDescription,
-		},
-	};
 
 	useEffect(() => {
 		setChanged(true);
@@ -184,8 +150,12 @@ export default function Page() {
 							</motion.div>
 						</div>
 					</div>
-					<div className={`flex flex-row gap-2 items-center mobile w-full justify-center tablet:items-center mobile:flex-col`}>
-						<div className={`bg-neutral-800 flex flex-col rounded-lg p-3 ${compactMode ? "min-w-72" : "min-w-[340px]"}`}>
+					<div
+						className={`flex flex-row gap-2 items-center mobile w-full justify-center tablet:items-center mobile:flex-col`}
+					>
+						<div
+							className={`bg-neutral-800 flex flex-col rounded-lg p-3 ${compactMode ? "min-w-72" : "min-w-[340px]"}`}
+						>
 							<div className="flex flex-col gap-4">
 								<div className="flex gap-2 items-center w-full rounded-lg p-2 bg-neutral-900/50">
 									<Image
@@ -199,7 +169,9 @@ export default function Page() {
 										{l.home.conversation.spyei.server}
 									</span>
 								</div>
-								<div className={`flex ${compactMode ? "gap-5" : "gap-2"} flex-col border-l-neutral-700 border-l-2`}>
+								<div
+									className={`flex ${compactMode ? "gap-5" : "gap-2"} flex-col border-l-neutral-700 border-l-2`}
+								>
 									<div className="text-neutral-400 flex items-center gap-2 px-1">
 										<HiHashtag />
 										<span>{l.home.conversation.connectedChannel}</span>
@@ -249,7 +221,9 @@ export default function Page() {
 								</div>
 							</div>
 						</div>
-						<div className={`bg-neutral-800 flex flex-col rounded-lg p-3 ${compactMode ? "min-w-72" : "min-w-[340px]"}`}>
+						<div
+							className={`bg-neutral-800 flex flex-col rounded-lg p-3 ${compactMode ? "min-w-72" : "min-w-[340px]"}`}
+						>
 							<div className="flex flex-col gap-4">
 								<div className="flex gap-2 items-center w-full rounded-lg p-2 bg-neutral-900/50">
 									<Image
@@ -263,7 +237,9 @@ export default function Page() {
 										{l.home.conversation.unreal.server}
 									</span>
 								</div>
-								<div className={`flex flex-col ${compactMode ? "gap-5" : "gap-2"} border-l-neutral-700 border-l-2 relative`}>
+								<div
+									className={`flex flex-col ${compactMode ? "gap-5" : "gap-2"} border-l-neutral-700 border-l-2 relative`}
+								>
 									<div className="text-neutral-400 flex items-center gap-2 px-1">
 										<HiHashtag />
 										<span>{l.home.conversation.connectedChannel}</span>
@@ -338,56 +314,21 @@ export default function Page() {
 						</div>
 					</div>
 				</div>
-				<div className="p-10 w-full h-screen tablet:h-auto relative flex items-center justify-center flex-col">
-					<motion.div
-						initial={{ opacity: 0, y: 100 }}
-						whileInView={{ opacity: 0.9, y: 0 }}
-						className="flex text-white flex-col items-center justiify-center gap-3 text-center"
-					>
-						<div className="flex flex-col gap-2">
-							<h1 className="font-extrabold text-4xl">{l.home.custom.title}</h1>
-							<span className="max-w-[800px]">{l.home.custom.description}</span>
-						</div>
-						<div className="gap-4 grid grid-cols-2 tablet:grid-cols-1 text-start">
-							{Object.values(InitialPageConnectedConnectionFlags).map(
-								(flag, index) => (
-									<motion.div
-										initial={{ opacity: 0, y: -30 }}
-										whileInView={{ opacity: 1, y: 0 }}
-										transition={{ delay: 0.1 * index }}
-										key={index}
-										className="flex flex-col gap-1 p-3 rounded-lg 
-                                        bg-neutral-900 h-full place-content-center max-w-96"
-									>
-										<div className="flex items-center gap-1">
-											<div className="relative">
-												<Switch
-													onChange={() => {
-														flag === "COMPACT_MODE" &&
-															setCompactMode(!compactMode);
-													}}
-													color="secondary"
-												/>
-											</div>
-											<span className="font-bold">
-												{flagsDescriptions[flag].title}
-											</span>
-										</div>
-										<span className="text-sm text-neutral-300">
-											{flagsDescriptions[flag].description}
-										</span>
-									</motion.div>
-								),
-							)}
-						</div>
-						<div className="bg-neutral-900 p-3 rounded-lg items-center justify-center text-center w-full">
-							<span>{l.home.custom.moreOptions}</span>
-						</div>
-					</motion.div>
-				</div>
+				<CustomizeMessage
+					author={{
+						avatar:
+							(loggeduser
+								? `https://cdn.discordapp.com/avatars/${loggeduser.id}/${loggeduser.avatar}.png`
+								: user?.avatar) ?? "",
+						username: (loggeduser ? loggeduser.username : user?.name) ?? "",
+						hour
+					}}
+					compactMode={compactMode}
+					setCompactMode={setCompactMode}
+				/>
 				<div
 					className="flex items-center justify-center w-full tablet:w-screen tablet:px-3 
-                    h-[60vh]"
+                    h-screen max-h-screen"
 				>
 					<BackgroundColoredGradient>
 						<div className="bg-neutral-900 rounded-lg w-full p-8 flex items-center justify-center flex-col">
