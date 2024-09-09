@@ -1,6 +1,7 @@
 export const languages = {
 	"pt-BR": {
 		home: {
+			file: "Arquivo legal",
 			header: {
 				documentation: "Documentação",
 				support: "Suporte",
@@ -807,6 +808,7 @@ export const languages = {
 	},
 	"en-US": {
 		home: {
+			file: "Cool File",
 			header: {
 				documentation: "Documentation",
 				support: "Support",
@@ -997,7 +999,7 @@ export const languages = {
 							"Allow to appear server information in sent messages, like name and id",
 						allowEmojis: "Allow Emojis",
 						allowEmojisDescription: "Allow only emojis from discord",
-						compactModeEnabled: "Compact Mode Enabled",
+						compactModeEnabled: "Compact Mode",
 						compactModeEnabledDescription: "More compact message to be sent",
 						autoTranslate: "Auto Translate",
 						autoTranslateDescription:
