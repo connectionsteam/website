@@ -5,6 +5,7 @@ interface Props {
 	cursor?: string;
 	activeTab: string;
 	setActiveTab: (activeTab: string) => void;
+	newTab?: string[];
 }
 
 export default function DefaultTabs({
@@ -12,6 +13,7 @@ export default function DefaultTabs({
 	cursor,
 	activeTab,
 	setActiveTab,
+	newTab
 }: Props) {
 	return (
 		<div className="flex space-x-1">
@@ -35,6 +37,7 @@ export default function DefaultTabs({
 						/>
 					)}
 					{tab.label}
+					{(newTab?.includes(tab.id)) && <div className="absolute bg-red-500 text-xs px-2 rounded-full -right-4 top-0">New</div>}
 				</button>
 			))}
 		</div>

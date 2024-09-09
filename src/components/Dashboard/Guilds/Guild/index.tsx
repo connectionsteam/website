@@ -226,6 +226,7 @@ export default function GuildComponent() {
 												setActiveTab={setActiveTab}
 												cursor="bg-neutral-800"
 												tabs={tabs}
+												newTab={["logs"]}
 											/>
 										</div>
 										{tabs.find((t) => t.id === activeTab)?.component}
