@@ -38,7 +38,7 @@ export default function EditedConnectionsEmbed({ flags, author }: Props) {
 
 	return (
 		<div className="flex gap-2 w-full tablet:flex-col items-start justify-center">
-			<div className="bg-neutral-800 p-3 rounded-lg flex flex-col gap-2 h-fit">
+			<div className="bg-neutral-800 p-3 rounded-lg flex flex-col gap-2 h-fit w-full">
 				<div className="flex gap-2 items-center w-full rounded-lg p-2 bg-neutral-900/50 h-fit">
 					<Image
 						width={40}
@@ -59,7 +59,7 @@ export default function EditedConnectionsEmbed({ flags, author }: Props) {
 				/>
 			</div>
 			<div className="flex flex-col gap-2 w-full h-fit">
-				<div className="bg-neutral-800 p-3 rounded-lg flex flex-col gap-3 h-fit">
+				<div className="bg-neutral-800 p-3 rounded-lg flex flex-col gap-3 h-fit w-[120%] tablet:w-full">
 					<div className="flex gap-2 items-center w-full rounded-lg p-2 bg-neutral-900/50 h-fit">
 						<Image
 							width={40}
@@ -221,7 +221,7 @@ rounded-lg flex items-center gap-2 w-fit text-sm mt-1"
 							{flags.includes(flagsType.AllowFiles) && (
 								<motion.div
 									{...animation}
-									className="w-48 h-44 flex items-center justify-center gap-2 rounded-lg 
+									className="w-36 h-32 flex items-center justify-center gap-2 rounded-lg 
 flex-col border-neutral-700 border-2"
 								>
 									<LuFile />

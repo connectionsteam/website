@@ -31,7 +31,7 @@ export const languages = {
 			embeds: {
 				hour: "Hoje às ",
 			},
-			addConnections: "Adicionar Connections",
+			addConnections: "Adicionar",
 			conversation: {
 				spyei: {
 					message: "Eae mano, como vai?",
@@ -838,7 +838,7 @@ export const languages = {
 			embeds: {
 				hour: "Today at ",
 			},
-			addConnections: "Invite Connections",
+			addConnections: "Invite",
 			conversation: {
 				spyei: {
 					message: "What's up bro?",

@@ -3,10 +3,9 @@ import {
 	ConnectedConnectionFlags,
 	type ConnectedConnectionPayload,
 	type GuildChannelsPayload,
-	GuildPayload,
 } from "../../../../types";
 import BlockedWords from "./BlockedWords";
-import type { Dispatch, SetStateAction } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import GuildConnectionFlags from "./Flags";
 import Image from "next/image";
 import { HiHashtag } from "react-icons/hi";
@@ -29,6 +28,7 @@ export default function GuildEditConnection({
 	setConnection,
 	guildId,
 }: Props) {
+	const [modifications, setModifications] = useState(false);
 	const l = useLanguage();
 
 	return (
@@ -122,11 +122,15 @@ export default function GuildEditConnection({
 							</h1>
 							<div className="flex flex-col gap-3">
 								<BlockedWords
+									setModifications={setModifications}
+									modifications={modifications}
 									setConnection={setConnection}
 									guildId={guildId}
 									connection={connection}
 								/>
 								<GuildConnectionFlags
+									setModifications={setModifications}
+									modifications={modifications}
 									setConnection={setConnection}
 									guildId={guildId}
 									connection={connection}
@@ -135,6 +139,7 @@ export default function GuildEditConnection({
 						</div>
 					</div>
 				</div>
+				{}
 			</div>
 		</>
 	);

@@ -112,7 +112,7 @@ export default function Page() {
 						>
 							Connections
 						</h1>
-						<p className="text-neutral-300 text-lg mobile:text-sm tablet:text-center">
+						<p className="text-neutral-300 text-lg mobile:text-sm tablet:text-center mobile:max-w-[90vw]">
 							{l.home.description}
 						</p>
 						<div className="flex gap-2 items-center w-full tablet:flex-col mobile:max-w-[318px]">
@@ -321,22 +321,19 @@ export default function Page() {
 								? `https://cdn.discordapp.com/avatars/${loggeduser.id}/${loggeduser.avatar}.png`
 								: user?.avatar) ?? "",
 						username: (loggeduser ? loggeduser.username : user?.name) ?? "",
-						hour
+						hour,
 					}}
 					compactMode={compactMode}
 					setCompactMode={setCompactMode}
 				/>
-				<div
-					className="flex items-center justify-center w-full tablet:w-screen tablet:px-3 
-                    h-screen max-h-screen"
-				>
-					<BackgroundColoredGradient>
+				<div className="flex items-center justify-center w-full h-screen">
+					<div className="p-1 bg-gradient-to-r from-fuchsia-500 to-indigo-500 mx-3 mobile:w-[96vw] rounded-lg">
 						<div className="bg-neutral-900 rounded-lg w-full p-8 flex items-center justify-center flex-col">
 							<div className="justify-center py-4 flex-col text-center items-center gap-2 mobile:w-full w-[76%] flex">
 								<motion.h1
 									initial={{ opacity: 0, x: 10 }}
 									whileInView={{ opacity: 1, x: 0 }}
-									className="font-bold text-3xl mobile:text-xl"
+									className="font-bold text-3xl mobile:text-2xl"
 								>
 									{l.home.addConnectionsEmbed.title}
 								</motion.h1>
@@ -344,7 +341,7 @@ export default function Page() {
 									initial={{ opacity: 0, x: -10 }}
 									whileInView={{ opacity: 1, x: 0 }}
 									transition={{ delay: 0.2 }}
-									className="text-neutral-300"
+									className="text-neutral-300 mobile:text-sm"
 								>
 									{l.home.addConnectionsEmbed.description}
 								</motion.span>
@@ -376,7 +373,7 @@ export default function Page() {
 								</a>
 							</div>
 						</div>
-					</BackgroundColoredGradient>
+					</div>
 				</div>
 			</div>
 			<div className="absolute bottom-2 flex justify-center items-center mobile:hidden">
