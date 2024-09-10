@@ -122,14 +122,11 @@ export default function GuildEditConnection({
 							</h1>
 							<div className="flex flex-col gap-3">
 								<BlockedWords
-									modifications={modifications}
 									setConnection={setConnection}
 									guildId={guildId}
 									connection={connection}
 								/>
 								<GuildConnectionFlags
-									setModifications={setModifications}
-									modifications={modifications}
 									setConnection={setConnection}
 									guildId={guildId}
 									connection={connection}
