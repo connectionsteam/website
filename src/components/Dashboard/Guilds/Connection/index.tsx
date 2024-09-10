@@ -116,7 +116,7 @@ export default function GuildEditConnection({
 								</div>
 							</div>
 						</div>
-						<div className="flex flex-col gap-2">
+						<div className="flex flex-col gap-2 a">
 							<h1 className="font-bold text-xl">
 								{l.dashboard.guilds.connections.infos.configure}
 							</h1>
