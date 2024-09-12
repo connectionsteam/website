@@ -28,7 +28,6 @@ export default function GuildEditConnection({
 	setConnection,
 	guildId,
 }: Props) {
-	const [modifications, setModifications] = useState(false);
 	const l = useLanguage();
 
 	return (
@@ -135,7 +134,6 @@ export default function GuildEditConnection({
 						</div>
 					</div>
 				</div>
-				{}
 			</div>
 		</>
 	);

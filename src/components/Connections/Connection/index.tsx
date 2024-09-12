@@ -23,12 +23,12 @@ const ConnectionsPageCard = forwardRef<HTMLDivElement, Props>(
 		const { user } = useContext(UserContext);
 
 		const animation =
-			connections.length < 16
+			connections.length < 30
 				? {
 						initial: { opacity: 0, y: 30 },
 						animate: { opacity: 1, y: 0 },
 						exit: { opacity: 0, y: -30 },
-						transition: { delay: 0.09 * index, duration: 0.09 },
+						transition: { delay: 0.03 * index, duration: 0.03 },
 					}
 				: {};
 
