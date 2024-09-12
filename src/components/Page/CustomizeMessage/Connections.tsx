@@ -1,26 +1,14 @@
-import { LuExternalLink, LuFile } from "react-icons/lu";
-import { useLanguage } from "../../hooks/useLanguage";
-import { InitialPageConnectionFlags as flagsType } from "../../types";
-import Avatar from "../Mixed/Avatar";
 import { ReactNode, useEffect, useState } from "react";
+import { useLanguage } from "../../../hooks/useLanguage";
+import { CustomizeUserProps } from "./Embed";
+import { InitialPageConnectionFlags as flagsType } from "../../../types";
+import { AnimatePresence, motion } from "framer-motion";
+import { languages } from "../../../locale";
+import Avatar from "../../Mixed/Avatar";
 import { FaCheck } from "react-icons/fa6";
-import Image from "next/image";
-import { languages } from "../../locale";
-import { motion, AnimatePresence } from "framer-motion";
-
-export interface CustomizeUserProps {
-	avatar: string;
-	username: string;
-	hour: string;
-	flags?: flagsType[];
-}
+import { LuExternalLink, LuFile } from "react-icons/lu";
 
 interface Props {
-	flags: flagsType[];
-	author: CustomizeUserProps;
-}
-
-interface ConnectionsEmbedProps {
 	author: CustomizeUserProps;
 	hour: string;
 	flags: flagsType[];
@@ -33,53 +21,7 @@ const animation = {
 	transition: { duration: 0.2 },
 };
 
-export default function EditedConnectionsEmbed({ flags, author }: Props) {
-	const l = useLanguage();
-
-	return (
-		<div className="flex gap-2 w-full tablet:flex-col items-start justify-center">
-			<div className="bg-neutral-800 p-3 rounded-lg flex flex-col gap-2 h-fit w-full">
-				<div className="flex gap-2 items-center w-full rounded-lg p-2 bg-neutral-900/50 h-fit">
-					<Image
-						width={40}
-						height={40}
-						src="/guilds/spyei.png"
-						alt="Spyei's Guild"
-						className="rounded-full"
-					/>
-					<span className="text-lg font-semibold">
-						{l.home.conversation.spyei.server}
-					</span>
-				</div>
-				<UserEmbed
-					flags={flags}
-					avatar={author.avatar}
-					username={author.username}
-					hour={author.hour}
-				/>
-			</div>
-			<div className="flex flex-col gap-2 w-full h-fit">
-				<div className="bg-neutral-800 p-3 rounded-lg flex flex-col gap-3 h-fit w-[120%] tablet:w-full">
-					<div className="flex gap-2 items-center w-full rounded-lg p-2 bg-neutral-900/50 h-fit">
-						<Image
-							width={40}
-							height={40}
-							src="/guilds/unreal.png"
-							alt="Unreal's Guild"
-							className="rounded-full"
-						/>
-						<span className="text-lg font-semibold">
-							{l.home.conversation.unreal.server}
-						</span>
-					</div>
-					<ConnectionsEmbed flags={flags} author={author} hour={author.hour} />
-				</div>
-			</div>
-		</div>
-	);
-}
-
-function ConnectionsEmbed({ hour, author, flags }: ConnectionsEmbedProps) {
+export default function ConnectionsEmbed({ hour, author, flags }: Props) {
 	const l = useLanguage();
 	const [translatedContent, setTranslatedContent] = useState("");
 
@@ -97,8 +39,6 @@ function ConnectionsEmbed({ hour, author, flags }: ConnectionsEmbedProps) {
 			</motion.a>
 		),
 	};
-
-	console.log(translatedContent, l.language);
 
 	const renderMessage = () =>
 		flags!
@@ -128,18 +68,22 @@ function ConnectionsEmbed({ hour, author, flags }: ConnectionsEmbedProps) {
 	}, [l.language, flags]);
 
 	return (
-		<div className="flex items-start gap-2 py-2 h-fit">
+		<div className="flex gap-2 py-2 h-full items-center">
 			{flags.includes(flagsType.CompactModeEnabled) ? (
-				<>
-					<div className="min-w-10 min-h-10">
-						<Avatar src={author.avatar} className="w-10 h-10" />
+				<div className="flex items-start gap-2">
+					<div>
+						<div className="min-w-10 min-h-10">
+							<Avatar src={author.avatar} className="w-10 h-10" />
+						</div>
 					</div>
 					<div className="flex flex-col w-full">
-						<div className="flex gap-1">
-							<div className="flex gap-1 items-center justify-center">
+						<div className="flex gap-1 flex-wrap">
+							<div className="flex gap-1 justify-start flex-wrap">
 								<span className="font-bold">{author.username}</span>
-								<div className="rounded-md text-white bg-blue-500 px-2 py-[1px] text-xs flex gap-0.5 items-center">
-									<FaCheck />
+								{flags.includes(flagsType.AllowOrigin) && (
+									<motion.span {...animation}>({l.home.embeds.fromSpyei})</motion.span>
+								)}
+								<div className="rounded-md text-white bg-blue-500 px-2 py-[1px] text-xs flex gap-0.5 items-center font-bold">
 									<span>APP</span>
 								</div>
 							</div>
@@ -153,7 +97,9 @@ function ConnectionsEmbed({ hour, author, flags }: ConnectionsEmbedProps) {
 							<AnimatePresence>
 								{flags.includes(flagsType.AllowFiles) && (
 									<motion.div
-										{...animation}
+										initial={{ opacity: 0, x: 10 }}
+										animate={{ opacity: 1, x: 0 }}
+										transition={{ duration: 0.2 }}
 										className="w-36 h-32 flex items-center justify-center gap-2 rounded-lg 
 flex-col border-neutral-700 border-2"
 									>
@@ -171,9 +117,9 @@ rounded-lg flex items-center gap-2 w-fit text-sm mt-1"
 							<LuExternalLink />
 						</button>
 					</div>
-				</>
+				</div>
 			) : (
-				<>
+				<div className="flex items-start gap-2">
 					<div className="min-w-10 min-h-10">
 						<Avatar src="/avatars/connections.png" className="w-10 h-10" />
 					</div>
@@ -181,7 +127,7 @@ rounded-lg flex items-center gap-2 w-fit text-sm mt-1"
 						<div className="flex gap-1">
 							<div className="flex gap-1 items-center justify-center">
 								<span className="font-bold">Connections</span>
-								<div className="rounded-md text-white bg-blue-500 px-2 py-[1px] text-xs flex gap-0.5 items-center">
+								<div className="rounded-md text-white bg-blue-500 px-2 py-[1px] text-xs flex gap-0.5 items-center font-bold">
 									<FaCheck />
 									<span>APP</span>
 								</div>
@@ -202,7 +148,7 @@ rounded-lg flex items-center gap-2 w-fit text-sm mt-1"
 								{renderMessage()}
 							</div>
 							<AnimatePresence>
-								{!flags.includes(flagsType.NoIndentification) && (
+								{flags.includes(flagsType.AllowOrigin) && (
 									<motion.div
 										{...animation}
 										className="flex gap-2 items-center rounded-lg"
@@ -220,7 +166,9 @@ rounded-lg flex items-center gap-2 w-fit text-sm mt-1"
 						<AnimatePresence>
 							{flags.includes(flagsType.AllowFiles) && (
 								<motion.div
-									{...animation}
+									initial={{ opacity: 0, x: 10 }}
+									animate={{ opacity: 1, x: 0 }}
+									transition={{ duration: 0.2 }}
 									className="w-36 h-32 flex items-center justify-center gap-2 rounded-lg 
 flex-col border-neutral-700 border-2"
 								>
@@ -230,47 +178,8 @@ flex-col border-neutral-700 border-2"
 							)}
 						</AnimatePresence>
 					</div>
-				</>
+				</div>
 			)}
-		</div>
-	);
-}
-
-function UserEmbed({ avatar, username, hour }: CustomizeUserProps) {
-	const l = useLanguage();
-
-	return (
-		<div className="flex items-start gap-3 p-2 h-fit">
-			<div className="min-w-10 min-h-10">
-				<Avatar src={avatar} className="w-10 h-10" />
-			</div>
-			<div className="flex flex-col text-start">
-				<div className="flex gap-1 items-center">
-					<span className="font-bold">{username}</span>
-					<span className="text-neutral-400 text-xs mt-1">
-						{l.home.embeds.hour} {hour}
-					</span>
-				</div>
-				<div className="flex flex-col ">
-					{l.home.conversation.spyei.message}
-					<span>😃😁</span>
-					<a
-						className="text-blue-500 underline"
-						href="https://squarecloud.app/"
-						target="_blank"
-						rel="noreferrer"
-					>
-						https://squarecloud.app/
-					</a>
-					<div
-						className="w-36 h-32 flex items-center justify-center gap-2 rounded-lg 
-flex-col border-neutral-700 border-2 mt-1"
-					>
-						<LuFile size={18} />
-						<span className="text-neutral-300 text-sm">{l.home.file}</span>
-					</div>
-				</div>
-			</div>
 		</div>
 	);
 }
