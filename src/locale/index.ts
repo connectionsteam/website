@@ -29,6 +29,8 @@ export const languages = {
 			description:
 				"Connections é um bot criado para facilitar conexões entre servidores, promovendo engajamento e dinamismo.",
 			embeds: {
+				fromSpyei: "de Servidor de spyei",
+				fromUnreal: "de Servidor de unreal",
 				hour: "Hoje às ",
 			},
 			addConnections: "Adicionar Connections",
@@ -836,6 +838,8 @@ export const languages = {
 			description:
 				"Connections is a bot designed to facilitate connections between servers, enhancing engagement and dynamism in your server.",
 			embeds: {
+				fromSpyei: "from Spyei's Server",
+				fromUnreal: "from Unreal's Server",
 				hour: "Today at ",
 			},
 			addConnections: "Invite Connections",
