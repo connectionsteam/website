@@ -147,7 +147,7 @@ export default function EditDashboardConnection({
 										<div className="flex gap-1">
 											<div className="flex gap-1 items-center justify-center">
 												<span className="font-bold">Connections</span>
-												<div className="rounded-md text-white bg-blue-500 px-2 py-[1px] text-xs flex gap-1 items-center">
+												<div className="rounded-md text-white bg-blue-500 px-2 py-[1px] text-xs flex gap-1 items-center font-bold">
 													<FaCheck />
 													<span>APP</span>
 												</div>
