@@ -100,7 +100,7 @@ export default function CreateConnectionForm({
 						<DefaultInput
 							label={l.dashboard.connections.connection.form.maxConnections}
 							type="number"
-							placeholder="5"
+							placeholder="100"
 							onChange={(e) => setPostValues(e, "maxConnections")}
 						/>
 						{errors.length > 0 ? (
