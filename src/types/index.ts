@@ -376,6 +376,10 @@ export interface TabState {
 
 export interface ConnectionsPageStructure {
 	_id: string;
+	team?: {
+		name: string,
+		iconURL: string;
+	};
 	name: string;
 	creator: {
 		id: string;

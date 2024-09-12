@@ -572,6 +572,7 @@ export const languages = {
 			discord: "Entrar com discord",
 		},
 		connection: {
+			team: "Time:",
 			wantPromoted: "Quer sua conexão no topo?",
 			wantpromotedDescription: "Junte-se ao Promoted clicando no botão abaixo!",
 			promote: "Promover Conexão",
@@ -1376,6 +1377,7 @@ export const languages = {
 			discord: "Login with discord",
 		},
 		connection: {
+			team: "Team:",
 			wantPromoted: "Want your connection on top?",
 			wantpromotedDescription:
 				"Join the Promoted by clicking the button below!",

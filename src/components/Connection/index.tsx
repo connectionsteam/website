@@ -131,18 +131,33 @@ export default function ConnectionPageComponent() {
 							/>
 						</div>
 					</div>
-					<div className="flex gap-2 items-center flex-wrap">
-						<span className="font-bold">{l.connection.creator}</span>
-						<div className="w-8 h-8">
-							<Avatar
-								className="w-full h-full"
-								src={`https://cdn.discordapp.com/avatars/${connection.creator.id}/${connection.creator.avatar}.png`}
-							/>
+					{connection.team ? (
+						<div className="flex gap-2 items-center flex-wrap">
+							<span className="font-bold">{l.connection.team}</span>
+							<div className="w-8 h-8">
+								<Avatar
+									className="w-full h-full"
+									src={connection.team.iconURL}
+								/>
+							</div>
+							<span className="font-bold text-lg">
+								{connection.team.name}
+							</span>
 						</div>
-						<span className="font-bold text-lg">
-							{connection.creator.username}
-						</span>
-					</div>
+					) : (
+						<div className="flex gap-2 items-center flex-wrap">
+							<span className="font-bold">{l.connection.creator}</span>
+							<div className="w-8 h-8">
+								<Avatar
+									className="w-full h-full"
+									src={`https://cdn.discordapp.com/avatars/${connection.creator.id}/${connection.creator.avatar}.png`}
+								/>
+							</div>
+							<span className="font-bold text-lg">
+								{connection.creator.username}
+							</span>
+						</div>
+					)}
 					<div className="flex items-center w-full gap-2 flex-wrap">
 						{connection.tags.map((tag, index) => (
 							<button

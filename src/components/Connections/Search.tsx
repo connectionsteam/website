@@ -4,7 +4,6 @@ import { useLanguage } from "../../hooks/useLanguage";
 import { RiHashtag } from "react-icons/ri";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { api } from "../../utils/api";
-import DefaultInput from "../Mixed/Input";
 import ConnectionPageCard from "./Card";
 import debounce from "../../utils/debounce";
 
