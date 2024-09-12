@@ -115,7 +115,7 @@ export interface ConnectedConnectionPayload {
 export enum InitialPageConnectionFlags {
 	AllowFiles = "ALLOW_FILES",
 	AllowLinks = "ALLOW_LINKS",
-	NoIndentification = "NO_INDENTIFICATION",
+	AllowOrigin = "ALLOW_ORIGIN",
 	AutoTranslate = "AUTO_TRANSLATE",
 	AllowEmojis = "ALLOW_EMOJIS",
 	CompactModeEnabled = "COMPACT_MODE",
