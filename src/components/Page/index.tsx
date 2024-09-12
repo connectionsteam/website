@@ -10,7 +10,6 @@ import ConnectionsEmbed from "./ConnectionsEmbed";
 import DefaultButton from "../Mixed/Button";
 import { TbLayoutDashboardFilled } from "react-icons/tb";
 import { LuPlusCircle } from "react-icons/lu";
-import { BackgroundColoredGradient } from "../ui/BgGradient";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts/User";
@@ -141,7 +140,7 @@ export default function Page() {
 									target="_blank"
 									href={url}
 									className="bg-neutral-800 flex items-center justify-start
-                            p-4 px-5 rounded-lg transition w-full gap-3 hover:bg-neutral-700"
+                            p-3 py-4 rounded-lg transition w-full gap-3 hover:bg-neutral-700"
 									rel="noreferrer"
 								>
 									<LuPlusCircle size={20} />
