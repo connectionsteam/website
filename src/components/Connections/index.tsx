@@ -64,7 +64,7 @@ export default function ConnectionsPageComponent() {
 		setLoading(true);
 
 		const { data } = await api.get(
-			`/connections?${queryParams}&start_at=${page * 10}&end_at=${(page + 1) * 10}`,
+			`/connections?${queryParams}&start_at=${page * 18}&end_at=${(page + 1) * 18}`,
 		);
 
 		if (data.length === 0) {
