@@ -2,10 +2,10 @@ import { motion } from "framer-motion";
 import { useLanguage } from "../../hooks/useLanguage";
 import { Switch } from "@nextui-org/switch";
 import { InitialPageConnectionFlags } from "../../types";
-import { act, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import EditedConnectionsEmbed, {
 	CustomizeUserProps,
-} from "./EditedConnectionsEmbed";
+} from "./CustomizeMessage/Embed";
 
 interface Props {
 	compactMode: boolean;
@@ -32,10 +32,10 @@ export default function CustomizeMessage({
 			title: l.dashboard.guilds.connections.flags.allowLinks,
 			description: l.dashboard.guilds.connections.flags.allowLinksDescription,
 		},
-		[InitialPageConnectionFlags.NoIndentification]: {
-			title: l.dashboard.guilds.connections.flags.noIndentification,
+		[InitialPageConnectionFlags.AllowOrigin]: {
+			title: l.dashboard.guilds.connections.flags.allowOrigin,
 			description:
-				l.dashboard.guilds.connections.flags.noIndentificationDescription,
+				l.dashboard.guilds.connections.flags.allowOriginDescription,
 		},
 		[InitialPageConnectionFlags.AutoTranslate]: {
 			title: l.dashboard.guilds.connections.flags.autoTranslate,
@@ -57,6 +57,7 @@ export default function CustomizeMessage({
 		setActiveFlags([
 			InitialPageConnectionFlags.AllowEmojis,
 			InitialPageConnectionFlags.AllowLinks,
+			InitialPageConnectionFlags.AllowOrigin,
 		]);
 	}, []);
 
@@ -77,11 +78,12 @@ export default function CustomizeMessage({
 					<h1 className="font-extrabold text-4xl">{l.home.custom.title}</h1>
 					<span className="max-w-[800px]">{l.home.custom.description}</span>
 				</div>
-				<div className="flex flex-col gap-6 items-center justify-center">
+				<div className="flex flex-col gap-4 items-center justify-center">
 					<div className="w-fit min-w-80">
 						<EditedConnectionsEmbed author={author} flags={activeFlags} />
 					</div>
-					<div className="flex flex-wrap gap-6 tablet:flex-col items-center justify-start">
+					<div className="grid grid-cols-3 gap-3 tablet:flex-col place-items-center justify-items-start
+					tablet:grid-cols-2 mobile:grid-cols-1">
 						{Object.values(InitialPageConnectionFlags).map((flag, index) => (
 							<motion.div
 								initial={{ opacity: 0, y: -30 }}
@@ -89,18 +91,12 @@ export default function CustomizeMessage({
 								transition={{ delay: 0.1 * index }}
 								key={index}
 								className="flex flex-col gap-1 p-3 rounded-lg 
-                                        bg-neutral-900 justify-center max-w-96 tablet:w-full"
+                                        bg-neutral-800 justify-center w-full tablet:w-full h-full"
 							>
 								<div className="flex items-center gap-1">
 									<div className="relative">
 										<Switch
 											isSelected={activeFlags.includes(flag)}
-											isDisabled={
-												flag === InitialPageConnectionFlags.NoIndentification &&
-												activeFlags.includes(
-													InitialPageConnectionFlags.CompactModeEnabled,
-												)
-											}
 											onChange={handleChangeFlag(flag)}
 											color="secondary"
 										/>
