@@ -83,7 +83,7 @@ export default function ConnectionsPageVoteComponent({
 										{connection.votes.reduce(
 											(total, { count }) => total + count,
 											0,
-										) ?? 0}
+										) || 0}
 									</motion.span>
 									<motion.span
 										key="voted"
@@ -94,7 +94,7 @@ export default function ConnectionsPageVoteComponent({
 										{connection.votes.reduce(
 											(total, { count }) => total + count,
 											0,
-										) + 1 ?? 0}
+										) + 1 || 0}
 									</motion.span>
 									)
 								</div>
