@@ -14,7 +14,7 @@ import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts/User";
 import Avatar from "../Mixed/Avatar";
-import CustomizeMessage from "./CustomizeMessage";
+import CustomizeMessage from "./CustomizeMessageC";
 
 interface CoolUser {
 	id: string;
