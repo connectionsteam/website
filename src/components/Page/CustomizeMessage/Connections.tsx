@@ -78,7 +78,7 @@ export default function ConnectionsEmbed({ hour, author, flags, file }: Props) {
 							<Avatar src={author.avatar} className="w-10 h-10" />
 						</div>
 					</div>
-					<div className="flex flex-col w-full">
+					<div className="flex flex-col w-full gap-0.5">
 						<div className="flex gap-1 flex-wrap">
 							<div className="flex gap-1 justify-start flex-wrap">
 								<span className="font-bold">{author.username}</span>

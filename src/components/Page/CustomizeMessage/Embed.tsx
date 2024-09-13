@@ -22,7 +22,7 @@ export default function EditedConnectionsEmbed({ flags, author }: Props) {
 	const [file, setFile] = useState<File | null>(null);
 
 	return (
-		<div className="flex gap-2 w-full tablet:flex-col items-start justify-center h-full">
+		<div className="grid grid-cols-2 gap-2 w-full mobile:grid-cols-1 place-items-start justify-items-center h-full">
 			<div className="bg-neutral-800 p-3 rounded-lg flex flex-col gap-2 h-full w-full">
 				<div className="flex gap-2 items-center w-full rounded-lg p-2 bg-neutral-900/50">
 					<Image
@@ -36,17 +36,19 @@ export default function EditedConnectionsEmbed({ flags, author }: Props) {
 						{l.home.conversation.spyei.server}
 					</span>
 				</div>
-				<UserEmbed
-					file={file}
-					setFile={setFile}
-					flags={flags}
-					avatar={author.avatar}
-					username={author.username}
-					hour={author.hour}
-				/>
+				<div className="h-full flex justify-start items-center">
+					<UserEmbed
+						file={file}
+						setFile={setFile}
+						flags={flags}
+						avatar={author.avatar}
+						username={author.username}
+						hour={author.hour}
+					/>
+				</div>
 			</div>
 			<div className="flex flex-col gap-2 w-full h-full">
-				<div className="bg-neutral-800 p-3 rounded-lg flex flex-col gap-3 h-full w-[125%] tablet:w-full">
+				<div className="bg-neutral-800 p-3 rounded-lg flex flex-col gap-3 h-full w-full tablet:w-full">
 					<div className="flex gap-2 items-center w-full rounded-lg p-2 bg-neutral-900/50">
 						<Image
 							width={40}

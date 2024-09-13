@@ -31,7 +31,7 @@ export default function UserEmbed({
 	};
 
 	return (
-		<div className="flex gap-3 p-2 h-full items-center">
+		<div className="flex gap-3 p-2 items-center">
 			<div className="flex items-start gap-2">
 				<div className="min-w-10 min-h-10">
 					<Avatar src={avatar} className="w-10 h-10" />
