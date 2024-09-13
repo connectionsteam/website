@@ -16,6 +16,7 @@ import Filters from "./Filters";
 import DeskConnectionsFilters from "./DeskFilters";
 import DefaultButton from "../Mixed/Button";
 import { VscTriangleUp } from "react-icons/vsc";
+import ConnectionSkeleton from "./Connection/Skeleton";
 
 export default function ConnectionsPageComponent() {
 	const l = useLanguage();
@@ -31,6 +32,7 @@ export default function ConnectionsPageComponent() {
 	const [hasMore, setHasMore] = useState(true);
 	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 	const [queryInput, setQueryInput] = useState("");
+	const [firstLoading, setFirstLoading] = useState(true);
 	const [options, setOptions] = useState(() => {
 		const savedLayout = localStorage.getItem("layout");
 		return savedLayout ? { layout: savedLayout } : { layout: "grid" };
@@ -63,19 +65,22 @@ export default function ConnectionsPageComponent() {
 	const fetchConnections = async (page = 0, append = false) => {
 		setLoading(true);
 
-		const { data } = await api.get(
-			`/connections?${queryParams}&start_at=${page * 18}&end_at=${(page + 1) * 18}`,
-		);
-
-		if (data.length === 0) {
-			setHasMore(false);
-		} else {
-			setConnections((prevConnections) =>
-				append ? [...prevConnections, ...data] : data,
+		setTimeout(async () => {
+			const { data } = await api.get(
+				`/connections?${queryParams}&start_at=${page * 18}&end_at=${(page + 1) * 18}`,
 			);
-		}
 
-		setLoading(false);
+			if (data.length === 0) {
+				setHasMore(false);
+			} else {
+				setConnections((prevConnections) =>
+					append ? [...prevConnections, ...data] : data,
+				);
+			}
+
+			setFirstLoading(false);
+			setLoading(false);
+		}, 2000);
 	};
 
 	useEffect(() => {
@@ -224,21 +229,37 @@ export default function ConnectionsPageComponent() {
 									: "flex flex-col gap-2 w-full"
 							}
 						>
-							{connections.map((connection, index) => (
-								<ConnectionsPageCard
-									guilds={guilds ? guilds : []}
-									connections={connections}
-									layout={options.layout}
-									key={index}
-									connection={connection}
-									index={index}
-									ref={
-										index === connections.length - 1
-											? lastConnectionElementRef
-											: null
-									}
-								/>
-							))}
+							{loading && firstLoading
+								? Array.from({ length: 16 }).map((_, index) => (
+										<motion.div
+											initial={{ opacity: 0, y: 30 }}
+											animate={{ opacity: 1, y: 0 }}
+											exit={{ opacity: 0, y: -30 }}
+											transition={{ delay: 0.03 * index, duration: 0.03 }}
+										>
+											<ConnectionSkeleton key={index} />
+										</motion.div>
+									))
+								: connections.map((connection, index) => (
+										<ConnectionsPageCard
+											guilds={guilds ? guilds : []}
+											connections={connections}
+											layout={options.layout}
+											key={index}
+											connection={connection}
+											index={index}
+											ref={
+												index === connections.length - 1
+													? lastConnectionElementRef
+													: null
+											}
+										/>
+									))}
+							{loading &&
+								!firstLoading &&
+								Array.from({ length: 16 }).map((_, index) => (
+									<ConnectionSkeleton key={index} />
+								))}
 						</div>
 					</div>
 					<div className="flex-col flex px-2 items-center justify-center tablet:hidden w-96 gap-4">
@@ -279,11 +300,6 @@ export default function ConnectionsPageComponent() {
 						</div>
 					</div>
 				</div>
-				{loading && (
-					<div className="w-full flex items-center text-center justify-center mt-2">
-						<AiOutlineLoading3Quarters className="animate-spin" size={30} />
-					</div>
-				)}
 			</div>
 		</DefaultLayout>
 	);
