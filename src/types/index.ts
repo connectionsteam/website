@@ -120,7 +120,7 @@ export enum InitialPageConnectionFlags {
 	AllowEmojis = "ALLOW_EMOJIS",
 	CompactModeEnabled = "COMPACT_MODE",
 }
-
+// nao sei porqu ta dion
 export enum ConnectedConnectionFlags {
 	Frozen = "FROZEN",
 	AllowFiles = "ALLOW_FILES",
