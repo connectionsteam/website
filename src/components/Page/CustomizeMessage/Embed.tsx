@@ -3,6 +3,7 @@ import { InitialPageConnectionFlags as flagsType } from "../../../types";
 import Image from "next/image";
 import ConnectionsEmbed from "./Connections";
 import UserEmbed from "./User";
+import { useState } from "react";
 
 export interface CustomizeUserProps {
 	avatar: string;
@@ -18,6 +19,7 @@ interface Props {
 
 export default function EditedConnectionsEmbed({ flags, author }: Props) {
 	const l = useLanguage();
+	const [file, setFile] = useState<File | null>(null);
 
 	return (
 		<div className="flex gap-2 w-full tablet:flex-col items-start justify-center h-full">
@@ -35,6 +37,8 @@ export default function EditedConnectionsEmbed({ flags, author }: Props) {
 					</span>
 				</div>
 				<UserEmbed
+					file={file}
+					setFile={setFile}
 					flags={flags}
 					avatar={author.avatar}
 					username={author.username}
@@ -55,7 +59,12 @@ export default function EditedConnectionsEmbed({ flags, author }: Props) {
 							{l.home.conversation.unreal.server}
 						</span>
 					</div>
-					<ConnectionsEmbed flags={flags} author={author} hour={author.hour} />
+					<ConnectionsEmbed
+						flags={flags}
+						author={author}
+						hour={author.hour}
+						file={file}
+					/>
 				</div>
 			</div>
 		</div>

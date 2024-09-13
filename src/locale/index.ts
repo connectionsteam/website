@@ -1,7 +1,7 @@
 export const languages = {
 	"pt-BR": {
 		home: {
-			file: "Arquivo legal",
+			file: "Escolha algum arquivo",
 			header: {
 				documentation: "Documentação",
 				support: "Suporte",
@@ -811,7 +811,7 @@ export const languages = {
 	},
 	"en-US": {
 		home: {
-			file: "Cool File",
+			file: "Choose an file",
 			header: {
 				documentation: "Documentation",
 				support: "Support",

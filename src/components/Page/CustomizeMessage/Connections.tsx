@@ -7,10 +7,12 @@ import { languages } from "../../../locale";
 import Avatar from "../../Mixed/Avatar";
 import { FaCheck } from "react-icons/fa6";
 import { LuExternalLink, LuFile } from "react-icons/lu";
+import Image from "next/image";
 
 interface Props {
 	author: CustomizeUserProps;
 	hour: string;
+	file: File | null;
 	flags: flagsType[];
 }
 
@@ -21,7 +23,7 @@ const animation = {
 	transition: { duration: 0.2 },
 };
 
-export default function ConnectionsEmbed({ hour, author, flags }: Props) {
+export default function ConnectionsEmbed({ hour, author, flags, file }: Props) {
 	const l = useLanguage();
 	const [translatedContent, setTranslatedContent] = useState("");
 
@@ -81,7 +83,9 @@ export default function ConnectionsEmbed({ hour, author, flags }: Props) {
 							<div className="flex gap-1 justify-start flex-wrap">
 								<span className="font-bold">{author.username}</span>
 								{flags.includes(flagsType.AllowOrigin) && (
-									<motion.span {...animation}>({l.home.embeds.fromSpyei})</motion.span>
+									<motion.span {...animation}>
+										({l.home.embeds.fromSpyei})
+									</motion.span>
 								)}
 								<div className="rounded-md text-white bg-blue-500 px-2 py-[1px] text-xs flex gap-0.5 items-center font-bold">
 									<span>APP</span>
@@ -100,11 +104,35 @@ export default function ConnectionsEmbed({ hour, author, flags }: Props) {
 										initial={{ opacity: 0, x: 10 }}
 										animate={{ opacity: 1, x: 0 }}
 										transition={{ duration: 0.2 }}
-										className="w-36 h-32 flex items-center justify-center gap-2 rounded-lg 
-flex-col border-neutral-700 border-2"
+										className="flex items-center gap-2"
 									>
-										<LuFile />
-										<span className="text-neutral-300">{l.home.file}</span>
+										{file ? (
+											file.type === "image/png" ? (
+												<Image
+													className="rounded-lg"
+													width={200}
+													height={200}
+													src={URL.createObjectURL(file)}
+													alt={file.name}
+												/>
+											) : (
+												<div className="p-3 py-4 flex gap-2 items-center border-neutral-700 border-2 rounded-lg">
+													<LuFile size={18} />
+													<span className="text-neutral-300 text-sm">
+														{file.name.length > 20
+															? file.name.slice(0, 20) + "..."
+															: file.name}
+													</span>
+												</div>
+											)
+										) : (
+											<div className="p-3 py-4 flex gap-2 items-center border-neutral-700 border-2 rounded-lg">
+												<LuFile size={18} />
+												<span className="text-neutral-300 text-sm">
+													{l.home.file}
+												</span>
+											</div>
+										)}
 									</motion.div>
 								)}
 							</AnimatePresence>
@@ -169,11 +197,35 @@ rounded-lg flex items-center gap-2 w-fit text-sm mt-1"
 									initial={{ opacity: 0, x: 10 }}
 									animate={{ opacity: 1, x: 0 }}
 									transition={{ duration: 0.2 }}
-									className="w-36 h-32 flex items-center justify-center gap-2 rounded-lg 
-flex-col border-neutral-700 border-2"
+									className="flex items-center gap-2"
 								>
-									<LuFile />
-									<span className="text-neutral-300">{l.home.file}</span>
+									{file ? (
+										file.type === "image/png" ? (
+											<Image
+												className="rounded-lg"
+												width={200}
+												height={200}
+												src={URL.createObjectURL(file)}
+												alt={file.name}
+											/>
+										) : (
+											<div className="p-3 py-4 flex gap-2 items-center border-neutral-700 border-2 rounded-lg">
+												<LuFile size={18} />
+												<span className="text-neutral-300 text-sm">
+													{file.name.length > 20
+														? file.name.slice(0, 20) + "..."
+														: file.name}
+												</span>
+											</div>
+										)
+									) : (
+										<div className="p-3 py-4 flex gap-2 items-center border-neutral-700 border-2 rounded-lg">
+											<LuFile size={18} />
+											<span className="text-neutral-300 text-sm">
+												{l.home.file}
+											</span>
+										</div>
+									)}
 								</motion.div>
 							)}
 						</AnimatePresence>
