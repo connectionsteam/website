@@ -80,7 +80,7 @@ export default function ConnectionsPageVoteComponent({
 										animate={{ opacity: 0, display: "none", y: -10 }}
 										transition={{ delay: 0.1, transition: { duration: 0.4 } }}
 									>
-										{connection.votes?.reduce(
+										{connection.votes.reduce(
 											(total, { count }) => total + count,
 											0,
 										) ?? 0}
@@ -91,7 +91,7 @@ export default function ConnectionsPageVoteComponent({
 										animate={{ opacity: 1, display: "block", y: 0 }}
 										transition={{ delay: 0.4, transition: { duration: 0.1 } }}
 									>
-										{connection.votes?.reduce(
+										{connection.votes.reduce(
 											(total, { count }) => total + count,
 											0,
 										) + 1 ?? 0}
