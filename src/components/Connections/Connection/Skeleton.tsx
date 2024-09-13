@@ -1,12 +1,12 @@
 import { MdOutlineKeyboardArrowUp } from "react-icons/md";
 
-export default function ConnectionSkeleton() {
+export default function ConnectionSkeleton({ grid }: { grid?: boolean }) {
 	return (
 		<div className="w-full relative">
 			<div
-				className="p-3 h-full bg-neutral-800 rounded-lg transition mobile:gap-2
+				className={`p-3 h-full bg-neutral-800 rounded-lg transition mobile:gap-2
                     w-full flex items-start justify-center mobile:flex-col
-                    mobile:items-center border-2 border-transparent"
+                    mobile:items-center border-2 border-transparent ${grid ? "flex-col gap-2": ""}`}
 			>
 				<div className="flex gap-3 mobile:flex-col items-center flex-grow h-full">
 					<div className="h-full flex items-center justify-center">
@@ -23,9 +23,9 @@ export default function ConnectionSkeleton() {
 						</div>
 					</div>
 				</div>
-				<div className="flex gap-2 mobile:w-full">
-					<div className="p-2 bg-neutral-700 rounded-lg transition h-8 w-20 flex items-center animate-pulse"></div>
-					<div className="p-2 bg-neutral-700 rounded-lg transition h-8 w-20 flex gap-2 items-center animate-pulse"></div>
+				<div className="flex gap-2 mobile:w-full mobile:justify-center">
+					<div className="p-2 bg-neutral-700 rounded-lg transition h-10 w-20 flex items-center animate-pulse mobile:w-24"></div>
+					<div className={`p-2 bg-neutral-700 rounded-lg transition h-10 ${grid ? "w-28" : "w-20"} flex gap-2 items-center animate-pulse mobile:w-full`}></div>
 				</div>
 			</div>
 		</div>

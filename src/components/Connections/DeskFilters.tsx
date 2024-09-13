@@ -45,7 +45,7 @@ export default function DeskConnectionsFilters({
 
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
-			if (e.key === "Enter" && filters.tag !== "") {
+			if (e.key === "Enter") {
 				setSubmited(true);
 			}
 		};
@@ -55,7 +55,7 @@ export default function DeskConnectionsFilters({
 		return () => {
 			window.removeEventListener("keydown", handleKeyDown);
 		};
-	}, [filters]);
+	}, [filters, setSubmited]);
 
 	return (
 		<div className="text-white">
@@ -118,10 +118,7 @@ export default function DeskConnectionsFilters({
 									/>
 								</div>
 								<button
-									onClick={() => {
-										if (filters.tag === "") return;
-										setSubmited(true);
-									}}
+									onClick={() => setSubmited(true)}
 									className="flex items-center h-full p-2 justify-center pl-0"
 								>
 									<div

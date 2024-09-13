@@ -9,7 +9,6 @@ import ConnectionsPageCard from "./Connection";
 import { useIsClient } from "../../contexts/Client";
 import { RiHashtag } from "react-icons/ri";
 import { Modal, useDisclosure } from "@nextui-org/modal";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import SearchConnection from "./Search";
 import { IoFilter } from "react-icons/io5";
 import Filters from "./Filters";
@@ -62,25 +61,28 @@ export default function ConnectionsPageComponent() {
 		});
 	};
 
+	console.log(connections.map((a) => a.name));
+
 	const fetchConnections = async (page = 0, append = false) => {
 		setLoading(true);
 
-		setTimeout(async () => {
-			const { data } = await api.get(
-				`/connections?${queryParams}&start_at=${page * 18}&end_at=${(page + 1) * 18}`,
-			);
+		const { data } = await api.get(
+			`/connections?${queryParams}&start_at=${page * 18}&end_at=${(page + 1) * 18}`,
+		);
 
-			if (data.length === 0) {
-				setHasMore(false);
-			} else {
-				setConnections((prevConnections) =>
-					append ? [...prevConnections, ...data] : data,
-				);
+		if (data.length === 0) {
+			if (filters.tag !== "" && submited) {
+				setConnections(data);
 			}
+			setHasMore(false);
+		} else {
+			setConnections((prevConnections) =>
+				append ? [...prevConnections, ...data] : data,
+			);
+		}
 
-			setFirstLoading(false);
-			setLoading(false);
-		}, 2000);
+		setFirstLoading(false);
+		setLoading(false);
 	};
 
 	useEffect(() => {
@@ -138,6 +140,8 @@ export default function ConnectionsPageComponent() {
 		fetchGuilds();
 	}, []);
 
+	console.log(filters);
+
 	return (
 		<DefaultLayout>
 			<div className="flex flex-col w-full gap-3">
@@ -146,7 +150,7 @@ export default function ConnectionsPageComponent() {
 					<span className="text-neutral-300">{l.connection.description}</span>
 				</div>
 				<div className="w-full relative h-full">
-					{connections.length > 0 && (
+					{
 						<SearchConnection
 							queryInput={queryInput}
 							setSubmited={setSubmited}
@@ -156,7 +160,7 @@ export default function ConnectionsPageComponent() {
 							setFilters={setFilters}
 							actualConnections={connections}
 						/>
-					)}
+					}
 				</div>
 				<div className="w-full flex items-center justify-center gap-2 h-full">
 					<div className="flex gap-1 overflow-x-auto flex-grow">
@@ -220,41 +224,57 @@ export default function ConnectionsPageComponent() {
 						</Modal>
 					</div>
 				</div>
-				<div className="flex gap-4 w-full items-start">
+				<div
+					className={`flex gap-4 w-full ${connections.length === 0 ? "items-center" : "items-start"}`}
+				>
 					<div className="flex w-full">
 						<div
 							className={
 								options.layout === "grid"
-									? "grid grid-cols-2 gap-3 w-full mobile:grid-cols-1"
-									: "flex flex-col gap-2 w-full"
+									? `grid grid-cols-2 gap-3 w-full mobile:grid-cols-1`
+									: "flex flex-col gap-2 w-full h-full items-center justify-center"
 							}
 						>
-							{loading && firstLoading
-								? Array.from({ length: 16 }).map((_, index) => (
-										<motion.div
-											initial={{ opacity: 0, y: 30 }}
-											animate={{ opacity: 1, y: 0 }}
-											exit={{ opacity: 0, y: -30 }}
-											transition={{ delay: 0.03 * index, duration: 0.03 }}
-										>
-											<ConnectionSkeleton key={index} />
-										</motion.div>
-									))
-								: connections.map((connection, index) => (
-										<ConnectionsPageCard
-											guilds={guilds ? guilds : []}
-											connections={connections}
-											layout={options.layout}
+							{loading && firstLoading ? (
+								Array.from({ length: 16 }).map((_, index) => (
+									<motion.div
+										initial={{ opacity: 0, y: 30 }}
+										animate={{ opacity: 1, y: 0 }}
+										exit={{ opacity: 0, y: -30 }}
+										transition={{ delay: 0.03 * index, duration: 0.03 }}
+									>
+										<ConnectionSkeleton
 											key={index}
-											connection={connection}
-											index={index}
-											ref={
-												index === connections.length - 1
-													? lastConnectionElementRef
-													: null
-											}
+											grid={options.layout === "grid"}
 										/>
-									))}
+									</motion.div>
+								))
+							) : connections.length === 0 ? (
+								<div className="text-center">
+									<span className="font-semibold">
+										{l.connection.noConnections}
+									</span>
+									<p className="text-neutral-300 text-sm">
+										Tente resetar os filtros ou buscar por uma tag mais famosa
+									</p>
+								</div>
+							) : (
+								connections.map((connection, index) => (
+									<ConnectionsPageCard
+										guilds={guilds ? guilds : []}
+										connections={connections}
+										layout={options.layout}
+										key={index}
+										connection={connection}
+										index={index}
+										ref={
+											index === connections.length - 1
+												? lastConnectionElementRef
+												: null
+										}
+									/>
+								))
+							)}
 							{loading &&
 								!firstLoading &&
 								Array.from({ length: 16 }).map((_, index) => (
