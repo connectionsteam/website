@@ -1,6 +1,7 @@
 # Connections Website
 
 Para ver o site em ação clone esse repositório, e siga os passos abaixo
+ou acesse-o diretamente por esse link: https://connections.squareweb.app/
 
 Digite em seu console para instalar todas as dependências necessárias
 
