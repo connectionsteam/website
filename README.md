@@ -20,3 +20,5 @@ Quando iniciar ele se encontra na url: http://localhost:3000 após isso só ver 
 #
 
 Caso tenha alguma duvida entre nesse servidor: https://discord.gg/9GTS9yUkV6
+
+test
